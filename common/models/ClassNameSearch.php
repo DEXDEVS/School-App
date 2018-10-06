@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\StdFeeDetails;
+use common\models\ClassName;
 
 /**
- * StdFeeDetailsSearch represents the model behind the search form about `common\models\StdFeeDetails`.
+ * ClassNameSearch represents the model behind the search form about `common\models\ClassName`.
  */
-class StdFeeDetailsSearch extends StdFeeDetails
+class ClassNameSearch extends ClassName
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class StdFeeDetailsSearch extends StdFeeDetails
     public function rules()
     {
         return [
-            [['std_fee_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
-            [['date', 'total_fee', 'created_at', 'updated_at'], 'safe'],
+            [['class_name_id', 'created_by', 'updated_by'], 'integer'],
+            [['class_name', 'class_name_description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class StdFeeDetailsSearch extends StdFeeDetails
      */
     public function search($params)
     {
-        $query = StdFeeDetails::find();
+        $query = ClassName::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,16 +56,15 @@ class StdFeeDetailsSearch extends StdFeeDetails
         }
 
         $query->andFilterWhere([
-            'std_fee_id' => $this->std_fee_id,
-            'std_id' => $this->std_id,
-            'date' => $this->date,
+            'class_name_id' => $this->class_name_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'total_fee', $this->total_fee]);
+        $query->andFilterWhere(['like', 'class_name', $this->class_name])
+            ->andFilterWhere(['like', 'class_name_description', $this->class_name_description]);
 
         return $dataProvider;
     }

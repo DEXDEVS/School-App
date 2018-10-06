@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\StdClasses;
+use common\models\StdGuardianInfo;
 
 /**
- * StdClassesSearch represents the model behind the search form about `common\models\StdClasses`.
+ * StdGuardianInfoSearch represents the model behind the search form about `common\models\StdGuardianInfo`.
  */
-class StdClassesSearch extends StdClasses
+class StdGuardianInfoSearch extends StdGuardianInfo
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class StdClassesSearch extends StdClasses
     public function rules()
     {
         return [
-            [['class_id', 'class_name_id', 'session_id', 'section_id', 'timing_id', 'created_by', 'updated_by'], 'integer'],
-            [['class_description', 'created_at', 'updated_at'], 'safe'],
+            [['std_guardian_info_d', 'std_id', 'created_by', 'updated_by'], 'integer'],
+            [['father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class StdClassesSearch extends StdClasses
      */
     public function search($params)
     {
-        $query = StdClasses::find();
+        $query = StdGuardianInfo::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,18 +56,19 @@ class StdClassesSearch extends StdClasses
         }
 
         $query->andFilterWhere([
-            'class_id' => $this->class_id,
-            'class_name_id' => $this->class_name_id,
-            'session_id' => $this->session_id,
-            'section_id' => $this->section_id,
-            'timing_id' => $this->timing_id,
+            'std_guardian_info_d' => $this->std_guardian_info_d,
+            'std_id' => $this->std_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'class_description', $this->class_description]);
+        $query->andFilterWhere(['like', 'father_name', $this->father_name])
+            ->andFilterWhere(['like', 'father_cnic', $this->father_cnic])
+            ->andFilterWhere(['like', 'father_email', $this->father_email])
+            ->andFilterWhere(['like', 'guardian_contact_no_1', $this->guardian_contact_no_1])
+            ->andFilterWhere(['like', 'guardian_contact_no_2', $this->guardian_contact_no_2]);
 
         return $dataProvider;
     }

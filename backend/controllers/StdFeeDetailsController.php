@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\StdFeeDetails;
-use backend\models\StdFeeDetailsSearch;
+use common\models\StdFeeDetailsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

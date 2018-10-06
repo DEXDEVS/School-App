@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Sections;
+use common\models\StdEnrollmentHead;
 
 /**
- * SectionsSearch represents the model behind the search form about `common\models\Sections`.
+ * StdEnrollmentHeadSearch represents the model behind the search form about `common\models\StdEnrollmentHead`.
  */
-class SectionsSearch extends Sections
+class StdEnrollmentHeadSearch extends StdEnrollmentHead
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SectionsSearch extends Sections
     public function rules()
     {
         return [
-            [['section_id', 'session_id', 'created_by', 'updated_by'], 'integer'],
-            [['section_description', 'created_at', 'updated_at'], 'safe'],
+            [['std_enroll_head_id', 'class_id', 'created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SectionsSearch extends Sections
      */
     public function search($params)
     {
-        $query = Sections::find();
+        $query = StdEnrollmentHead::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,15 +56,13 @@ class SectionsSearch extends Sections
         }
 
         $query->andFilterWhere([
-            'section_id' => $this->section_id,
-            'session_id' => $this->session_id,
+            'std_enroll_head_id' => $this->std_enroll_head_id,
+            'class_id' => $this->class_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
-
-        $query->andFilterWhere(['like', 'section_description', $this->section_description]);
 
         return $dataProvider;
     }

@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\StdEnrollmentHead;
+use common\models\TeacherSubjectAssignDetail;
 
 /**
- * StdEnrollmentHeadSearch represents the model behind the search form about `common\models\StdEnrollmentHead`.
+ * TeacherSubjectAssignDetailSearch represents the model behind the search form about `common\models\TeacherSubjectAssignDetail`.
  */
-class StdEnrollmentHeadSearch extends StdEnrollmentHead
+class TeacherSubjectAssignDetailSearch extends TeacherSubjectAssignDetail
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
     public function rules()
     {
         return [
-            [['std_enroll_head_id', 'class_id', 'created_by', 'updated_by'], 'integer'],
+            [['teacher_subject_assign_detail_id', 'teacher_subject_assign_detail_head_id', 'class_id', 'subject_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
      */
     public function search($params)
     {
-        $query = StdEnrollmentHead::find();
+        $query = TeacherSubjectAssignDetail::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,8 +56,10 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
         }
 
         $query->andFilterWhere([
-            'std_enroll_head_id' => $this->std_enroll_head_id,
+            'teacher_subject_assign_detail_id' => $this->teacher_subject_assign_detail_id,
+            'teacher_subject_assign_detail_head_id' => $this->teacher_subject_assign_detail_head_id,
             'class_id' => $this->class_id,
+            'subject_id' => $this->subject_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,

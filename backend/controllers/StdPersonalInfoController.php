@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\StdPersonalInfo;
-use backend\models\StdPersonalInfoSearch;
+use common\models\StdPersonalInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

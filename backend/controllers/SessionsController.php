@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Sessions;
-use backend\models\SessionseSearch;
+use common\models\SessionsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,7 +38,7 @@ class SessionsController extends Controller
      */
     public function actionIndex()
     {    
-        $searchModel = new SessionseSearch();
+        $searchModel = new SessionsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

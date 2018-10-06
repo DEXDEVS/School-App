@@ -10,10 +10,19 @@ use yii\widgets\ActiveForm;
 <div class="std-enrollment-detail-form">
 
     <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_enroll_detail_head_id')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_enroll_detail_std_id')->textInput() ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'std_enroll_detail_head_id')->textInput() ?>
+       
+    <!-- 
 
-    <?= $form->field($model, 'std_enroll_detail_std_id')->textInput() ?>
+    
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
@@ -21,7 +30,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?= $form->field($model, 'updated_by')->textInput() ?> -->
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

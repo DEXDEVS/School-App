@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\TeacherSubjectAssignDetail;
+use common\models\StdClasses;
 
 /**
- * TeacherSubjectAssignDetailSearch represents the model behind the search form about `common\models\TeacherSubjectAssignDetail`.
+ * StdClassesSearch represents the model behind the search form about `common\models\StdClasses`.
  */
-class TeacherSubjectAssignDetailSearch extends TeacherSubjectAssignDetail
+class StdClassesSearch extends StdClasses
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class TeacherSubjectAssignDetailSearch extends TeacherSubjectAssignDetail
     public function rules()
     {
         return [
-            [['teacher_subject_assign_detail_id', 'teacher_subject_assign_detail_head_id', 'class_id', 'subject_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['class_id', 'class_name_id', 'session_id', 'section_id', 'timing_id', 'created_by', 'updated_by'], 'integer'],
+            [['class_description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class TeacherSubjectAssignDetailSearch extends TeacherSubjectAssignDetail
      */
     public function search($params)
     {
-        $query = TeacherSubjectAssignDetail::find();
+        $query = StdClasses::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,15 +56,18 @@ class TeacherSubjectAssignDetailSearch extends TeacherSubjectAssignDetail
         }
 
         $query->andFilterWhere([
-            'teacher_subject_assign_detail_id' => $this->teacher_subject_assign_detail_id,
-            'teacher_subject_assign_detail_head_id' => $this->teacher_subject_assign_detail_head_id,
             'class_id' => $this->class_id,
-            'subject_id' => $this->subject_id,
+            'class_name_id' => $this->class_name_id,
+            'session_id' => $this->session_id,
+            'section_id' => $this->section_id,
+            'timing_id' => $this->timing_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+
+        $query->andFilterWhere(['like', 'class_description', $this->class_description]);
 
         return $dataProvider;
     }

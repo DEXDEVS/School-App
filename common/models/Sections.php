@@ -34,9 +34,9 @@ class Sections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['session_id', 'section_description', 'created_by', 'updated_by'], 'required'],
+            [['session_id', 'section_description'], 'required'],
             [['session_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['section_description'], 'string', 'max' => 255],
             [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
         ];

@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Sessions;
+use common\models\Sections;
 
 /**
- * SessionseSearch represents the model behind the search form about `common\models\Sessions`.
+ * SectionsSearch represents the model behind the search form about `common\models\Sections`.
  */
-class SessionseSearch extends Sessions
+class SectionsSearch extends Sections
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SessionseSearch extends Sessions
     public function rules()
     {
         return [
-            [['session_id', 'created_by', 'updated_by'], 'integer'],
-            [['session_name', 'session_description', 'created_at', 'updated_at'], 'safe'],
+            [['section_id', 'session_id', 'created_by', 'updated_by'], 'integer'],
+            [['section_description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SessionseSearch extends Sessions
      */
     public function search($params)
     {
-        $query = Sessions::find();
+        $query = Sections::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,6 +56,7 @@ class SessionseSearch extends Sessions
         }
 
         $query->andFilterWhere([
+            'section_id' => $this->section_id,
             'session_id' => $this->session_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -63,8 +64,7 @@ class SessionseSearch extends Sessions
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'session_name', $this->session_name])
-            ->andFilterWhere(['like', 'session_description', $this->session_description]);
+        $query->andFilterWhere(['like', 'section_description', $this->section_description]);
 
         return $dataProvider;
     }

@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Timings;
+use common\models\StdAcademicInfo;
 
 /**
- * TimingsSearch represents the model behind the search form about `common\models\Timings`.
+ * StdAcademicInfoSearch represents the model behind the search form about `common\models\StdAcademicInfo`.
  */
-class TimingsSearch extends Timings
+class StdAcademicInfoSearch extends StdAcademicInfo
 {
     /**
      * @inheritdoc
@@ -18,8 +18,9 @@ class TimingsSearch extends Timings
     public function rules()
     {
         return [
-            [['timing_id', 'created_by', 'updated_by'], 'integer'],
-            [['Timings', 'timing_description', 'created_at', 'updated_at'], 'safe'],
+            [['academic_id', 'std_id', 'class_name_id', 'total_marks', 'obtained_marks', 'created_by', 'updated_by'], 'integer'],
+            [['passing_year', 'grades', 'Institute', 'created_at', 'updated_at'], 'safe'],
+            [['percentage'], 'number'],
         ];
     }
 
@@ -41,7 +42,7 @@ class TimingsSearch extends Timings
      */
     public function search($params)
     {
-        $query = Timings::find();
+        $query = StdAcademicInfo::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,15 +57,21 @@ class TimingsSearch extends Timings
         }
 
         $query->andFilterWhere([
-            'timing_id' => $this->timing_id,
-            'Timings' => $this->Timings,
+            'academic_id' => $this->academic_id,
+            'std_id' => $this->std_id,
+            'class_name_id' => $this->class_name_id,
+            'total_marks' => $this->total_marks,
+            'obtained_marks' => $this->obtained_marks,
+            'percentage' => $this->percentage,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'timing_description', $this->timing_description]);
+        $query->andFilterWhere(['like', 'passing_year', $this->passing_year])
+            ->andFilterWhere(['like', 'grades', $this->grades])
+            ->andFilterWhere(['like', 'Institute', $this->Institute]);
 
         return $dataProvider;
     }

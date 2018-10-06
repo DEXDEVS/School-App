@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Subjects;
+use common\models\Timings;
 
 /**
- * SubjectsSearch represents the model behind the search form about `common\models\Subjects`.
+ * TimingsSearch represents the model behind the search form about `common\models\Timings`.
  */
-class SubjectsSearch extends Subjects
+class TimingsSearch extends Timings
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SubjectsSearch extends Subjects
     public function rules()
     {
         return [
-            [['subject_id', 'created_by', 'updated_by'], 'integer'],
-            [['subject_name', 'created_at', 'updated_at'], 'safe'],
+            [['timing_id', 'created_by', 'updated_by'], 'integer'],
+            [['Timings', 'timing_description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SubjectsSearch extends Subjects
      */
     public function search($params)
     {
-        $query = Subjects::find();
+        $query = Timings::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,14 +56,15 @@ class SubjectsSearch extends Subjects
         }
 
         $query->andFilterWhere([
-            'subject_id' => $this->subject_id,
+            'timing_id' => $this->timing_id,
+            'Timings' => $this->Timings,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'subject_name', $this->subject_name]);
+        $query->andFilterWhere(['like', 'timing_description', $this->timing_description]);
 
         return $dataProvider;
     }

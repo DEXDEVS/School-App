@@ -7,19 +7,19 @@ use Yii;
 /**
  * This is the model class for table "std_academic_info".
  *
- * @property int $academic_id
- * @property int $std_id
- * @property int $class_name_id
+ * @property integer $academic_id
+ * @property integer $std_id
+ * @property integer $class_name_id
  * @property string $passing_year
- * @property int $total_marks
- * @property int $obtained_marks
+ * @property integer $total_marks
+ * @property integer $obtained_marks
  * @property string $grades
  * @property double $percentage
  * @property string $Institute
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property StdPersonalInfo $std
  * @property ClassName $className
@@ -27,7 +27,7 @@ use Yii;
 class StdAcademicInfo extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -35,7 +35,7 @@ class StdAcademicInfo extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
@@ -53,7 +53,7 @@ class StdAcademicInfo extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {

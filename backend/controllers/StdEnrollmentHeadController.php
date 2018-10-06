@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\StdEnrollmentHead;
-use backend\models\StdEnrollmentHeadSearch;
+use common\models\StdEnrollmentHeadSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

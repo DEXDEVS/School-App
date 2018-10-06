@@ -35,9 +35,9 @@ class TeacherAcademics extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['teacher_id', 'qualification', 'passing_year', 'Institute', 'created_by', 'updated_by'], 'required'],
+            [['teacher_id', 'qualification', 'passing_year', 'Institute'], 'required'],
             [['teacher_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['qualification', 'passing_year'], 'string', 'max' => 32],
             [['Institute'], 'string', 'max' => 50],
             [['teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeacherPersonalInfo::className(), 'targetAttribute' => ['teacher_id' => 'teacher_id']],

@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\TeacherSubjectAssignDetail;
-use backend\models\TeacherSubjectAssignDetailSearch;
+use common\models\TeacherSubjectAssignDetailSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

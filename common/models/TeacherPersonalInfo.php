@@ -40,9 +40,9 @@ class TeacherPersonalInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['teacher_name', 'father_name', 'teacher_cnic', 'teacher_contact_no', 'teacher_address', 'teacher_marital_status', 'teacher_gender', 'teacher_email', 'created_by', 'updated_by'], 'required'],
+            [['teacher_name', 'father_name', 'teacher_cnic', 'teacher_contact_no', 'teacher_address', 'teacher_marital_status', 'teacher_gender', 'teacher_email'], 'required'],
             [['teacher_gender'], 'string'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['teacher_name', 'father_name', 'teacher_marital_status'], 'string', 'max' => 50],
             [['teacher_cnic', 'teacher_contact_no'], 'string', 'max' => 15],

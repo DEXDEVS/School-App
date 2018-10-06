@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\TeacherSubjectAssignHead;
+use common\models\StdEnrollmentDetail;
 
 /**
- * TeacherSubjectAssignHeadSearch represents the model behind the search form about `common\models\TeacherSubjectAssignHead`.
+ * StdEnrollmentDetailSearch represents the model behind the search form about `common\models\StdEnrollmentDetail`.
  */
-class TeacherSubjectAssignHeadSearch extends TeacherSubjectAssignHead
+class StdEnrollmentDetailSearch extends StdEnrollmentDetail
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class TeacherSubjectAssignHeadSearch extends TeacherSubjectAssignHead
     public function rules()
     {
         return [
-            [['teacher_subject_assign_head_id', 'teacher_id', 'created_by', 'updated_by'], 'integer'],
+            [['std_enroll_detail_id', 'std_enroll_detail_head_id', 'std_enroll_detail_std_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class TeacherSubjectAssignHeadSearch extends TeacherSubjectAssignHead
      */
     public function search($params)
     {
-        $query = TeacherSubjectAssignHead::find();
+        $query = StdEnrollmentDetail::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,12 +56,13 @@ class TeacherSubjectAssignHeadSearch extends TeacherSubjectAssignHead
         }
 
         $query->andFilterWhere([
-            'teacher_subject_assign_head_id' => $this->teacher_subject_assign_head_id,
-            'teacher_id' => $this->teacher_id,
+            'std_enroll_detail_id' => $this->std_enroll_detail_id,
+            'std_enroll_detail_head_id' => $this->std_enroll_detail_head_id,
+            'std_enroll_detail_std_id' => $this->std_enroll_detail_std_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ]);
 
         return $dataProvider;

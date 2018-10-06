@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\StdGuardianInfo;
-use backend\models\StdGuardianInfoSearch;
+use common\models\StdGuardianInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
