@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use common\models\Branches;
 
+use dosamigos\datetimepicker\DateTimePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\StdSessions */
 /* @var $form yii\widgets\ActiveForm */
@@ -25,10 +26,32 @@ use common\models\Branches;
         </div>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'session_start_date')->textInput() ?>
+                <label>Session Start Date</label>
+                    <?= DateTimePicker::widget([
+                        'model' => $model,
+                        'attribute' => 'session_start_date',
+                        'language' => 'en',
+                        'size' => 'ms',
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd HH:ii:ss',
+                            'todayBtn' => true
+                        ]
+                    ]);?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'session_end_date')->textInput() ?>
+                <label>Session End Date</label>
+                    <?= DateTimePicker::widget([
+                        'model' => $model,
+                        'attribute' => 'session_end_date',
+                        'language' => 'en',
+                        'size' => 'ms',
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd HH:ii:ss',
+                            'todayBtn' => true
+                        ]
+                    ]);?>
             </div>
         </div>
         <div class="row">
