@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use common\models\Branches;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdSessions */
@@ -12,7 +14,10 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'session_branch_id')->textInput() ?>
+                <?= $form->field($model, 'session_branch_id')->dropDownList(
+                    ArrayHelper::map(Branches::find()->all(),'branch_id','branch_name'),
+                    ['prompt'=>'Select Branch..']
+                )?>
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'session_name')->textInput(['maxlength' => true]) ?>

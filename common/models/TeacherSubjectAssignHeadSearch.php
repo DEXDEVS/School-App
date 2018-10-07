@@ -18,7 +18,7 @@ class TeacherSubjectAssignHeadSearch extends TeacherSubjectAssignHead
     public function rules()
     {
         return [
-            [['teacher_subject_assign_head_id', 'teacher_id', 'created_by', 'updated_by'], 'integer'],
+            [['teacher_subject_assign_head_id', 'teacher_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -60,8 +60,8 @@ class TeacherSubjectAssignHeadSearch extends TeacherSubjectAssignHead
             'teacher_id' => $this->teacher_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ]);
 
         return $dataProvider;

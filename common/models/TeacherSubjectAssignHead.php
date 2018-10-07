@@ -11,8 +11,8 @@ use Yii;
  * @property integer $teacher_id
  * @property string $created_at
  * @property string $updated_at
- * @property integer $created_by
- * @property integer $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property TeacherSubjectAssignDetail[] $teacherSubjectAssignDetails
  * @property EmpInfo $teacher
@@ -33,8 +33,8 @@ class TeacherSubjectAssignHead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['teacher_id', 'created_by', 'updated_by'], 'required'],
-            [['teacher_id', 'created_by', 'updated_by'], 'integer'],
+            [['teacher_id', 'created_by', 'updated_by'], 'required'],
+            [['teacher_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['teacher_id' => 'emp_id']],
         ];
@@ -50,8 +50,8 @@ class TeacherSubjectAssignHead extends \yii\db\ActiveRecord
             'teacher_id' => 'Teacher ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
         ];
     }
 

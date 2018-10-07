@@ -10,13 +10,14 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'session_id',
-    ],
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'session_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'session_branch_id',
+        'value'=>'sessionBranch.branch_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -30,10 +31,10 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'session_end_date',
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'status',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',

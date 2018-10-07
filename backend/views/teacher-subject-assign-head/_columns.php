@@ -28,11 +28,11 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'created_by',
+        'attribute'=>'created_by',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'updated_by',
+        'attribute'=>'updated_by',
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
