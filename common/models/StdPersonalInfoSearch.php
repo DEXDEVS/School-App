@@ -19,7 +19,7 @@ class StdPersonalInfoSearch extends StdPersonalInfo
     {
         return [
             [['std_id', 'created_by', 'updated_by'], 'integer'],
-            [['std_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_b_form', 'std_cast', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'std_serious_disease', 'created_at', 'updated_at'], 'safe'],
+            [['std_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'std_serious_disease', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -71,7 +71,6 @@ class StdPersonalInfoSearch extends StdPersonalInfo
             ->andFilterWhere(['like', 'std_temporary_address', $this->std_temporary_address])
             ->andFilterWhere(['like', 'std_email', $this->std_email])
             ->andFilterWhere(['like', 'std_b_form', $this->std_b_form])
-            ->andFilterWhere(['like', 'std_cast', $this->std_cast])
             ->andFilterWhere(['like', 'std_district', $this->std_district])
             ->andFilterWhere(['like', 'std_religion', $this->std_religion])
             ->andFilterWhere(['like', 'std_nationality', $this->std_nationality])

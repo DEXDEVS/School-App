@@ -18,7 +18,7 @@ class StdGuardianInfoSearch extends StdGuardianInfo
     public function rules()
     {
         return [
-            [['std_guardian_info_d', 'std_id', 'created_by', 'updated_by'], 'integer'],
+            [['std_guardian_info_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
             [['father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -56,7 +56,7 @@ class StdGuardianInfoSearch extends StdGuardianInfo
         }
 
         $query->andFilterWhere([
-            'std_guardian_info_d' => $this->std_guardian_info_d,
+            'std_guardian_info_id' => $this->std_guardian_info_id,
             'std_id' => $this->std_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

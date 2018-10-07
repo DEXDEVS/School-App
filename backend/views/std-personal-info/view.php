@@ -19,7 +19,6 @@ use yii\widgets\DetailView;
             'std_temporary_address',
             'std_email:email',
             'std_b_form',
-            'std_cast',
             'std_district',
             'std_religion',
             'std_nationality',

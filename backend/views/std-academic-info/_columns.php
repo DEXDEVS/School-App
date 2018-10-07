@@ -24,12 +24,16 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'passing_year',
+        'attribute'=>'previous_class',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'total_marks',
+        'attribute'=>'passing_year',
     ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'total_marks',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'obtained_marks',

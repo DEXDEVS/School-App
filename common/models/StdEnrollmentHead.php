@@ -7,20 +7,20 @@ use Yii;
 /**
  * This is the model class for table "std_enrollment_head".
  *
- * @property int $std_enroll_head_id
- * @property int $class_id
+ * @property integer $std_enroll_head_id
+ * @property integer $class_id
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property StdEnrollmentDetail[] $stdEnrollmentDetails
- * @property StdClasses $class
+ * @property StdClass $class
  */
 class StdEnrollmentHead extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -28,7 +28,7 @@ class StdEnrollmentHead extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
@@ -36,12 +36,12 @@ class StdEnrollmentHead extends \yii\db\ActiveRecord
             [['class_id', 'created_by', 'updated_by'], 'required'],
             [['class_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClasses::className(), 'targetAttribute' => ['class_id' => 'class_id']],
+            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['class_id' => 'class_id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -68,6 +68,6 @@ class StdEnrollmentHead extends \yii\db\ActiveRecord
      */
     public function getClass()
     {
-        return $this->hasOne(StdClasses::className(), ['class_id' => 'class_id']);
+        return $this->hasOne(StdClass::className(), ['class_id' => 'class_id']);
     }
 }

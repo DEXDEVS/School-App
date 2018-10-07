@@ -7,8 +7,8 @@ use Yii;
 /**
  * This is the model class for table "std_guardian_info".
  *
- * @property int $std_guardian_info_d
- * @property int $std_id
+ * @property integer $std_guardian_info_id
+ * @property integer $std_id
  * @property string $father_name
  * @property string $father_cnic
  * @property string $father_email
@@ -16,15 +16,15 @@ use Yii;
  * @property string $guardian_contact_no_2
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property StdPersonalInfo $std
  */
 class StdGuardianInfo extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -32,14 +32,14 @@ class StdGuardianInfo extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['std_id', 'father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2'], 'required'],
+            [['std_id', 'father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'created_by', 'updated_by'], 'required'],
             [['std_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['created_at', 'updated_at'], 'safe'],
             [['father_name'], 'string', 'max' => 50],
             [['father_cnic', 'guardian_contact_no_1', 'guardian_contact_no_2'], 'string', 'max' => 15],
             [['father_email'], 'string', 'max' => 84],
@@ -48,12 +48,12 @@ class StdGuardianInfo extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
-            'std_guardian_info_d' => 'Std Guardian Info D',
+            'std_guardian_info_id' => 'Std Guardian Info ID',
             'std_id' => 'Std ID',
             'father_name' => 'Father Name',
             'father_cnic' => 'Father Cnic',

@@ -13,6 +13,7 @@ use yii\widgets\DetailView;
             'academic_id',
             'std_id',
             'class_name_id',
+            'previous_class',
             'passing_year',
             'total_marks',
             'obtained_marks',

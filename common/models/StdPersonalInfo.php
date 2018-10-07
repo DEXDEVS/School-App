@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "std_personal_info".
  *
- * @property int $std_id
+ * @property integer $std_id
  * @property string $std_name
  * @property string $std_contact_no
  * @property string $std_DOB
@@ -16,7 +16,6 @@ use Yii;
  * @property string $std_temporary_address
  * @property string $std_email
  * @property string $std_b_form
- * @property string $std_cast
  * @property string $std_district
  * @property string $std_religion
  * @property string $std_nationality
@@ -24,8 +23,8 @@ use Yii;
  * @property string $std_serious_disease
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property StdAcademicInfo[] $stdAcademicInfos
  * @property StdEnrollmentDetail[] $stdEnrollmentDetails
@@ -35,7 +34,7 @@ use Yii;
 class StdPersonalInfo extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -43,16 +42,16 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['std_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_b_form', 'std_cast', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'std_serious_disease'], 'required'],
-            [['std_DOB', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['std_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'std_serious_disease', 'created_by', 'updated_by'], 'required'],
+            [['std_DOB', 'created_at', 'updated_at'], 'safe'],
             [['std_gender'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
-            [['std_name', 'std_cast', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
+            [['std_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
             [['std_contact_no'], 'string', 'max' => 11],
             [['std_permanent_address', 'std_temporary_address', 'std_b_form'], 'string', 'max' => 255],
             [['std_email'], 'string', 'max' => 84],
@@ -61,7 +60,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -75,7 +74,6 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             'std_temporary_address' => 'Std Temporary Address',
             'std_email' => 'Std Email',
             'std_b_form' => 'Std B Form',
-            'std_cast' => 'Std Cast',
             'std_district' => 'Std District',
             'std_religion' => 'Std Religion',
             'std_nationality' => 'Std Nationality',

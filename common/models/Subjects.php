@@ -7,19 +7,19 @@ use Yii;
 /**
  * This is the model class for table "subjects".
  *
- * @property int $subject_id
+ * @property integer $subject_id
  * @property string $subject_name
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property TeacherSubjectAssignDetail[] $teacherSubjectAssignDetails
  */
 class Subjects extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -27,20 +27,20 @@ class Subjects extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['subject_name'], 'required'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['subject_name', 'created_by', 'updated_by'], 'required'],
+            [['created_at', 'updated_at'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['subject_name'], 'string', 'max' => 32],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {

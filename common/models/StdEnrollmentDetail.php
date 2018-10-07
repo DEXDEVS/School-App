@@ -7,13 +7,13 @@ use Yii;
 /**
  * This is the model class for table "std_enrollment_detail".
  *
- * @property int $std_enroll_detail_id
- * @property int $std_enroll_detail_head_id
- * @property int $std_enroll_detail_std_id
+ * @property integer $std_enroll_detail_id
+ * @property integer $std_enroll_detail_head_id
+ * @property integer $std_enroll_detail_std_id
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property StdEnrollmentHead $stdEnrollDetailHead
  * @property StdPersonalInfo $stdEnrollDetailStd
@@ -21,7 +21,7 @@ use Yii;
 class StdEnrollmentDetail extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -29,21 +29,21 @@ class StdEnrollmentDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['std_enroll_detail_head_id', 'std_enroll_detail_std_id'], 'required'],
+            [['std_enroll_detail_head_id', 'std_enroll_detail_std_id', 'created_by', 'updated_by'], 'required'],
             [['std_enroll_detail_head_id', 'std_enroll_detail_std_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['created_at', 'updated_at'], 'safe'],
             [['std_enroll_detail_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdEnrollmentHead::className(), 'targetAttribute' => ['std_enroll_detail_head_id' => 'std_enroll_head_id']],
             [['std_enroll_detail_std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_enroll_detail_std_id' => 'std_id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {

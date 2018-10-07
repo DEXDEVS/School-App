@@ -7,7 +7,7 @@ use johnitvn\ajaxcrud\CrudAsset;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\StdEnrollmentHeadSearch */
+/* @var $searchModel common\models\StdEnrollmentHeadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Std Enrollment Heads';

@@ -7,20 +7,20 @@ use Yii;
 /**
  * This is the model class for table "teacher_subject_assign_head".
  *
- * @property int $teacher_subject_assign_head_id
- * @property int $teacher_id
+ * @property integer $teacher_subject_assign_head_id
+ * @property integer $teacher_id
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property TeacherSubjectAssignDetail[] $teacherSubjectAssignDetails
- * @property TeacherPersonalInfo $teacher
+ * @property EmpInfo $teacher
  */
 class TeacherSubjectAssignHead extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -28,7 +28,7 @@ class TeacherSubjectAssignHead extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
@@ -36,12 +36,12 @@ class TeacherSubjectAssignHead extends \yii\db\ActiveRecord
             [['teacher_id', 'created_by', 'updated_by'], 'required'],
             [['teacher_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeacherPersonalInfo::className(), 'targetAttribute' => ['teacher_id' => 'teacher_id']],
+            [['teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['teacher_id' => 'emp_id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -68,6 +68,6 @@ class TeacherSubjectAssignHead extends \yii\db\ActiveRecord
      */
     public function getTeacher()
     {
-        return $this->hasOne(TeacherPersonalInfo::className(), ['teacher_id' => 'teacher_id']);
+        return $this->hasOne(EmpInfo::className(), ['emp_id' => 'teacher_id']);
     }
 }

@@ -15,6 +15,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'class_name_id')->textInput() ?>
 
+    <?= $form->field($model, 'previous_class')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'passing_year')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'total_marks')->textInput() ?>

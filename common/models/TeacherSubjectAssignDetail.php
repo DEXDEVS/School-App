@@ -7,23 +7,23 @@ use Yii;
 /**
  * This is the model class for table "teacher_subject_assign_detail".
  *
- * @property int $teacher_subject_assign_detail_id
- * @property int $teacher_subject_assign_detail_head_id
- * @property int $class_id
- * @property int $subject_id
+ * @property integer $teacher_subject_assign_detail_id
+ * @property integer $teacher_subject_assign_detail_head_id
+ * @property integer $class_id
+ * @property integer $subject_id
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property TeacherSubjectAssignHead $teacherSubjectAssignDetailHead
  * @property Subjects $subject
- * @property StdClasses $class
+ * @property StdClass $class
  */
 class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -31,7 +31,7 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
@@ -41,12 +41,12 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'safe'],
             [['teacher_subject_assign_detail_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeacherSubjectAssignHead::className(), 'targetAttribute' => ['teacher_subject_assign_detail_head_id' => 'teacher_subject_assign_head_id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
-            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClasses::className(), 'targetAttribute' => ['class_id' => 'class_id']],
+            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['class_id' => 'class_id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -83,6 +83,6 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
      */
     public function getClass()
     {
-        return $this->hasOne(StdClasses::className(), ['class_id' => 'class_id']);
+        return $this->hasOne(StdClass::className(), ['class_id' => 'class_id']);
     }
 }

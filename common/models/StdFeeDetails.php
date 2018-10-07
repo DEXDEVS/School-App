@@ -7,21 +7,21 @@ use Yii;
 /**
  * This is the model class for table "std_fee_details".
  *
- * @property int $std_fee_id
- * @property int $std_id
+ * @property integer $std_fee_id
+ * @property integer $std_id
  * @property string $date
  * @property string $total_fee
  * @property string $created_at
  * @property string $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property integer $created_by
+ * @property integer $updated_by
  *
  * @property StdPersonalInfo $std
  */
 class StdFeeDetails extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
@@ -29,21 +29,21 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['std_id', 'date', 'total_fee'], 'required'],
+            [['std_id', 'date', 'total_fee', 'created_by', 'updated_by'], 'required'],
             [['std_id', 'created_by', 'updated_by'], 'integer'],
-            [['date', 'created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
+            [['date', 'created_at', 'updated_at'], 'safe'],
             [['total_fee'], 'string', 'max' => 50],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {

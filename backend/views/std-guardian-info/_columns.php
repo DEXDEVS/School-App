@@ -12,7 +12,7 @@ return [
     ],
         [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_guardian_info_d',
+        'attribute'=>'std_guardian_info_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

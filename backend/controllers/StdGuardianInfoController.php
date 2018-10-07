@@ -124,7 +124,7 @@ class StdGuardianInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_guardian_info_d]);
+                return $this->redirect(['view', 'id' => $model->std_guardian_info_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -185,7 +185,7 @@ class StdGuardianInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_guardian_info_d]);
+                return $this->redirect(['view', 'id' => $model->std_guardian_info_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,

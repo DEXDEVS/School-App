@@ -10,7 +10,7 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'std_guardian_info_d',
+            'std_guardian_info_id',
             'std_id',
             'father_name',
             'father_cnic',

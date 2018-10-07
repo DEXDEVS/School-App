@@ -19,7 +19,7 @@ class StdAcademicInfoSearch extends StdAcademicInfo
     {
         return [
             [['academic_id', 'std_id', 'class_name_id', 'total_marks', 'obtained_marks', 'created_by', 'updated_by'], 'integer'],
-            [['passing_year', 'grades', 'Institute', 'created_at', 'updated_at'], 'safe'],
+            [['previous_class', 'passing_year', 'grades', 'Institute', 'created_at', 'updated_at'], 'safe'],
             [['percentage'], 'number'],
         ];
     }
@@ -69,7 +69,8 @@ class StdAcademicInfoSearch extends StdAcademicInfo
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'passing_year', $this->passing_year])
+        $query->andFilterWhere(['like', 'previous_class', $this->previous_class])
+            ->andFilterWhere(['like', 'passing_year', $this->passing_year])
             ->andFilterWhere(['like', 'grades', $this->grades])
             ->andFilterWhere(['like', 'Institute', $this->Institute]);
 
