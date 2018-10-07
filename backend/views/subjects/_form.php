@@ -10,8 +10,14 @@ use yii\widgets\ActiveForm;
 <div class="subjects-form">
 
     <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $form->field($model, 'subject_name')->textInput(['maxlength' => true]) ?>
+            </div>
 
-    <?= $form->field($model, 'subject_name')->textInput(['maxlength' => true]) ?>
+        </div>
+
+    <!-- 
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
@@ -19,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?= $form->field($model, 'updated_by')->textInput() ?> -->
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

@@ -34,9 +34,9 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'date', 'total_fee', 'created_by', 'updated_by'], 'required'],
+            [['std_id', 'date', 'total_fee'], 'required'],
             [['std_id', 'created_by', 'updated_by'], 'integer'],
-            [['date', 'created_at', 'updated_at'], 'safe'],
+            [['date', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['total_fee'], 'string', 'max' => 50],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
         ];

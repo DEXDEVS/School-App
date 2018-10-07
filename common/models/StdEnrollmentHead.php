@@ -33,8 +33,8 @@ class StdEnrollmentHead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_id', 'created_by', 'updated_by'], 'required'],
-            [['class_id', 'created_by', 'updated_by'], 'integer'],
+            [['class_id'], 'required'],
+            [['class_id', 'created_by', 'updated_by', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['class_id' => 'class_id']],
         ];

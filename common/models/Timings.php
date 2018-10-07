@@ -31,8 +31,8 @@ class Timings extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Timings', 'timing_description', 'created_by', 'updated_by'], 'required'],
-            [['Timings', 'created_at', 'updated_at'], 'safe'],
+            [['Timings', 'timing_description'], 'required'],
+            [['Timings', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['timing_description'], 'string', 'max' => 255],
         ];

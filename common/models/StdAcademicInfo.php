@@ -23,7 +23,7 @@ use Yii;
  * @property integer $updated_by
  *
  * @property StdPersonalInfo $std
- * @property StdClassName $className
+ * @property StdClassName $className
  */
 class StdAcademicInfo extends \yii\db\ActiveRecord
 {
@@ -41,15 +41,15 @@ class StdAcademicInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'class_name_id', 'previous_class', 'passing_year', 'total_marks', 'obtained_marks', 'grades', 'percentage', 'Institute', 'created_by', 'updated_by'], 'required'],
+            [['std_id', 'class_name_id', 'previous_class', 'passing_year', 'total_marks', 'obtained_marks', 'grades', 'percentage', 'Institute'], 'required'],
             [['std_id', 'class_name_id', 'total_marks', 'obtained_marks', 'created_by', 'updated_by'], 'integer'],
             [['grades'], 'string'],
             [['percentage'], 'number'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['previous_class', 'Institute'], 'string', 'max' => 50],
             [['passing_year'], 'string', 'max' => 32],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
-            [['class_name_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_name_id' => 'class_name_id']],
+            [['class_name_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_name_id' => 'class_name_id']],
         ];
     }
 
@@ -89,6 +89,6 @@ class StdAcademicInfo extends \yii\db\ActiveRecord
      */
     public function getClassName()
     {
-        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_name_id']);
+        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_name_id']);
     }
 }

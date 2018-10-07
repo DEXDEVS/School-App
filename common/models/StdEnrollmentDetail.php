@@ -34,9 +34,9 @@ class StdEnrollmentDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_enroll_detail_head_id', 'std_enroll_detail_std_id', 'created_by', 'updated_by'], 'required'],
+            [['std_enroll_detail_head_id', 'std_enroll_detail_std_id'], 'required'],
             [['std_enroll_detail_head_id', 'std_enroll_detail_std_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['std_enroll_detail_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdEnrollmentHead::className(), 'targetAttribute' => ['std_enroll_detail_head_id' => 'std_enroll_head_id']],
             [['std_enroll_detail_std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_enroll_detail_std_id' => 'std_id']],
         ];

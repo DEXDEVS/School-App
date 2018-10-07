@@ -10,20 +10,28 @@ use yii\widgets\ActiveForm;
 <div class="std-fee-details-form">
 
     <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_id')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'date')->textInput() ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $form->field($model, 'total_fee')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'std_id')->textInput() ?>
-
-    <?= $form->field($model, 'date')->textInput() ?>
-
-    <?= $form->field($model, 'total_fee')->textInput(['maxlength' => true]) ?>
-
+    <!-- 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?= $form->field($model, 'updated_by')->textInput() ?> -->
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

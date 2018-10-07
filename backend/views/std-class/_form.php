@@ -10,22 +10,30 @@ use yii\widgets\ActiveForm;
 <div class="std-class-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'class_name_id')->textInput() ?>
-
-    <?= $form->field($model, 'session_id')->textInput() ?>
-
-    <?= $form->field($model, 'section_id')->textInput() ?>
-
-    <?= $form->field($model, 'class_name')->textInput(['maxlength' => true]) ?>
-
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'class_name_id')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'session_id')->textInput() ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'section_id')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                 <?= $form->field($model, 'class_name')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+    <!-- 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?= $form->field($model, 'updated_by')->textInput() ?> -->
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

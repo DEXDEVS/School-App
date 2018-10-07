@@ -10,24 +10,43 @@ use yii\widgets\ActiveForm;
 <div class="std-academic-info-form">
 
     <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_id')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'previous_class')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                 <?= $form->field($model, 'passing_year')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'total_marks')->textInput() ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'obtained_marks')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'grades')->dropDownList([ 'A+' => 'A+', 'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', ], ['prompt' => '']) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'percentage')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'Institute')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+       
 
-    <?= $form->field($model, 'std_id')->textInput() ?>
-
-    <?= $form->field($model, 'class_name_id')->textInput() ?>
-
-    <?= $form->field($model, 'previous_class')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'passing_year')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'total_marks')->textInput() ?>
-
-    <?= $form->field($model, 'obtained_marks')->textInput() ?>
-
-    <?= $form->field($model, 'grades')->dropDownList([ 'A+' => 'A+', 'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'percentage')->textInput() ?>
-
-    <?= $form->field($model, 'Institute')->textInput(['maxlength' => true]) ?>
+       
+<!-- 
+    
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
@@ -35,7 +54,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?= $form->field($model, 'updated_by')->textInput() ?> -->
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

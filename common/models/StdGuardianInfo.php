@@ -37,9 +37,9 @@ class StdGuardianInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'created_by', 'updated_by'], 'required'],
+            [['std_id', 'father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2'], 'required'],
             [['std_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['father_name'], 'string', 'max' => 50],
             [['father_cnic', 'guardian_contact_no_1', 'guardian_contact_no_2'], 'string', 'max' => 15],
             [['father_email'], 'string', 'max' => 84],

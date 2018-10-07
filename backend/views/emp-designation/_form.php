@@ -10,14 +10,23 @@ use yii\widgets\ActiveForm;
 <div class="emp-designation-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'emp_id')->textInput() ?>
-
-    <?= $form->field($model, 'emp_designation')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_designation_type')->dropDownList([ 'Permanent' => 'Permanent', 'Visitor' => 'Visitor', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'emp_salary')->textInput() ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'emp_id')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'emp_designation')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'emp_designation_type')->dropDownList([ 'Permanent' => 'Permanent', 'Visitor' => 'Visitor', ], ['prompt' => '']) ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'emp_salary')->textInput() ?>
+            </div>
+        </div>
+    
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

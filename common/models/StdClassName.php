@@ -34,8 +34,8 @@ class StdClassName extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_name', 'class_name_description', 'created_by', 'updated_by'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['class_name', 'class_name_description'], 'required'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['class_name'], 'string', 'max' => 32],
             [['class_name_description'], 'string', 'max' => 255],

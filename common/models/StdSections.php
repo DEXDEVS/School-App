@@ -35,9 +35,9 @@ class StdSections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['session_id', 'section_name', 'section_intake', 'created_by', 'updated_by'], 'required'],
+            [['session_id', 'section_name', 'section_intake'], 'required'],
             [['session_id', 'section_intake', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['section_name'], 'string', 'max' => 50],
             [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
         ];

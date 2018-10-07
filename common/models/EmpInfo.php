@@ -43,10 +43,10 @@ class EmpInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_address', 'emp_marital_status', 'emp_gender', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name', 'created_by', 'updated_by'], 'required'],
+            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_address', 'emp_marital_status', 'emp_gender', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name'], 'required'],
             [['emp_gender'], 'string'],
             [['emp_passing_year', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['emp_name', 'emp_father_name', 'emp_marital_status', 'emp_qualification', 'emp_institute_name'], 'string', 'max' => 50],
             [['emp_cnic', 'emp_contact_no'], 'string', 'max' => 15],
             [['emp_address'], 'string', 'max' => 64],

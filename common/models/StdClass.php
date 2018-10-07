@@ -17,7 +17,7 @@ use Yii;
  * @property integer $created_by
  * @property integer $updated_by
  *
- * @property StdClassName $className
+ * @property StdClassName $className
  * @property StdSections $section
  * @property StdSessions $session
  * @property StdEnrollmentHead[] $stdEnrollmentHeads
@@ -39,11 +39,11 @@ class StdClass extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_name_id', 'session_id', 'section_id', 'class_name', 'created_by', 'updated_by'], 'required'],
+            [['class_name_id', 'session_id', 'section_id', 'class_name'], 'required'],
             [['class_name_id', 'session_id', 'section_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['class_name'], 'string', 'max' => 100],
-            [['class_name_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_name_id' => 'class_name_id']],
+            [['class_name_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_name_id' => 'class_name_id']],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSections::className(), 'targetAttribute' => ['section_id' => 'section_id']],
             [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
         ];
@@ -72,7 +72,7 @@ class StdClass extends \yii\db\ActiveRecord
      */
     public function getClassName()
     {
-        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_name_id']);
+        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_name_id']);
     }
 
     /**

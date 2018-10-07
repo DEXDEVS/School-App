@@ -10,18 +10,33 @@ use yii\widgets\ActiveForm;
 <div class="branches-form">
 
     <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'branch_code')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'branch_name')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'branch_location')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'branch_contact_no')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'branch_email')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'status')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ], ['prompt' => '']) ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'branch_code')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'branch_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'branch_location')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'branch_contact_no')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'branch_email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ], ['prompt' => '']) ?>
+   <!--
+    
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
@@ -29,7 +44,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?= $form->field($model, 'updated_by')->textInput() ?> -->
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

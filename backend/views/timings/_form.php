@@ -10,10 +10,17 @@ use yii\widgets\ActiveForm;
 <div class="timings-form">
 
     <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'Timings')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'timing_description')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'Timings')->textInput() ?>
 
-    <?= $form->field($model, 'timing_description')->textInput(['maxlength' => true]) ?>
+    <!-- 
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
@@ -21,7 +28,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?= $form->field($model, 'updated_by')->textInput() ?> -->
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

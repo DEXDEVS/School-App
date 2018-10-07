@@ -10,12 +10,15 @@ use yii\widgets\ActiveForm;
 <div class="migration-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    	<div class="row">
+    		<div class="col-md-6">
+    			<?= $form->field($model, 'version')->textInput(['maxlength' => true]) ?>
+    		</div>
+    		<div class="col-md-6">
+    			<?= $form->field($model, 'apply_time')->textInput() ?>
+    		</div>
+    	</div>
 
-    <?= $form->field($model, 'version')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'apply_time')->textInput() ?>
-
-  
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
