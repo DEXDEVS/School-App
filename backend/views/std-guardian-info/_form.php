@@ -20,7 +20,9 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'father_cnic')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'father_cnic')->widget(yii\widgets\MaskedInput::class, [
+        'mask' => '99999-9999999-9',
+        ]) ?>
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'father_email')->textInput(['maxlength' => true]) ?>
@@ -28,10 +30,11 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'guardian_contact_no_1')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'guardian_contact_no_1')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'guardian_contact_no_2')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'guardian_contact_no_2')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
             </div>
         </div>
 

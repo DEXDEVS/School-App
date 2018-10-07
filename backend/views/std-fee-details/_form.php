@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use dosamigos\datetimepicker\DateTimePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\StdFeeDetails */
 /* @var $form yii\widgets\ActiveForm */
@@ -15,7 +15,18 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'std_id')->textInput() ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'date')->textInput() ?>
+                <label>Date</label>
+                <?= DateTimePicker::widget([
+                    'model' => $model,
+                    'attribute' => 'date',
+                    'language' => 'en',
+                    'size' => 'ms',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd HH:ii:ss',
+                        'todayBtn' => true
+                    ]
+                ]);?>
             </div>
         </div>
         <div class="row">

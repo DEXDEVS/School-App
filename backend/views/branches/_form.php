@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'branch_location')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'branch_contact_no')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'branch_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
             </div>
         </div>
         <div class="row">

@@ -20,10 +20,13 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="row">
             <div class="col-md-6">
-                 <?= $form->field($model, 'emp_cnic')->textInput(['maxlength' => true]) ?>
+                 <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, [
+        'mask' => '99999-9999999-9',
+        ]) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'emp_contact_no')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'emp_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+
             </div>
         </div>
         <div class="row">
