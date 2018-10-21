@@ -20,8 +20,17 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>SMART EDUCATION</title>
     <?php $this->head() ?>
+    <link rel="shortcut icon" href="images/logo.jpg" type="image/jpg">
+    <style>
+        .nav{
+            background-color: #5FDAF4;
+        }
+        .nav a{
+            color: #000;
+        }
+    </style>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -29,14 +38,90 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => "<b>SMART EDUCATION</b>",
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'nav',
         ],
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
+        ["label" => "System Configuration",
+            "url" => "#",
+            "icon" => "fab fa-stumbleupon-circle",
+            "items" => [
+                [
+                    "label" => "Branch",
+                    "url" => "index.php?r=branches",
+                ],
+                [
+                    "label" => "Departments",
+                    "url" => "index.php?r=departments",
+                ],
+                [
+                    "label" => "Programs",
+                    "url" => "index.php?r=programs",
+                ],
+                [
+                    "label" => "Courses",
+                    "url" => "index.php?r=courses",
+                ],
+                [
+                    "label" => "Batches",
+                    "url" => "index.php?r=batches",
+                ],
+                [
+                    "label" => "Sections",
+                    "url" => "index.php?r=sections",
+                ],
+                [
+                    "label" => "Class",
+                    "url" => "index.php?r=std-class", 
+                ],
+            ],
+        ],
+        ["label" => "Student Registration",
+            "url" => "#",
+            "icon" => "fab fa-stumbleupon-circle",
+            "items" => [
+                [
+                    "label" => "Student Personal Info",
+                    "url" => "index.php?r=std-personal-info",
+                ],
+                [
+                    "label" => "Student Guardian Info",
+                    "url" => "index.php?r=std-guardian-info",
+                ],
+                [
+                    "label" => "Student Academic Info",
+                    "url" => "index.php?r=std-academic-info",
+                ],
+                [
+                    "label" => "Student Session",
+                    "url" => "index.php?r=std-sessions",
+                ],
+                [
+                    "label" => "Student Section",
+                    "url" => "index.php?r=std-sections",
+                ],
+                [
+                    "label" => "Student Class",
+                    "url" => "index.php?r=std-class",
+                ],
+                [
+                    "label" => "Student Fee Details",
+                    "url" => "index.php?r=std-fee-details",
+                ],
+                [
+                    "label" => "Student Enrollment Head",
+                    "url" => "index.php?r=std-enrollment-head",
+                ],
+                [
+                    "label" => "Student Enrollment Detail",
+                    "url" => "index.php?r=std-enrollment-detail",
+                ],
+            ],
+        ],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -66,13 +151,18 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+<footer class="footer nav">
+      <div class="text-center">
+        <p style="color: black">
+           Copyrights &copy; <?php echo date('Y'); ?>. All Rights Reserved | Powered By: <a href="http://www.dexdevs.com/" target="_blank" style="color: #2452E7"><b>DEXDEVS</b></a>
+        </p>
+        <a href="index.html#" class="go-top">
+          <i class="fa fa-angle-up"></i>
+          </a>
+      </div>
+    </footer>
+
 
 <?php $this->endBody() ?>
 </body>
