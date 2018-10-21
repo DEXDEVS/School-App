@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use common\models\StdSessions;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdSections */
@@ -12,7 +14,9 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'session_id')->textInput() ?>
+                <?= $form->field($model, 'session_id')->dropDownList(
+                    ArrayHelper::map(StdSessions::find()->all(),'session_id','session_name')
+                )?>
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'section_name')->textInput(['maxlength' => true]) ?>

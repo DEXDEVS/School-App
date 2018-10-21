@@ -10,17 +10,19 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'academic_id',
-    ],
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'academic_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_id',
+        'value'=>'std.std_name'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_name_id',
+        'value'=>'className.class_name'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

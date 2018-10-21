@@ -34,7 +34,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'emp_address')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'emp_marital_status')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'emp_marital_status')->dropDownList([ 'Single' => 'Single', 'Married' => 'Married', ], ['prompt' => '']) ?>
             </div>
         </div>
         <div class="row">

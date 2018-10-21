@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use common\models\StdClass;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdEnrollmentHead */
@@ -12,7 +14,10 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <div class="=row">
         <div class="col-md-12">
-            <?= $form->field($model, 'class_id')->textInput() ?>
+            <?= $form->field($model, 'class_id')->dropDownList(
+                    ArrayHelper::map(StdClass::find()->all(),'class_id','class_name'),
+                    ['prompt'=>'']
+                )?>
         </div>
 
     </div>

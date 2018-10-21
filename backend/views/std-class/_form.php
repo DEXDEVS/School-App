@@ -1,6 +1,10 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use common\models\StdClassName;
+use common\models\StdSessions;
+use common\models\StdSections;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdClass */
@@ -12,19 +16,32 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'class_name_id')->textInput() ?>
+                <?= $form->field($model, 'class_name_id')->dropDownList(
+                    ArrayHelper::map(StdClassName::find()->all(),'class_name_id','class_name')
+                )?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'session_id')->textInput() ?>
+                <?= $form->field($model, 'session_id')->dropDownList(
+                    ArrayHelper::map(StdSessions::find()->all(),'session_id','session_name'),
+                     [
+                    'prompt'=>'Select Session',
+                    // 'onchange'=>'
+                    //     $.post("index.php?r=std-sections/list&id='.'"+$(this).val(),function( data ){
+                    //         $( "select#models-contact" ).html( data );
+                    //     });'
+                    ]
+                )?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'section_id')->textInput() ?>
+                <?= $form->field($model, 'section_id')->dropDownList(
+                    ArrayHelper::map(StdSections::find()->all(),'section_id','section_name')
+                )?>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                  <?= $form->field($model, 'class_name')->textInput(['maxlength' => true]) ?>
-            </div>
+            </div> -->
         </div>
     <!-- 
     <?= $form->field($model, 'created_at')->textInput() ?>

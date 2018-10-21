@@ -15,6 +15,10 @@ use yii\widgets\DetailView;
             'emp_designation',
             'emp_designation_type',
             'emp_salary',
+            'created_at',
+            'updated_at',
+            'created_by',
+            'updated_by',
         ],
     ]) ?>
 
