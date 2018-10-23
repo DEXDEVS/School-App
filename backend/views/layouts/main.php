@@ -122,6 +122,20 @@ AppAsset::register($this);
                 ],
             ],
         ],
+        ["label" => "Employee Registration",
+            "url" => "#",
+            "icon" => "fab fa-stumbleupon-circle",
+            "items" => [
+                [
+                    "label" => "Employee Info",
+                    "url" => "index.php?r=emp-info",
+                ],
+                [
+                    "label" => "Employee Designation",
+                    "url" => "index.php?r=emp-designation",
+                ],
+            ],
+        ],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
