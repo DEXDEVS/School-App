@@ -24,22 +24,18 @@ use common\models\StdSessions;
         </div>
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'section_intake')->textInput() ?>
+                <?= $form->field($model, 'section_intake')->input('number') ?>
             </div>
             
         </div>
 
-        
+       <!--  <?= $form->field($model, 'created_at')->textInput() ?>
 
-   <!--  
+        <?= $form->field($model, 'updated_at')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+        <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?> -->
+        <?= $form->field($model, 'updated_by')->textInput() ?> -->
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

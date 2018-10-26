@@ -51,28 +51,20 @@ AppAsset::register($this);
             "icon" => "fab fa-stumbleupon-circle",
             "items" => [
                 [
-                    "label" => "Branch",
+                    "label" => "Branches",
                     "url" => "index.php?r=branches",
                 ],
                 [
-                    "label" => "Departments",
-                    "url" => "index.php?r=departments",
+                    "label" => "Session",
+                    "url" => "index.php?r=std-sessions",
                 ],
                 [
-                    "label" => "Programs",
-                    "url" => "index.php?r=programs",
+                    "label" => "Section",
+                    "url" => "index.php?r=std-sections",
                 ],
                 [
-                    "label" => "Courses",
-                    "url" => "index.php?r=courses",
-                ],
-                [
-                    "label" => "Batches",
-                    "url" => "index.php?r=batches",
-                ],
-                [
-                    "label" => "Sections",
-                    "url" => "index.php?r=sections",
+                    "label" => "Subjects",
+                    "url" => "index.php?r=subjects",
                 ],
                 [
                     "label" => "Class",
@@ -95,14 +87,6 @@ AppAsset::register($this);
                 [
                     "label" => "Student Academic Info",
                     "url" => "index.php?r=std-academic-info",
-                ],
-                [
-                    "label" => "Student Session",
-                    "url" => "index.php?r=std-sessions",
-                ],
-                [
-                    "label" => "Student Section",
-                    "url" => "index.php?r=std-sections",
                 ],
                 [
                     "label" => "Student Class",

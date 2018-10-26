@@ -157,7 +157,7 @@ class EmpDesignationController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update EmpDesignation #".$id,
+                    'title'=> "Update Emp Designation #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

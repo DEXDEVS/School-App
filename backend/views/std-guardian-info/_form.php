@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use common\models\StdPersonalInfo;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdGuardianInfo */
@@ -14,10 +15,19 @@ use common\models\StdPersonalInfo;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'std_id')->dropDownList(
-                    ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
-                    ['prompt'=>'']
-                )?>
+                
+                <?= $form->field($model, 'std_id')->widget(Select2::classname(), [
+        //'name' => 'emp',
+        'data' => ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
+        'language' => 'en',
+        'options' => [
+            'placeholder' => 'Select Student',
+            //'multiple' => true,
+        ],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ])?>
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'father_name')->textInput(['maxlength' => true]) ?>
