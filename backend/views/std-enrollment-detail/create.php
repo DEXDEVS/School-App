@@ -10,5 +10,6 @@ use yii\helpers\Html;
 <div class="std-enrollment-detail-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'stdEnrollmentHead' => $stdEnrollmentHead,
     ]) ?>
 </div>

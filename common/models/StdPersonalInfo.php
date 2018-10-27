@@ -47,15 +47,14 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'std_serious_disease'], 'required'],
+            [['std_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'required'],
             [['std_DOB', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['std_gender'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
-            [['std_contact_no'], 'string', 'max' => 11],
+            [['std_contact_no'], 'string', 'max' => 15],
             [['std_permanent_address', 'std_temporary_address', 'std_b_form'], 'string', 'max' => 255],
             [['std_email'], 'string', 'max' => 84],
-            [['std_serious_disease'], 'string', 'max' => 64],
         ];
     }
 

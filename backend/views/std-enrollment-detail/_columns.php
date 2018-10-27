@@ -17,10 +17,12 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_enroll_detail_head_id',
+        'value' => 'stdEnrollDetailHead.std_enroll_head_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_enroll_detail_std_id',
+        'value' => 'stdEnrollDetailStd.std_name'
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

@@ -10,7 +10,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel common\models\TeacherSubjectAssignHeadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Teacher Subject Assign Heads';
+$this->title = Yii::t('app', 'Teacher Subject Assign Heads');
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);

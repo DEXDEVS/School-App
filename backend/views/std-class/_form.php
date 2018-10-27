@@ -22,8 +22,8 @@ use common\models\StdSections;
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'session_id')->dropDownList(
-                    ArrayHelper::map(StdSessions::find()->where(['status' => 'Active'])->all(),'session_id','session_name'),
-                     ['prompt'=>'Select Session']
+                    ArrayHelper::map(StdSessions::find()->where(['status'=>'Active'])->all(),'session_id','session_name'),
+                     ['prompt'=>'Select Session',]
                 )?>
             </div>
         </div>

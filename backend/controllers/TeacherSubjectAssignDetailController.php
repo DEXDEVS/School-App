@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\TeacherSubjectAssignDetail;
 use common\models\TeacherSubjectAssignDetailSearch;
+use common\models\TeacherSubjectAssignHead;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -83,6 +84,7 @@ class TeacherSubjectAssignDetailController extends Controller
     {
         $request = Yii::$app->request;
         $model = new TeacherSubjectAssignDetail();  
+        $teacherSubjectAssignHead = new TeacherSubjectAssignHead();
 
         if($request->isAjax){
             /*
@@ -94,12 +96,21 @@ class TeacherSubjectAssignDetailController extends Controller
                     'title'=> "Create new TeacherSubjectAssignDetail",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'teacherSubjectAssignHead' => $teacherSubjectAssignHead,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($teacherSubjectAssignHead->load($request->post()) && $model->load($request->post())){
+                        $teacher_name = Yii::$app->db->createCommand("SELECT class_name FROM std_class where class_id = $teacherSubjectAssignHead->class_id")->queryAll();
+
+                        $stdEnrollmentHead->std_enroll_head_name = $course_class[0]['class_name'];
+                        $stdEnrollmentHead->created_by = Yii::$app->user->identity->id; 
+                        $stdEnrollmentHead->created_at = new \yii\db\Expression('NOW()');
+                        $stdEnrollmentHead->updated_by = '0';
+                        $stdEnrollmentHead->updated_at = '0'; 
+                        $stdEnrollmentHead->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new TeacherSubjectAssignDetail",

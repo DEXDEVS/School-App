@@ -19,7 +19,7 @@ class TeacherSubjectAssignHeadSearch extends TeacherSubjectAssignHead
     {
         return [
             [['teacher_subject_assign_head_id', 'teacher_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['teacher_subject_assign_head_name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -63,6 +63,8 @@ class TeacherSubjectAssignHeadSearch extends TeacherSubjectAssignHead
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+
+        $query->andFilterWhere(['like', 'teacher_subject_assign_head_name', $this->teacher_subject_assign_head_name]);
 
         return $dataProvider;
     }

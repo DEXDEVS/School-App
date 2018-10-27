@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\StdEnrollmentDetail;
 use common\models\StdEnrollmentDetailSearch;
+use common\models\StdEnrollmentHead;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -82,7 +83,8 @@ class StdEnrollmentDetailController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new StdEnrollmentDetail();  
+        $model = new StdEnrollmentDetail(); 
+        $stdEnrollmentHead = new StdEnrollmentHead(); 
 
         if($request->isAjax){
             /*
@@ -94,16 +96,38 @@ class StdEnrollmentDetailController extends Controller
                     'title'=> "Create new StdEnrollmentDetail",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'stdEnrollmentHead' => $stdEnrollmentHead,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post())){
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0'; 
-                $model->save();
+            }else if($stdEnrollmentHead->load($request->post()) && $model->load($request->post())){
+
+                $course_class = Yii::$app->db->createCommand("SELECT class_name FROM std_class where class_id = $stdEnrollmentHead->class_id")->queryAll();
+
+                $stdEnrollmentHead->std_enroll_head_name = $course_class[0]['class_name'];
+                $stdEnrollmentHead->created_by = Yii::$app->user->identity->id; 
+                $stdEnrollmentHead->created_at = new \yii\db\Expression('NOW()');
+                $stdEnrollmentHead->updated_by = '0';
+                $stdEnrollmentHead->updated_at = '0'; 
+                $stdEnrollmentHead->save();
+
+                // select2 add multiple students start...!
+                $array = $model->std_enroll_detail_std_id;
+                foreach ($array as  $value) {
+                    $model = new StdEnrollmentDetail();
+                    $model->std_enroll_detail_head_id = $stdEnrollmentHead->std_enroll_head_id;
+                    $model->std_enroll_detail_std_id = $value;
+
+                    // created and updated values...
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0';
+                    $model->updated_at = '0'; 
+                    $model->save();
+                }
+                // select2 add multiple students end...!
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new StdEnrollmentDetail",
@@ -148,7 +172,9 @@ class StdEnrollmentDetailController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id);   
+        $stdEnrollmentHead = new StdEnrollmentHead(); 
+    
 
         if($request->isAjax){
             /*
@@ -160,15 +186,29 @@ class StdEnrollmentDetailController extends Controller
                     'title'=> "Update StdEnrollmentDetail #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
+                        'stdEnrollmentHead' => $stdEnrollmentHead,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post())){
+            }else if($stdEnrollmentHead->load($request->post()) && $model->load($request->post())){
+
+                $course_class = Yii::$app->db->createCommand("SELECT class_name FROM std_class where class_id = $stdEnrollmentHead->class_id")->queryAll();
+
+                $stdEnrollmentHead->std_enroll_head_name = $course_class[0]['class_name'];
+                $stdEnrollmentHead->updated_by = Yii::$app->user->identity->id; 
+                $stdEnrollmentHead->updated_at = new \yii\db\Expression('NOW()');
+                $stdEnrollmentHead->created_by = $model->created_by;
+                $stdEnrollmentHead->created_at = $model->created_at; 
+                $stdEnrollmentHead->save();
+
+                $model->std_enroll_detail_head_id = $stdEnrollmentHead->std_enroll_head_id;
                 $model->updated_by = Yii::$app->user->identity->id;
                 $model->updated_at = new \yii\db\Expression('NOW()');
                 $model->created_by = $model->created_by;
+                $model->created_at = $model->created_at;
                 $model->save();
+                
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "StdEnrollmentDetail #".$id,

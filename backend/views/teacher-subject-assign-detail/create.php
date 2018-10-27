@@ -10,5 +10,6 @@ use yii\helpers\Html;
 <div class="teacher-subject-assign-detail-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'teacherSubjectAssignHead' => $teacherSubjectAssignHead,
     ]) ?>
 </div>

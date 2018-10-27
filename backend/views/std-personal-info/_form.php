@@ -76,17 +76,7 @@ use dosamigos\datetimepicker\DateTimePicker;
         <div class="col-md-6">
             <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
         </div>        
-    </div> 
-  <!--   <?= $form->field($model, 'std_serious_disease')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?> -->
-
+    </div>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

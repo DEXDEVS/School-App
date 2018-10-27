@@ -1,8 +1,6 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
-use common\models\StdClass;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdEnrollmentHead */
@@ -12,17 +10,10 @@ use common\models\StdClass;
 <div class="std-enrollment-head-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <div class="=row">
-        <div class="col-md-12">
-            <?= $form->field($model, 'class_id')->dropDownList(
-                    ArrayHelper::map(StdClass::find()->all(),'class_id','class_name'),
-                    ['prompt'=>'']
-                )?>
-        </div>
 
-    </div>
+    <?= $form->field($model, 'class_id')->textInput() ?>
 
-    <!-- 
+    <?= $form->field($model, 'std_enroll_head_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
@@ -30,12 +21,12 @@ use common\models\StdClass;
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?> -->
+    <?= $form->field($model, 'updated_by')->textInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 

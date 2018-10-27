@@ -10,10 +10,10 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'teacher_subject_assign_detail_id',
-    ],
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'teacher_subject_assign_detail_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'teacher_subject_assign_detail_head_id',
@@ -34,10 +34,10 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_at',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'created_by',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'created_by',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_by',

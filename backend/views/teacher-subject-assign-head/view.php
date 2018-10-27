@@ -12,6 +12,7 @@ use yii\widgets\DetailView;
         'attributes' => [
             'teacher_subject_assign_head_id',
             'teacher_id',
+            'teacher_subject_assign_head_name',
             'created_at',
             'updated_at',
             'created_by',

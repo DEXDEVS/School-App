@@ -13,18 +13,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'teacher_id')->textInput() ?>
 
-   <!--  <?= $form->field($model, 'created_at')->textInput() ?>
+    <?= $form->field($model, 'teacher_subject_assign_head_name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <?= $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?> -->
+    <?= $form->field($model, 'updated_by')->textInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 

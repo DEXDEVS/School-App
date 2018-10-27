@@ -12,6 +12,7 @@ use yii\widgets\DetailView;
         'attributes' => [
             'std_enroll_head_id',
             'class_id',
+            'std_enroll_head_name',
             'created_at',
             'updated_at',
             'created_by',

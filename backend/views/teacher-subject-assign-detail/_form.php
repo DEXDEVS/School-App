@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use common\models\EmpDesignation;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\TeacherSubjectAssignDetail */
@@ -12,7 +14,10 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'teacher_subject_assign_detail_head_id')->textInput() ?>
+                <?= $form->field($teacherSubjectAssignHead, 'teacher_id')->dropDownList(
+                    ArrayHelper::map(EmpDesignation::find()->where(['emp_designation'=>'Teacher'])->all(),'emp_id','emp_name'),
+                    ['prompt'=>'']
+                )?>
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'class_id')->textInput() ?>
@@ -25,15 +30,7 @@ use yii\widgets\ActiveForm;
         </div>
 
         
-   <!--  
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?> -->
+  
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

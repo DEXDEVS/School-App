@@ -17,7 +17,10 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'teacher_id',
-        'value'=>'teacher.teacher_name',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'teacher_subject_assign_head_name',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

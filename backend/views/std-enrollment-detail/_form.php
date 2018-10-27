@@ -1,6 +1,11 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\StdClass;
+use common\models\StdPersonalInfo;
+use kartik\select2\Select2;
+
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdEnrollmentDetail */
@@ -12,22 +17,24 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'std_enroll_detail_head_id')->textInput() ?>
+                <?= $form->field($stdEnrollmentHead, 'class_id')->dropDownList(
+                    ArrayHelper::map(StdClass::find()->all(),'class_id','class_name'),
+                    ['prompt'=>'']
+                )?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'std_enroll_detail_std_id')->textInput() ?>
+                <?= $form->field($model, 'std_enroll_detail_std_id')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
+                    'language' => 'en',
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'multiple' => true
+                    ],
+                ]);
+                ?>
             </div>
         </div>
-
-    <!-- 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?> -->
-
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
