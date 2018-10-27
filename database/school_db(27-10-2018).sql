@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2018 at 09:23 AM
--- Server version: 10.1.29-MariaDB
--- PHP Version: 7.2.0
+-- Generation Time: Oct 27, 2018 at 04:41 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -188,7 +188,8 @@ CREATE TABLE `std_class` (
 
 INSERT INTO `std_class` (`class_id`, `class_name_id`, `session_id`, `section_id`, `class_name`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 (1, 6, 1, 1, '3rd-2016-2017-pink', '2018-10-08 04:21:04', '0000-00-00 00:00:00', 1, 0),
-(2, 8, 2, 2, '5th-2017-2018-blue', '2018-10-08 04:21:38', '0000-00-00 00:00:00', 1, 0);
+(2, 8, 2, 2, '5th-2017-2018-blue', '2018-10-08 04:21:38', '0000-00-00 00:00:00', 1, 0),
+(3, 7, 1, 1, '4th-2016-2017-pink', '2018-10-27 09:04:21', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -244,7 +245,19 @@ CREATE TABLE `std_enrollment_detail` (
 INSERT INTO `std_enrollment_detail` (`std_enroll_detail_id`, `std_enroll_detail_head_id`, `std_enroll_detail_std_id`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 (1, 7, 2, '2018-10-26 09:20:40', '2018-10-26 09:20:40', 1, 1),
 (2, 4, 3, '2018-10-26 06:49:56', '0000-00-00 00:00:00', 1, 0),
-(3, 5, 1, '2018-10-26 06:59:50', '0000-00-00 00:00:00', 1, 0);
+(3, 5, 1, '2018-10-26 06:59:50', '0000-00-00 00:00:00', 1, 0),
+(4, 16, 3, '2018-10-27 08:49:00', '0000-00-00 00:00:00', 1, 0),
+(5, 16, 4, '2018-10-27 08:49:00', '0000-00-00 00:00:00', 1, 0),
+(6, 16, 5, '2018-10-27 08:49:00', '0000-00-00 00:00:00', 1, 0),
+(7, 16, 6, '2018-10-27 08:49:00', '0000-00-00 00:00:00', 1, 0),
+(8, 16, 7, '2018-10-27 08:49:00', '0000-00-00 00:00:00', 1, 0),
+(9, 17, 1, '2018-10-27 09:04:46', '0000-00-00 00:00:00', 1, 0),
+(10, 17, 2, '2018-10-27 09:04:47', '0000-00-00 00:00:00', 1, 0),
+(11, 17, 3, '2018-10-27 09:04:47', '0000-00-00 00:00:00', 1, 0),
+(12, 17, 4, '2018-10-27 09:04:47', '0000-00-00 00:00:00', 1, 0),
+(13, 17, 5, '2018-10-27 09:04:47', '0000-00-00 00:00:00', 1, 0),
+(14, 17, 6, '2018-10-27 09:04:47', '0000-00-00 00:00:00', 1, 0),
+(15, 17, 7, '2018-10-27 09:04:47', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -274,7 +287,16 @@ INSERT INTO `std_enrollment_head` (`std_enroll_head_id`, `class_id`, `std_enroll
 (5, 1, '3rd-2016-2017-pink', '2018-10-26 06:59:50', '0000-00-00 00:00:00', 1, 0),
 (6, 1, '3rd-2016-2017-pink', '2018-10-26 07:01:10', '0000-00-00 00:00:00', 1, 0),
 (7, 1, '3rd-2016-2017-pink', '2018-10-26 06:07:42', '2018-10-26 09:20:39', 1, 1),
-(8, 2, '5th-2017-2018-blue', '2018-10-26 09:27:17', '0000-00-00 00:00:00', 1, 0);
+(8, 2, '5th-2017-2018-blue', '2018-10-26 09:27:17', '0000-00-00 00:00:00', 1, 0),
+(9, 2, '5th-2017-2018-blue', '2018-10-27 08:41:08', '0000-00-00 00:00:00', 1, 0),
+(10, 2, '5th-2017-2018-blue', '2018-10-27 08:43:03', '0000-00-00 00:00:00', 1, 0),
+(11, 2, '5th-2017-2018-blue', '2018-10-27 08:44:04', '0000-00-00 00:00:00', 1, 0),
+(12, 2, '5th-2017-2018-blue', '2018-10-27 08:44:51', '0000-00-00 00:00:00', 1, 0),
+(13, 2, '5th-2017-2018-blue', '2018-10-27 08:45:09', '0000-00-00 00:00:00', 1, 0),
+(14, 2, '5th-2017-2018-blue', '2018-10-27 08:45:30', '0000-00-00 00:00:00', 1, 0),
+(15, 2, '5th-2017-2018-blue', '2018-10-27 08:45:42', '0000-00-00 00:00:00', 1, 0),
+(16, 2, '5th-2017-2018-blue', '2018-10-27 08:49:00', '0000-00-00 00:00:00', 1, 0),
+(17, 3, '4th-2016-2017-pink', '2018-10-27 09:04:46', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -319,7 +341,8 @@ CREATE TABLE `std_guardian_info` (
 
 INSERT INTO `std_guardian_info` (`std_guardian_info_id`, `std_id`, `father_name`, `father_cnic`, `father_email`, `guardian_contact_no_1`, `guardian_contact_no_2`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 (1, 1, 'G Mustafa', '12345-6789123-4', 'abu@gmail.com', '+12-345-6789123', '+12-345-6789123', '2018-10-10 14:32:56', '0000-00-00 00:00:00', 1, 0),
-(2, 2, 'Iftkhar', '12345-6789123-4', 'abu@gmail.com', '+12-345-6789123', '+12-345-6789123', '2018-10-10 14:33:37', '0000-00-00 00:00:00', 1, 0);
+(2, 2, 'Iftkhar', '12345-6789123-4', 'abu@gmail.com', '+12-345-6789123', '+12-345-6789123', '2018-10-10 14:33:37', '0000-00-00 00:00:00', 1, 0),
+(3, 3, 'dfghj', '12345-6787545-6', 'dfghjkjhg@.com', '+34-567-8823456', '+34-567-8987456', '2018-10-27 08:14:43', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -330,7 +353,7 @@ INSERT INTO `std_guardian_info` (`std_guardian_info_id`, `std_id`, `father_name`
 CREATE TABLE `std_personal_info` (
   `std_id` int(11) NOT NULL,
   `std_name` varchar(50) NOT NULL,
-  `std_contact_no` varchar(32) NOT NULL,
+  `std_contact_no` varchar(15) NOT NULL,
   `std_DOB` date NOT NULL,
   `std_gender` enum('Male','Female') NOT NULL,
   `std_permanent_address` varchar(255) NOT NULL,
@@ -341,7 +364,6 @@ CREATE TABLE `std_personal_info` (
   `std_religion` varchar(50) NOT NULL,
   `std_nationality` varchar(50) NOT NULL,
   `std_tehseel` varchar(50) NOT NULL,
-  `std_serious_disease` varchar(64) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) NOT NULL,
@@ -352,10 +374,14 @@ CREATE TABLE `std_personal_info` (
 -- Dumping data for table `std_personal_info`
 --
 
-INSERT INTO `std_personal_info` (`std_id`, `std_name`, `std_contact_no`, `std_DOB`, `std_gender`, `std_permanent_address`, `std_temporary_address`, `std_email`, `std_b_form`, `std_district`, `std_religion`, `std_nationality`, `std_tehseel`, `std_serious_disease`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 'Kinza', '0300 1234567', '0000-00-00', 'Female', 'RYK', 'RYK', 'kinza@gmail.com', '12345-1234567-1', 'RYK', 'Islam', 'Pakistani', 'RYK', 'Mentally disturbed', '2018-10-10 13:10:34', '0000-00-00 00:00:00', 1, 0),
-(2, 'Nadia', '0300 1234567', '2018-10-29', 'Female', 'RYK', 'RYK', 'nadia@gmail.com', '12345-6789123-4', 'RYK', 'RYK', 'Pakistan', 'Islam', '', '2018-10-10 13:34:26', '0000-00-00 00:00:00', 1, 0),
-(3, 'Noman', '+12-345-6789123', '2018-10-10', 'Male', 'RYK', 'RYK', 'nomi@gmail.com', '12345-6789123-4', 'RYK', 'Islam', 'Pakistani', 'RYK', '', '2018-10-10 14:05:12', '0000-00-00 00:00:00', 1, 0);
+INSERT INTO `std_personal_info` (`std_id`, `std_name`, `std_contact_no`, `std_DOB`, `std_gender`, `std_permanent_address`, `std_temporary_address`, `std_email`, `std_b_form`, `std_district`, `std_religion`, `std_nationality`, `std_tehseel`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 'Kinza', '0300 1234567', '0000-00-00', 'Female', 'RYK', 'RYK', 'kinza@gmail.com', '12345-1234567-1', 'RYK', 'Islam', 'Pakistani', 'RYK', '2018-10-10 13:10:34', '0000-00-00 00:00:00', 1, 0),
+(2, 'Nadia', '0300 1234567', '2018-10-29', 'Female', 'RYK', 'RYK', 'nadia@gmail.com', '12345-6789123-4', 'RYK', 'RYK', 'Pakistan', 'Islam', '2018-10-10 13:34:26', '0000-00-00 00:00:00', 1, 0),
+(3, 'Noman', '+12-345-6789123', '2018-10-10', 'Male', 'RYK', 'RYK', 'nomi@gmail.com', '12345-6789123-4', 'RYK', 'Islam', 'Pakistani', 'RYK', '2018-10-10 14:05:12', '0000-00-00 00:00:00', 1, 0),
+(4, 'Ali', '+56-234-6789098', '2018-10-27', 'Male', 'seuh', 'hggyu', 'hiuuhi', '23456-7890987-6', 'jbjbj', 'knk', 'jjj', 'jhjh', '2018-10-27 08:21:09', '0000-00-00 00:00:00', 1, 0),
+(5, 'Hamza', '+35-678-9009876', '2018-10-27', 'Male', 'tghjk', 'lkokjo', '4567kpok', '23678-7654345-6', 'dfhjk', 'jojoj', 'jjoijho', 'hukhukhk', '2018-10-27 08:21:37', '0000-00-00 00:00:00', 1, 0),
+(6, 'Qasim', '+38-909-8765445', '2018-10-27', 'Male', 'dtrjhhi iyhiuh ', 'huihuii uihui', 'hiuhuihuiu', '23678-8765434-5', 'vhg ghjhl ', 'u uiuigug ', 'gyugfu gyuguilui ', 'yuyugul gygyugul ', '2018-10-27 08:22:15', '0000-00-00 00:00:00', 1, 0),
+(7, 'Anas', '+23-456-7890987', '2018-10-27', 'Male', 'rgjghhguk uihuih ', 'uihuihi iu huih', 'ihuih ', '23467-8987655-6', 'drtyu ', 'yhiopjh iuhui ', 'rtyuijhh ', 'tyguhjioog', '2018-10-27 08:23:12', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -407,8 +433,8 @@ CREATE TABLE `std_sessions` (
 --
 
 INSERT INTO `std_sessions` (`session_id`, `session_branch_id`, `session_name`, `session_start_date`, `session_end_date`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 1, '2016-2017', '2016-09-01', '2017-09-30', 'Active', '2018-10-07 18:39:20', '0000-00-00 00:00:00', 1, 0),
-(2, 2, '2017-2018', '2017-10-01', '2018-10-07', 'Inactive', '2018-10-07 18:41:22', '0000-00-00 00:00:00', 1, 0);
+(1, 1, '2016-2017', '2016-09-01', '2017-09-30', 'Inactive', '2018-10-27 09:39:47', '2018-10-27 09:39:47', 1, 1),
+(2, 2, '2017-2018', '2017-10-01', '2018-10-07', 'Active', '2018-10-27 09:39:40', '2018-10-27 09:39:40', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -451,6 +477,7 @@ CREATE TABLE `teacher_subject_assign_detail` (
 CREATE TABLE `teacher_subject_assign_head` (
   `teacher_subject_assign_head_id` int(11) NOT NULL,
   `teacher_id` int(11) NOT NULL,
+  `teacher_subject_assign_head_name` varchar(200) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) NOT NULL,
@@ -668,7 +695,7 @@ ALTER TABLE `std_academic_info`
 -- AUTO_INCREMENT for table `std_class`
 --
 ALTER TABLE `std_class`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `std_class_name`
@@ -680,13 +707,13 @@ ALTER TABLE `std_class_name`
 -- AUTO_INCREMENT for table `std_enrollment_detail`
 --
 ALTER TABLE `std_enrollment_detail`
-  MODIFY `std_enroll_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `std_enroll_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `std_enrollment_head`
 --
 ALTER TABLE `std_enrollment_head`
-  MODIFY `std_enroll_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `std_enroll_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `std_fee_details`
@@ -698,13 +725,13 @@ ALTER TABLE `std_fee_details`
 -- AUTO_INCREMENT for table `std_guardian_info`
 --
 ALTER TABLE `std_guardian_info`
-  MODIFY `std_guardian_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `std_guardian_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `std_personal_info`
 --
 ALTER TABLE `std_personal_info`
-  MODIFY `std_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `std_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `std_sections`
