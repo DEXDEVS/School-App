@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2018 at 04:41 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Oct 27, 2018 at 07:32 PM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -60,6 +60,7 @@ INSERT INTO `branches` (`branch_id`, `branch_code`, `branch_name`, `branch_locat
 CREATE TABLE `emp_designation` (
   `emp_designation_id` int(11) NOT NULL,
   `emp_id` int(11) NOT NULL,
+  `emp_name` varchar(200) NOT NULL,
   `emp_designation` varchar(100) NOT NULL,
   `emp_designation_type` enum('Permanent','Visitor') NOT NULL,
   `emp_salary` double NOT NULL,
@@ -73,10 +74,11 @@ CREATE TABLE `emp_designation` (
 -- Dumping data for table `emp_designation`
 --
 
-INSERT INTO `emp_designation` (`emp_designation_id`, `emp_id`, `emp_designation`, `emp_designation_type`, `emp_salary`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 1, 'Lectrur', 'Permanent', 50000, '2018-10-10 17:14:45', '0000-00-00 00:00:00', 1, 0),
-(2, 4, 'Principal', 'Permanent', 100000, '2018-10-10 17:15:08', '0000-00-00 00:00:00', 1, 0),
-(3, 2, 'Teacher', 'Visitor', 20000, '2018-10-10 17:15:23', '0000-00-00 00:00:00', 1, 0);
+INSERT INTO `emp_designation` (`emp_designation_id`, `emp_id`, `emp_name`, `emp_designation`, `emp_designation_type`, `emp_salary`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 1, 'Kinza', 'Lectrur', 'Permanent', 50000, '2018-10-27 15:53:56', '2018-10-27 15:53:56', 1, 1),
+(2, 4, 'Nadia', 'Principal', 'Permanent', 100000, '2018-10-27 15:54:07', '2018-10-27 15:54:07', 1, 1),
+(3, 2, 'Asra', 'Teacher', 'Permanent', 20000, '2018-10-27 16:02:50', '2018-10-27 16:02:50', 1, 1),
+(4, 3, 'Ammarah', 'Teacher', 'Visitor', 150000, '2018-10-27 16:03:32', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -296,7 +298,11 @@ INSERT INTO `std_enrollment_head` (`std_enroll_head_id`, `class_id`, `std_enroll
 (14, 2, '5th-2017-2018-blue', '2018-10-27 08:45:30', '0000-00-00 00:00:00', 1, 0),
 (15, 2, '5th-2017-2018-blue', '2018-10-27 08:45:42', '0000-00-00 00:00:00', 1, 0),
 (16, 2, '5th-2017-2018-blue', '2018-10-27 08:49:00', '0000-00-00 00:00:00', 1, 0),
-(17, 3, '4th-2016-2017-pink', '2018-10-27 09:04:46', '0000-00-00 00:00:00', 1, 0);
+(17, 3, '4th-2016-2017-pink', '2018-10-27 09:04:46', '0000-00-00 00:00:00', 1, 0),
+(18, 1, '3rd-2016-2017-pink', '2018-10-27 08:49:00', '2018-10-27 16:29:59', 1, 1),
+(19, 1, '3rd-2016-2017-pink', '2018-10-26 06:59:50', '2018-10-27 16:30:43', 1, 1),
+(20, 2, '5th-2017-2018-blue', '2018-10-27 08:49:00', '2018-10-27 16:31:57', 1, 1),
+(21, 2, '5th-2017-2018-blue', '2018-10-27 08:49:00', '2018-10-27 16:39:20', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -451,6 +457,17 @@ CREATE TABLE `subjects` (
   `updated_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`subject_id`, `subject_name`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 'Maths', '2018-10-27 16:25:24', '0000-00-00 00:00:00', 0, 0),
+(2, 'English', '2018-10-27 16:25:39', '0000-00-00 00:00:00', 0, 0),
+(3, 'Urdu', '2018-10-27 16:25:57', '0000-00-00 00:00:00', 0, 0),
+(4, 'Physics', '2018-10-27 16:26:14', '0000-00-00 00:00:00', 0, 0),
+(5, 'Bio', '2018-10-27 16:26:33', '0000-00-00 00:00:00', 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -468,6 +485,27 @@ CREATE TABLE `teacher_subject_assign_detail` (
   `updated_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `teacher_subject_assign_detail`
+--
+
+INSERT INTO `teacher_subject_assign_detail` (`teacher_subject_assign_detail_id`, `teacher_subject_assign_detail_head_id`, `class_id`, `subject_id`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(3, 11, 1, 1, '2018-10-27 17:20:47', '0000-00-00 00:00:00', 1, 0),
+(4, 11, 1, 2, '2018-10-27 17:20:47', '0000-00-00 00:00:00', 1, 0),
+(5, 11, 1, 3, '2018-10-27 17:20:47', '0000-00-00 00:00:00', 1, 0),
+(6, 11, 1, 4, '2018-10-27 17:20:47', '0000-00-00 00:00:00', 1, 0),
+(7, 11, 1, 5, '2018-10-27 17:20:47', '0000-00-00 00:00:00', 1, 0),
+(8, 12, 1, 1, '2018-10-27 17:21:34', '0000-00-00 00:00:00', 1, 0),
+(9, 12, 2, 1, '2018-10-27 17:21:34', '0000-00-00 00:00:00', 1, 0),
+(10, 12, 1, 2, '2018-10-27 17:21:34', '0000-00-00 00:00:00', 1, 0),
+(11, 12, 2, 2, '2018-10-27 17:21:34', '0000-00-00 00:00:00', 1, 0),
+(12, 13, 2, 2, '2018-10-27 17:29:59', '0000-00-00 00:00:00', 1, 0),
+(13, 13, 3, 2, '2018-10-27 17:29:59', '0000-00-00 00:00:00', 1, 0),
+(14, 13, 2, 4, '2018-10-27 17:29:59', '0000-00-00 00:00:00', 1, 0),
+(15, 13, 3, 4, '2018-10-27 17:29:59', '0000-00-00 00:00:00', 1, 0),
+(16, 13, 2, 5, '2018-10-27 17:30:00', '0000-00-00 00:00:00', 1, 0),
+(17, 13, 3, 5, '2018-10-27 17:30:00', '0000-00-00 00:00:00', 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -483,6 +521,25 @@ CREATE TABLE `teacher_subject_assign_head` (
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `teacher_subject_assign_head`
+--
+
+INSERT INTO `teacher_subject_assign_head` (`teacher_subject_assign_head_id`, `teacher_id`, `teacher_subject_assign_head_name`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 4, 'Nadia', '2018-10-27 16:48:34', '0000-00-00 00:00:00', 1, 0),
+(2, 4, 'Nadia', '2018-10-27 16:49:43', '0000-00-00 00:00:00', 1, 0),
+(3, 4, 'Nadia', '2018-10-27 16:53:22', '0000-00-00 00:00:00', 1, 0),
+(4, 4, 'Nadia', '2018-10-27 16:57:25', '0000-00-00 00:00:00', 1, 0),
+(5, 4, 'Nadia', '2018-10-27 17:03:45', '0000-00-00 00:00:00', 1, 0),
+(6, 1, 'Kinza', '2018-10-27 17:05:16', '0000-00-00 00:00:00', 1, 0),
+(7, 1, 'Kinza', '2018-10-27 17:07:24', '0000-00-00 00:00:00', 1, 0),
+(8, 4, 'Nadia', '2018-10-27 17:09:32', '0000-00-00 00:00:00', 1, 0),
+(9, 1, 'Kinza', '2018-10-27 17:10:52', '0000-00-00 00:00:00', 1, 0),
+(10, 1, 'Kinza', '2018-10-27 17:18:56', '0000-00-00 00:00:00', 1, 0),
+(11, 1, 'Kinza', '2018-10-27 17:20:47', '0000-00-00 00:00:00', 1, 0),
+(12, 2, 'Asra', '2018-10-27 17:21:34', '0000-00-00 00:00:00', 1, 0),
+(13, 3, 'Ammarah', '2018-10-27 17:29:59', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -677,7 +734,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `emp_designation`
 --
 ALTER TABLE `emp_designation`
-  MODIFY `emp_designation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `emp_designation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `emp_info`
@@ -713,7 +770,7 @@ ALTER TABLE `std_enrollment_detail`
 -- AUTO_INCREMENT for table `std_enrollment_head`
 --
 ALTER TABLE `std_enrollment_head`
-  MODIFY `std_enroll_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `std_enroll_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `std_fee_details`
@@ -749,19 +806,19 @@ ALTER TABLE `std_sessions`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `teacher_subject_assign_detail`
 --
 ALTER TABLE `teacher_subject_assign_detail`
-  MODIFY `teacher_subject_assign_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `teacher_subject_assign_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `teacher_subject_assign_head`
 --
 ALTER TABLE `teacher_subject_assign_head`
-  MODIFY `teacher_subject_assign_head_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `teacher_subject_assign_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `timings`

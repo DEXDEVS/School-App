@@ -17,14 +17,17 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'teacher_subject_assign_detail_head_id',
+        'value'=>'teacherSubjectAssignDetailHead.teacher_subject_assign_head_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_id',
+        'value'=>'class.class_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'subject_id',
+        'value'=>'subject.subject_name',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

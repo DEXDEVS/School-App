@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 use common\models\EmpInfo;
 
 /* @var $this yii\web\View */
@@ -12,11 +12,11 @@ use common\models\EmpInfo;
 <div class="emp-designation-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
     <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'emp_id')->dropDownList(
-                    ArrayHelper::map(EmpInfo::find()->all(),'emp_id','emp_name')
+                    ArrayHelper::map(EmpInfo::find()->all(),'emp_id','emp_name'),
+                    ['prompt'=>'']
                 )?>
         </div>
         <div class="col-md-6">
@@ -24,21 +24,13 @@ use common\models\EmpInfo;
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <?= $form->field($model, 'emp_designation_type')->dropDownList([ 'Permanent' => 'Permanent', 'Visitor' => 'Visitor', ], ['prompt' => '']) ?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'emp_salary')->textInput() ?>
         </div>
     </div>
-<!--   <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?> -->
-
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

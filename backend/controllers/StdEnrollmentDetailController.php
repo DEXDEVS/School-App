@@ -202,13 +202,21 @@ class StdEnrollmentDetailController extends Controller
                 $stdEnrollmentHead->created_at = $model->created_at; 
                 $stdEnrollmentHead->save();
 
-                $model->std_enroll_detail_head_id = $stdEnrollmentHead->std_enroll_head_id;
-                $model->updated_by = Yii::$app->user->identity->id;
-                $model->updated_at = new \yii\db\Expression('NOW()');
-                $model->created_by = $model->created_by;
-                $model->created_at = $model->created_at;
-                $model->save();
-                
+                // select2 add multiple students start...!
+                $array = $model->std_enroll_detail_std_id;
+                foreach ($array as  $value) {
+                    $model = new StdEnrollmentDetail();
+                    $model->std_enroll_detail_head_id = $stdEnrollmentHead->std_enroll_head_id;
+                    $model->std_enroll_detail_std_id = $value;
+
+                    // created and updated values...
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
+                }
+                // select2 add multiple students end...!                
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "StdEnrollmentDetail #".$id,

@@ -12,6 +12,7 @@ use yii\widgets\DetailView;
         'attributes' => [
             'emp_designation_id',
             'emp_id',
+            'emp_name',
             'emp_designation',
             'emp_designation_type',
             'emp_salary',

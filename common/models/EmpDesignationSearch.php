@@ -18,8 +18,8 @@ class EmpDesignationSearch extends EmpDesignation
     public function rules()
     {
         return [
-            [['emp_designation_id', 'emp_id'], 'integer'],
-            [['emp_designation', 'emp_designation_type'], 'safe'],
+            [['emp_designation_id', 'emp_id', 'created_by', 'updated_by'], 'integer'],
+            [['emp_name', 'emp_designation', 'emp_designation_type', 'created_at', 'updated_at'], 'safe'],
             [['emp_salary'], 'number'],
         ];
     }
@@ -60,9 +60,14 @@ class EmpDesignationSearch extends EmpDesignation
             'emp_designation_id' => $this->emp_designation_id,
             'emp_id' => $this->emp_id,
             'emp_salary' => $this->emp_salary,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'emp_designation', $this->emp_designation])
+        $query->andFilterWhere(['like', 'emp_name', $this->emp_name])
+            ->andFilterWhere(['like', 'emp_designation', $this->emp_designation])
             ->andFilterWhere(['like', 'emp_designation_type', $this->emp_designation_type]);
 
         return $dataProvider;
