@@ -44,7 +44,11 @@ AppAsset::register($this);
             'class' => 'nav',
         ],
     ]);
-    $menuItems = [
+    
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+    } else {
+        $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ["label" => "System Configuration",
             "url" => "#",
@@ -65,10 +69,6 @@ AppAsset::register($this);
                 [
                     "label" => "Subjects",
                     "url" => "index.php?r=subjects",
-                ],
-                [
-                    "label" => "Class",
-                    "url" => "index.php?r=std-class", 
                 ],
             ],
         ],
@@ -118,12 +118,13 @@ AppAsset::register($this);
                     "label" => "Employee Designation",
                     "url" => "index.php?r=emp-designation",
                 ],
+                [
+                    "label" => "Assign Teacher",
+                    "url" => "index.php?r=teacher-subject-assign-detail",
+                ],
             ],
         ],
     ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -150,14 +151,14 @@ AppAsset::register($this);
 </div>
 
 
-<footer class="footer nav">
+    <footer class="footer nav">
       <div class="text-center">
         <p style="color: black">
-           Copyrights &copy; <?php echo date('Y'); ?>. All Rights Reserved | Powered By: <a href="http://www.dexdevs.com/" target="_blank" style="color: #2452E7"><b>DEXDEVS</b></a>
+            Copyrights &copy; <?php echo date('Y'); ?>. All Rights Reserved | Powered By: <a href="http://www.dexdevs.com/" target="_blank" style="color: #2452E7"><b>DEXDEVS</b></a>
         </p>
         <a href="index.html#" class="go-top">
-          <i class="fa fa-angle-up"></i>
-          </a>
+            <i class="fa fa-angle-up"></i>
+        </a>
       </div>
     </footer>
 
