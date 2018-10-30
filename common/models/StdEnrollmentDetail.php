@@ -49,8 +49,8 @@ class StdEnrollmentDetail extends \yii\db\ActiveRecord
     {
         return [
             'std_enroll_detail_id' => 'Std Enroll Detail ID',
-            'std_enroll_detail_head_id' => 'Std Enroll Detail Head ID',
-            'std_enroll_detail_std_id' => 'Std Enroll Detail Std ID',
+            'std_enroll_detail_head_id' => 'Std Enroll Detail Head Name',
+            'std_enroll_detail_std_id' => 'Std Enroll Detail Std Name',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

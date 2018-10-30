@@ -18,8 +18,8 @@ class StdGuardianInfoSearch extends StdGuardianInfo
     public function rules()
     {
         return [
-            [['std_guardian_info_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
-            [['father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'created_at', 'updated_at'], 'safe'],
+            [['std_guardian_info_id','created_by', 'updated_by'], 'integer'],
+            [[ 'std_id', 'father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -54,10 +54,9 @@ class StdGuardianInfoSearch extends StdGuardianInfo
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('std');
         $query->andFilterWhere([
             'std_guardian_info_id' => $this->std_guardian_info_id,
-            'std_id' => $this->std_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -68,7 +67,8 @@ class StdGuardianInfoSearch extends StdGuardianInfo
             ->andFilterWhere(['like', 'father_cnic', $this->father_cnic])
             ->andFilterWhere(['like', 'father_email', $this->father_email])
             ->andFilterWhere(['like', 'guardian_contact_no_1', $this->guardian_contact_no_1])
-            ->andFilterWhere(['like', 'guardian_contact_no_2', $this->guardian_contact_no_2]);
+            ->andFilterWhere(['like', 'guardian_contact_no_2', $this->guardian_contact_no_2])
+            ->andFilterWhere(['like', 'std_personal_info.std_name', $this->std_id]);
 
         return $dataProvider;
     }

@@ -18,8 +18,8 @@ class StdSessionsSearch extends StdSessions
     public function rules()
     {
         return [
-            [['session_id', 'session_branch_id', 'created_by', 'updated_by'], 'integer'],
-            [['session_name', 'session_start_date', 'session_end_date', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['session_id', 'created_by', 'updated_by'], 'integer'],
+            [[ 'session_branch_id', 'session_name', 'session_start_date', 'session_end_date', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -54,10 +54,9 @@ class StdSessionsSearch extends StdSessions
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('sessionBranch');
         $query->andFilterWhere([
             'session_id' => $this->session_id,
-            'session_branch_id' => $this->session_branch_id,
             'session_start_date' => $this->session_start_date,
             'session_end_date' => $this->session_end_date,
             'created_at' => $this->created_at,
@@ -67,7 +66,8 @@ class StdSessionsSearch extends StdSessions
         ]);
 
         $query->andFilterWhere(['like', 'session_name', $this->session_name])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'branches.branch_name', $this->session_branch_id]);
 
         return $dataProvider;
     }

@@ -60,8 +60,8 @@ class StdAcademicInfo extends \yii\db\ActiveRecord
     {
         return [
             'academic_id' => 'Academic ID',
-            'std_id' => 'Std ID',
-            'class_name_id' => 'Class Name ID',
+            'std_id' => 'Std Name',
+            'class_name_id' => 'Class Name Name',
             'previous_class' => 'Previous Class',
             'passing_year' => 'Passing Year',
             'total_marks' => 'Total Marks',

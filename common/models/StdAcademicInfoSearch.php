@@ -18,8 +18,8 @@ class StdAcademicInfoSearch extends StdAcademicInfo
     public function rules()
     {
         return [
-            [['academic_id', 'std_id', 'class_name_id', 'total_marks', 'obtained_marks', 'created_by', 'updated_by'], 'integer'],
-            [['previous_class', 'passing_year', 'grades', 'Institute', 'created_at', 'updated_at'], 'safe'],
+            [['academic_id', 'total_marks', 'obtained_marks', 'created_by', 'updated_by'], 'integer'],
+            [['std_id', 'class_name_id', 'previous_class', 'passing_year', 'grades', 'Institute', 'created_at', 'updated_at'], 'safe'],
             [['percentage'], 'number'],
         ];
     }
@@ -55,11 +55,10 @@ class StdAcademicInfoSearch extends StdAcademicInfo
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('std');
+        $query->joinWith('className');
         $query->andFilterWhere([
             'academic_id' => $this->academic_id,
-            'std_id' => $this->std_id,
-            'class_name_id' => $this->class_name_id,
             'total_marks' => $this->total_marks,
             'obtained_marks' => $this->obtained_marks,
             'percentage' => $this->percentage,
@@ -72,7 +71,9 @@ class StdAcademicInfoSearch extends StdAcademicInfo
         $query->andFilterWhere(['like', 'previous_class', $this->previous_class])
             ->andFilterWhere(['like', 'passing_year', $this->passing_year])
             ->andFilterWhere(['like', 'grades', $this->grades])
-            ->andFilterWhere(['like', 'Institute', $this->Institute]);
+            ->andFilterWhere(['like', 'Institute', $this->Institute])
+            ->andFilterWhere(['like', 'std_personal_info.std_name', $this->std_id])
+            ->andFilterWhere(['like', 'std_class_name.class_name', $this->class_name_id]);
 
         return $dataProvider;
     }

@@ -40,8 +40,8 @@ class StdClass extends \yii\db\ActiveRecord
     {
         return [
             [['class_name_id', 'session_id', 'section_id', 'class_name'], 'required'],
-            [['class_name_id', 'session_id', 'section_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [[ 'created_by', 'updated_by'], 'integer'],
+            [['class_name_id', 'session_id', 'section_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['class_name'], 'string', 'max' => 100],
             [['class_name_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_name_id' => 'class_name_id']],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSections::className(), 'targetAttribute' => ['section_id' => 'section_id']],
@@ -56,9 +56,9 @@ class StdClass extends \yii\db\ActiveRecord
     {
         return [
             'class_id' => 'Class ID',
-            'class_name_id' => 'Class Name ID',
-            'session_id' => 'Session ID',
-            'section_id' => 'Section ID',
+            'class_name_id' => 'Class Name',
+            'session_id' => 'Session Name',
+            'section_id' => 'Section Name',
             'class_name' => 'Class Name',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

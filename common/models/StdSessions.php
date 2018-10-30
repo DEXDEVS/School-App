@@ -39,8 +39,8 @@ class StdSessions extends \yii\db\ActiveRecord
     {
         return [
             [['session_branch_id', 'session_name', 'session_start_date', 'session_end_date', 'status'], 'required'],
-            [['session_branch_id', 'created_by', 'updated_by'], 'integer'],
-            [['session_start_date', 'session_end_date', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['created_by', 'updated_by'], 'integer'],
+            [['session_branch_id', 'session_start_date', 'session_end_date', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['status'], 'string'],
             [['session_name'], 'string', 'max' => 32],
             [['session_branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['session_branch_id' => 'branch_id']],
@@ -54,7 +54,7 @@ class StdSessions extends \yii\db\ActiveRecord
     {
         return [
             'session_id' => 'Session ID',
-            'session_branch_id' => 'Session Branch ID',
+            'session_branch_id' => 'Session Branch Name',
             'session_name' => 'Session Name',
             'session_start_date' => 'Session Start Date',
             'session_end_date' => 'Session End Date',

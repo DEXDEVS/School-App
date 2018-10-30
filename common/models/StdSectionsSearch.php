@@ -54,10 +54,9 @@ class StdSectionsSearch extends StdSections
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('session');
         $query->andFilterWhere([
             'section_id' => $this->section_id,
-            'session_id' => $this->session_id,
             'section_intake' => $this->section_intake,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -65,7 +64,8 @@ class StdSectionsSearch extends StdSections
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'section_name', $this->section_name]);
+        $query->andFilterWhere(['like', 'section_name', $this->section_name])
+            ->andFilterWhere(['like', 'std_sessions.session_name', $this->session_id]);
 
         return $dataProvider;
     }

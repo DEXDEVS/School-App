@@ -18,8 +18,8 @@ class StdClassSearch extends StdClass
     public function rules()
     {
         return [
-            [['class_id', 'class_name_id', 'session_id', 'section_id', 'created_by', 'updated_by'], 'integer'],
-            [['class_name', 'created_at', 'updated_at'], 'safe'],
+            [['class_id',  'created_by', 'updated_by'], 'integer'],
+            [['class_name_id', 'session_id', 'section_id', 'class_name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -54,19 +54,21 @@ class StdClassSearch extends StdClass
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('className');
+        $query->joinWith('session');
+        $query->joinWith('section');
         $query->andFilterWhere([
             'class_id' => $this->class_id,
-            'class_name_id' => $this->class_name_id,
-            'session_id' => $this->session_id,
-            'section_id' => $this->section_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'class_name', $this->class_name]);
+        $query->andFilterWhere(['like', 'class_name', $this->class_name])
+            ->andFilterWhere(['like', 'std_class_name.class_name', $this->class_name_id])
+            ->andFilterWhere(['like', 'std_sessions.session_name', $this->session_id])
+            ->andFilterWhere(['like', 'std_sections.section_name', $this->section_id]);
 
         return $dataProvider;
     }

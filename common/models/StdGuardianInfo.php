@@ -54,7 +54,7 @@ class StdGuardianInfo extends \yii\db\ActiveRecord
     {
         return [
             'std_guardian_info_id' => 'Std Guardian Info ID',
-            'std_id' => 'Std ID',
+            'std_id' => 'Std Name',
             'father_name' => 'Father Name',
             'father_cnic' => 'Father Cnic',
             'father_email' => 'Father Email',
