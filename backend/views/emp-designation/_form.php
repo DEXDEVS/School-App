@@ -1,8 +1,6 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use common\models\EmpInfo;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\EmpDesignation */
@@ -12,29 +10,19 @@ use common\models\EmpInfo;
 <div class="emp-designation-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
     <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'emp_id')->dropDownList(
-                    ArrayHelper::map(EmpInfo::find()->all(),'emp_id','emp_name'),
-                    ['prompt'=>'']
-                )?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'emp_designation')->textInput(['maxlength' => true]) ?>
-        </div>
+    	<div class="col-md-6">
+			<?= $form->field($model, 'emp_designation')->textInput(['maxlength' => true]) ?>    		
+    	</div>
+    	<div class="col-md-6">
+    		<?= $form->field($model, 'emp_designation_type')->dropDownList([ 'Permanent' => 'Permanent', 'Visitor' => 'Visitor', ], ['prompt' => '']) ?>
+    	</div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'emp_designation_type')->dropDownList([ 'Permanent' => 'Permanent', 'Visitor' => 'Visitor', ], ['prompt' => '']) ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'emp_salary')->textInput() ?>
-        </div>
-    </div>
-  
+
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 

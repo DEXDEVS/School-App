@@ -11,11 +11,8 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'emp_designation_id',
-            'emp_id',
-            'emp_name',
             'emp_designation',
             'emp_designation_type',
-            'emp_salary',
             'created_at',
             'updated_at',
             'created_by',

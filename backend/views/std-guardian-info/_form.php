@@ -15,19 +15,18 @@ use kartik\select2\Select2;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                
                 <?= $form->field($model, 'std_id')->widget(Select2::classname(), [
-        //'name' => 'emp',
-        'data' => ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
-        'language' => 'en',
-        'options' => [
-            'placeholder' => 'Select Student',
-            //'multiple' => true,
-        ],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ])?>
+                    //'name' => 'emp',
+                    'data' => ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
+                    'language' => 'en',
+                    'options' => [
+                        'placeholder' => 'Select Student',
+                        //'multiple' => true,
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])?>
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'father_name')->textInput(['maxlength' => true]) ?>
@@ -52,18 +51,6 @@ use kartik\select2\Select2;
                 <?= $form->field($model, 'guardian_contact_no_2')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
             </div>
         </div>
-
-        
-<!-- 
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?> -->
-
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

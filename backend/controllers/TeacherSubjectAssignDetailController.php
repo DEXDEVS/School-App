@@ -112,7 +112,6 @@ class TeacherSubjectAssignDetailController extends Controller
                         $teacherSubjectAssignHead->updated_at = '0'; 
                         $teacherSubjectAssignHead->save();
 
-                        
                         // select2 add multiple students start...!
                         $array = $model->class_id;
                         $sub = $model->subject_id;

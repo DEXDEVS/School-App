@@ -19,7 +19,8 @@ class EmpInfoSearch extends EmpInfo
     {
         return [
             [['emp_id', 'emp_passing_year', 'created_by', 'updated_by'], 'integer'],
-            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_address', 'emp_marital_status', 'emp_gender', 'emp_email', 'emp_qualification', 'emp_institute_name', 'created_at', 'updated_at'], 'safe'],
+            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_address', 'emp_marital_status', 'emp_gender', 'emp_email', 'emp_qualification', 'emp_institute_name', 'created_at', 'updated_at', 'emp_designation_id'], 'safe'],
+            [['emp_salary'], 'number'],
         ];
     }
 
@@ -54,10 +55,11 @@ class EmpInfoSearch extends EmpInfo
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('empDesignation');
         $query->andFilterWhere([
             'emp_id' => $this->emp_id,
             'emp_passing_year' => $this->emp_passing_year,
+            'emp_salary' => $this->emp_salary,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -73,8 +75,8 @@ class EmpInfoSearch extends EmpInfo
             ->andFilterWhere(['like', 'emp_gender', $this->emp_gender])
             ->andFilterWhere(['like', 'emp_email', $this->emp_email])
             ->andFilterWhere(['like', 'emp_qualification', $this->emp_qualification])
-            ->andFilterWhere(['like', 'emp_institute_name', $this->emp_institute_name]);
-
+            ->andFilterWhere(['like', 'emp_institute_name', $this->emp_institute_name])
+            ->andFilterWhere(['like', 'emp_designation.emp_designation', $this->emp_designation_id]);    
         return $dataProvider;
     }
 }

@@ -16,9 +16,9 @@ use Yii;
  * @property integer $created_by
  * @property integer $updated_by
  *
- * @property TeacherSubjectAssignHead $teacherSubjectAssignDetailHead
  * @property Subjects $subject
  * @property StdClass $class
+ * @property TeacherSubjectAssignHead $teacherSubjectAssignDetailHead
  */
 class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
 {
@@ -36,12 +36,12 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['teacher_subject_assign_detail_head_id', 'class_id', 'subject_id'], 'required'],
+            [['teacher_subject_assign_detail_head_id', 'class_id', 'subject_id', 'created_by', 'updated_by'], 'required'],
             [['teacher_subject_assign_detail_head_id', 'class_id', 'subject_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
-            [['teacher_subject_assign_detail_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeacherSubjectAssignHead::className(), 'targetAttribute' => ['teacher_subject_assign_detail_head_id' => 'teacher_subject_assign_head_id']],
+            [['created_at', 'updated_at'], 'safe'],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['class_id' => 'class_id']],
+            [['teacher_subject_assign_detail_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeacherSubjectAssignHead::className(), 'targetAttribute' => ['teacher_subject_assign_detail_head_id' => 'teacher_subject_assign_head_id']],
         ];
     }
 
@@ -65,14 +65,6 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTeacherSubjectAssignDetailHead()
-    {
-        return $this->hasOne(TeacherSubjectAssignHead::className(), ['teacher_subject_assign_head_id' => 'teacher_subject_assign_detail_head_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getSubject()
     {
         return $this->hasOne(Subjects::className(), ['subject_id' => 'subject_id']);
@@ -84,5 +76,13 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
     public function getClass()
     {
         return $this->hasOne(StdClass::className(), ['class_id' => 'class_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTeacherSubjectAssignDetailHead()
+    {
+        return $this->hasOne(TeacherSubjectAssignHead::className(), ['teacher_subject_assign_head_id' => 'teacher_subject_assign_detail_head_id']);
     }
 }

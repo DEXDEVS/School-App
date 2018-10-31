@@ -100,15 +100,11 @@ class EmpDesignationController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-                        $employ_name = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info where emp_id = $model->emp_id")->queryAll();
-
-                        $model->emp_name = $employ_name[0]['emp_name'];
-                        $model->created_by = Yii::$app->user->identity->id; 
-                        $model->created_at = new \yii\db\Expression('NOW()');
-                        $model->updated_by = '0';
-                        $model->updated_at = '0'; 
-                        $model->save();
-
+                $model->created_by = Yii::$app->user->identity->id; 
+                $model->created_at = new \yii\db\Expression('NOW()');
+                $model->updated_by = '0';
+                $model->updated_at = '0'; 
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new EmpDesignation",
@@ -170,14 +166,11 @@ class EmpDesignationController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
-                        $employ_name = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info where emp_id = $model->emp_id")->queryAll();
-
-                        $model->emp_name = $employ_name[0]['emp_name'];
-                        $model->updated_by = Yii::$app->user->identity->id;
-                        $model->updated_at = new \yii\db\Expression('NOW()');
-                        $model->created_by = $model->created_by;
-                        $model->created_at = $model->created_at;
-                        $model->save();
+                $model->updated_by = Yii::$app->user->identity->id;
+                $model->updated_at = new \yii\db\Expression('NOW()');
+                $model->created_by = $model->created_by;
+                $model->created_at = $model->created_at;
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "EmpDesignation #".$id,

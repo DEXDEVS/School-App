@@ -15,17 +15,18 @@ use Yii;
  * @property string $emp_address
  * @property string $emp_marital_status
  * @property string $emp_gender
+ * @property integer $emp_designation_id
  * @property string $emp_email
  * @property string $emp_qualification
  * @property integer $emp_passing_year
  * @property string $emp_institute_name
+ * @property double $emp_salary
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
  * @property integer $updated_by
  *
- * @property EmpDesignation[] $empDesignations
- * @property TeacherSubjectAssignHead[] $teacherSubjectAssignHeads
+ * @property EmpDesignation $empDesignation
  */
 class EmpInfo extends \yii\db\ActiveRecord
 {
@@ -43,14 +44,16 @@ class EmpInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_address', 'emp_marital_status', 'emp_gender', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name'], 'required'],
-            [['emp_gender'], 'string'],
-            [['emp_passing_year', 'created_by', 'updated_by'], 'integer'],
+            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_address', 'emp_marital_status', 'emp_gender', 'emp_designation_id', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name', 'emp_salary'], 'required'],
+            [['emp_marital_status', 'emp_gender'], 'string'],
+            [['emp_designation_id', 'emp_passing_year', 'created_by', 'updated_by'], 'integer'],
+            [['emp_salary'], 'number'],
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
-            [['emp_name', 'emp_father_name', 'emp_marital_status', 'emp_qualification', 'emp_institute_name'], 'string', 'max' => 50],
+            [['emp_name', 'emp_father_name', 'emp_qualification', 'emp_institute_name'], 'string', 'max' => 50],
             [['emp_cnic', 'emp_contact_no'], 'string', 'max' => 15],
             [['emp_address'], 'string', 'max' => 64],
             [['emp_email'], 'string', 'max' => 84],
+            [['emp_designation_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpDesignation::className(), 'targetAttribute' => ['emp_designation_id' => 'emp_designation_id']],
         ];
     }
 
@@ -68,10 +71,12 @@ class EmpInfo extends \yii\db\ActiveRecord
             'emp_address' => 'Emp Address',
             'emp_marital_status' => 'Emp Marital Status',
             'emp_gender' => 'Emp Gender',
+            'emp_designation_id' => 'Emp Designation',
             'emp_email' => 'Emp Email',
             'emp_qualification' => 'Emp Qualification',
             'emp_passing_year' => 'Emp Passing Year',
             'emp_institute_name' => 'Emp Institute Name',
+            'emp_salary' => 'Emp Salary',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
@@ -82,16 +87,8 @@ class EmpInfo extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEmpDesignations()
+    public function getEmpDesignation()
     {
-        return $this->hasMany(EmpDesignation::className(), ['emp_id' => 'emp_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTeacherSubjectAssignHeads()
-    {
-        return $this->hasMany(TeacherSubjectAssignHead::className(), ['teacher_id' => 'emp_id']);
+        return $this->hasOne(EmpDesignation::className(), ['emp_designation_id' => 'emp_designation_id']);
     }
 }
