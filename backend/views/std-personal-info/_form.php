@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\UploadedFile;
 use dosamigos\datetimepicker\DateTimePicker;
 
 /* @var $this yii\web\View */
@@ -44,43 +45,75 @@ use dosamigos\datetimepicker\DateTimePicker;
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'std_temporary_address')->textInput(['maxlength' => true]) ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
             <?= $form->field($model, 'std_email')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '99999-9999999-9', ]) ?>
-       </div>
+            <?= $form->field($model, 'std_photo')->fileInput() ?>
+        </div>
     </div> 
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '99999-9999999-9', ]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
         </div>        
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'std_total_fee')->textInput() ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'std_fee_discount')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'std_net_fee')->textInput() ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= $form->field($model, 'std_temporary_address')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    
+
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 

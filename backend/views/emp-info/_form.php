@@ -33,15 +33,6 @@ use common\models\EmpDesignation;
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'emp_address')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'emp_marital_status')->dropDownList([ 'Single' => 'Single', 'Married' => 'Married', ], ['prompt' => '']) ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
             <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => '']) ?>
         </div>
         <div class="col-md-6">
@@ -49,31 +40,40 @@ use common\models\EmpDesignation;
                 ArrayHelper::map(EmpDesignation::find()->all(),'emp_designation_id','emp_designation')
             )?>
         </div>
+        
     </div>
 
     <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'emp_marital_status')->dropDownList([ 'Single' => 'Single', 'Married' => 'Married', ], ['prompt' => '']) ?>
+        </div>
         <div class="col-md-6">
             <?= $form->field($model, 'emp_email')->textInput(['maxlength' => true]) ?>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'emp_qualification')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'emp_passing_year')->textInput() ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'emp_passing_year')->textInput() ?>
+            <?= $form->field($model, 'emp_institute_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'emp_institute_name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'emp_salary')->textInput(['type' => 'number']) ?>
         </div>
     </div>
     
     <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'emp_salary')->textInput(['type' => 'number']) ?>
-        </div>
-        <div class="col-md-6">
+
+        <div class="col-md-12">
+            <?= $form->field($model, 'emp_address')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 

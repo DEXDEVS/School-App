@@ -10,13 +10,12 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel common\models\StdPersonalInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Std Personal Infos';
+$this->title = Yii::t('app', 'Std Personal Infos');
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 ?>
-
 <div class="std-personal-info-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([

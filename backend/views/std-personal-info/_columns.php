@@ -10,10 +10,10 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_id',
-    // ],
+        [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'std_id',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_name',
@@ -44,6 +44,10 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_photo',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'std_b_form',
     // ],
     // [
@@ -64,7 +68,15 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'std_serious_disease',
+        // 'attribute'=>'std_total_fee',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_fee_discount',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_net_fee',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

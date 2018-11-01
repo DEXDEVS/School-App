@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 
 /**
  * StdPersonalInfoController implements the CRUD actions for StdPersonalInfo model.
@@ -100,6 +101,15 @@ class StdPersonalInfoController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
+                $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                if(!empty($model->std_photo)){
+                    $imageName = $model->std_name.'_photo'; 
+                    $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                    //save the path in the db column
+                    $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                } else {
+                   $model->std_photo = '0'; 
+                }
                 $model->created_by = Yii::$app->user->identity->id; 
                 $model->created_at = new \yii\db\Expression('NOW()');
                 $model->updated_by = '0'; 
@@ -166,6 +176,16 @@ class StdPersonalInfoController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
+                $stdPersonalInfo = Yii::$app->db->createCommand("SELECT * FROM std_personal_info where std_id = $id")->queryAll();
+                $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                if(!empty($model->std_photo)){
+                    $imageName = $model->std_name.'_photo'; 
+                    $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                    //save the path in the db column
+                    $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                } else {
+                   $model->std_photo = $stdPersonalInfo[0]['std_photo']; 
+                }
                 $model->updated_by = Yii::$app->user->identity->id;
                 $model->updated_at = new \yii\db\Expression('NOW()');
                 $model->created_by = $model->created_by;
