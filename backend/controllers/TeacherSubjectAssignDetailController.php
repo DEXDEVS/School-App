@@ -117,12 +117,9 @@ class TeacherSubjectAssignDetailController extends Controller
                         $sub = $model->subject_id;
                         foreach ($sub as  $valu) {
                             foreach ($array as  $value) {
-                            $model = new TeacherSubjectAssignDetail();
-                            $model->teacher_subject_assign_detail_head_id = $teacherSubjectAssignHead->teacher_subject_assign_head_id;
-                            $model->class_id = $value;
-
-                        
-                                //$model = new TeacherSubjectAssignDetail();
+                                $model = new TeacherSubjectAssignDetail();
+                                $model->teacher_subject_assign_detail_head_id = $teacherSubjectAssignHead->teacher_subject_assign_head_id;
+                                $model->class_id = $value;
                                 $model->subject_id = $valu;
 
                                 // created and updated values...
