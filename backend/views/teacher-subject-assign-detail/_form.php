@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
-use common\models\EmpDesignation;
+use common\models\EmpInfo;
 use kartik\select2\Select2;
 use common\models\StdClass;
 use common\models\Subjects;
@@ -18,7 +18,7 @@ use common\models\Subjects;
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($teacherSubjectAssignHead, 'teacher_id')->dropDownList(
-                    ArrayHelper::map(EmpDesignation::find()->all(),'emp_id','emp_name'),
+                    ArrayHelper::map(EmpInfo::find()->where(['emp_designation_id' => 4])->all(),'emp_id','emp_name'),
                     ['prompt'=>'']
                 )?>
             </div>
