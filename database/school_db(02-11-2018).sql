@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2018 at 12:52 PM
--- Server version: 10.1.29-MariaDB
--- PHP Version: 7.2.0
+-- Generation Time: Nov 02, 2018 at 02:38 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -119,7 +119,7 @@ INSERT INTO `emp_info` (`emp_id`, `emp_name`, `emp_father_name`, `emp_cnic`, `em
 --
 
 CREATE TABLE `fee` (
-  `fee_id` int(11) NOT NULL,
+  `fee_id` int(11) NOT NULL,
   `std_id` int(11) NOT NULL,
   `admission_fee` double NOT NULL,
   `addmission_fee_discount` double NOT NULL,
@@ -640,7 +640,7 @@ ALTER TABLE `emp_info`
 -- Indexes for table `fee`
 --
 ALTER TABLE `fee`
-  ADD PRIMARY KEY (`fee_id`),
+  ADD PRIMARY KEY (`fee_id`),
   ADD KEY `std_id` (`std_id`);
 
 --
@@ -800,7 +800,7 @@ ALTER TABLE `emp_info`
 -- AUTO_INCREMENT for table `fee`
 --
 ALTER TABLE `fee`
-  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `fee_transaction_detail`
