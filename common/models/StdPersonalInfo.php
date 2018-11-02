@@ -49,8 +49,8 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_name', 'std_contact_no', 'std_father_name','std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'created_by', 'updated_by'], 'required'],
-            [['std_DOB', 'created_at', 'updated_at'], 'safe'],
+            [['std_name', 'std_contact_no', 'std_father_name','std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'required'],
+            [['std_DOB', 'created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
             [['std_gender'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_name', 'std_father_name' , 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],

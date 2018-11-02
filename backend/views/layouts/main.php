@@ -124,6 +124,29 @@ AppAsset::register($this);
                 ],
             ],
         ],
+        ["label" => "Fee Management",
+            "url" => "#",
+            "icon" => "fab fa-stumbleupon-circle",
+            "items" => [
+
+                [
+                    "label" => "Student Fee",
+                    "url" => "index.php?r=fee",
+                ],
+                [
+                    "label" => "Fee Type",
+                    "url" => "index.php?r=fee-type",
+                ],
+                [
+                    "label" => "Fee Transaction Head",
+                    "url" => "index.php?r=fee-transaction-head",
+                ],
+                [
+                    "label" => "Fee Transaction Detail",
+                    "url" => "index.php?r=fee-transaction-detail",
+                ],
+            ],
+        ],
     ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
