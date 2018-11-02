@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\StdPersonalInfo;
+use common\models\StdGuardianInfo;
+use common\models\StdAcademicInfo;
 use common\models\StdPersonalInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -84,6 +86,8 @@ class StdPersonalInfoController extends Controller
     {
         $request = Yii::$app->request;
         $model = new StdPersonalInfo();  
+        $stdGuardianInfo = new StdGuardianInfo ;
+        $stdAcademicInfo = new StdAcademicInfo;
 
         if($request->isAjax){
             /*
@@ -95,26 +99,43 @@ class StdPersonalInfoController extends Controller
                     'title'=> "Create new StdPersonalInfo",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'stdGuardianInfo' => $stdGuardianInfo,
+                        'stdAcademicInfo' => $stdAcademicInfo,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post())){
-                $model->std_photo = UploadedFile::getInstance($model,'std_photo');
-                if(!empty($model->std_photo)){
-                    $imageName = $model->std_name.'_photo'; 
-                    $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
-                    //save the path in the db column
-                    $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
-                } else {
-                   $model->std_photo = '0'; 
-                }
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0'; 
-                $model->updated_at = '0';
-                $model->save();
+            }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdAcademicInfo->load($request->post())){
+                        $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                        if(!empty($model->std_photo)){
+                            $imageName = $model->std_name.'_photo'; 
+                            $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                            //save the path in the db column
+                            $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                        } else {
+                           $model->std_photo = '0'; 
+                        }
+                        $model->created_by = Yii::$app->user->identity->id; 
+                        $model->created_at = new \yii\db\Expression('NOW()');
+                        $model->updated_by = '0'; 
+                        $model->updated_at = '0';
+                        $model->save();
+
+                        $stdGuardianInfo->std_id = $model->std_id;
+                        $stdGuardianInfo->created_by = Yii::$app->user->identity->id; 
+                        $stdGuardianInfo->created_at = new \yii\db\Expression('NOW()');
+                        $stdGuardianInfo->updated_by = '0'; 
+                        $stdGuardianInfo->updated_at = '0';
+                        $stdGuardianInfo->save();
+
+                        $stdAcademicInfo->std_id = $model->std_id;
+                        $stdAcademicInfo->created_by = Yii::$app->user->identity->id; 
+                        $stdAcademicInfo->created_at = new \yii\db\Expression('NOW()');
+                        $stdAcademicInfo->updated_by = '0'; 
+                        $stdAcademicInfo->updated_at = '0';
+                        $stdAcademicInfo->save();
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new StdPersonalInfo",

@@ -10,6 +10,7 @@ use yii\helpers\Url;
  *
  * @property integer $std_id
  * @property string $std_name
+ * @property string $std_father_name
  * @property string $std_contact_no
  * @property string $std_DOB
  * @property string $std_gender
@@ -22,9 +23,6 @@ use yii\helpers\Url;
  * @property string $std_religion
  * @property string $std_nationality
  * @property string $std_tehseel
- * @property double $std_total_fee
- * @property double $std_fee_discount
- * @property double $std_net_fee
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -51,12 +49,11 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'std_total_fee', 'std_fee_discount', 'std_net_fee', 'created_by', 'updated_by'], 'required'],
+            [['std_name', 'std_contact_no', 'std_father_name','std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'created_by', 'updated_by'], 'required'],
             [['std_DOB', 'created_at', 'updated_at'], 'safe'],
             [['std_gender'], 'string'],
-            [['std_total_fee', 'std_fee_discount', 'std_net_fee'], 'number'],
             [['created_by', 'updated_by'], 'integer'],
-            [['std_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
+            [['std_name', 'std_father_name' , 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
             [['std_contact_no'], 'string', 'max' => 15],
             [['std_permanent_address', 'std_temporary_address', 'std_b_form'], 'string', 'max' => 255],
             [['std_email'], 'string', 'max' => 84],
@@ -72,6 +69,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
         return [
             'std_id' => 'Stdudent ID',
             'std_name' => 'Stdudent Name',
+            'std_father_name' => 'Stdudent Father Name',
             'std_contact_no' => 'Stdudent Contact No',
             'std_DOB' => 'Stdudent DOB',
             'std_gender' => 'Stdudent Gender',
@@ -84,9 +82,6 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             'std_religion' => 'Stdudent Religion',
             'std_nationality' => 'Stdudent Nationality',
             'std_tehseel' => 'Stdudent Tehseel',
-            'std_total_fee' => 'Stdudent Total Fee',
-            'std_fee_discount' => 'Stdudent Fee Discount',
-            'std_net_fee' => 'Stdudent Net Fee',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

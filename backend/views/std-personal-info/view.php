@@ -26,6 +26,7 @@ $options = ['data-lightbox'=>'profile image','data-title'=>$photoInfo['alt']];
         'attributes' => [
             'std_id',
             'std_name',
+            'std_father_name',
             'std_contact_no',
             'std_DOB',
             'std_gender',
@@ -38,9 +39,6 @@ $options = ['data-lightbox'=>'profile image','data-title'=>$photoInfo['alt']];
             'std_religion',
             'std_nationality',
             'std_tehseel',
-            'std_total_fee',
-            'std_fee_discount',
-            'std_net_fee',
             'created_at',
             'updated_at',
             'created_by',
