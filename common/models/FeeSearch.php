@@ -18,7 +18,7 @@ class FeeSearch extends Fee
     public function rules()
     {
         return [
-            [['fee_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
+            [['fee_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
             [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'monthly_fee', 'monthly_fee_discount', 'net_monthly_fee'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
         ];
@@ -57,7 +57,7 @@ class FeeSearch extends Fee
         }
 
         $query->andFilterWhere([
-            'fee_id' => $this->fee_id,
+            'fee_id' => $this->fee_id,
             'std_id' => $this->std_id,
             'admission_fee' => $this->admission_fee,
             'addmission_fee_discount' => $this->addmission_fee_discount,

@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "fee".
  *
- * @property integer $fee_id
+ * @property integer $fee_id
  * @property integer $std_id
  * @property double $admission_fee
  * @property double $addmission_fee_discount
@@ -52,7 +52,7 @@ class Fee extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'fee_id' => 'Fee Id',
+            'fee_id' => 'Fee ID',
             'std_id' => 'Std ID',
             'admission_fee' => 'Admission Fee',
             'addmission_fee_discount' => 'Addmission Fee Discount',
