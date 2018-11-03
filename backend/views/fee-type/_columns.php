@@ -1,4 +1,4 @@
-<?php
+<?php
 use yii\helpers\Url;
 
 return [
@@ -10,10 +10,10 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'fee_type_id',
-    ],
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'fee_type_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'fee_type_name',

@@ -10,26 +10,37 @@ use yii\widgets\ActiveForm;
 <div class="fee-transaction-head-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'std_class_id')->textInput() ?>
-
-    <?= $form->field($model, 'std_id')->textInput() ?>
-
-    <?= $form->field($model, 'month')->dropDownList([ 'January' => 'January', 'Fabruary' => 'Fabruary', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July', 'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'transaction_date')->textInput() ?>
-
-    <?= $form->field($model, 'total_amount')->textInput() ?>
-
-    <?= $form->field($model, 'total_discount')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_class_id')->textInput() ?>
+                <?= $form->field($model, 'std_class_id')->dropDownList(
+                    ArrayHelper::map(StdClass::find()->all(),'std_class_id','class_name'),
+                    ['prompt'=>'']
+                )?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_id')->dropDownList(
+                    ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
+                    ['prompt'=>'']
+                )?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'month')->dropDownList([ 'January' => 'January', 'Fabruary' => 'Fabruary', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July', 'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December', ], ['prompt' => '']) ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'transaction_date')->textInput() ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'total_amount')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'total_discount')->textInput() ?>
+            </div>
+        </div>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

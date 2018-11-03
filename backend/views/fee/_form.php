@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use common\models\StdPersonalInfo;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Fee */
@@ -10,29 +12,34 @@ use yii\widgets\ActiveForm;
 <div class="fee-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'std_id')->textInput() ?>
-
-    <?= $form->field($model, 'admission_fee')->textInput() ?>
-
-    <?= $form->field($model, 'addmission_fee_discount')->textInput() ?>
-
-    <?= $form->field($model, 'net_addmission_fee')->textInput() ?>
-
-    <?= $form->field($model, 'monthly_fee')->textInput() ?>
-
-    <?= $form->field($model, 'monthly_fee_discount')->textInput() ?>
-
-    <?= $form->field($model, 'net_monthly_fee')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_id')->dropDownList(
+                    ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
+                    ['prompt'=>'']
+                )?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'admission_fee')->textInput() ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'addmission_fee_discount')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'net_addmission_fee')->textInput() ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'monthly_fee')->textInput() ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'monthly_fee_discount')->textInput() ?>
+             </div>
+        </div>
+                <?= $form->field($model, 'net_monthly_fee')->textInput() ?>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
