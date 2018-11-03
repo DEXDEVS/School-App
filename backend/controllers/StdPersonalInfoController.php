@@ -63,12 +63,12 @@ class StdPersonalInfoController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdPersonalInfo ".$model->std_name,
+                    'title'=> "<b>Student Personal: </b>".$model->std_name,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -97,14 +97,14 @@ class StdPersonalInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdPersonalInfo",
+                    'title'=> "<b>Create new Student Personal Info</b>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                         'stdGuardianInfo' => $stdGuardianInfo,
                         'stdAcademicInfo' => $stdAcademicInfo,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdAcademicInfo->load($request->post())){
@@ -139,20 +139,20 @@ class StdPersonalInfoController extends Controller
 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new StdPersonalInfo",
-                    'content'=>'<span class="text-success">Create StdPersonalInfo success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'title'=> "<b>Create new Student Personal Info</b>",
+                    'content'=>'<span class="text-success">Create Student Personal Info successfully</span>',
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-success','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new StdPersonalInfo",
+                    'title'=> "Create new Student Personal Info",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
         
                 ];         
             }
@@ -190,12 +190,12 @@ class StdPersonalInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdPersonalInfo #".$model->std_name,
+                    'title'=> "<b>Update Student Personal Info: </b>".$model->std_name,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
                 $stdPersonalInfo = Yii::$app->db->createCommand("SELECT * FROM std_personal_info where std_id = $id")->queryAll();
@@ -215,16 +215,16 @@ class StdPersonalInfoController extends Controller
                 $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "StdPersonalInfo #".$id,
+                    'title'=> "<b>Student Personal Info: </b>".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Update StdPersonalInfo #".$id,
+                    'title'=> "<b>Update Student Personal Info: </b>".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

@@ -60,12 +60,12 @@ class TeacherSubjectAssignDetailController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "TeacherSubjectAssignDetail #".$id,
+                    'title'=> "<b>Teacher Subject Assign Detail: </b>".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -93,13 +93,13 @@ class TeacherSubjectAssignDetailController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new TeacherSubjectAssignDetail",
+                    'title'=> "<b>Create new Teacher Subject Assign Detail</b>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                         'teacherSubjectAssignHead' => $teacherSubjectAssignHead,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
         
                 ];         
             }else if($teacherSubjectAssignHead->load($request->post()) && $model->load($request->post())){
@@ -133,20 +133,20 @@ class TeacherSubjectAssignDetailController extends Controller
                         // select2 add multiple students end...!       
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new TeacherSubjectAssignDetail",
+                    'title'=> "<b>Create new Teacher Subject Assign Detail</b>",
                     'content'=>'<span class="text-success">Create TeacherSubjectAssignDetail success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-success','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new TeacherSubjectAssignDetail",
+                    'title'=> "<b>Create new Teacher Subject Assign Detail</b>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
         
                 ];         
             }
@@ -184,31 +184,31 @@ class TeacherSubjectAssignDetailController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update TeacherSubjectAssignDetail #".$id,
+                    'title'=> "<b>Update Teacher Subject Assign Detail: </b>".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "TeacherSubjectAssignDetail #".$id,
+                    'title'=> "<b>Teacher Subject Assign Detail: </b>".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Update TeacherSubjectAssignDetail #".$id,
+                    'title'=> "<b>Update Teacher Subject Assign Detail: </b>".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
                 ];        
             }
         }else{

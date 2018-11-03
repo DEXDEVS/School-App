@@ -60,7 +60,7 @@ class EmpInfoController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "EmpInfo #".$model->emp_name,
+                    'title'=> "<b>Employee: </b>".$model->emp_name,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -92,7 +92,7 @@ class EmpInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new EmpInfo",
+                    'title'=> "<b>Create new Employee</b>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -108,8 +108,8 @@ class EmpInfoController extends Controller
                 $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new EmpInfo",
-                    'content'=>'<span class="text-success">Create EmpInfo success</span>',
+                    'title'=> "Create new Employee",
+                    'content'=>'<span class="text-success">Create Employee successfully</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
@@ -159,7 +159,7 @@ class EmpInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update EmpInfo #".$model->emp_name,
+                    'title'=> "<b>Update Employee: </b>".$model->emp_name,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -183,7 +183,7 @@ class EmpInfoController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update EmpInfo #".$id,
+                    'title'=> "Update Employee #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
