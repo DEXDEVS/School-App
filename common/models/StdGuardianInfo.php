@@ -37,12 +37,13 @@ class StdGuardianInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2'], 'required'],
+            [['std_id', 'father_name', 'father_cnic',  'guardian_contact_no_1'], 'required'],
             [['std_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['father_email', 'guardian_contact_no_2', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['father_name'], 'string', 'max' => 50],
             [['father_cnic', 'guardian_contact_no_1', 'guardian_contact_no_2'], 'string', 'max' => 15],
             [['father_email'], 'string', 'max' => 84],
+            [['father_email'],'email'],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
         ];
     }
@@ -55,9 +56,9 @@ class StdGuardianInfo extends \yii\db\ActiveRecord
         return [
             'std_guardian_info_id' => 'Std Guardian Info ID',
             'std_id' => 'Std Name',
-            'father_name' => 'Father Name',
-            'father_cnic' => 'Father Cnic',
-            'father_email' => 'Father Email',
+            'father_name' => 'Father Name/Guardian Name',
+            'father_cnic' => 'Father Cnic/Guardian Name',
+            'father_email' => 'Father Email/Guardian Name',
             'guardian_contact_no_1' => 'Guardian Contact No 1',
             'guardian_contact_no_2' => 'Guardian Contact No 2',
             'created_at' => 'Created At',

@@ -10,5 +10,6 @@ use yii\helpers\Html;
 <div class="fee-transaction-detail-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'feeTransactionHead' => $feeTransactionHead,
     ]) ?>
 </div>

@@ -49,14 +49,15 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_name', 'std_contact_no', 'std_father_name','std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'required'],
-            [['std_DOB', 'created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
+            [['std_name', 'std_father_name','std_DOB', 'std_gender', 'std_permanent_address', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'required'],
+            [['std_DOB', 'std_contact_no', 'std_email', 'std_b_form',  'std_photo', 'std_temporary_address','created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
             [['std_gender'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_name', 'std_father_name' , 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
             [['std_contact_no'], 'string', 'max' => 15],
             [['std_permanent_address', 'std_temporary_address', 'std_b_form'], 'string', 'max' => 255],
             [['std_email'], 'string', 'max' => 84],
+            [['std_email'],'email'],
             [['std_photo'], 'string', 'max' => 200],
         ];
     }

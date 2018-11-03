@@ -251,6 +251,7 @@ class StdEnrollmentDetailController extends Controller
         }
     }
 
+
     /**
      * Delete an existing StdEnrollmentDetail model.
      * For ajax request will return json object
@@ -278,6 +279,28 @@ class StdEnrollmentDetailController extends Controller
 
 
     }
+    public function actionLists($id){
+        $className = Yii::$app->db->createCommand("SELECT std_enroll_head_id FROM std_enrollment_head where class_id = $id")->queryAll();
+        $std = Yii::$app->db->createCommand("SELECT std_id FROM std_enrollment_detail where std_enroll_detail_head_id = $className")->queryAll();
+        var_dump($className);
+        die();
+
+        $countStudents = StdEnrollmentDetail::find()
+            ->where(['std_enroll_detail_head_id' => $className])
+            ->count();
+
+        $students = StdEnrollmentDetail::find()
+            ->where(['std_enroll_detail_head_id' => $className])
+            ->all();
+
+        if($countStudents > 0){
+            foreach ($students as $student) {
+                echo "<option value='".$student->std_id."'>".$student->std_name."</option>";
+            }
+        }else{
+            echo "<option> - </option>";
+        }
+    } 
 
      /**
      * Delete multiple existing StdEnrollmentDetail model.

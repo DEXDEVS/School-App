@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'std_class_id')->textInput() ?>
                 <?= $form->field($model, 'std_class_id')->dropDownList(
                     ArrayHelper::map(StdClass::find()->all(),'std_class_id','class_name'),
                     ['prompt'=>'']

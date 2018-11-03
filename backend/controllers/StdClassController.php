@@ -212,6 +212,7 @@ class StdClassController extends Controller
         }
     }
 
+
     /**
      * Delete an existing StdClass model.
      * For ajax request will return json object

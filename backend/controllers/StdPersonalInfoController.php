@@ -6,6 +6,7 @@ use Yii;
 use common\models\StdPersonalInfo;
 use common\models\StdGuardianInfo;
 use common\models\StdAcademicInfo;
+use common\models\Fee;
 use common\models\StdPersonalInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -89,6 +90,7 @@ class StdPersonalInfoController extends Controller
         $model = new StdPersonalInfo();  
         $stdGuardianInfo = new StdGuardianInfo ;
         $stdAcademicInfo = new StdAcademicInfo;
+        $fee = new Fee();
 
         if($request->isAjax){
             /*
@@ -97,17 +99,18 @@ class StdPersonalInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdPersonalInfo",
+                    'title'=> "<b>Create new Student</b>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                         'stdGuardianInfo' => $stdGuardianInfo,
                         'stdAcademicInfo' => $stdAcademicInfo,
+                        'fee' => $fee,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdAcademicInfo->load($request->post())){
+            }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $fee->load($request->post())){
                         $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                         if(!empty($model->std_photo)){
                             $imageName = $model->std_name.'_photo'; 
@@ -136,6 +139,13 @@ class StdPersonalInfoController extends Controller
                         $stdAcademicInfo->updated_by = '0'; 
                         $stdAcademicInfo->updated_at = '0';
                         $stdAcademicInfo->save();
+
+                        $fee->std_id = $model->std_id;
+                        $fee->created_by = Yii::$app->user->identity->id; 
+                        $fee->created_at = new \yii\db\Expression('NOW()');
+                        $fee->updated_by = '0'; 
+                        $fee->updated_at = '0';
+                        $fee->save();
 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
@@ -273,6 +283,8 @@ class StdPersonalInfoController extends Controller
 
 
     }
+
+    
 
      /**
      * Delete multiple existing StdPersonalInfo model.

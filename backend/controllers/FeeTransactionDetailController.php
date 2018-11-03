@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\FeeTransactionDetail;
+use common\models\FeeTransactionHead;
 use common\models\FeeTransactionDetailSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -82,7 +83,8 @@ class FeeTransactionDetailController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new FeeTransactionDetail();  
+        $model = new FeeTransactionDetail(); 
+        $feeTransactionHead = new FeeTransactionHead();
 
         if($request->isAjax){
             /*
@@ -94,12 +96,25 @@ class FeeTransactionDetailController extends Controller
                     'title'=> "Create new FeeTransactionDetail",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'feeTransactionHead' => $feeTransactionHead,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($feeTransactionHead->load($request->post()) && $model->load($request->post())){
+                        $feeTransactionHead->created_by = Yii::$app->user->identity->id; 
+                        $feeTransactionHead->created_at = new \yii\db\Expression('NOW()');
+                        $feeTransactionHead->updated_by = '0'; 
+                        $feeTransactionHead->updated_at = '0';
+                        $feeTransactionHead->save();
+
+                        $model->fee_trans_detail_head_id = $feeTransactionHead->fee_trans_id;
+                        $model->created_by = Yii::$app->user->identity->id; 
+                        $model->created_at = new \yii\db\Expression('NOW()');
+                        $model->updated_by = '0'; 
+                        $model->updated_at = '0';
+                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new FeeTransactionDetail",

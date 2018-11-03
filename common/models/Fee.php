@@ -38,10 +38,10 @@ class Fee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'monthly_fee', 'monthly_fee_discount', 'net_monthly_fee', 'created_by', 'updated_by'], 'required'],
+            [['std_id', 'admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'monthly_fee', 'monthly_fee_discount', 'net_monthly_fee', ], 'required'],
             [['std_id', 'created_by', 'updated_by'], 'integer'],
             [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'monthly_fee', 'monthly_fee_discount', 'net_monthly_fee'], 'number'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
         ];
     }

@@ -15,7 +15,7 @@ use common\models\StdClassName;
 <div class="std-personal-info-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <h3> Personal Info </h3>
     <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'std_name')->textInput(['maxlength' => true]) ?>
@@ -29,7 +29,7 @@ use common\models\StdClassName;
     </div>
     <div class="row"> 
         <div class="col-md-4">
-            <label>Std_dob</label>
+            <label>Stdudent DOB</label>
             <?= DateTimePicker::widget([
                 'model' => $model,
                 'attribute' => 'std_DOB',
@@ -143,6 +143,32 @@ use common\models\StdClassName;
             </div>
         </div>
         <!-- Academic Info end -->
+
+        <!-- Fee detail start -->
+        <h3> Fee Detail </h3>
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($fee, 'admission_fee')->textInput(['type'=> 'number']) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($fee, 'addmission_fee_discount')->textInput(['type'=> 'number']) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($fee, 'net_addmission_fee')->textInput(['type'=> 'number']) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($fee, 'monthly_fee')->textInput(['type'=> 'number']) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($fee, 'monthly_fee_discount')->textInput(['type'=> 'number']) ?>
+             </div>
+              <div class="col-md-4">
+                <?= $form->field($fee, 'net_monthly_fee')->textInput(['type'=> 'number']) ?>
+            </div>
+        </div>        
+        <!-- Fee detail end -->
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
