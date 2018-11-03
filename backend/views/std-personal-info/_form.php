@@ -15,100 +15,109 @@ use common\models\StdClassName;
 <div class="std-personal-info-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <h3> Personal Info </h3>
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_name')->textInput(['maxlength' => true]) ?>
+    
+    <div style="border: 2px solid #337AB7; padding: 15px;">    
+        <h3 style="color: #337AB7; margin-top: -10px"> Personal Info </h3>
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+            </div>  
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_father_name')->textInput(['maxlength' => true]) ?>
+            </div>     
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
-        </div>  
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_father_name')->textInput(['maxlength' => true]) ?>
-        </div>     
-    </div>
-    <div class="row"> 
-        <div class="col-md-4">
-            <label>Stdudent DOB</label>
-            <?= DateTimePicker::widget([
-                'model' => $model,
-                'attribute' => 'std_DOB',
-                'language' => 'en',
-                'size' => 'ms',
-                'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy-mm-dd HH:ii:ss',
-                    'todayBtn' => true
-                ]
-            ]);?>
+        <div class="row"> 
+            <div class="col-md-4">
+                <label>Stdudent DOB</label>
+                <?= DateTimePicker::widget([
+                    'model' => $model,
+                    'attribute' => 'std_DOB',
+                    'language' => 'en',
+                    'size' => 'ms',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd HH:ii:ss',
+                        'todayBtn' => true
+                    ]
+                ]);?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_gender')->dropDownList
+                ([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => '']) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_email')->textInput(['maxlength' => true]) ?>
+            </div>
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_gender')->dropDownList
-            ([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => '']) ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_email')->textInput(['maxlength' => true]) ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_photo')->fileInput() ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '99999-9999999-9', ]) ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
-        </div>
-    </div> 
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_photo')->fileInput() ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '99999-9999999-9', ]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div> 
 
-    <div class="row">  
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
+        <div class="row">  
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
+            </div>  
+            <div class="col-md-4">
+                <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
+            </div>   
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
-        </div>  
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
-        </div>   
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'std_temporary_address')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'std_temporary_address')->textInput(['maxlength' => true]) ?>
-        </div>
-    </div>
+    <hr>
 
     <!-- Guardian Info-->
-    <h3> Guardian Info </h3>
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($stdGuardianInfo, 'father_name')->textInput(['maxlength' => true]) ?>
+    <div style="border: 2px solid #5FDAF4; padding: 15px;">
+        <h3 style="color: #5FDAF4; margin-top: -10px"> Guardian Info </h3>
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($stdGuardianInfo, 'father_name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($stdGuardianInfo, 'father_cnic')->widget(yii\widgets\MaskedInput::class, [
+                    'mask' => '99999-9999999-9',
+                ]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($stdGuardianInfo, 'father_email')->textInput(['maxlength' => true]) ?>
+            </div>
         </div>
-        <div class="col-md-4">
-            <?= $form->field($stdGuardianInfo, 'father_cnic')->widget(yii\widgets\MaskedInput::class, [
-                'mask' => '99999-9999999-9',
-            ]) ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($stdGuardianInfo, 'father_email')->textInput(['maxlength' => true]) ?>
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($stdGuardianInfo, 'guardian_contact_no_1')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+            </div>
+            <div class="col-md-4">
+                 <?= $form->field($stdGuardianInfo, 'guardian_contact_no_2')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($stdGuardianInfo, 'guardian_contact_no_1')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
-        </div>
-        <div class="col-md-4">
-             <?= $form->field($stdGuardianInfo, 'guardian_contact_no_2')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
-        </div>
-    </div>
-        <!-- Guardian Info end -->
+    <hr>
+    <!-- Guardian Info end -->
 
-        <!-- Academic Info -->
-        <h3> Academic Info </h3>
+    
+    <div style="border: 2px solid #EC971F; padding: 15px;">
+        <!-- Aca demic Info -->
+        <h3 style="color: #EC971F; margin-top: -10px"> Academic Info </h3>
         <div class="row">
             <div class="col-md-4">
                 <?= $form->field($stdAcademicInfo, 'class_name_id')->dropDownList(
@@ -142,33 +151,55 @@ use common\models\StdClassName;
                 <?= $form->field($stdAcademicInfo, 'Institute')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
+    </div>
+    <hr>
         <!-- Academic Info end -->
 
-        <!-- Fee detail start -->
-        <h3> Fee Detail </h3>
+        <div style="border: 2px solid red; padding: 15px;">
+            <!-- Fee detail start -->
+        <h3 style="color: red; margin-top: -10px"> Fee Detail </h3>
         <div class="row">
             <div class="col-md-4">
-                <?= $form->field($fee, 'admission_fee')->textInput(['type'=> 'number']) ?>
+                <?= $form->field($fee, 'admission_fee')->textInput(['type' => 'number','id' => 'admissionFee']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($fee, 'addmission_fee_discount')->textInput(['type'=> 'number']) ?>
+                <?= $form->field($fee, 'addmission_fee_discount')->textInput(['type' => 'number','id' => 'admissionFeeDiscount']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($fee, 'net_addmission_fee')->textInput(['type'=> 'number']) ?>
+                <?= $form->field($fee, 'net_addmission_fee')->textInput(['type' => 'number', 'id' => 'netAdmissionFee', 'readonly'=> true, 'onfocus' => 'showNetAdmissionFee();' ]) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <?= $form->field($fee, 'monthly_fee')->textInput(['type'=> 'number']) ?>
+                <?= $form->field($fee, 'monthly_fee')->textInput(['type' => 'number','id' => 'monthlyFee']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($fee, 'monthly_fee_discount')->textInput(['type'=> 'number']) ?>
+                <?= $form->field($fee, 'monthly_fee_discount')->textInput(['type' => 'number','id' => 'monthlyFeeDiscount']) ?>
              </div>
               <div class="col-md-4">
-                <?= $form->field($fee, 'net_monthly_fee')->textInput(['type'=> 'number']) ?>
+                <?= $form->field($fee, 'net_monthly_fee')->textInput(['type' => 'number', 'id' => 'netMonthlyFee', 'readonly'=> true, 'onfocus' => 'showNetMonthlyFee();' ]) ?>
             </div>
         </div>        
         <!-- Fee detail end -->
+
+        <!-- Script For Fee Calcution Start-->
+        <script type="text/javascript">
+            // showNetMonthlyFee function...!
+            function showNetAdmissionFee() {
+                var value1 = document.getElementById('admissionFee').value;
+                var value2 = document.getElementById('admissionFeeDiscount').value;
+                document.getElementById('netAdmissionFee').value = value1 - value2 ;
+            }
+            // showNetMonthlyFee function...!
+            function showNetMonthlyFee() {
+                var value1 = document.getElementById('monthlyFee').value;
+                var value2 = document.getElementById('monthlyFeeDiscount').value;
+                document.getElementById('netMonthlyFee').value = value1 - value2;
+            }
+        </script>
+        <!-- Script For Fee Calcution Close-->
+        </div>
+
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
