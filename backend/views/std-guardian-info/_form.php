@@ -16,7 +16,6 @@ use kartik\select2\Select2;
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($model, 'std_id')->widget(Select2::classname(), [
-                    //'name' => 'emp',
                     'data' => ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
                     'language' => 'en',
                     'options' => [

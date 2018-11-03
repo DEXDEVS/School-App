@@ -56,10 +56,11 @@ class EmpInfoController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
+        $model = $this->findModel($id);
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "EmpInfo #".$id,
+                    'title'=> "EmpInfo #".$model->emp_name,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -158,7 +159,7 @@ class EmpInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update EmpInfo #".$id,
+                    'title'=> "Update EmpInfo #".$model->emp_name,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

@@ -56,10 +56,11 @@ class StdClassController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
+        $model = $this->findModel($id);
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdClass #".$id,
+                    'title'=> "StdClass #".$model->class_name,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -165,7 +166,7 @@ class StdClassController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdClass #".$id,
+                    'title'=> "Update StdClass #".$model->class_name,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

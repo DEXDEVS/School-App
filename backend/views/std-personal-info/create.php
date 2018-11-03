@@ -10,5 +10,7 @@ use yii\helpers\Html;
 <div class="std-personal-info-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'stdGuardianInfo' => $stdGuardianInfo,
+        'stdAcademicInfo' => $stdAcademicInfo,
     ]) ?>
 </div>

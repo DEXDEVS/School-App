@@ -20,6 +20,10 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'std_father_name',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_contact_no',
     ],
     [
@@ -68,18 +72,6 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'std_total_fee',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'std_fee_discount',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'std_net_fee',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
     // ],
     // [
@@ -98,9 +90,9 @@ return [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',
-        'urlCreator' => function($action, $model, $key, $index) { 
+        /*'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
-        },
+        },*/
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
         'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
