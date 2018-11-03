@@ -59,10 +59,11 @@ class StdPersonalInfoController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
+        $model = $this->findModel($id);
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdPersonalInfo #".$id,
+                    'title'=> "StdPersonalInfo ".$model->std_name,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -189,7 +190,7 @@ class StdPersonalInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdPersonalInfo #".$id,
+                    'title'=> "Update StdPersonalInfo #".$model->std_name,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

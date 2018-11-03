@@ -56,10 +56,11 @@ class BranchesController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
+        $model = $this->findModel($id);
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Branches #".$id,
+                    'title'=> "".$model->branch_name,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -158,7 +159,7 @@ class BranchesController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update Branches #".$id,
+                    'title'=> "Update ".$model->branch_name,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
