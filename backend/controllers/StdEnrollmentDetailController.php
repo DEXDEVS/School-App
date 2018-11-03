@@ -60,12 +60,12 @@ class StdEnrollmentDetailController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdEnrollmentDetail #".$id,
+                    'title'=> "<b>Stdudent Enrollment Detail: </b>".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -93,13 +93,13 @@ class StdEnrollmentDetailController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdEnrollmentDetail",
+                    'title'=> "<b>Create new Stdudent Enrollment Detail</b>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                         'stdEnrollmentHead' => $stdEnrollmentHead,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-success pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-danger','type'=>"submit"])
         
                 ];         
             }else if($stdEnrollmentHead->load($request->post()) && $model->load($request->post())){
@@ -131,20 +131,20 @@ class StdEnrollmentDetailController extends Controller
                 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new StdEnrollmentDetail",
+                    'title'=> "Create new Stdudent Enrollment Detail",
                     'content'=>'<span class="text-success">Create StdEnrollmentDetail success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-success','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new StdEnrollmentDetail",
+                    'title'=> "Create new Stdudent Enrollment Detail",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
         
                 ];         
             }
@@ -184,13 +184,13 @@ class StdEnrollmentDetailController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdEnrollmentDetail #".$id,
+                    'title'=> "<b>Update Student Enrollment Detail: </b>".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                         'stdEnrollmentHead' => $stdEnrollmentHead,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
                 ];         
             }else if($stdEnrollmentHead->load($request->post()) && $model->load($request->post())){
 

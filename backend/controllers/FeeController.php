@@ -14,7 +14,7 @@ use yii\helpers\Html;
 /**
  * FeeController implements the CRUD actions for Fee model.
  */
-class FeeController extends Controller
+class FeeController extends Controller 
 {
     /**
      * @inheritdoc
