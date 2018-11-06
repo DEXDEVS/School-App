@@ -28,7 +28,7 @@ use common\models\StdPersonalInfo;
                 <?= $form->field($model, 'addmission_fee_discount')->textInput(['type' => 'number','id' => 'admissionFeeDiscount']) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'net_addmission_fee')->textInput(['type' => 'number', 'id' => 'netAdmissionFee', 'readonly'=> true, 'onfocus' => 'showNetAdmissionFee();' ]) ?>
+                <?= $form->field($model, 'net_addmission_fee')->textInput(['type' => 'number', 'id' => 'netAdmissionFee', 'readonly'=> true, 'onchange' => 'showNetAdmissionFee();' ]) ?>
             </div>
         </div>
         <div class="row">
@@ -42,7 +42,7 @@ use common\models\StdPersonalInfo;
 
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'net_monthly_fee')->textInput(['type' => 'number', 'id' => 'netMonthlyFee', 'readonly'=> true, 'onfocus' => 'showNetMonthlyFee();' ]) ?>
+                <?= $form->field($model, 'net_monthly_fee')->textInput(['type' => 'number', 'id' => 'netMonthlyFee', 'readonly'=> true, 'onchange' => 'showNetMonthlyFee();' ]) ?>
             </div>
         </div>
 
