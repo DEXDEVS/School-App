@@ -19,7 +19,7 @@ class StdEnrollmentDetailSearch extends StdEnrollmentDetail
     {
         return [
             [['std_enroll_detail_id', 'created_by', 'updated_by'], 'integer'],
-            [[ 'std_enroll_detail_head_id', 'std_enroll_detail_std_id', 'created_at', 'updated_at'], 'safe'],
+            [[ 'std_enroll_detail_head_id', 'std_enroll_detail_std_name','std_enroll_detail_std_id', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 

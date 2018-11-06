@@ -39,10 +39,10 @@ class FeeTransactionHead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_class_id', 'std_id', 'month', 'transaction_date', 'total_amount', 'total_discount', 'created_by', 'updated_by'], 'required'],
+            [['std_class_id', 'std_id', 'month', 'transaction_date', 'total_amount', 'total_discount'], 'required'],
             [['std_class_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
             [['month'], 'string'],
-            [['transaction_date', 'created_at', 'updated_at'], 'safe'],
+            [['transaction_date', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['total_amount', 'total_discount'], 'number'],
             [['std_class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['std_class_id' => 'class_id']],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],

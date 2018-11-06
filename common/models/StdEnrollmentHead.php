@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $std_enroll_head_id
  * @property integer $class_id
+ * @property string $std_enroll_head_name
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -33,9 +34,10 @@ class StdEnrollmentHead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_id'], 'required'],
-            [['class_id', 'created_by', 'updated_by', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['class_id', 'std_enroll_head_name'], 'required'],
+            [['class_id', 'created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['std_enroll_head_name'], 'string', 'max' => 255],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['class_id' => 'class_id']],
         ];
     }
@@ -48,6 +50,7 @@ class StdEnrollmentHead extends \yii\db\ActiveRecord
         return [
             'std_enroll_head_id' => 'Std Enroll Head ID',
             'class_id' => 'Class ID',
+            'std_enroll_head_name' => 'Std Enroll Head Name',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

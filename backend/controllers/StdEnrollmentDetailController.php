@@ -119,6 +119,9 @@ class StdEnrollmentDetailController extends Controller
                     $model = new StdEnrollmentDetail();
                     $model->std_enroll_detail_head_id = $stdEnrollmentHead->std_enroll_head_id;
                     $model->std_enroll_detail_std_id = $value;
+                    $stdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$value'")->queryAll();
+                    $model->std_enroll_detail_std_name = $stdName[0]['std_name'];
+
                 // select2 add multiple students end...!    
 
                     // created and updated values...
@@ -209,12 +212,14 @@ class StdEnrollmentDetailController extends Controller
                     $model = new StdEnrollmentDetail();
                     $model->std_enroll_detail_head_id = $stdEnrollmentHead->std_enroll_head_id;
                     $model->std_enroll_detail_std_id = $value;
+                    $stdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$value'")->queryAll();
+                    $model->std_enroll_detail_std_name = $stdName[0]['std_name'];
 
                     // created and updated values...
                     $model->updated_by = Yii::$app->user->identity->id;
                     $model->updated_at = new \yii\db\Expression('NOW()');
-                    $model->created_by = $model->created_by;
-                    $model->created_at = $model->created_at;
+                   // $model->created_by = $model->created_by;
+                    //$model->created_at = $model->created_at;
                     $model->save();
                 }
                 // select2 add multiple students end...!                
@@ -276,31 +281,8 @@ class StdEnrollmentDetailController extends Controller
             */
             return $this->redirect(['index']);
         }
-
-
     }
-    public function actionLists($id){
-        $className = Yii::$app->db->createCommand("SELECT std_enroll_head_id FROM std_enrollment_head where class_id = $id")->queryAll();
-        $std = Yii::$app->db->createCommand("SELECT std_id FROM std_enrollment_detail where std_enroll_detail_head_id = $className")->queryAll();
-        var_dump($className);
-        die();
 
-        $countStudents = StdEnrollmentDetail::find()
-            ->where(['std_enroll_detail_head_id' => $className])
-            ->count();
-
-        $students = StdEnrollmentDetail::find()
-            ->where(['std_enroll_detail_head_id' => $className])
-            ->all();
-
-        if($countStudents > 0){
-            foreach ($students as $student) {
-                echo "<option value='".$student->std_id."'>".$student->std_name."</option>";
-            }
-        }else{
-            echo "<option> - </option>";
-        }
-    } 
 
      /**
      * Delete multiple existing StdEnrollmentDetail model.

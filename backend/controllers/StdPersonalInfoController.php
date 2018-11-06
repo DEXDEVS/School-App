@@ -100,7 +100,7 @@ class StdPersonalInfoController extends Controller
             if($request->isGet){
                 return [
 
-                    'title'=> "<b>Create new Student Personal Info</b>",
+                    'title'=> "<b>Create new Student Personal Info</b>".$model->std_name,
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                         'stdGuardianInfo' => $stdGuardianInfo,

@@ -19,7 +19,7 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
     {
         return [
             [['std_enroll_head_id', 'class_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['std_enroll_head_name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -63,6 +63,8 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+
+        $query->andFilterWhere(['like', 'std_enroll_head_name', $this->std_enroll_head_name]);
 
         return $dataProvider;
     }

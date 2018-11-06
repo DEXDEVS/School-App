@@ -175,7 +175,8 @@ class TeacherSubjectAssignDetailController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id); 
+        $teacherSubjectAssignHead = new TeacherSubjectAssignHead();      
 
         if($request->isAjax){
             /*
@@ -187,11 +188,40 @@ class TeacherSubjectAssignDetailController extends Controller
                     'title'=> "<b>Update Teacher Subject Assign Detail: </b>".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
+                        'teacherSubjectAssignHead' => $teacherSubjectAssignHead,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($teacherSubjectAssignHead->load($request->post()) && $model->load($request->post())){
+                        $teacher_name = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info where emp_id = $teacherSubjectAssignHead->teacher_id")->queryAll();
+
+                        $teacherSubjectAssignHead->teacher_subject_assign_head_name = $teacher_name[0]['emp_name'];
+                        $teacherSubjectAssignHead->updated_by = Yii::$app->user->identity->id;
+                        $teacherSubjectAssignHead->updated_at = date('Y-m-d h:m:s');
+                        $teacherSubjectAssignHead->created_by = $model->created_by;
+                        $teacherSubjectAssignHead->created_at = $model->created_at; 
+                        $teacherSubjectAssignHead->save();
+
+                        // select2 add multiple students start...!
+                        $array = $model->class_id;
+                        $sub = $model->subject_id;
+                        foreach ($sub as  $valu) {
+                            foreach ($array as  $value) {
+                                $model = new TeacherSubjectAssignDetail();
+                                $model->teacher_subject_assign_detail_head_id = $teacherSubjectAssignHead->teacher_subject_assign_head_id;
+                                $model->class_id = $value;
+                                $model->subject_id = $valu;
+
+                                // created and updated values...
+                                $model->updated_by = Yii::$app->user->identity->id;
+                                $model->updated_at = date('Y-m-d h:m:s');
+                                $model->created_by = $model->created_by;
+                                $model->created_at = $model->created_at;
+                                $model->save(false);
+                            }
+                        }
+                        // select2 add multiple students end...! 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "<b>Teacher Subject Assign Detail: </b>".$id,

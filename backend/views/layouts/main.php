@@ -23,14 +23,8 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <link rel="shortcut icon" href="images/logo.jpg" type="image/jpg">
-    <style>
-        .nav{
-            background-color: #5FDAF4;
-        }
-        .nav a{
-            color: #000;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+   
 </head>
 <body>
 <?php $this->beginBody() ?>
