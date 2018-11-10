@@ -26,7 +26,7 @@ use dosamigos\datetimepicker\DateTimePicker;
             <div class="col-md-6">
                 <?= $form->field($feeTransactionHead, 'std_id')->dropDownList(
                     ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
-                    ['prompt'=>'Select Student','id' => 'studentId']
+                    ['id' => 'studentId']
                 )?>
             </div>
         </div>
@@ -63,19 +63,20 @@ use dosamigos\datetimepicker\DateTimePicker;
         <div class="col-md-6">
             <?= $form->field($model, 'fee_type_id')->dropDownList(
                     ArrayHelper::map(FeeType::find()->all(),'fee_type_id','fee_type_name'),
-                    ['prompt'=>'Select FeeType']
+                    ['prompt'=>'Select FeeType','id'=>'feeType']
             )?> 
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount','onchange'=>'netAmount();']) ?>
+            <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount','type' => 'number']) ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'fee_discount')->textInput() ?>
+            <?= $form->field($model, 'fee_discount')->textInput(['id'=> 'feeDiscount']) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'discounted_value')->textInput() ?>
+            <?= $form->field($model, 'discounted_value')->textInput(['id'=>'discountValue', 'readonly' => true]) ?>
+
         </div>
     </div>
     <div class="row">
@@ -83,7 +84,7 @@ use dosamigos\datetimepicker\DateTimePicker;
             <?= $form->field($model, 'net_total')->textInput(['id'=>'netTotal', 'readonly' => true]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'paid_amount')->textInput(['id'=>'paidAmount','onchange'=>'remainingAmount();']) ?>
+            <?= $form->field($model, 'paid_amount')->textInput(['id'=>'paidAmount','onchange'=>'remainingAmount();','type' => 'number']) ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'remaining')->textInput(['id'=>'remaining','readonly'=> true]) ?>
@@ -123,6 +124,8 @@ $('#classId').on('change',function(){
             
             var len =jsonResult[0].length;
             var html = "";
+            $('#studentId').empty();
+            $('#studentId').append("<option>" + "Select Student" + "</option>");
             for(var i=0; i<len; i++)
             {
             var stdId = jsonResult[0][i];
@@ -134,7 +137,80 @@ $('#classId').on('change',function(){
     });       
 });
 
+//get student detail
 
+var netTotal = 0;
+
+$('#studentId').on('change',function(){
+   var studentId = $('#studentId').val();
+   
+   $.ajax({
+        type:'post',
+        cache:false,
+        data:{studentId:studentId},
+        url: "$url",
+
+        success: function(result){
+
+            var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
+            console.log(jsonResult);
+            var netAddmissionFee = jsonResult['net_addmission_fee'];
+            var netMonthlyFee = jsonResult['net_monthly_fee'];
+            $('#feeType').on('change',function(){
+                var feeType = $('#feeType').val();
+                
+                if(feeType == 1){
+                    $('#feeAmount').val(netAddmissionFee);
+                    var netValue = $('#feeAmount').val();
+                    netTotal += parseInt(netValue);
+                    $('#netTotal').val(netTotal);
+                }else if (feeType == 2){
+                    $('#feeAmount').val(netMonthlyFee);
+                    var netValue = $('#feeAmount').val();
+                    netTotal += parseInt(netValue) ;
+                    $('#netTotal').val(netTotal);
+                }else {
+                    $('#feeAmount').val('');
+                }      
+            });   
+        }         
+    });       
+});
+// $('#feeAmount').on('change',function(){
+//     var netValue = $('#feeAmount').val();
+//     var total = parseInt(netValue);
+//     netTotal += total;
+//     $('#netTotal').val(netTotal);
+// });
+    $('#feeDiscount').on('change',function(){
+        var netValue = $('#feeAmount').val();
+        var total = parseInt(netValue);
+        var discount = $('#feeDiscount').val();
+        var feeDiscount = parseInt(discount);
+
+        if(discount == feeDiscount + '%'){
+            
+            amount = parseInt((total * feeDiscount)/100);
+
+            $('#discountValue').val(amount);
+        
+            netTotal +=total - amount;
+            $('#netTotal').val(netTotal);
+            $('#feeAmount').val(''); 
+            $('#feeDiscount').val('');
+            $('#discountValue').val('');
+        } else {
+            amountt = parseInt(total - feeDiscount);
+            $('#discountValue').val(amountt);
+        
+            netTotal += amountt;
+            $('#netTotal').val(netTotal);
+            $('#feeAmount').val(''); 
+            $('#feeDiscount').val('');
+            $('#discountValue').val('');
+        }
+    });  
+   
 JS;
 $this->registerJs($script);
 ?> 

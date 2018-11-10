@@ -43,7 +43,7 @@ class FeeTransactionDetail extends \yii\db\ActiveRecord
         return [
             [['fee_trans_detail_head_id', 'fee_type_id', 'fee_amount', 'net_total', 'paid_amount', 'remaining', 'status'], 'required'],
             [['fee_trans_detail_head_id', 'fee_type_id', 'created_by', 'updated_by'], 'integer'],
-            [['fee_amount', 'fee_discount', 'discounted_value', 'net_total','paid_amount', 'remaining'], 'number'],
+            [['fee_amount', 'discounted_value', 'net_total','paid_amount', 'remaining'], 'number'],
             [['status'], 'string'],
             [['created_at', 'updated_at', 'created_by', 'updated_by','fee_discount', 'discounted_value'], 'safe'],
             [['fee_trans_detail_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeeTransactionHead::className(), 'targetAttribute' => ['fee_trans_detail_head_id' => 'fee_trans_id']],
