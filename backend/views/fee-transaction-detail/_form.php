@@ -16,25 +16,25 @@ use dosamigos\datetimepicker\DateTimePicker;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <?= $form->field($feeTransactionHead, 'std_class_id')->dropDownList(
                     ArrayHelper::map(StdClass::find()->all(),'class_id','class_name'),
                     ['prompt'=>'Select Class',
                     'id' => 'classId',
                 ])?> 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <?= $form->field($feeTransactionHead, 'std_id')->dropDownList(
                     ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
-                    ['id' => 'studentId']
+                    ['prompt'=>'Select Student','id' => 'studentId']
                 )?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($feeTransactionHead, 'month')->dropDownList([ 'January' => 'January', 'Fabruary' => 'Fabruary', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July', 'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December', ], ['prompt' => 'Select Month']) ?>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($feeTransactionHead, 'month')->dropDownList([ 'January' => 'January', 'Fabruary' => 'Fabruary', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July', 'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December', ], ['prompt' => 'Select Month']) ?>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label>Transaction Date</label>
                 <?= DateTimePicker::widget([
                     'model' => $feeTransactionHead,
@@ -48,50 +48,62 @@ use dosamigos\datetimepicker\DateTimePicker;
                     ]
                 ]);?>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <?= $form->field($feeTransactionHead, 'total_amount')->textInput() ?>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <?= $form->field($feeTransactionHead, 'total_discount')->textInput() ?>
             </div>
         </div>
-
     <!-- Fee Transaction Detail-->
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'fee_type_id')->dropDownList(
                     ArrayHelper::map(FeeType::find()->all(),'fee_type_id','fee_type_name'),
                     ['prompt'=>'Select FeeType','id'=>'feeType']
             )?> 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount','type' => 'number']) ?>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'fee_discount')->textInput(['id'=> 'feeDiscount']) ?>
         </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'discounted_value')->textInput(['id'=>'discountValue', 'readonly' => true]) ?>
-
-        </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
+            <?= $form->field($model, 'discounted_value')->textInput(['id'=>'discountValue', 'readonly' => true]) ?>
+        </div>
+        <div class="col-md-4">
             <?= $form->field($model, 'net_total')->textInput(['id'=>'netTotal', 'readonly' => true]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <?= $form->field($model, 'paid_amount')->textInput(['id'=>'paidAmount','onchange'=>'remainingAmount();','type' => 'number']) ?>
         </div>
+    </div>
+    <div class="row">    
         <div class="col-md-3">
             <?= $form->field($model, 'remaining')->textInput(['id'=>'remaining','readonly'=> true]) ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList([ 'Paid' => 'Paid', 'Unpaid' => 'Unpaid', ], ['prompt' => 'Status...']) ?>
         </div>
+    </div>
+    <input type="button" name="" value ="Add" class="btn btn-success" id= "addInfo">
+    
+
+    <div id="mydata">
+        <br/>
+        <table  id="infoTable" class="table table-striped table-bordered dt-responsive nowrap" align ="center" width="70%" style="display: none;">
+            <tr>
+            <th> Fee Type ID         </th>
+            <th> Fee Amount          </th>
+            <th> Fee Discount        </th>
+            <th> Discounted Value    </th>
+            <th> Net Total           </th>
+            </tr>
+        </table>
+        <br/>
     </div>
     
 	<?php if (!Yii::$app->request->isAjax){ ?>
@@ -125,7 +137,7 @@ $('#classId').on('change',function(){
             var len =jsonResult[0].length;
             var html = "";
             $('#studentId').empty();
-            $('#studentId').append("<option>" + "Select Student" + "</option>");
+            $('#studentId').append("<option>"+"Select Student"+"</option>");
             for(var i=0; i<len; i++)
             {
             var stdId = jsonResult[0][i];
@@ -210,7 +222,23 @@ $('#studentId').on('change',function(){
             $('#discountValue').val('');
         }
     });  
-   
+   //arrays declaration
+    let feeType = new Array();
+    let feeAmount = new Array();
+    let feeDiscount = new Array();
+    let DiscountedValue = new Array();
+  //this code apply on the add button
+     $('#addInfo').on('click',function(){
+
+            $('#infoTable').show();
+            let fType = $('#feeType').val();
+            let fAmount =$('#feeAmount').val();
+            let fDiscount=$('#feeDiscount').val();
+            let dValue =$('#discountValue').val();
+
+            alert(fAmount);
+
+        });
 JS;
 $this->registerJs($script);
 ?> 
