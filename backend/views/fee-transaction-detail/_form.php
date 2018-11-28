@@ -102,7 +102,7 @@ use dosamigos\datetimepicker\DateTimePicker;
             <th> Total Amount        </th>
             <th> Fee Discount        </th>
             <th> Discounted Value    </th>
-             <th> Fee Amount         </th>
+            <th> Fee Amount         </th>
             <th>Delete</th>
             </tr>
         </table>
@@ -215,11 +215,8 @@ let amountt =0;
             
         } else {
             amountt = parseInt(total - feeDiscount);
-            $('#discountValue').val(feeDiscount);
-            
+            $('#discountValue').val(feeDiscount); 
             netTotal += amountt;
-           // $('#netTotal').val(netTotal);
-           
         }
     });  
    //arrays declaration
@@ -230,6 +227,8 @@ let amountt =0;
   //this code apply on the add button
      $('#addInfo').on('click',function(){
                 
+
+            $('#netTotal').val(netTotal);
 
             $('#infoTable').show();
             let fType = $('#feeType').val();
@@ -273,6 +272,7 @@ let amountt =0;
             var j=i-1;
 
             var arrVal = feeAmountArray[j];
+            alert(arrVal);
 
             feeTypeArray.splice(j,1);
             feeAmountArray.splice(j,1);
