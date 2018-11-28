@@ -26,8 +26,9 @@ use dosamigos\datetimepicker\DateTimePicker;
             <div class="col-md-4">
                 <?= $form->field($feeTransactionHead, 'std_id')->dropDownList(
                     ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
-                    ['prompt'=>'Select Student','id' => 'studentId']
-                )?>
+                    ['prompt'=>'Select Student',
+                    'id' => 'std',
+                ])?>
             </div>
             <div class="col-md-4">
                 <?= $form->field($feeTransactionHead, 'month')->dropDownList([ 'January' => 'January', 'Fabruary' => 'Fabruary', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July', 'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December', ], ['prompt' => 'Select Month']) ?>
@@ -96,11 +97,13 @@ use dosamigos\datetimepicker\DateTimePicker;
         <br/>
         <table  id="infoTable" class="table table-striped table-bordered dt-responsive nowrap" align ="center" width="70%" style="display: none;">
             <tr>
+            <th>Index No</th>
             <th> Fee Type ID         </th>
-            <th> Fee Amount          </th>
+            <th> Total Amount        </th>
             <th> Fee Discount        </th>
             <th> Discounted Value    </th>
-            <th> Net Total           </th>
+             <th> Fee Amount         </th>
+            <th>Delete</th>
             </tr>
         </table>
         <br/>
@@ -136,25 +139,32 @@ $('#classId').on('change',function(){
             
             var len =jsonResult[0].length;
             var html = "";
-            $('#studentId').empty();
-            $('#studentId').append("<option>"+"Select Student"+"</option>");
+            $('#std').empty();
+            $('#std').append("<option>"+"Select Student.."+"</option>");
             for(var i=0; i<len; i++)
             {
             var stdId = jsonResult[0][i];
             var stdName = jsonResult[1][i];
             html += "<option value="+ stdId +">"+stdName+"</option>";
             }
-            $(".field-studentId select").html(html);
+            $(".field-std select").append(html);
+
         }         
     });       
 });
 
 //get student detail
-
 var netTotal = 0;
-
-$('#studentId').on('change',function(){
-   var studentId = $('#studentId').val();
+$('#std').on('change',function(){
+   var studentId = $('#std').val();
+    $('#feeType').val('');
+    $('#feeAmount').val('');
+    $('#discountValue').val('');
+    $('#feeDiscount').val('');
+    $('#netTotal').val('');
+    netTotal = 0;
+   
+   
    
    $.ajax({
         type:'post',
@@ -173,27 +183,19 @@ $('#studentId').on('change',function(){
                 
                 if(feeType == 1){
                     $('#feeAmount').val(netAddmissionFee);
-                    var netValue = $('#feeAmount').val();
-                    netTotal += parseInt(netValue);
-                    $('#netTotal').val(netTotal);
+
                 }else if (feeType == 2){
                     $('#feeAmount').val(netMonthlyFee);
-                    var netValue = $('#feeAmount').val();
-                    netTotal += parseInt(netValue) ;
-                    $('#netTotal').val(netTotal);
+                   
                 }else {
                     $('#feeAmount').val('');
+                    
                 }      
             });   
         }         
     });       
 });
-// $('#feeAmount').on('change',function(){
-//     var netValue = $('#feeAmount').val();
-//     var total = parseInt(netValue);
-//     netTotal += total;
-//     $('#netTotal').val(netTotal);
-// });
+let amountt =0;
     $('#feeDiscount').on('change',function(){
         var netValue = $('#feeAmount').val();
         var total = parseInt(netValue);
@@ -205,49 +207,86 @@ $('#studentId').on('change',function(){
             amount = parseInt((total * feeDiscount)/100);
 
             $('#discountValue').val(amount);
-        
-            netTotal +=total - amount;
-            $('#netTotal').val(netTotal);
-            $('#feeAmount').val(''); 
-            $('#feeDiscount').val('');
-            $('#discountValue').val('');
+            
+            amountt = total - amount;
+
+            netTotal += amountt;
+           // $('#netTotal').val(netTotal);
+            
         } else {
             amountt = parseInt(total - feeDiscount);
-            $('#discountValue').val(amountt);
-        
+            $('#discountValue').val(feeDiscount);
+            
             netTotal += amountt;
-            $('#netTotal').val(netTotal);
-            $('#feeAmount').val(''); 
-            $('#feeDiscount').val('');
-            $('#discountValue').val('');
+           // $('#netTotal').val(netTotal);
+           
         }
     });  
    //arrays declaration
-    let feeType = new Array();
-    let feeAmount = new Array();
-    let feeDiscount = new Array();
-    let DiscountedValue = new Array();
+    let feeTypeArray = new Array();
+    let feeAmountArray = new Array();
+    let feeDiscountArray = new Array();
+    let discountValueArray = new Array();
   //this code apply on the add button
      $('#addInfo').on('click',function(){
+                
 
             $('#infoTable').show();
             let fType = $('#feeType').val();
-            let fAmount =$('#feeAmount').val();
             let fDiscount=$('#feeDiscount').val();
+            let totalFeeAmount = $('#feeAmount').val();
             let dValue =$('#discountValue').val();
 
-            alert(fAmount);
+
+           feeTypeArray.push(fType);
+           feeAmountArray.push(amountt);
+           feeDiscountArray.push(fDiscount);
+           discountValueArray.push(dValue);
+
+            var table = document.getElementById('infoTable');
+            let rowCount = table.rows.length;
+
+            let row = table.insertRow(1);
+
+            row.insertCell(0).innerHTML = rowCount;
+            row.insertCell(1).innerHTML = fType;
+            row.insertCell(2).innerHTML = totalFeeAmount;
+            row.insertCell(3).innerHTML = fDiscount;
+            row.insertCell(4).innerHTML = dValue;
+            row.insertCell(5).innerHTML = amountt;
+
+            row.insertCell(6).innerHTML = "<span class='glyphicon glyphicon-remove' style='color:red; font-size: 18px; padding-left: 20px;' onclick='deleteRecord(this);'></span>";
+
+
+
+            $('#feeAmount').val('');
+            $('#discountValue').val(''); 
+            $('#feeDiscount').val('');
 
         });
+
+    //function for delete the record from array
+        function deleteRecord(value){
+            alert("Are you sure you want to delete it?");
+            var i = value.parentNode.parentNode.rowIndex;
+            document.getElementById("infoTable").deleteRow(i);
+            var j=i-1;
+
+            var arrVal = feeAmountArray[j];
+
+            feeTypeArray.splice(j,1);
+            feeAmountArray.splice(j,1);
+            feeDiscountArray.splice(j,1);
+            discountValueArray.splice(j,1); 
+            let newTotal = netTotal -arrVal;
+            $('#netTotal').val(newTotal);
+        }
+
 JS;
 $this->registerJs($script);
 ?> 
 
 <script type="text/javascript">
-    function netAmount(){
-        var netValue = document.getElementById('feeAmount').value;
-        document.getElementById('netTotal').value = netValue;    
-    }
     function remainingAmount(){
         var netTotal = document.getElementById('netTotal').value;
         var paidAmount = document.getElementById('paidAmount').value;
