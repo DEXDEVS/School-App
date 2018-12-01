@@ -214,6 +214,11 @@ class FeeTransactionDetailController extends Controller
         return $this->render('fetch-students');
     }
 
+    public function actionFeeVocher()
+    {
+        return $this->render('fee-vocher');
+    }
+
     /**
      * Delete an existing FeeTransactionDetail model.
      * For ajax request will return json object
