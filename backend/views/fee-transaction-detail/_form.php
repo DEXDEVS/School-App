@@ -31,7 +31,7 @@ use dosamigos\datetimepicker\DateTimePicker;
                 ])?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'month')->dropDownList([ 'January' => 'January', 'Fabruary' => 'Fabruary', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July', 'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December', ], ['prompt' => 'Select Month']) ?>
+                <?= $form->field($feeTransactionHead, 'month')->dropDownList([ 'January' => 'January', 'Fabruary' => 'Fabruary', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July', 'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December', ], ['prompt' => 'Select Month','id'=>'month']) ?>
             </div>
         </div>
         <div class="row">
@@ -45,15 +45,16 @@ use dosamigos\datetimepicker\DateTimePicker;
                     'clientOptions' => [
                         'autoclose' => true,
                         'format' => 'yyyy-mm-dd HH:ii:ss',
-                        'todayBtn' => true
+                        'todayBtn' => true,
+                        'id'=>'date'
                     ]
                 ]);?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'total_amount')->textInput() ?>
+                <?= $form->field($feeTransactionHead, 'total_amount')->textInput(['id'=>'totalAmount']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'total_discount')->textInput() ?>
+                <?= $form->field($feeTransactionHead, 'total_discount')->textInput(['id'=>'totalDiscount']) ?>
             </div>
         </div>
     <!-- Fee Transaction Detail-->
@@ -65,7 +66,7 @@ use dosamigos\datetimepicker\DateTimePicker;
             )?> 
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount','type' => 'number']) ?>
+            <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount']) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'fee_discount')->textInput(['id'=> 'feeDiscount']) ?>
@@ -102,16 +103,17 @@ use dosamigos\datetimepicker\DateTimePicker;
             <th> Total Amount        </th>
             <th> Fee Discount        </th>
             <th> Discounted Value    </th>
-            <th> Fee Amount         </th>
+            <th> Fee Amount          </th>
             <th>Delete</th>
             </tr>
         </table>
         <br/>
     </div>
+    <input type="button" name="btn" value="Confirm" id= "insert" >
     
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 
@@ -196,6 +198,7 @@ $('#std').on('change',function(){
     });       
 });
 let amountt =0;
+let discountt = 0;
     $('#feeDiscount').on('change',function(){
         var netValue = $('#feeAmount').val();
         var total = parseInt(netValue);
@@ -226,16 +229,16 @@ let amountt =0;
     let discountValueArray = new Array();
   //this code apply on the add button
      $('#addInfo').on('click',function(){
-                
 
             $('#netTotal').val(netTotal);
+            $('#totalAmount').val(netTotal);
+
 
             $('#infoTable').show();
             let fType = $('#feeType').val();
             let fDiscount=$('#feeDiscount').val();
             let totalFeeAmount = $('#feeAmount').val();
             let dValue =$('#discountValue').val();
-
 
            feeTypeArray.push(fType);
            feeAmountArray.push(amountt);
@@ -245,7 +248,7 @@ let amountt =0;
             var table = document.getElementById('infoTable');
             let rowCount = table.rows.length;
 
-            let row = table.insertRow(1);
+            let row = table.insertRow(rowCount);
 
             row.insertCell(0).innerHTML = rowCount;
             row.insertCell(1).innerHTML = fType;
@@ -256,7 +259,8 @@ let amountt =0;
 
             row.insertCell(6).innerHTML = "<span class='glyphicon glyphicon-remove' style='color:red; font-size: 18px; padding-left: 20px;' onclick='deleteRecord(this);'></span>";
 
-
+            discountt += parseInt(dValue);
+            $('#totalDiscount').val(discountt);
 
             $('#feeAmount').val('');
             $('#discountValue').val(''); 
@@ -270,18 +274,27 @@ let amountt =0;
             var i = value.parentNode.parentNode.rowIndex;
             document.getElementById("infoTable").deleteRow(i);
             var j=i-1;
-
-            var arrVal = feeAmountArray[j];
-            alert(arrVal);
-
+            let sum = 0;
             feeTypeArray.splice(j,1);
             feeAmountArray.splice(j,1);
             feeDiscountArray.splice(j,1);
             discountValueArray.splice(j,1); 
-            let newTotal = netTotal -arrVal;
-            $('#netTotal').val(newTotal);
-        }
 
+            for(let x=0; x<feeAmountArray.length; x++){
+                sum = sum + feeAmountArray[x];
+            }
+            $('#netTotal').val(sum);
+            $('#totalAmount').val(sum);
+        }
+$('#insert').on('click',function(){ 
+        alert("Are you sure you complete your transaction?");
+        $('#netTotal').val(feeTypeArray);
+        $('#feeAmount').val(feeAmountArray);
+        $('#feeDiscount').val(feeDiscountArray);
+        $('#discountValue').val(discountValueArray); 
+    });
+        
+        
 JS;
 $this->registerJs($script);
 ?> 

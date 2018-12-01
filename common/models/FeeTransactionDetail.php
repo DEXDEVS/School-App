@@ -11,7 +11,7 @@ use Yii;
  * @property integer $fee_trans_detail_head_id
  * @property integer $fee_type_id
  * @property double $fee_amount
- * @property double $fee_discount
+ * @property string $fee_discount
  * @property double $discounted_value
  * @property double $net_total
  * @property double $paid_amount
@@ -41,11 +41,11 @@ class FeeTransactionDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fee_trans_detail_head_id', 'fee_type_id', 'fee_amount', 'net_total', 'paid_amount', 'remaining', 'status'], 'required'],
+            [['fee_trans_detail_head_id'], 'required'],
             [['fee_trans_detail_head_id', 'fee_type_id', 'created_by', 'updated_by'], 'integer'],
             [['fee_amount', 'discounted_value', 'net_total','paid_amount', 'remaining'], 'number'],
             [['status'], 'string'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by','fee_discount', 'discounted_value'], 'safe'],
+            [['fee_type_id', 'fee_amount', 'net_total', 'paid_amount', 'remaining', 'status','created_at', 'updated_at', 'created_by', 'updated_by','fee_discount', 'discounted_value'], 'safe'],
             [['fee_trans_detail_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeeTransactionHead::className(), 'targetAttribute' => ['fee_trans_detail_head_id' => 'fee_trans_id']],
             [['fee_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeeType::className(), 'targetAttribute' => ['fee_type_id' => 'fee_type_id']],
         ];

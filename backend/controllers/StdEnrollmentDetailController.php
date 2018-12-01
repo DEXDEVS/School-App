@@ -116,6 +116,7 @@ class StdEnrollmentDetailController extends Controller
                 // select2 add multiple students start...!
                 $array = $model->std_enroll_detail_std_id;
                 foreach ($array as  $value) {
+                    var_dump($value);
                     $model = new StdEnrollmentDetail();
                     $model->std_enroll_detail_head_id = $stdEnrollmentHead->std_enroll_head_id;
                     $model->std_enroll_detail_std_id = $value;

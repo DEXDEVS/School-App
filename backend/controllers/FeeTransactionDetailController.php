@@ -108,13 +108,35 @@ class FeeTransactionDetailController extends Controller
                         $feeTransactionHead->updated_by = '0'; 
                         $feeTransactionHead->updated_at = '0';
                         $feeTransactionHead->save();
+                        
+                        $str = $model->net_total;
+                        $feeId = explode(",",$str);
 
-                        $model->fee_trans_detail_head_id = $feeTransactionHead->fee_trans_id;
-                        $model->created_by = Yii::$app->user->identity->id; 
-                        $model->created_at = new \yii\db\Expression('NOW()');
-                        $model->updated_by = '0'; 
-                        $model->updated_at = '0';
-                        $model->save();
+                        $str1 = $model->fee_amount;
+                        $feeAmount = explode(",",$str1);
+                    
+                        $str2= $model->fee_discount;
+                        $feeDiscount = explode(",",$str2);
+
+                        $str3= $model->discounted_value;
+                        $discontValue = explode(",",$str3);
+                        
+                        foreach ($feeAmount as $index => $value) {
+                            $model = new FeeTransactionDetail();
+                            $model->fee_trans_detail_head_id = $feeTransactionHead->fee_trans_id;
+                            $model->fee_type_id = $feeId[$index];
+                            $model->fee_amount = $value;
+                            $model->fee_discount = $feeDiscount[$index];
+                            $model->discounted_value = $discontValue[$index];
+
+
+                            // created and updated values...
+                            $model->created_by = Yii::$app->user->identity->id;
+                            $model->created_at = new \yii\db\Expression('NOW()');
+                            $model->updated_at = 0;
+                            $model->updated_by = 0;
+                            $model->save();
+                        }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new FeeTransactionDetail",
@@ -212,6 +234,11 @@ class FeeTransactionDetailController extends Controller
     public function actionFetchStudents()
     {   
         return $this->render('fetch-students');
+    }
+
+    public function actionAjaxRequest()
+    {   
+        return $this->render('ajax-request');
     }
 
     /**
