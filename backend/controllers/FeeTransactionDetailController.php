@@ -236,9 +236,10 @@ class FeeTransactionDetailController extends Controller
         return $this->render('fetch-students');
     }
 
-    public function actionAjaxRequest()
-    {   
-        return $this->render('ajax-request');
+
+    public function actionFeeVocher()
+    {
+        return $this->render('fee-vocher');
     }
 
     /**
