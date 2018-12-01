@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Branches;
-use common\models\BranchesSearch;
+use common\models\Institute;
+use common\models\InstituteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,9 +12,9 @@ use \yii\web\Response;
 use yii\helpers\Html;
 
 /**
- * BranchesController implements the CRUD actions for Branches model.
+ * InstituteController implements the CRUD actions for Institute model.
  */
-class BranchesController extends Controller
+class InstituteController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +33,12 @@ class BranchesController extends Controller
     }
 
     /**
-     * Lists all Branches models.
+     * Lists all Institute models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new BranchesSearch();
+        $searchModel = new InstituteSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +49,7 @@ class BranchesController extends Controller
 
 
     /**
-     * Displays a single Branches model.
+     * Displays a single Institute model.
      * @param integer $id
      * @return mixed
      */
@@ -59,7 +59,7 @@ class BranchesController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Branches #".$id,
+                    'title'=> "Institute #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -74,7 +74,7 @@ class BranchesController extends Controller
     }
 
     /**
-     * Creates a new Branches model.
+     * Creates a new Institute model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -82,7 +82,7 @@ class BranchesController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new Branches();  
+        $model = new Institute();  
 
         if($request->isAjax){
             /*
@@ -91,7 +91,7 @@ class BranchesController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new Branches",
+                    'title'=> "Create new Institute",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -107,15 +107,15 @@ class BranchesController extends Controller
                 $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Branches",
-                    'content'=>'<span class="text-success">Create Branches success</span>',
+                    'title'=> "Create new Institute",
+                    'content'=>'<span class="text-success">Create Institute success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new Branches",
+                    'title'=> "Create new Institute",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -129,7 +129,7 @@ class BranchesController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->branch_id]);
+                return $this->redirect(['view', 'id' => $model->institute_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -140,7 +140,7 @@ class BranchesController extends Controller
     }
 
     /**
-     * Updates an existing Branches model.
+     * Updates an existing Institute model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -158,7 +158,7 @@ class BranchesController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update Branches #".$id,
+                    'title'=> "Update Institute #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -173,7 +173,7 @@ class BranchesController extends Controller
                 $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Branches #".$id,
+                    'title'=> "Institute #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -182,7 +182,7 @@ class BranchesController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update Branches #".$id,
+                    'title'=> "Update Institute #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -195,7 +195,7 @@ class BranchesController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->branch_id]);
+                return $this->redirect(['view', 'id' => $model->institute_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -205,7 +205,7 @@ class BranchesController extends Controller
     }
 
     /**
-     * Delete an existing Branches model.
+     * Delete an existing Institute model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -233,7 +233,7 @@ class BranchesController extends Controller
     }
 
      /**
-     * Delete multiple existing Branches model.
+     * Delete multiple existing Institute model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -264,15 +264,15 @@ class BranchesController extends Controller
     }
 
     /**
-     * Finds the Branches model based on its primary key value.
+     * Finds the Institute model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Branches the loaded model
+     * @return Institute the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Branches::findOne($id)) !== null) {
+        if (($model = Institute::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

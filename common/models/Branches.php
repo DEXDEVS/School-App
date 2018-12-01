@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "branches".
  *
  * @property integer $branch_id
+ * @property integer $institute_id
  * @property string $branch_code
  * @property string $branch_name
  * @property string $branch_location
@@ -19,6 +20,7 @@ use Yii;
  * @property integer $created_by
  * @property integer $updated_by
  *
+ * @property Institute $institute
  * @property StdSessions[] $stdSessions
  */
 class Branches extends \yii\db\ActiveRecord
@@ -37,13 +39,15 @@ class Branches extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['branch_code', 'branch_name', 'branch_location', 'branch_contact_no', 'branch_email', 'status'], 'required'],
+            [['institute_id', 'branch_code', 'branch_name', 'branch_location', 'branch_contact_no', 'branch_email', 'status', 'created_by', 'updated_by'], 'required'],
+            [['institute_id', 'created_by', 'updated_by'], 'integer'],
             [['status'], 'string'],
-            [['created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
-            [['created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
             [['branch_code', 'branch_name', 'branch_contact_no'], 'string', 'max' => 32],
             [['branch_location'], 'string', 'max' => 50],
             [['branch_email'], 'string', 'max' => 100],
+            [['branch_email'],'email'],
+            [['institute_id'], 'exist', 'skipOnError' => true, 'targetClass' => Institute::className(), 'targetAttribute' => ['institute_id' => 'institute_id']],
         ];
     }
 
@@ -54,6 +58,7 @@ class Branches extends \yii\db\ActiveRecord
     {
         return [
             'branch_id' => 'Branch ID',
+            'institute_id' => 'Institute ID',
             'branch_code' => 'Branch Code',
             'branch_name' => 'Branch Name',
             'branch_location' => 'Branch Location',
@@ -65,6 +70,14 @@ class Branches extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInstitute()
+    {
+        return $this->hasOne(Institute::className(), ['institute_id' => 'institute_id']);
     }
 
     /**

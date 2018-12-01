@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Branches;
+use common\models\Institute;
 
 /**
- * BranchesSearch represents the model behind the search form about `common\models\Branches`.
+ * InstituteSearch represents the model behind the search form about `common\models\Institute`.
  */
-class BranchesSearch extends Branches
+class InstituteSearch extends Institute
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class BranchesSearch extends Branches
     public function rules()
     {
         return [
-            [['branch_id', 'institute_id', 'created_by', 'updated_by'], 'integer'],
-            [['branch_code', 'branch_name', 'branch_location', 'branch_contact_no', 'branch_email', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['institute_id', 'created_by', 'updated_by'], 'integer'],
+            [['institute_name', 'institute_logo', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class BranchesSearch extends Branches
      */
     public function search($params)
     {
-        $query = Branches::find();
+        $query = Institute::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,7 +56,6 @@ class BranchesSearch extends Branches
         }
 
         $query->andFilterWhere([
-            'branch_id' => $this->branch_id,
             'institute_id' => $this->institute_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -64,12 +63,8 @@ class BranchesSearch extends Branches
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'branch_code', $this->branch_code])
-            ->andFilterWhere(['like', 'branch_name', $this->branch_name])
-            ->andFilterWhere(['like', 'branch_location', $this->branch_location])
-            ->andFilterWhere(['like', 'branch_contact_no', $this->branch_contact_no])
-            ->andFilterWhere(['like', 'branch_email', $this->branch_email])
-            ->andFilterWhere(['like', 'status', $this->status]);
+        $query->andFilterWhere(['like', 'institute_name', $this->institute_name])
+            ->andFilterWhere(['like', 'institute_logo', $this->institute_logo]);
 
         return $dataProvider;
     }

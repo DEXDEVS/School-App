@@ -3,21 +3,16 @@
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Branches */
+/* @var $model common\models\Institute */
 ?>
-<div class="branches-view">
+<div class="institute-view">
  
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'branch_id',
             'institute_id',
-            'branch_code',
-            'branch_name',
-            'branch_location',
-            'branch_contact_no',
-            'branch_email:email',
-            'status',
+            'institute_name',
+            'institute_logo',
             'created_at',
             'updated_at',
             'created_by',

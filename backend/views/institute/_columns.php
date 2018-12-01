@@ -12,37 +12,16 @@ return [
     ],
     //     [
     //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'branch_id',
+    //     'attribute'=>'institute_id',
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'institute_id',
-        'value'=>'institute.institute_name',
+        'attribute'=>'institute_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'branch_code',
+        'attribute'=>'institute_logo',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'branch_name',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'branch_location',
-    ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'branch_contact_no',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'branch_email',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'status',
-    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
@@ -52,12 +31,12 @@ return [
         // 'attribute'=>'updated_at',
     // ],
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'created_by',
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'created_by',
     // ],
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'updated_by',
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'updated_by',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',
