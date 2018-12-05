@@ -160,24 +160,24 @@ use common\models\StdClassName;
         <h3 style="color: red; margin-top: -10px"> Fee Detail </h3>
         <div class="row">
             <div class="col-md-4">
-                <?= $form->field($fee, 'admission_fee')->textInput(['type' => 'number','id' => 'admissionFee']) ?>
+                <?= $form->field($stdFeeDetails, 'admission_fee')->textInput(['type' => 'number','id' => 'admissionFee']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($fee, 'addmission_fee_discount')->textInput(['type' => 'number','id' => 'admissionFeeDiscount']) ?>
+                <?= $form->field($stdFeeDetails, 'addmission_fee_discount')->textInput(['type' => 'number','id' => 'admissionFeeDiscount']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($fee, 'net_addmission_fee')->textInput(['type' => 'number', 'id' => 'netAdmissionFee', 'readonly'=> true, 'onfocus' => 'showNetAdmissionFee();' ]) ?>
+                <?= $form->field($stdFeeDetails, 'net_addmission_fee')->textInput(['type' => 'number', 'id' => 'netAdmissionFee', 'readonly'=> true, 'onfocus' => 'showNetAdmissionFee();' ]) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <?= $form->field($fee, 'monthly_fee')->textInput(['type' => 'number','id' => 'monthlyFee']) ?>
+                <?= $form->field($stdFeeDetails, 'monthly_fee')->textInput(['type' => 'number','id' => 'monthlyFee']) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($fee, 'monthly_fee_discount')->textInput(['type' => 'number','id' => 'monthlyFeeDiscount']) ?>
+                <?= $form->field($stdFeeDetails, 'monthly_fee_discount')->textInput(['type' => 'number','id' => 'monthlyFeeDiscount']) ?>
              </div>
               <div class="col-md-4">
-                <?= $form->field($fee, 'net_monthly_fee')->textInput(['type' => 'number', 'id' => 'netMonthlyFee', 'readonly'=> true, 'onfocus' => 'showNetMonthlyFee();' ]) ?>
+                <?= $form->field($stdFeeDetails, 'net_monthly_fee')->textInput(['type' => 'number', 'id' => 'netMonthlyFee', 'readonly'=> true, 'onfocus' => 'showNetMonthlyFee();' ]) ?>
             </div>
         </div>        
         <!-- Fee detail end -->

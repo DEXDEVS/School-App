@@ -10,10 +10,14 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'std_fee_id',
+            'fee_id',
             'std_id',
-            'date',
-            'total_fee',
+            'admission_fee',
+            'addmission_fee_discount',
+            'net_addmission_fee',
+            'monthly_fee',
+            'monthly_fee_discount',
+            'net_monthly_fee',
             'created_at',
             'updated_at',
             'created_by',

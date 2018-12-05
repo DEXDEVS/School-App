@@ -14,9 +14,6 @@ use Yii;
  * @property string $fee_discount
  * @property double $discounted_value
  * @property double $net_total
- * @property double $paid_amount
- * @property double $remaining
- * @property string $status
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -43,9 +40,8 @@ class FeeTransactionDetail extends \yii\db\ActiveRecord
         return [
             [['fee_trans_detail_head_id'], 'required'],
             [['fee_trans_detail_head_id', 'fee_type_id', 'created_by', 'updated_by'], 'integer'],
-            [['fee_amount', 'discounted_value', 'net_total','paid_amount', 'remaining'], 'number'],
-            [['status'], 'string'],
-            [['fee_type_id', 'fee_amount', 'net_total', 'paid_amount', 'remaining', 'status','created_at', 'updated_at', 'created_by', 'updated_by','fee_discount', 'discounted_value'], 'safe'],
+            [['fee_amount', 'discounted_value', 'net_total'], 'number'],
+            [['fee_type_id', 'fee_amount', 'net_total','created_at', 'updated_at', 'created_by', 'updated_by','fee_discount', 'discounted_value'], 'safe'],
             [['fee_trans_detail_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeeTransactionHead::className(), 'targetAttribute' => ['fee_trans_detail_head_id' => 'fee_trans_id']],
             [['fee_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => FeeType::className(), 'targetAttribute' => ['fee_type_id' => 'fee_type_id']],
         ];
@@ -64,9 +60,6 @@ class FeeTransactionDetail extends \yii\db\ActiveRecord
             'fee_discount' => 'Fee Discount',
             'discounted_value' => 'Discounted Value',
             'net_total' => 'Net Total',
-            'paid_amount' => 'Paid Amount',
-            'remaining' => 'Remaining',
-            'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

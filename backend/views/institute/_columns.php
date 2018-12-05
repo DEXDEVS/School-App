@@ -10,10 +10,10 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'institute_id',
-    // ],
+        [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'institute_id',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'institute_name',
@@ -21,6 +21,10 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'institute_logo',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'institute_account_no',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -30,13 +34,13 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_at',
     // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'created_by',
+    ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'created_by',
-    // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'updated_by',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_by',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',

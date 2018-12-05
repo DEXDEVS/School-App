@@ -124,7 +124,7 @@ class StdFeeDetailsController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_fee_id]);
+                return $this->redirect(['view', 'id' => $model->fee_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -185,7 +185,7 @@ class StdFeeDetailsController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_fee_id]);
+                return $this->redirect(['view', 'id' => $model->fee_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,

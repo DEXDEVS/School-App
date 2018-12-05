@@ -12,6 +12,6 @@ use yii\helpers\Html;
         'model' => $model,
         'stdGuardianInfo' => $stdGuardianInfo,
         'stdAcademicInfo' => $stdAcademicInfo,
-        'fee' => $fee,
+        'stdFeeDetails' => $stdFeeDetails,
     ]) ?>
 </div>

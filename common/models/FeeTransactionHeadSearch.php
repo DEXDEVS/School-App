@@ -19,8 +19,8 @@ class FeeTransactionHeadSearch extends FeeTransactionHead
     {
         return [
             [['fee_trans_id', 'std_class_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
-            [['month', 'transaction_date', 'created_at', 'updated_at'], 'safe'],
-            [['total_amount', 'total_discount'], 'number'],
+            [['month', 'transaction_date', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['total_amount', 'total_discount', 'paid_amount', 'remaining'], 'number'],
         ];
     }
 
@@ -63,13 +63,16 @@ class FeeTransactionHeadSearch extends FeeTransactionHead
             'transaction_date' => $this->transaction_date,
             'total_amount' => $this->total_amount,
             'total_discount' => $this->total_discount,
+            'paid_amount' => $this->paid_amount,
+            'remaining' => $this->remaining,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'month', $this->month]);
+        $query->andFilterWhere(['like', 'month', $this->month])
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

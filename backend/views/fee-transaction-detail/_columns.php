@@ -21,6 +21,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'fee_type_id',
+        'value'=>'feeType.fee_type_name'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

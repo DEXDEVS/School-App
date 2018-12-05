@@ -6,7 +6,7 @@ use Yii;
 use common\models\StdPersonalInfo;
 use common\models\StdGuardianInfo;
 use common\models\StdAcademicInfo;
-use common\models\Fee;
+use common\models\StdFeeDetails;
 use common\models\StdPersonalInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -90,7 +90,7 @@ class StdPersonalInfoController extends Controller
         $model = new StdPersonalInfo();  
         $stdGuardianInfo = new StdGuardianInfo ;
         $stdAcademicInfo = new StdAcademicInfo;
-        $fee = new Fee();
+        $stdFeeDetails = new StdFeeDetails();
 
         if($request->isAjax){
             /*
@@ -105,13 +105,13 @@ class StdPersonalInfoController extends Controller
                         'model' => $model,
                         'stdGuardianInfo' => $stdGuardianInfo,
                         'stdAcademicInfo' => $stdAcademicInfo,
-                        'fee' => $fee,
+                        'stdFeeDetails' => $stdFeeDetails,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $fee->load($request->post())){
+            }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post())){
                         $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                         if(!empty($model->std_photo)){
                             $imageName = $model->std_name.'_photo'; 
@@ -141,12 +141,12 @@ class StdPersonalInfoController extends Controller
                         $stdAcademicInfo->updated_at = '0';
                         $stdAcademicInfo->save();
 
-                        $fee->std_id = $model->std_id;
-                        $fee->created_by = Yii::$app->user->identity->id; 
-                        $fee->created_at = new \yii\db\Expression('NOW()');
-                        $fee->updated_by = '0'; 
-                        $fee->updated_at = '0';
-                        $fee->save();
+                        $stdFeeDetails->std_id = $model->std_id;
+                        $stdFeeDetails->created_by = Yii::$app->user->identity->id; 
+                        $stdFeeDetails->created_at = new \yii\db\Expression('NOW()');
+                        $stdFeeDetails->updated_by = '0'; 
+                        $stdFeeDetails->updated_at = '0';
+                        $stdFeeDetails->save();
 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',

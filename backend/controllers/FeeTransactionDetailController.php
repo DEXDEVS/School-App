@@ -47,6 +47,11 @@ class FeeTransactionDetailController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function beforeAction($action) {
+    $this->enableCsrfValidation = false;
+    return parent::beforeAction($action);
+    }
 
 
     /**

@@ -10,21 +10,37 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'fee_id',
+    // ],
+    [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_fee_id',
+        'attribute'=>'std.std_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_id',
+        'attribute'=>'admission_fee',
+    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'addmission_fee_discount',
+    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'net_addmission_fee',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'date',
+        'attribute'=>'monthly_fee',
     ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'monthly_fee_discount',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'total_fee',
+        'attribute'=>'net_monthly_fee',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -34,10 +50,10 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_at',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'created_by',
-    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_by',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_by',

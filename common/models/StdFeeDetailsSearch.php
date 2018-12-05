@@ -18,8 +18,9 @@ class StdFeeDetailsSearch extends StdFeeDetails
     public function rules()
     {
         return [
-            [['std_fee_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
-            [['date', 'total_fee', 'created_at', 'updated_at'], 'safe'],
+            [['fee_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
+            [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'monthly_fee', 'monthly_fee_discount', 'net_monthly_fee'], 'number'],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -56,16 +57,19 @@ class StdFeeDetailsSearch extends StdFeeDetails
         }
 
         $query->andFilterWhere([
-            'std_fee_id' => $this->std_fee_id,
+            'fee_id' => $this->fee_id,
             'std_id' => $this->std_id,
-            'date' => $this->date,
+            'admission_fee' => $this->admission_fee,
+            'addmission_fee_discount' => $this->addmission_fee_discount,
+            'net_addmission_fee' => $this->net_addmission_fee,
+            'monthly_fee' => $this->monthly_fee,
+            'monthly_fee_discount' => $this->monthly_fee_discount,
+            'net_monthly_fee' => $this->net_monthly_fee,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
-
-        $query->andFilterWhere(['like', 'total_fee', $this->total_fee]);
 
         return $dataProvider;
     }

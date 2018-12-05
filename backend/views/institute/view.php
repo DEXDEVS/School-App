@@ -13,6 +13,7 @@ use yii\widgets\DetailView;
             'institute_id',
             'institute_name',
             'institute_logo',
+            'institute_account_no',
             'created_at',
             'updated_at',
             'created_by',

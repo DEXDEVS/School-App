@@ -14,14 +14,17 @@ use Yii;
  * @property string $transaction_date
  * @property double $total_amount
  * @property double $total_discount
+ * @property double $paid_amount
+ * @property double $remaining
+ * @property string $status
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
  * @property integer $updated_by
  *
  * @property FeeTransactionDetail[] $feeTransactionDetails
- * @property StdClass $stdClass
  * @property StdPersonalInfo $std
+ * @property StdClass $stdClass
  */
 class FeeTransactionHead extends \yii\db\ActiveRecord
 {
@@ -41,11 +44,11 @@ class FeeTransactionHead extends \yii\db\ActiveRecord
         return [
             [['std_class_id', 'std_id', 'month', 'transaction_date', 'total_amount', 'total_discount'], 'required'],
             [['std_class_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
-            [['month'], 'string'],
-            [['transaction_date', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
-            [['total_amount', 'total_discount'], 'number'],
-            [['std_class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['std_class_id' => 'class_id']],
+            [['month', 'status'], 'string'],
+            [['transaction_date', 'created_at', 'updated_at', 'paid_amount', 'remaining', 'status', 'created_by', 'updated_by'], 'safe'],
+            [['total_amount', 'total_discount', 'paid_amount', 'remaining'], 'number'],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
+            [['std_class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['std_class_id' => 'class_id']],
         ];
     }
 
@@ -62,6 +65,9 @@ class FeeTransactionHead extends \yii\db\ActiveRecord
             'transaction_date' => 'Transaction Date',
             'total_amount' => 'Total Amount',
             'total_discount' => 'Total Discount',
+            'paid_amount' => 'Paid Amount',
+            'remaining' => 'Remaining',
+            'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
@@ -80,16 +86,16 @@ class FeeTransactionHead extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStdClass()
+    public function getStd()
     {
-        return $this->hasOne(StdClass::className(), ['class_id' => 'std_class_id']);
+        return $this->hasOne(StdPersonalInfo::className(), ['std_id' => 'std_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStd()
+    public function getStdClass()
     {
-        return $this->hasOne(StdPersonalInfo::className(), ['std_id' => 'std_id']);
+        return $this->hasOne(StdClass::className(), ['class_id' => 'std_class_id']);
     }
 }

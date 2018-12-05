@@ -10,14 +10,14 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'fee_trans_id',
-    // ],
+        [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'fee_trans_id',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_class_id',
-        'value' => 'stdClass.class_name'
+        'value'=>'stdClass.class_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -39,6 +39,18 @@ return [
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'total_discount',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'paid_amount',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'remaining',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'status',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

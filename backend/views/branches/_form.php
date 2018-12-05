@@ -36,7 +36,7 @@ use common\models\Institute;
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'branch_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+            <?= $form->field($model, 'branch_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '999-99-99999', ]) ?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'branch_email')->textInput(['maxlength' => true]) ?>

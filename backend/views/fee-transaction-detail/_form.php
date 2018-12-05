@@ -79,21 +79,9 @@ use dosamigos\datetimepicker\DateTimePicker;
         <div class="col-md-4">
             <?= $form->field($model, 'net_total')->textInput(['id'=>'netTotal', 'readonly' => true]) ?>
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'paid_amount')->textInput(['id'=>'paidAmount','onchange'=>'remainingAmount();','type' => 'number']) ?>
-        </div>
-    </div>
-    <div class="row">    
-        <div class="col-md-3">
-            <?= $form->field($model, 'remaining')->textInput(['id'=>'remaining','readonly'=> true]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList([ 'Paid' => 'Paid', 'Unpaid' => 'Unpaid', ], ['prompt' => 'Status...']) ?>
-        </div>
     </div>
     <input type="button" name="" value ="Add" class="btn btn-success" id= "addInfo">
     
-
     <div id="mydata">
         <br/>
         <table  id="infoTable" class="table table-striped table-bordered dt-responsive nowrap" align ="center" width="70%" style="display: none;">
@@ -297,13 +285,5 @@ $('#insert').on('click',function(){
         
 JS;
 $this->registerJs($script);
-?> 
-
-<script type="text/javascript">
-    function remainingAmount(){
-        var netTotal = document.getElementById('netTotal').value;
-        var paidAmount = document.getElementById('paidAmount').value;
-        var remainingBal = netTotal - paidAmount;
-        document.getElementById('remaining').value = remainingBal;    
-    }
+?>
 </script>

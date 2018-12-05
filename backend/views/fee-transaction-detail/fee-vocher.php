@@ -29,21 +29,104 @@
 	</style>
 </head>
 <body>
+<div class="container">
+    <form  action = "index.php?r=fee-transaction-detail/fee-vocher" method="POST">
+    	<div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
+                </div>    
+            </div>    
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Select Class</label>
+                    <select class="form-control" name="classid" id="classId">
+							<?php 
+								$className = Yii::$app->db->createCommand("SELECT * FROM std_class")->queryAll();
+								
+								  	foreach ($className as  $value) { ?>	
+									<option value="<?php echo $value["class_id"]; ?>">
+										<?php echo $value["class_name"]; ?>	
+									</option>
+							<?php } ?>
+					</select>      
+                </div>    
+            </div>  
+            <!-- <div class="col-md-4">
+                <div class="form-group">
+                    <label>Select Student</label>
+                    <select class="form-control" name="student" id="std">
+							
+					</select>        
+                </div>    
+            </div> -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Select Month</label>
+                    <select class="form-control" name="month">
+								<option value="1">January</option>
+								<option value="2">Fabruary</option>
+								<option value="3">March</option>
+								<option value="4">April</option>
+								<option value="5">May</option>
+								<option value="6">June</option>
+								<option value="7">July</option>
+								<option value="8">August</option>
+								<option value="9">September</option>
+								<option value="10">October</option>
+								<option value="11">November</option>
+								<option value="12">December</option>
+					</select>      
+                </div>    
+            </div>    
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <button type="submit" name="submit" class="btn btn-info">Submit</button>
+                </div>    
+            </div>
+        </div>
+    </form>    
+</div>
+
+<?php
+	if(isset($_POST["submit"])){
+		$classid = $_POST["classid"];
+		$month = $_POST["month"];
+		$months = Yii::$app->db->createCommand("SELECT m.month_id FROM month as m RIGHT JOIN fee_transaction_head as fth ON m.month_id = fth.month WHERE fth.month = '$month'")->queryAll();
+		if(!empty($months) AND $month == $months[0]['month_id']){
+
+			$institue = Yii::$app->db->createCommand("SELECT * FROM institute ")->queryAll();
+			$branch = Yii::$app->db->createCommand("SELECT * FROM branches WHERE branch_code = 002 ")->queryAll();
+			$ids = Yii::$app->db->createCommand("SELECT class_name_id,session_id,section_id FROM std_class WHERE class_id = '$classid'")->queryAll();
+			$stdIds = $ids[0];
+			$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$stdIds[class_name_id]'")->queryAll();
+			$sessionName = Yii::$app->db->createCommand("SELECT session_name FROM std_sessions WHERE session_id = '$stdIds[session_id]'")->queryAll();
+			$sectionName = Yii::$app->db->createCommand("SELECT section_name FROM std_sections WHERE section_id = '$stdIds[section_id]'")->queryAll();
+			$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_id = '$classid'")->queryAll();
+			foreach ($student as $id =>$value) {
+				$stdInfo = Yii::$app->db->createCommand("SELECT std_name , std_father_name  FROM std_personal_info WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
+				$feeDetail = Yii::$app->db->createCommand("SELECT *  FROM fee_transaction_detail as ftd INNER JOIN fee_transaction_head as fth ON fth.fee_trans_id = ftd.fee_trans_detail_head_id WHERE fth.std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
+				$feeType = Yii::$app->db->createCommand("SELECT fee_type_id,fee_type_name  FROM fee_type")->queryAll();
+?>
 
 <div id="print-content">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-6 image">
 				<img src="images/school_logo.jpg" class="image img-circle" width="90" height="90">
-				<h2 class="h2">THE CANADIAN INSTITUTE (TCI)</h2>
-				<h4 class="h4">Gulshan Iqbal | Rahim Yar Khan</h4>
-				<span class="span">Phone No: 068-58-75567</span>
+				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
+				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
+				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 			<div class="col-md-6 image">
 				<img src="images/school_logo.jpg" class="img-circle" width="90" height="90">
-				<h2 class="h2">THE CANADIAN INSTITUTE (TCI)</h2>
-				<h4 class="h4">Gulshan Iqbal | Rahim Yar Khan</h4>
-				<span class="span">Phone No: 068-58-75567</span>
+				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
+				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
+				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 		</div><br>
 
@@ -51,26 +134,27 @@
 			<div class="col-md-6">
 				<div style="border: 1px solid; line-height: 2; height: 28px">
 					<p align="center">
-						<b>November - 2018</b>
+						<b><?php echo $month ." - ". date('Y'); ?></b>
 					</p>
 				</div>
-				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Student Copy <span style="float: right;">Voucher # : 12345</span></b></p>
+				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Student Copy <span style="float: right;">Voucher # :<?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
 				<div style="border: 1px solid; line-height: 2; height: 28px; margin-top: -10px">
 					<p>
-						<b>The Bank of Punjab, Abu Dhabi Road RYK.  &nbsp;|&nbsp;&nbsp;Account Number: 54637195377393</b>
+						<b>The Bank of Punjab, Abu Dhabi Road RYK.  &nbsp;|&nbsp;&nbsp;Account Number: 
+							<?php echo $institue[0]['institute_account_no'] ?></b>
 					</p>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div style="border: 1px solid; line-height: 2; height: 28px">
 					<p align="center">
-						<b>November - 2018</b>
+						<b><?php echo $month ." - ". date('Y'); ?></b>
 					</p>
 				</div>
-				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Institue Copy <span style="float: right;">Voucher # : 12345</span></b></p>
+				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Institue Copy <span style="float: right;">Voucher # : <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
 				<div style="border: 1px solid; line-height: 2; height: 28px; margin-top: -10px">
 					<p>
-						<b>The Bank of Punjab, Abu Dhabi Road RYK. &nbsp;|&nbsp;&nbsp;Account Number: 54637195377393</b>
+						<b>The Bank of Punjab, Abu Dhabi Road RYK. &nbsp;|&nbsp;&nbsp;Account Number: <?php echo $institue[0]['institute_account_no'] ?></b>
 					</p>
 				</div>
 			</div>
@@ -81,23 +165,23 @@
 				<table width="100%">
 					<tr>
 						<th>Student Name:</th>
-						<td>Ali Naveed</td>
+						<td><?php echo $stdInfo[0]['std_name'] ?></td>
 						<th>Father Name:</th>
-						<td>Naveed Ahmed</td>
+						<td><?php echo $stdInfo[0]['std_father_name'] ?></td>
 						<th>Roll #</th>
-						<td>001</td>
+						<td><?php echo $student[$id]['std_enroll_detail_id'] ?></td>
 					</tr>
 					<tr>
 						<th>Session:</th>
-						<td>2017-2018</td>
+						<td><?php echo $sessionName[0]['session_name']?></td>
 						<th>Class</th>
-						<td>5th</td>
+						<td><?php echo $className[0]['class_name']?></td>
 						<th>Section</th>
-						<td>5th-Red</td>
+						<td><?php echo $className[0]['class_name'] .'-'. $sectionName[0]['section_name']?></td>
 					</tr>
 					<tr>
 						<th>Issue Date:</th>
-						<td>01-11-2018</td>
+						<td><?php echo date('d-m-Y') ?></td>
 						<th>Due Date:</th>
 						<td>10-11-2018</td>			
 						<th>Valid Date:</th>
@@ -110,23 +194,23 @@
 				<table width="100%" style="border:1px">
 					<tr>
 						<th>Student Name:</th>
-						<td>Ali Naveed</td>
+						<td><?php echo $stdInfo[0]['std_name'] ?></td>
 						<th>Father Name:</th>
-						<td>Naveed Ahmed</td>
+						<td><?php echo $stdInfo[0]['std_father_name'] ?></td>
 						<th>Roll #</th>
-						<td>001</td>
+						<td><?php echo $student[$id]['std_enroll_detail_id'] ?></td>
 					</tr>
 					<tr>
 						<th>Session:</th>
-						<td>2017-2018</td>
+						<td><?php echo $sessionName[0]['session_name']?></td>
 						<th>Class</th>
-						<td>5th</td>
+						<td><?php echo $className[0]['class_name']?></td>
 						<th>Section</th>
-						<td>5th-Red</td>
+						<td><?php echo $className[0]['class_name'] .'-'. $sectionName[0]['section_name']?></td>
 					</tr>
 					<tr>
 						<th>Issue Date:</th>
-						<td>01-11-2018</td>
+						<td><?php echo date('d-m-Y') ?></td>
 						<th>Due Date:</th>
 						<td>10-11-2018</td>			
 						<th>Valid Date:</th>
@@ -144,46 +228,21 @@
 						<th colspan="2">Descrpition</th>
 						<th>Amount</th>
 					</tr>
+					<?php foreach ($feeType as $index => $value) { ?>
 					<tr>
-						<td align="center">1</td>
-						<td colspan="2">Monthly Tuition Fee</td>
-						<td align="center">2,000</td>
+						<td align="center"><?php echo ($index +1);?></td>
+						<td colspan="2"><?php echo $feeType[$index]['fee_type_name'];?></td>
+						<td align="center">
+							<?php
+								foreach ($feeDetail as $key => $value) { 
+									if($feeDetail[$key]['fee_type_id'] == $feeType[$index]['fee_type_id'] ){
+										echo $feeDetail[$key]['fee_amount'];
+									}	
+								} 
+							?>
+						</td>
 					</tr>
-					<tr>
-						<td align="center">2</td>
-						<td colspan="2">Admission Fee</td>
-						<td align="center">4,000</td>
-					</tr>
-					<tr>
-						<td align="center">3</td>
-						<td colspan="2">Transport Fee</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">4</td>
-						<td colspan="2">Security Fund</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">5</td>
-						<td colspan="2">Annual Fee</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">6</td>
-						<td colspan="2">Library Fee</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">7</td>
-						<td colspan="2">Unpaid Voucher Fine</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">8</td>
-						<td colspan="2">Prospectus Charges</td>
-						<td align="center"></td>
-					</tr>
+					<?php } ?>	
 				</table>
 			</div>
 			
@@ -194,46 +253,21 @@
 						<th colspan="2">Descrpition</th>
 						<th>Amount</th>
 					</tr>
+					<?php foreach ($feeType as $index => $value) { ?>
 					<tr>
-						<td align="center">1</td>
-						<td colspan="2">Monthly Tuition Fee</td>
-						<td align="center">2,000</td>
+						<td align="center"><?php echo ($index +1);?></td>
+						<td colspan="2"><?php echo $feeType[$index]['fee_type_name'];?></td>
+						<td align="center">
+							<?php
+								foreach ($feeDetail as $key => $value) { 
+									if($feeDetail[$key]['fee_type_id'] == $feeType[$index]['fee_type_id'] ){
+										echo $feeDetail[$key]['fee_amount'];
+									}	
+								} 
+							?>
+						</td>
 					</tr>
-					<tr>
-						<td align="center">2</td>
-						<td colspan="2">Admission Fee</td>
-						<td align="center">4,000</td>
-					</tr>
-					<tr>
-						<td align="center">3</td>
-						<td colspan="2">Transport Fee</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">4</td>
-						<td colspan="2">Security Fund</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">5</td>
-						<td colspan="2">Annual Fee</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">6</td>
-						<td colspan="2">Library Fee</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">7</td>
-						<td colspan="2">Unpaid Voucher Fine</td>
-						<td align="center"></td>
-					</tr>
-					<tr>
-						<td align="center">8</td>
-						<td colspan="2">Prospectus Charges</td>
-						<td align="center"></td>
-					</tr>
+					<?php } ?>	
 				</table>
 			</div>
 		</div>
@@ -243,15 +277,15 @@
 				<table class="table">
 					<tr>
 						<th>Current Vocher Total:</th>
-						<td>6,000</td>
+						<td> <?php echo $feeDetail[0]['total_amount'];?> </td>
 					</tr>
 					<tr>
 						<th>Previous Dues:</th>
-						<td></td>
+						<td> <?php echo $feeDetail[0]['remaining'];?> </td>
 					</tr>
 					<tr>
 						<th>Receivable within due date:</th>
-						<td><b>6,000</b></td>
+						<td> <b><?php echo $feeDetail[0]['total_amount'];?></b> </td>
 					</tr>
 				</table>
 			</div>
@@ -259,15 +293,15 @@
 				<table width="100%" class="table">
 					<tr>
 						<th>Current Vocher Total:</th>
-						<td>6,000</td>
+						<td> <?php echo $feeDetail[0]['total_amount'];?> </td>
 					</tr>
 					<tr>
 						<th>Previous Dues:</th>
-						<td></td>
+						<td> <?php echo $feeDetail[0]['remaining'];?> </td>
 					</tr>
 					<tr>
 						<th>Receivable within due date:</th>
-						<td><b>6,000</b></td>
+						<td> <b><?php echo $feeDetail[0]['total_amount'];	?></b></td>
 					</tr>
 				</table>
 			</div>
@@ -315,6 +349,10 @@
 		</div>
 	</div>
 	<!-- container-fluid close -->
+	<?php 
+		//enfing of foreach loop
+		}
+	 ?>
 </div>
 <!-- print-content close -->
 
@@ -323,16 +361,22 @@
 </right>
 
 <script type="text/javascript">
-function printDiv(divName) {
-    //var ButtonControl = document.getElementById("btnprint");
-    // show html content...
-    var printContents = document.getElementById(divName).innerHTML;
-    w=window.open();
-    w.document.write(printContents);
-    w.print();
-    w.close();	
-}
+	function printDiv(divName) {
+	    //var ButtonControl = document.getElementById("btnprint");
+	    // show html content...
+	    var printContents = document.getElementById(divName).innerHTML;
+	    w=window.open();
+	    w.document.write(printContents);
+	    w.print();
+	    w.close();	
+	}
 </script>
-
+<?php
+	// ending of if statement
+	} else {
+		echo "Select a valid month";
+	}
+}
+?> 
 </body>
 </html>

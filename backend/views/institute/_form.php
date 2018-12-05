@@ -14,6 +14,17 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'institute_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'institute_logo')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'institute_account_no')->textInput() ?>
+
+    <?= $form->field($model, 'created_at')->textInput() ?>
+
+    <?= $form->field($model, 'updated_at')->textInput() ?>
+
+    <?= $form->field($model, 'created_by')->textInput() ?>
+
+    <?= $form->field($model, 'updated_by')->textInput() ?>
+
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

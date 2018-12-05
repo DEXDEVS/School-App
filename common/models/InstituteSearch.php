@@ -18,7 +18,7 @@ class InstituteSearch extends Institute
     public function rules()
     {
         return [
-            [['institute_id', 'created_by', 'updated_by'], 'integer'],
+            [['institute_id', 'institute_account_no', 'created_by', 'updated_by'], 'integer'],
             [['institute_name', 'institute_logo', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -57,6 +57,7 @@ class InstituteSearch extends Institute
 
         $query->andFilterWhere([
             'institute_id' => $this->institute_id,
+            'institute_account_no' => $this->institute_account_no,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
