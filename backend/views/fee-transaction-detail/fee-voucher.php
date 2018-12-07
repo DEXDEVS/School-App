@@ -66,18 +66,18 @@
                 <div class="form-group">
                     <label>Select Month</label>
                     <select class="form-control" name="month">
-								<option value="1">January</option>
-								<option value="2">Fabruary</option>
-								<option value="3">March</option>
-								<option value="4">April</option>
-								<option value="5">May</option>
-								<option value="6">June</option>
-								<option value="7">July</option>
-								<option value="8">August</option>
-								<option value="9">September</option>
-								<option value="10">October</option>
-								<option value="11">November</option>
-								<option value="12">December</option>
+						<option value="1">January</option>
+						<option value="2">Fabruary</option>
+						<option value="3">March</option>
+						<option value="4">April</option>
+						<option value="5">May</option>
+						<option value="6">June</option>
+						<option value="7">July</option>
+						<option value="8">August</option>
+						<option value="9">September</option>
+						<option value="10">October</option>
+						<option value="11">November</option>
+						<option value="12">December</option>
 					</select>      
                 </div>    
             </div>    
@@ -137,7 +137,7 @@
 						<b><?php echo $month ." - ". date('Y'); ?></b>
 					</p>
 				</div>
-				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Student Copy <span style="float: right;">Voucher # :<?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
+				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Student Copy <span style="float: right;">Voucher # <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
 				<div style="border: 1px solid; line-height: 2; height: 28px; margin-top: -10px">
 					<p>
 						<b>The Bank of Punjab, Abu Dhabi Road RYK.  &nbsp;|&nbsp;&nbsp;Account Number: 
@@ -151,7 +151,7 @@
 						<b><?php echo $month ." - ". date('Y'); ?></b>
 					</p>
 				</div>
-				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Institue Copy <span style="float: right;">Voucher # : <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
+				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Institue Copy <span style="float: right;">Voucher # <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
 				<div style="border: 1px solid; line-height: 2; height: 28px; margin-top: -10px">
 					<p>
 						<b>The Bank of Punjab, Abu Dhabi Road RYK. &nbsp;|&nbsp;&nbsp;Account Number: <?php echo $institue[0]['institute_account_no'] ?></b>
@@ -346,7 +346,7 @@
 			<div class="col-md-6">
 				<p>A fine of Rs. 100 will be charged after due date. This voucher is not valid after the date of validity and bank will not receive it. For unpaid fee voucher, a fine of Rs. 200 will be charged in the voucher of next month.</p>
 			</div>
-		</div>
+		</div><hr>
 	</div>
 	<!-- container-fluid close -->
 	<?php 
