@@ -97,7 +97,10 @@
 		$classid = $_POST["classid"];
 		$month = $_POST["month"];
 		$months = Yii::$app->db->createCommand("SELECT m.month_id FROM month as m RIGHT JOIN fee_transaction_head as fth ON m.month_id = fth.month WHERE fth.month = '$month'")->queryAll();
-		if(!empty($months) AND $month == $months[0]['month_id']){
+		if(!empty($months)){
+			$monthId = $months[0]["month_id"];
+		}
+		if(!empty($months) && $month == $monthId){
 
 			$institue = Yii::$app->db->createCommand("SELECT * FROM institute ")->queryAll();
 			$branch = Yii::$app->db->createCommand("SELECT * FROM branches WHERE branch_code = 002 ")->queryAll();
@@ -109,7 +112,7 @@
 			$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_id = '$classid'")->queryAll();
 			foreach ($student as $id =>$value) {
 				$stdInfo = Yii::$app->db->createCommand("SELECT std_name , std_father_name  FROM std_personal_info WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
-				$feeDetail = Yii::$app->db->createCommand("SELECT *  FROM fee_transaction_detail as ftd INNER JOIN fee_transaction_head as fth ON fth.fee_trans_id = ftd.fee_trans_detail_head_id WHERE fth.std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
+				$feeDetail = Yii::$app->db->createCommand("SELECT *  FROM fee_transaction_detail as ftd INNER JOIN fee_transaction_head as fth ON fth.fee_trans_id = ftd.fee_trans_detail_head_id WHERE fth.std_id = '$value[std_enroll_detail_std_id]' AND fth.month = '$month'")->queryAll();
 				$feeType = Yii::$app->db->createCommand("SELECT fee_type_id,fee_type_name  FROM fee_type")->queryAll();
 ?>
 
@@ -374,8 +377,9 @@
 <?php
 	// ending of if statement
 	} else {
-		echo "Select a valid month";
+		echo "select a valid month";
 	}
+//ending of isset if
 }
 ?> 
 </body>

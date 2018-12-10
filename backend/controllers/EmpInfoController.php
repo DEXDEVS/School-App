@@ -56,11 +56,10 @@ class EmpInfoController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
-        $model = $this->findModel($id);
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "<b>Employee: </b>".$model->emp_name,
+                    'title'=> "EmpInfo #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -92,7 +91,7 @@ class EmpInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "<b>Create new Employee</b>",
+                    'title'=> "Create new EmpInfo",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -104,12 +103,12 @@ class EmpInfoController extends Controller
                 $model->created_by = Yii::$app->user->identity->id; 
                 $model->created_at = new \yii\db\Expression('NOW()');
                 $model->updated_by = '0';
-                $model->updated_at = '0'; 
+                $model->updated_at = '0';
                 $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Employee",
-                    'content'=>'<span class="text-success">Create Employee successfully</span>',
+                    'title'=> "Create new EmpInfo",
+                    'content'=>'<span class="text-success">Create EmpInfo success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
@@ -159,19 +158,14 @@ class EmpInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "<b>Update Employee: </b>".$model->emp_name,
+                    'title'=> "Update EmpInfo #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post())){
-                $model->updated_by = Yii::$app->user->identity->id;
-                $model->updated_at = new \yii\db\Expression('NOW()');
-                $model->created_by = $model->created_by;
-                $model->created_at = $model->created_at;
-                $model->save();
+            }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "EmpInfo #".$id,
@@ -183,7 +177,7 @@ class EmpInfoController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update Employee #".$id,
+                    'title'=> "Update EmpInfo #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -195,7 +189,12 @@ class EmpInfoController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
+            if ($model->load($request->post())) {
+                $model->updated_by = Yii::$app->user->identity->id;
+                $model->updated_at = new \yii\db\Expression('NOW()');
+                $model->created_by = $model->created_by;
+                $model->created_at = $model->created_at;
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->emp_id]);
             } else {
                 return $this->render('update', [

@@ -10,7 +10,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel common\models\EmpInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Emp Infos');
+$this->title = 'Emp Infos';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -27,9 +27,9 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Employee Info','class'=>'btn btn-success']).
+                    ['role'=>'modal-remote','title'=> 'Create new Emp Infos','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
+                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.
                     '{export}'
                 ],
@@ -60,6 +60,7 @@ CrudAsset::register($this);
 </div>
 <?php Modal::begin([
     "id"=>"ajaxCrudModal",
+    "size"=>"modal-lg",
     "footer"=>"",// always need it for jquery plugin
 ])?>
 <?php Modal::end(); ?>
