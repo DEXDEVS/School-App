@@ -241,10 +241,14 @@ class FeeTransactionDetailController extends Controller
         return $this->render('fetch-students');
     }
 
-
-    public function actionFeeVocher()
+    public function actionFeeVoucher()
     {
-        return $this->render('fee-vocher');
+        return $this->render('fee-voucher');
+    }
+
+    public function actionCollectVoucher()
+    {
+        return $this->render('collect-voucher');
     }
 
     /**
