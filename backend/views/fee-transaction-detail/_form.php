@@ -31,7 +31,7 @@ use dosamigos\datetimepicker\DateTimePicker;
                 ])?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'month')->dropDownList([ 'January' => 'January', 'Fabruary' => 'Fabruary', 'March' => 'March', 'April' => 'April', 'May' => 'May', 'June' => 'June', 'July' => 'July', 'August' => 'August', 'September' => 'September', 'October' => 'October', 'November' => 'November', 'December' => 'December', ], ['prompt' => 'Select Month','id'=>'month']) ?>
+                <?= $form->field($feeTransactionHead, 'month')->dropDownList([ '1' => 'January', '2' => 'Fabruary', '3' => 'March', '4' => 'April', '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'August', '9' => 'September', '10' => 'October', '11' => 'November', '12' => 'December', ], ['prompt' => 'Select Month','id'=>'month']) ?>
             </div>
         </div>
         <div class="row">
@@ -51,10 +51,10 @@ use dosamigos\datetimepicker\DateTimePicker;
                 ]);?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'total_amount')->textInput(['id'=>'totalAmount']) ?>
+                <?= $form->field($feeTransactionHead, 'total_amount')->textInput(['id'=>'totalAmount', 'readonly' => true]) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'total_discount')->textInput(['id'=>'totalDiscount']) ?>
+                <?= $form->field($feeTransactionHead, 'total_discount')->textInput(['id'=>'totalDiscount', 'readonly' => true]) ?>
             </div>
         </div>
     <!-- Fee Transaction Detail-->
@@ -69,7 +69,7 @@ use dosamigos\datetimepicker\DateTimePicker;
             <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount']) ?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'fee_discount')->textInput(['id'=> 'feeDiscount']) ?>
+            <?= $form->field($model, 'fee_discount')->textInput(['id'=> 'feeDiscount', 'value' => 0]) ?>
         </div>
     </div>
     <div class="row">
@@ -97,7 +97,7 @@ use dosamigos\datetimepicker\DateTimePicker;
         </table>
         <br/>
     </div>
-    <input type="button" name="btn" value="Confirm" id= "insert" >
+    <input type="button" name="btn" class="btn btn-info" value="Confirm" id= "insert" >
     
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

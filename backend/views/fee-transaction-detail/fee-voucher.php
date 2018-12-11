@@ -30,7 +30,7 @@
 </head>
 <body>
 <div class="container">
-    <form  action = "index.php?r=fee-transaction-detail/fee-vocher" method="POST">
+    <form  action = "index.php?r=fee-transaction-detail/fee-voucher" method="POST">
     	<div class="row">
             <div class="col-md-4">
                 <div class="form-group">
