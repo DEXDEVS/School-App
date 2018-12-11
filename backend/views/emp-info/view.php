@@ -19,6 +19,7 @@ use yii\widgets\DetailView;
             'emp_marital_status',
             'emp_gender',
             'emp_designation_id',
+            'emp_branch_id',
             'emp_email:email',
             'emp_qualification',
             'emp_passing_year',

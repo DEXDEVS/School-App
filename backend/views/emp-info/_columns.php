@@ -10,14 +10,9 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'emp_id',
-    // ],
-    [
+        [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_designation_id',
-        'value' => 'empDesignation.emp_designation'
+        'attribute'=>'emp_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -50,6 +45,10 @@ return [
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_designation_id',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_branch_id',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

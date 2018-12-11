@@ -38,6 +38,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                    'actions' => ['reset-password'],
+                    'allow' => true,
+                    'roles' => ['?'],
+                    ],
                 ],
             ],
             'verbs' => [
