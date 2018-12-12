@@ -16,13 +16,13 @@
         	<div class="col-md-3">
                 <div class="form-group">
                 	<label>Current Date</label>
-                    <input class="form-control" data-date-format="mm/dd/yyyy" type="date" name="date">
+                    <input class="form-control" data-date-format="mm/dd/yyyy" type="date" name="date" required="">
                 </div>    
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Select Class</label>
-                    <select class="form-control" name="classid" id="classId">
+                    <select class="form-control" name="classid" id="classId" required="">
 							<?php 
 								$className = Yii::$app->db->createCommand("SELECT * FROM std_class")->queryAll();
 								
@@ -45,11 +45,11 @@
 
 <?php
 	if(isset($_POST["submit"])){
-		$classid = $_POST["classid"];
-		$date = $_POST["date"];
+		 
+		$classid= $_POST["classid"];
+		 $date = $_POST["date"];
 
 		$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_id = '$classid'")->queryAll();
-		var_dump($student);
 		?>
 	<div class="container-fluid">
 		<hr>
@@ -63,7 +63,9 @@
 							<th>Student Name</th>
 							<th>Attendance</th>
 						</tr>
-						<?php $length = count($student); 
+						
+						<?php $length = count($student);
+						//$stdId = array(); 
 						for( $i=0; $i<$length; $i++) { ?>
 							<tr>
 								<td><?php echo $i+1 ?></td>
@@ -78,9 +80,7 @@
 								</td>
 							</tr>
 					<?php
-						// $attendance = array();
-						// $radio = "std".($i+1);
-						// $attendance[$stdId] = $radio;
+						$stdAttendId[$i] = $stdId;
 						//closing for loop
 						}
 					?>
@@ -90,6 +90,13 @@
 			</div><hr>
 			<div class="col-md-2">
 	                <div class="form-group">
+	                	<?php foreach ($stdAttendId as $value) {
+	                		echo '<input type="hidden" name="stdAttendance[]" value="'.$value.'">';
+	                	}
+	                	?>
+	                	<input type="hidden" name="length" value="<?php echo $length; ?>">
+	                	<input type="hidden" name="classid" value="<?php echo $classid; ?>">
+	                	<input type="hidden" name="date" value="<?php echo $date; ?>">
 	                    <button type="submit" name="save" class="btn btn-info form-control">Save Attendance</button>
 	                </div>    
 	        </div>
@@ -102,7 +109,28 @@
 
 	<?php 	
 		if (isset($_POST["save"])) {
-			
+				$classid = $_POST["classid"];
+				$date = $_POST["date"];
+				$length = $_POST["length"];
+				$stdAttendId = $_POST["stdAttendance"];
+				for($i=0; $i<$length;$i++){
+					$q=$i+1;
+					$std = "std".$q;
+					$status[$i] = $_POST["$std"];
+				}
+				$techerEmail = Yii::$app->user->identity->email;
+				$teacherId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$techerEmail'")->queryAll();
+
+				//var_dump($status);
+				for($i=0; $i<$length; $i++){
+					$attendance = Yii::$app->db->createCommand()->insert('std_attendance',[
+						'teacher_id' => $teacherId[0]['emp_id'],
+						'class_id' => $classid,
+						'date' => $date,
+						'student_id' => $stdAttendId[$i],
+						'status' => $status[$i],
+					])->execute();
+				}
 		}
 	 ?>
 

@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-info" onfocus="setVoucherID()"> Show Voucher Details</button>
+                    <button type="submit" name="submit" class="btn btn-info"> Show Voucher Details</button>
                 </div>    
             </div>   
         </div>
@@ -153,28 +153,21 @@ $url = \yii\helpers\Url::to("index.php?r=fee-transaction-detail/update-voucher")
 
 $script = <<< JS
 
-$('#btn').on('click',function(){
+$('#btn').on('click',function(event){
     var paidAmount = $('#paid_amount').val();
     var remainingAmount = $('#remaining_amount').val();
     var status = $('#status').val();
     var voucherNo = $('#voucherNo').val();
-
+    event.preventDefault();
     $.ajax({
         type:'post',
+        cache:false,
         data:{voucher_no:voucherNo,paid_amount:paidAmount,remaining_amount:remainingAmount,status:status},
         url: "$url",
 
         success:function(result){
-            //var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-            alert(result);
-            console.log(result);
-
-            // if(result==1){
-            //     $('.x_content').html('Vocher Collected Successfully...!');
-            // }
-            // else{
-            //     $('.x_content').html('Vocher Not Collected...!');
-            // }
+            var jsonResult = JSON.parse(result.substring(result.indexOf('{'),result.indexOf('}')+1));
+            console.log(jsonResult);
         }         
     });       
 });

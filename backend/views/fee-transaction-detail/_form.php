@@ -51,33 +51,36 @@ use dosamigos\datetimepicker\DateTimePicker;
                 ]);?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'total_amount')->textInput(['id'=>'totalAmount', 'readonly' => true]) ?>
+                <?= $form->field($model, 'fee_type_id')->dropDownList(
+                    ArrayHelper::map(FeeType::find()->all(),'fee_type_id','fee_type_name'),
+                    ['prompt'=>'Select FeeType','id'=>'feeType']
+                )?>  
             </div>
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'total_discount')->textInput(['id'=>'totalDiscount', 'readonly' => true]) ?>
+                <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount']) ?>
             </div>
         </div>
     <!-- Fee Transaction Detail-->
     <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'fee_type_id')->dropDownList(
-                    ArrayHelper::map(FeeType::find()->all(),'fee_type_id','fee_type_name'),
-                    ['prompt'=>'Select FeeType','id'=>'feeType']
-            )?> 
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount']) ?>
+        <div class="col-md-2">
+            
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'fee_discount')->textInput(['id'=> 'feeDiscount', 'value' => 0]) ?>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'discounted_value')->textInput(['id'=>'discountValue', 'readonly' => true]) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2 invisible" >
             <?= $form->field($model, 'net_total')->textInput(['id'=>'netTotal', 'readonly' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($feeTransactionHead, 'total_amount')->textInput(['id'=>'totalAmount', 'readonly' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($feeTransactionHead, 'total_discount')->textInput(['id'=>'totalDiscount', 'readonly' => true]) ?>
         </div>
     </div>
     <input type="button" name="" value ="Add" class="btn btn-success" id= "addInfo">
@@ -124,7 +127,7 @@ $('#classId').on('change',function(){
         url: "$url",
 
         success: function(result){
-
+            console.log(result);
             var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
             
             var len =jsonResult[0].length;
@@ -263,6 +266,7 @@ let discountt = 0;
             document.getElementById("infoTable").deleteRow(i);
             var j=i-1;
             let sum = 0;
+            let summ = 0;
             feeTypeArray.splice(j,1);
             feeAmountArray.splice(j,1);
             feeDiscountArray.splice(j,1);
@@ -273,6 +277,11 @@ let discountt = 0;
             }
             $('#netTotal').val(sum);
             $('#totalAmount').val(sum);
+            //Total Disscount
+            for(let x=0; x<discountValueArray.length; x++){
+                summ = summ + discountValueArray[x];
+            }
+            $('#totalDiscount').val(parseInt(summ));
         }
 $('#insert').on('click',function(){ 
         alert("Are you sure you complete your transaction?");
