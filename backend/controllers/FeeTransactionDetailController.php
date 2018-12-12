@@ -108,6 +108,7 @@ class FeeTransactionDetailController extends Controller
         
                 ];         
             }else if($feeTransactionHead->load($request->post()) && $model->load($request->post())){
+                        $feeTransactionHead->status = "Unpaid";
                         $feeTransactionHead->created_by = Yii::$app->user->identity->id; 
                         $feeTransactionHead->created_at = new \yii\db\Expression('NOW()');
                         $feeTransactionHead->updated_by = '0'; 
@@ -249,6 +250,11 @@ class FeeTransactionDetailController extends Controller
     public function actionCollectVoucher()
     {
         return $this->render('collect-voucher');
+    }
+
+    public function actionUpdateVoucher()
+    {
+        return $this->render('update-voucher');
     }
 
     /**
