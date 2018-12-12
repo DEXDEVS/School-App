@@ -98,7 +98,7 @@
 	if(isset($_POST["submit"])){
 		$classid = $_POST["classid"];
 		$month = $_POST["month"];
-		$months = Yii::$app->db->createCommand("SELECT m.month_id FROM month as m RIGHT JOIN fee_transaction_head as fth ON m.month_id = fth.month WHERE fth.month = '$month'")->queryAll();
+		$months = Yii::$app->db->createCommand("SELECT * FROM month as m RIGHT JOIN fee_transaction_head as fth ON m.month_id = fth.month WHERE fth.month = '$month'")->queryAll();
 		if(!empty($months)){
 			$monthId = $months[0]["month_id"];
 		}
@@ -115,6 +115,9 @@
 			foreach ($student as $id =>$value) {
 				$stdInfo = Yii::$app->db->createCommand("SELECT std_name , std_father_name  FROM std_personal_info WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
 				$feeDetail = Yii::$app->db->createCommand("SELECT *  FROM fee_transaction_detail as ftd INNER JOIN fee_transaction_head as fth ON fth.fee_trans_id = ftd.fee_trans_detail_head_id WHERE fth.std_id = '$value[std_enroll_detail_std_id]' AND fth.month = '$month'")->queryAll();
+				// var_dump($feeDetail);
+				// $stdMonth = $feeDetail['month'];
+				// if(!empty($stdMonth) && $stdMonth == $month ){
 				$feeType = Yii::$app->db->createCommand("SELECT fee_type_id,fee_type_name  FROM fee_type")->queryAll();
 ?>
 	
@@ -144,7 +147,7 @@
 			<div class="col-md-4">
 				<div style="border: 1px solid; line-height: 2; height: 28px">
 					<p align="center">
-						<b><?php echo $month ." - ". date('Y'); ?></b>
+						<b><?php echo $months[0]["month_name"] ." - ". date('Y'); ?></b>
 					</p>
 				</div>
 				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Student Copy <span style="float: right;">Voucher # <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
@@ -158,7 +161,7 @@
 			<div class="col-md-4">
 				<div style="border: 1px solid; line-height: 2; height: 28px">
 					<p align="center">
-						<b><?php echo $month ." - ". date('Y'); ?></b>
+						<b><?php echo $months[0]["month_name"] ." - ". date('Y'); ?></b>
 					</p>
 				</div>
 				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Institue Copy <span style="float: right;">Voucher # <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
@@ -458,7 +461,15 @@
 	</div>
 	<!-- print-content close -->
 	<?php 
+<<<<<<< HEAD
 		//ending of foreach loop
+=======
+		//ending of if statement
+	// } else {
+	// 	echo "blah blah";
+	// }
+		//enfing of foreach loop
+>>>>>>> 688d1f3f69a3c26b40e0a889529841cf3ee0db7d
 		}
 	?>
 	
@@ -475,7 +486,7 @@
 <?php
 	// ending of if statement
 	} else {
-		echo "select a valid month";
+		echo "Please Select a valid month";
 	}
 //ending of isset if
 }

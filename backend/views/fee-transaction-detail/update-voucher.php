@@ -9,9 +9,13 @@
     $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount, 'remaining'=> $remainingAmount , 'status' => $status], ['fee_trans_id' => $voucherNo])->execute();
     if ($updateTransactionHead) {
         //Success
-        echo 1;
+        echo "{\"";
+        echo true;
+        echo "\"}";
         } else {
         //Failure
-        echo 0;
+        echo "{";
+        echo false;
+        echo "}";
     }
 ?>
