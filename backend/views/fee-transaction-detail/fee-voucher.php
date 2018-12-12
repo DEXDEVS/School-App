@@ -130,13 +130,13 @@
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 			<div class="col-md-4 image">
-				<img src="images/school_logo.jpg" class="img-circle" width="65" height="65">
+				<img src="images/school_logo.jpg" class="image img-circle" width="65" height="65">
 				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
 				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 			<div class="col-md-4 image">
-				<img src="images/school_logo.jpg" class="img-circle" width="65" height="65">
+				<img src="images/school_logo.jpg" class="image img-circle" width="65" height="65">
 				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
 				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
@@ -174,7 +174,7 @@
 			<div class="col-md-4">
 				<div style="border: 1px solid; line-height: 2; height: 28px">
 					<p align="center">
-						<b><?php echo $month ." - ". date('Y'); ?></b>
+						<b><?php echo $months[0]["month_name"] ." - ". date('Y'); ?></b>
 					</p>
 				</div>
 				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Bank Copy <span style="float: right;">Voucher # <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
@@ -461,15 +461,7 @@
 	</div>
 	<!-- print-content close -->
 	<?php 
-<<<<<<< HEAD
 		//ending of foreach loop
-=======
-		//ending of if statement
-	// } else {
-	// 	echo "blah blah";
-	// }
-		//enfing of foreach loop
->>>>>>> 688d1f3f69a3c26b40e0a889529841cf3ee0db7d
 		}
 	?>
 	
@@ -486,7 +478,12 @@
 <?php
 	// ending of if statement
 	} else {
-		echo "Please Select a valid month";
+		echo 
+			"<div class='row' style='margin:0px -10px 0px 15px;'>
+				<div class='col-md-12 alert alert-warning' style='text-align: center'>
+					Please Select a valid month
+				</div>
+			</div>";
 	}
 //ending of isset if
 }
