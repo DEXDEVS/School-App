@@ -7,7 +7,7 @@ use johnitvn\ajaxcrud\CrudAsset;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\EmpInfoSearch */
+/* @var $searchModel backend\models\EmpInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Emp Infos';
@@ -60,7 +60,6 @@ CrudAsset::register($this);
 </div>
 <?php Modal::begin([
     "id"=>"ajaxCrudModal",
-    "size"=>"modal-lg",
     "footer"=>"",// always need it for jquery plugin
 ])?>
 <?php Modal::end(); ?>

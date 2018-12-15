@@ -10,10 +10,10 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_id',
-    ],
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'emp_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'emp_name',
@@ -32,7 +32,11 @@ return [
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'emp_address',
+        // 'attribute'=>'emp_perm_address',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_temp_address',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -44,7 +48,19 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_photo',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_designation_id',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_type_id',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'group_by',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -65,6 +81,10 @@ return [
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_institute_name',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'degree_scan_copy',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

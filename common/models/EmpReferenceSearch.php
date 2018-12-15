@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\EmpDesignation;
+use common\models\EmpReference;
 
 /**
- * EmpDesignationSearch represents the model behind the search form about `common\models\EmpDesignation`.
+ * EmpReferenceSearch represents the model behind the search form about `common\models\EmpReference`.
  */
-class EmpDesignationSearch extends EmpDesignation
+class EmpReferenceSearch extends EmpReference
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class EmpDesignationSearch extends EmpDesignation
     public function rules()
     {
         return [
-            [['emp_designation_id', 'created_by', 'updated_by'], 'integer'],
-            [['emp_designation', 'created_at', 'updated_at'], 'safe'],
+            [['emp_ref_id', 'emp_id', 'ref_contact_no', 'ref_cnic'], 'integer'],
+            [['ref_name', 'ref_designation'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class EmpDesignationSearch extends EmpDesignation
      */
     public function search($params)
     {
-        $query = EmpDesignation::find();
+        $query = EmpReference::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,14 +56,14 @@ class EmpDesignationSearch extends EmpDesignation
         }
 
         $query->andFilterWhere([
-            'emp_designation_id' => $this->emp_designation_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+            'emp_ref_id' => $this->emp_ref_id,
+            'emp_id' => $this->emp_id,
+            'ref_contact_no' => $this->ref_contact_no,
+            'ref_cnic' => $this->ref_cnic,
         ]);
 
-        $query->andFilterWhere(['like', 'emp_designation', $this->emp_designation]);
+        $query->andFilterWhere(['like', 'ref_name', $this->ref_name])
+            ->andFilterWhere(['like', 'ref_designation', $this->ref_designation]);
 
         return $dataProvider;
     }

@@ -10,47 +10,14 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_guardian_info_id',
-    // ],
-    [
+        [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_id',
-        'value'=>'std.std_name',
+        'attribute'=>'emp_type_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'guardian_name',
+        'attribute'=>'emp_type',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'guardian_relation',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'guardian_cnic',
-    ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'guardian_email',
-    // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'guardian_contact_no_1',
-    ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'guardian_contact_no_2',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'guardian_monthly_income',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'guardian_occupation',
-    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
@@ -59,14 +26,14 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_at',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'created_by',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'updated_by',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'created_by',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'updated_by',
+    ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\EmpDesignation;
+use common\models\EmpType;
 
 /**
- * EmpDesignationSearch represents the model behind the search form about `common\models\EmpDesignation`.
+ * EmpTypeSearch represents the model behind the search form about `common\models\EmpType`.
  */
-class EmpDesignationSearch extends EmpDesignation
+class EmpTypeSearch extends EmpType
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class EmpDesignationSearch extends EmpDesignation
     public function rules()
     {
         return [
-            [['emp_designation_id', 'created_by', 'updated_by'], 'integer'],
-            [['emp_designation', 'created_at', 'updated_at'], 'safe'],
+            [['emp_type_id', 'created_by', 'updated_by'], 'integer'],
+            [['emp_type', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class EmpDesignationSearch extends EmpDesignation
      */
     public function search($params)
     {
-        $query = EmpDesignation::find();
+        $query = EmpType::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,14 +56,14 @@ class EmpDesignationSearch extends EmpDesignation
         }
 
         $query->andFilterWhere([
-            'emp_designation_id' => $this->emp_designation_id,
+            'emp_type_id' => $this->emp_type_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'emp_designation', $this->emp_designation]);
+        $query->andFilterWhere(['like', 'emp_type', $this->emp_type]);
 
         return $dataProvider;
     }

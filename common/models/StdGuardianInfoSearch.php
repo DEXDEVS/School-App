@@ -18,8 +18,8 @@ class StdGuardianInfoSearch extends StdGuardianInfo
     public function rules()
     {
         return [
-            [['std_guardian_info_id','created_by', 'updated_by'], 'integer'],
-            [[ 'std_id', 'father_name', 'father_cnic', 'father_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'created_at', 'updated_at'], 'safe'],
+            [['std_guardian_info_id', 'std_id', 'guardian_monthly_income', 'created_by', 'updated_by'], 'integer'],
+            [['guardian_name', 'guardian_relation', 'guardian_cnic', 'guardian_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'guardian_occupation', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -54,21 +54,24 @@ class StdGuardianInfoSearch extends StdGuardianInfo
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->joinWith('std');
+
         $query->andFilterWhere([
             'std_guardian_info_id' => $this->std_guardian_info_id,
+            'std_id' => $this->std_id,
+            'guardian_monthly_income' => $this->guardian_monthly_income,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'father_name', $this->father_name])
-            ->andFilterWhere(['like', 'father_cnic', $this->father_cnic])
-            ->andFilterWhere(['like', 'father_email', $this->father_email])
+        $query->andFilterWhere(['like', 'guardian_name', $this->guardian_name])
+            ->andFilterWhere(['like', 'guardian_relation', $this->guardian_relation])
+            ->andFilterWhere(['like', 'guardian_cnic', $this->guardian_cnic])
+            ->andFilterWhere(['like', 'guardian_email', $this->guardian_email])
             ->andFilterWhere(['like', 'guardian_contact_no_1', $this->guardian_contact_no_1])
             ->andFilterWhere(['like', 'guardian_contact_no_2', $this->guardian_contact_no_2])
-            ->andFilterWhere(['like', 'std_personal_info.std_name', $this->std_id]);
+            ->andFilterWhere(['like', 'guardian_occupation', $this->guardian_occupation]);
 
         return $dataProvider;
     }

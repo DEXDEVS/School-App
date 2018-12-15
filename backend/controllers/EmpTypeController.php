@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\StdGuardianInfo;
-use common\models\StdGuardianInfoSearch;
+use common\models\EmpType;
+use common\models\EmpTypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,9 +12,9 @@ use \yii\web\Response;
 use yii\helpers\Html;
 
 /**
- * StdGuardianInfoController implements the CRUD actions for StdGuardianInfo model.
+ * EmpTypeController implements the CRUD actions for EmpType model.
  */
-class StdGuardianInfoController extends Controller
+class EmpTypeController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +33,12 @@ class StdGuardianInfoController extends Controller
     }
 
     /**
-     * Lists all StdGuardianInfo models.
+     * Lists all EmpType models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new StdGuardianInfoSearch();
+        $searchModel = new EmpTypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +49,7 @@ class StdGuardianInfoController extends Controller
 
 
     /**
-     * Displays a single StdGuardianInfo model.
+     * Displays a single EmpType model.
      * @param integer $id
      * @return mixed
      */
@@ -59,7 +59,7 @@ class StdGuardianInfoController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdGuardianInfo #".$id,
+                    'title'=> "EmpType #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -74,7 +74,7 @@ class StdGuardianInfoController extends Controller
     }
 
     /**
-     * Creates a new StdGuardianInfo model.
+     * Creates a new EmpType model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -82,7 +82,7 @@ class StdGuardianInfoController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new StdGuardianInfo();  
+        $model = new EmpType();  
 
         if($request->isAjax){
             /*
@@ -91,7 +91,7 @@ class StdGuardianInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdGuardianInfo",
+                    'title'=> "Create new EmpType",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -99,18 +99,23 @@ class StdGuardianInfoController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0';
+                    $model->updated_at = '0';
+                    $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new StdGuardianInfo",
-                    'content'=>'<span class="text-success">Create StdGuardianInfo success</span>',
+                    'title'=> "Create new EmpType",
+                    'content'=>'<span class="text-success">Create EmpType success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new StdGuardianInfo",
+                    'title'=> "Create new EmpType",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -124,7 +129,7 @@ class StdGuardianInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_guardian_info_id]);
+                return $this->redirect(['view', 'id' => $model->emp_type_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -135,7 +140,7 @@ class StdGuardianInfoController extends Controller
     }
 
     /**
-     * Updates an existing StdGuardianInfo model.
+     * Updates an existing EmpType model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -153,17 +158,22 @@ class StdGuardianInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdGuardianInfo #".$id,
+                    'title'=> "Update EmpType #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                        $model->updated_by = Yii::$app->user->identity->id;
+                        $model->updated_at = new \yii\db\Expression('NOW()');
+                        $model->created_by = $model->created_by;
+                        $model->created_at = $model->created_at;
+                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "StdGuardianInfo #".$id,
+                    'title'=> "EmpType #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -172,7 +182,7 @@ class StdGuardianInfoController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update StdGuardianInfo #".$id,
+                    'title'=> "Update EmpType #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -185,7 +195,7 @@ class StdGuardianInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_guardian_info_id]);
+                return $this->redirect(['view', 'id' => $model->emp_type_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -195,7 +205,7 @@ class StdGuardianInfoController extends Controller
     }
 
     /**
-     * Delete an existing StdGuardianInfo model.
+     * Delete an existing EmpType model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -223,7 +233,7 @@ class StdGuardianInfoController extends Controller
     }
 
      /**
-     * Delete multiple existing StdGuardianInfo model.
+     * Delete multiple existing EmpType model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -254,15 +264,15 @@ class StdGuardianInfoController extends Controller
     }
 
     /**
-     * Finds the StdGuardianInfo model based on its primary key value.
+     * Finds the EmpType model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StdGuardianInfo the loaded model
+     * @return EmpType the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StdGuardianInfo::findOne($id)) !== null) {
+        if (($model = EmpType::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
