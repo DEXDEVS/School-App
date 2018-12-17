@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\EmpInfo;
+use common\models\EmpReference;
 use backend\models\EmpInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -84,6 +85,7 @@ class EmpInfoController extends Controller
     {
         $request = Yii::$app->request;
         $model = new EmpInfo();  
+        $empRefModel = new EmpReference();
 
         if($request->isAjax){
             /*
@@ -95,12 +97,13 @@ class EmpInfoController extends Controller
                     'title'=> "Create new EmpInfo",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'empRefModel' => $empRefModel,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post())){
+            }else if($model->load($request->post()) && $empRefModel->load($request->post())){
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
                         if(!empty($model->emp_photo)){
                             $imageName = $model->emp_name.'_emp_photo'; 
@@ -124,6 +127,10 @@ class EmpInfoController extends Controller
                         $model->updated_by = '0';
                         $model->updated_at = '0';
                         $model->save();
+
+                        $empRefModel->emp_id = $model->emp_id;
+                        $empRefModel->save();
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new EmpInfo",

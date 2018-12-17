@@ -28,13 +28,14 @@ class EmpReference extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
+            [['ref_name', 'ref_contact_no', 'ref_cnic'], 'string', 'max' => 50],
+     
      */
     public function rules()
     {
         return [
             [['emp_id', 'ref_name', 'ref_contact_no', 'ref_cnic', 'ref_designation'], 'required'],
-            [['emp_id', 'ref_contact_no', 'ref_cnic'], 'integer'],
-            [['ref_name'], 'string', 'max' => 50],
+            [['emp_id'], 'integer'],
             [['ref_designation'], 'string', 'max' => 100],
             [['emp_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['emp_id' => 'emp_id']],
         ];

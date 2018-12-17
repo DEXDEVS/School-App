@@ -53,7 +53,7 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     {
         return [
             'fee_id' => 'Fee ID',
-            'std_id' => 'Std ID',
+            'std_id' => 'Student Name',
             'admission_fee' => 'Admission Fee',
             'addmission_fee_discount' => 'Addmission Fee Discount',
             'net_addmission_fee' => 'Net Addmission Fee',

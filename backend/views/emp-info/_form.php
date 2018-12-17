@@ -92,6 +92,25 @@ use common\models\Branches;
             <?= $form->field($model, 'emp_salary')->textInput() ?>
         </div>
     </div>
+
+    <!-- Form of Employee Reference -->
+    <h3>Emp Reference</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($empRefModel, 'ref_name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($empRefModel, 'ref_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($empRefModel, 'ref_cnic')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '99999-9999999-9', ]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($empRefModel, 'ref_designation')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
     
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
