@@ -18,8 +18,8 @@ use common\models\Subjects;
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($teacherSubjectAssignHead, 'teacher_id')->dropDownList(
-                    ArrayHelper::map(EmpInfo::find()->where(['emp_designation_id' => 4])->all(),'emp_id','emp_name'),
-                    ['prompt'=>'']
+                    ArrayHelper::map(EmpInfo::find()->where(['group_by' => 'Faculty'])->all(),'emp_id','emp_name'),
+                    ['prompt'=>'Select Teacher']
                 )?>
             </div>
             <div class="col-md-6">

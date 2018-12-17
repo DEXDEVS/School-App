@@ -18,10 +18,6 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'emp_designation',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_designation_type',
-    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',

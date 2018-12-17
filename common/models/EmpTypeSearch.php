@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\StdFeeDetails;
+use common\models\EmpType;
 
 /**
- * StdFeeDetailsSearch represents the model behind the search form about `common\models\StdFeeDetails`.
+ * EmpTypeSearch represents the model behind the search form about `common\models\EmpType`.
  */
-class StdFeeDetailsSearch extends StdFeeDetails
+class EmpTypeSearch extends EmpType
 {
     /**
      * @inheritdoc
@@ -18,9 +18,8 @@ class StdFeeDetailsSearch extends StdFeeDetails
     public function rules()
     {
         return [
-            [['fee_id', 'created_by', 'updated_by'], 'integer'],
-            [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'monthly_fee', 'monthly_fee_discount', 'net_monthly_fee'], 'number'],
-            [['std_id', 'created_at', 'updated_at'], 'safe'],
+            [['emp_type_id', 'created_by', 'updated_by'], 'integer'],
+            [['emp_type', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -42,7 +41,7 @@ class StdFeeDetailsSearch extends StdFeeDetails
      */
     public function search($params)
     {
-        $query = StdFeeDetails::find();
+        $query = EmpType::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,21 +54,17 @@ class StdFeeDetailsSearch extends StdFeeDetails
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->joinWith('std');
+
         $query->andFilterWhere([
-            'fee_id' => $this->fee_id,
-            'admission_fee' => $this->admission_fee,
-            'addmission_fee_discount' => $this->addmission_fee_discount,
-            'net_addmission_fee' => $this->net_addmission_fee,
-            'monthly_fee' => $this->monthly_fee,
-            'monthly_fee_discount' => $this->monthly_fee_discount,
-            'net_monthly_fee' => $this->net_monthly_fee,
+            'emp_type_id' => $this->emp_type_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
-        $query->andFilterWhere(['like', 'std_personal_info.std_name', $this->std_id]);
+
+        $query->andFilterWhere(['like', 'emp_type', $this->emp_type]);
+
         return $dataProvider;
     }
 }

@@ -15,9 +15,6 @@ use yii\widgets\ActiveForm;
     	<div class="col-md-6">
 			<?= $form->field($model, 'emp_designation')->textInput(['maxlength' => true]) ?>    		
     	</div>
-    	<div class="col-md-6">
-    		<?= $form->field($model, 'emp_designation_type')->dropDownList([ 'Permanent' => 'Permanent', 'Visitor' => 'Visitor', ], ['prompt' => '']) ?>
-    	</div>
     </div>
 
 	<?php if (!Yii::$app->request->isAjax){ ?>

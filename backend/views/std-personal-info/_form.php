@@ -91,25 +91,34 @@ use common\models\StdClassName;
         <h3 style="color: #5FDAF4; margin-top: -10px"> Guardian Info </h3>
         <div class="row">
             <div class="col-md-4">
-                <?= $form->field($stdGuardianInfo, 'father_name')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($stdGuardianInfo, 'guardian_name')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($stdGuardianInfo, 'father_cnic')->widget(yii\widgets\MaskedInput::class, [
-                    'mask' => '99999-9999999-9',
-                ]) ?>
+                <?= $form->field($stdGuardianInfo, 'guardian_relation')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($stdGuardianInfo, 'father_email')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($stdGuardianInfo, 'guardian_cnic')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
+                <?= $form->field($stdGuardianInfo, 'guardian_email')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-4">
                 <?= $form->field($stdGuardianInfo, 'guardian_contact_no_1')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
             </div>
             <div class="col-md-4">
-                 <?= $form->field($stdGuardianInfo, 'guardian_contact_no_2')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+                <?= $form->field($stdGuardianInfo, 'guardian_contact_no_2')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>  
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($stdGuardianInfo, 'guardian_monthly_income')->textInput() ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($stdGuardianInfo, 'guardian_occupation')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>  
     </div>
     <hr>
     <!-- Guardian Info end -->

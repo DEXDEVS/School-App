@@ -88,7 +88,7 @@ class StdPersonalInfoController extends Controller
     {
         $request = Yii::$app->request;
         $model = new StdPersonalInfo();  
-        $stdGuardianInfo = new StdGuardianInfo ;
+        $stdGuardianInfo = new StdGuardianInfo;
         $stdAcademicInfo = new StdAcademicInfo;
         $stdFeeDetails = new StdFeeDetails();
 

@@ -4,12 +4,14 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\EmpInfo;
-use common\models\EmpInfoSearch;
+use common\models\EmpReference;
+use backend\models\EmpInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 
 /**
  * EmpInfoController implements the CRUD actions for EmpInfo model.
@@ -83,6 +85,7 @@ class EmpInfoController extends Controller
     {
         $request = Yii::$app->request;
         $model = new EmpInfo();  
+        $empRefModel = new EmpReference();
 
         if($request->isAjax){
             /*
@@ -94,17 +97,40 @@ class EmpInfoController extends Controller
                     'title'=> "Create new EmpInfo",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'empRefModel' => $empRefModel,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post())){
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0';
-                $model->updated_at = '0';
-                $model->save();
+            }else if($model->load($request->post()) && $empRefModel->load($request->post())){
+                        $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
+                        if(!empty($model->emp_photo)){
+                            $imageName = $model->emp_name.'_emp_photo'; 
+                            $model->emp_photo->saveAs('uploads/'.$imageName.'.'.$model->emp_photo->extension);
+                            //save the path in the db column
+                            $model->emp_photo = 'uploads/'.$imageName.'.'.$model->emp_photo->extension;
+                        } else {
+                           $model->emp_photo = '0'; 
+                        }
+                        $model->degree_scan_copy = UploadedFile::getInstance($model,'degree_scan_copy');
+                        if(!empty($model->degree_scan_copy)){
+                            $imageName = $model->emp_name.'_degree_scan_copy'; 
+                            $model->degree_scan_copy->saveAs('uploads/'.$imageName.'.'.$model->degree_scan_copy->extension);
+                            //save the path in the db column
+                            $model->degree_scan_copy = 'uploads/'.$imageName.'.'.$model->degree_scan_copy->extension;
+                        } else {
+                           $model->degree_scan_copy = '0'; 
+                        }
+                        $model->created_by = Yii::$app->user->identity->id; 
+                        $model->created_at = new \yii\db\Expression('NOW()');
+                        $model->updated_by = '0';
+                        $model->updated_at = '0';
+                        $model->save();
+
+                        $empRefModel->emp_id = $model->emp_id;
+                        $empRefModel->save();
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new EmpInfo",
@@ -149,7 +175,8 @@ class EmpInfoController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id); 
+        $emp_info = Yii::$app->db->createCommand("SELECT emp_photo, degree_scan_copy FROM emp_info where emp_id = $id")->queryAll();      
 
         if($request->isAjax){
             /*
@@ -165,7 +192,30 @@ class EmpInfoController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                        $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
+                        if(!empty($model->emp_photo)){
+                            $imageName = $model->emp_name.'_emp_photo'; 
+                            $model->emp_photo->saveAs('uploads/'.$imageName.'.'.$model->emp_photo->extension);
+                            //save the path in the db column
+                            $model->emp_photo = 'uploads/'.$imageName.'.'.$model->emp_photo->extension;
+                        } else {
+                           $model->emp_photo = $emp_info[0]['emp_photo'];  
+                        }
+                        $model->degree_scan_copy = UploadedFile::getInstance($model,'degree_scan_copy');
+                        if(!empty($model->degree_scan_copy)){
+                            $imageName = $model->emp_name.'_degree_scan_copy'; 
+                            $model->degree_scan_copy->saveAs('uploads/'.$imageName.'.'.$model->degree_scan_copy->extension);
+                            //save the path in the db column
+                            $model->degree_scan_copy = 'uploads/'.$imageName.'.'.$model->degree_scan_copy->extension;
+                        } else {
+                           $model->degree_scan_copy = $emp_info[0]['degree_scan_copy'];  
+                        }
+                        $model->updated_by = Yii::$app->user->identity->id;
+                        $model->updated_at = new \yii\db\Expression('NOW()');
+                        $model->created_by = $model->created_by;
+                        $model->created_at = $model->created_at;
+                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "EmpInfo #".$id,
@@ -189,12 +239,7 @@ class EmpInfoController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post())) {
-                $model->updated_by = Yii::$app->user->identity->id;
-                $model->updated_at = new \yii\db\Expression('NOW()');
-                $model->created_by = $model->created_by;
-                $model->created_at = $model->created_at;
-                $model->save();
+            if ($model->load($request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->emp_id]);
             } else {
                 return $this->render('update', [

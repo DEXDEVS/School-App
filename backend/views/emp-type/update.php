@@ -2,14 +2,13 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
-/* @var $model common\models\EmpInfo */
-
+/* @var $model common\models\EmpType */
 ?>
-<div class="emp-info-create">
+<div class="emp-type-update">
+
     <?= $this->render('_form', [
         'model' => $model,
-        'empRefModel' => $empRefModel,
     ]) ?>
+
 </div>

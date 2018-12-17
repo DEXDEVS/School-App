@@ -9,11 +9,14 @@ use Yii;
  *
  * @property integer $std_guardian_info_id
  * @property integer $std_id
- * @property string $father_name
- * @property string $father_cnic
- * @property string $father_email
+ * @property string $guardian_name
+ * @property string $guardian_relation
+ * @property string $guardian_cnic
+ * @property string $guardian_email
  * @property string $guardian_contact_no_1
  * @property string $guardian_contact_no_2
+ * @property integer $guardian_monthly_income
+ * @property string $guardian_occupation
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -37,14 +40,15 @@ class StdGuardianInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'father_name', 'father_cnic',  'guardian_contact_no_1'], 'required'],
-            [['std_id', 'created_by', 'updated_by'], 'integer'],
-            [['father_email', 'guardian_contact_no_2', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
-            [['father_name'], 'string', 'max' => 50],
-            [['father_cnic', 'guardian_contact_no_1', 'guardian_contact_no_2'], 'string', 'max' => 15],
-            [['father_email'], 'string', 'max' => 84],
-            [['father_email'],'email'],
+            [['std_id', 'guardian_name', 'guardian_relation', 'guardian_cnic', 'guardian_email', 'guardian_contact_no_1', 'guardian_contact_no_2', 'guardian_monthly_income', 'guardian_occupation'], 'required'],
+            [['std_id', 'guardian_monthly_income', 'created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['guardian_name', 'guardian_relation', 'guardian_occupation'], 'string', 'max' => 50],
+            [['guardian_cnic', 'guardian_contact_no_1', 'guardian_contact_no_2'], 'string', 'max' => 15],
+            [['guardian_email'], 'string', 'max' => 84],
+            [['guardian_email'],'email'],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
+
         ];
     }
 
@@ -55,12 +59,15 @@ class StdGuardianInfo extends \yii\db\ActiveRecord
     {
         return [
             'std_guardian_info_id' => 'Std Guardian Info ID',
-            'std_id' => 'Std Name',
-            'father_name' => 'Father Name/Guardian Name',
-            'father_cnic' => 'Father Cnic/Guardian Name',
-            'father_email' => 'Father Email/Guardian Name',
+            'std_id' => 'Student Name',
+            'guardian_name' => 'Guardian Name',
+            'guardian_relation' => 'Guardian Relation',
+            'guardian_cnic' => 'Guardian Cnic',
+            'guardian_email' => 'Guardian Email',
             'guardian_contact_no_1' => 'Guardian Contact No 1',
             'guardian_contact_no_2' => 'Guardian Contact No 2',
+            'guardian_monthly_income' => 'Guardian Monthly Income',
+            'guardian_occupation' => 'Guardian Occupation',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
