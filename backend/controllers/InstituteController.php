@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 
 /**
  * InstituteController implements the CRUD actions for Institute model.
@@ -99,7 +100,21 @@ class InstituteController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->institute_logo = UploadedFile::getInstance($model,'institute_logo');
+                if(!empty($model->institute_logo)){
+                    $imageName = $model->institute_name.'_photo'; 
+                    $model->institute_logo->saveAs('uploads/'.$imageName.'.'.$model->institute_logo->extension);
+                    //save the path in the db column
+                    $model->institute_logo = 'uploads/'.$imageName.'.'.$model->institute_logo->extension;
+                } else {
+                   $model->institute_logo = '0'; 
+                }
+                $model->created_by = Yii::$app->user->identity->id; 
+                $model->created_at = new \yii\db\Expression('NOW()');
+                $model->updated_by = '0'; 
+                $model->updated_at = '0';
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new Institute",
@@ -160,7 +175,22 @@ class InstituteController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute where institute_id = $id")->queryAll();
+                $model->institute_logo = UploadedFile::getInstance($model,'institute_logo');
+                if(!empty($model->institute_logo)){
+                    $imageName = $model->institute_name.'_photo'; 
+                    $model->institute_logo->saveAs('uploads/'.$imageName.'.'.$model->institute_logo->extension);
+                    //save the path in the db column
+                    $model->institute_logo = 'uploads/'.$imageName.'.'.$model->institute_logo->extension;
+                } else {
+                   $model->institute_logo = $instituteInfo[0]['institute_logo']; 
+                }
+                $model->updated_by = Yii::$app->user->identity->id;
+                $model->updated_at = new \yii\db\Expression('NOW()');
+                $model->created_by = $model->created_by;
+                $model->created_at = $model->created_at;
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Institute #".$id,

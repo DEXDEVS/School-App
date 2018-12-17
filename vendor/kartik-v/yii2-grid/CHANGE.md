@@ -1,6 +1,36 @@
 Change Log: `yii2-grid`
 =======================
 
+## Version 3.2.8
+
+**Date:** 09-Nov-2018
+
+- (bug #854): Correct grid export to allow parsing new lines in content (for CSV/TEXT).
+- (enh #853): Correct grid grouping for child groups with repeating values.
+- (enh #852): Correct grid grouping for grids without grid footer.
+- Update README.
+
+## Version 3.2.7
+
+**Date:** 03-Nov-2018
+
+- (enh #847): Add new grid column `EnumColumn`.
+- (enh #846): Enhance Grid Grouping to better parse multi level group footers.
+- (enh #843, #844): Add ability to have different exportConversions for specific export type.
+    - For example `from_pdf` and `to_pdf` will be used instead of `from` and `to`. If 
+     only `to_pdf` is set then `from` and `to_pdf` will be used.
+- (enh #840): Update Persian Translations.
+- (enh #839): Enhancements to export form functionality.
+
+## Version 3.2.6
+
+**Date:** 09-Oct-2018
+
+- Update composer dependencies.
+- Enhance `ExportController` HTTP headers.
+- (enh #837): Various enhancements to grid export styling.
+- (bug #835): Correct rendering error due to code change in core `GridView` in `yiisoft/yii2`.
+
 ## Version 3.2.5
 
 **Date:** 27-Sep-2018
@@ -26,7 +56,7 @@ Change Log: `yii2-grid`
 
 - Enhance ExpandRowColumn default row css for Bootstrap 4.x.
 - Enhance styling and behavior for Bootstrap 4.x.
-- (bug #826): Update Ukrainian Translations.
+- (enh #826): Update Ukrainian Translations.
 
 ## Version 3.2.1
 

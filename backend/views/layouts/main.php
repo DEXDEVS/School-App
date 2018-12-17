@@ -49,6 +49,10 @@ AppAsset::register($this);
             "icon" => "fab fa-stumbleupon-circle",
             "items" => [
                 [
+                    "label" => "Institute",
+                    "url" => "index.php?r=institute",
+                ],
+                [
                     "label" => "Branches",
                     "url" => "index.php?r=branches",
                 ],

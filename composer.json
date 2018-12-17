@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "kartik-v/yii2-widget-select2": "@dev",
         "johnitvn/yii2-ajaxcrud": "*",
-        "2amigos/yii2-date-time-picker-widget": "~1.0"
+        "2amigos/yii2-date-time-picker-widget": "~1.0",
+        "hosannahighertech/yii2-light-bootstrap": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

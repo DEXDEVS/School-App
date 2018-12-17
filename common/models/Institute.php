@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "institute".
@@ -34,9 +35,9 @@ class Institute extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['institute_name', 'institute_logo', 'institute_account_no', 'created_by', 'updated_by'], 'required'],
+            [['institute_name', 'institute_logo', 'institute_account_no'], 'required'],
             [['institute_account_no', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by', 'institute_logo'], 'safe'],
             [['institute_name'], 'string', 'max' => 65],
             [['institute_logo'], 'string', 'max' => 200],
         ];
@@ -66,4 +67,21 @@ class Institute extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Branches::className(), ['institute_id' => 'institute_id']);
     }
+
+    public function getPhotoInfo(){
+        $path = Url::to('@web/uploads/');
+        $url = Url::to('@web/uploads/');
+        $filename = $this->institute_name.'_photo'.'.jpg';
+        $alt = $this->institute_name."'s image not exist!";
+
+        $imageInfo = ['alt'=>$alt];
+
+        if(file_exists($path.$filename)){
+            $imageInfo['url'] = $url.'default.jpg';
+        }  else {
+            $imageInfo['url'] = $url.$filename; 
+        }
+        return $imageInfo;
+    }
+    
 }

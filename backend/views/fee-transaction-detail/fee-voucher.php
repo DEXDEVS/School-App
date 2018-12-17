@@ -4,31 +4,6 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>Fee Vocher</title>
 	<link rel="stylesheet" href="print.css" type="text/css" media="print"/>
-	<style>
-		.image img{
-			float: left;
-		}
-		.h2{
-			float: left;
-			margin: 15px 4px;
-			font-weight: bold;
-			font-size: 16px;
-		}
-		.h4{
-			float: left;
-			margin: -32px 80px;
-			font-size: 14px;
-		}
-		.span{
-			float: left;
-			margin: -18px 100px;
-			font-size: 14px;
-		}
-		.feeTable th{
-			text-align: center;
-		}
-	</style>
-	
 </head>
 <body>
 <div class="container" style="margin-top: -60px;">
