@@ -16,11 +16,11 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'teacher_id',
+        'attribute'=>'teacher.emp_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'class_id',
+        'attribute'=>'class.class_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -28,12 +28,12 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'student_id',
+        'attribute'=>'student.std_name',
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'status',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
+    ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

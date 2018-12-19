@@ -3,7 +3,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>Fee Vocher</title>
-	<link rel="stylesheet" href="print.css" type="text/css" media="print"/>
 </head>
 <body>
 <div class="container" style="margin-top: -60px;">

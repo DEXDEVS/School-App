@@ -273,8 +273,10 @@ let discountt = 0;
             discountValueArray.splice(j,1); 
 
             for(let x=0; x<feeAmountArray.length; x++){
+                alert(feeAmountArray);
                 sum = sum + feeAmountArray[x];
             }
+
             $('#netTotal').val(sum);
             $('#totalAmount').val(sum);
             //Total Disscount

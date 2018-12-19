@@ -60,19 +60,19 @@
 	<div id="<?php echo $div; ?>">
 		<div class="row">
 			<div class="col-md-4 image">
-				<img src="<?php echo $institue[0]['institute_logo'] ?>" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
+				<img src="images/school_logo.jpg" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
 				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
 				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 			<div class="col-md-4 image">
-				<img src="<?php echo $institue[0]['institute_logo'] ?>" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
+				<img src="images/school_logo.jpg" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
 				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
 				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 			<div class="col-md-4 image">
-				<img src="<?php echo $institue[0]['institute_logo'] ?>" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
+				<img src="images/school_logo.jpg" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
 				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
 				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>

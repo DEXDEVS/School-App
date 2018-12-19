@@ -4,6 +4,8 @@
 	<title>Attendance</title>
 </head>
 <body>
+<div class="container-fluid" style="margin-top: -10px">
+	<h1 class="well well-sm" align="center">Attendance</h1>	
 	<form  action = "index.php?r=std-attendance/attendance" method="POST">
     	<div class="row">
             <div class="col-md-4">
@@ -13,13 +15,7 @@
             </div>    
         </div>
         <div class="row">
-        	<div class="col-md-3">
-                <div class="form-group">
-                	<label>Current Date</label>
-                    <input class="form-control" data-date-format="mm/dd/yyyy" type="date" name="date" required="">
-                </div>    
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-6 col-md-offset-2">
                 <div class="form-group">
                     <label>Select Class</label>
                     <select class="form-control" name="classid" id="classId" required="">
@@ -36,32 +32,48 @@
             </div> 
             <div class="col-md-2">
                 <div class="form-group">
-                	<label></label>
-                    <button type="submit" name="submit" class="btn btn-info form-control">Take Attendance</button>
+                    <button type="submit" name="submit" class="btn btn-info form-control" style="margin-top: 25px;">
+                    <i class="glyphicon glyphicon-share"></i>	
+                	<b>Get Class</b></button>
                 </div>    
             </div>    
         </div>
     </form>
+    
 
 <?php
 	if(isset($_POST["submit"])){
 		 
 		$classid= $_POST["classid"];
-		 $date = $_POST["date"];
+		$date = date('Y-m-d');
 
 		$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_id = '$classid'")->queryAll();
 		?>
-	<div class="container-fluid">
 		<hr>
 		<form method="POST" action="index.php?r=std-attendance/attendance">
 			<div class="row">
-				<div class="col-md-6">
-					<table width="100%">
+				<div class="col-md-8 col-md-offset-2">
+					<table width="100%" class="table table-condensed table-hover">
 						<tr>
+							<th>Class</th>
+							<th>Date</th>
+						</tr>
+						<tr>
+							<td><?php echo $className[0]['class_name']; ?></td>
+							<td><?php echo $date; ?></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<table width="100%" class="table table-striped table-condensed">
+						<tr></tr>
+						<tr class="label-primary" style="color: white;">
 							<th>Sr No</th>
 							<th>RollNo</th>
 							<th>Student Name</th>
-							<th>Attendance</th>
+							<th style="text-align: center;">Attendance</th>
 						</tr>
 						
 						<?php $length = count($student);
@@ -73,10 +85,10 @@
 								<?php $stdId = $student[$i]['std_enroll_detail_std_id'];
 									  $stdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info  WHERE std_id = '$stdId'")->queryAll();?>
 								<td><?php echo $stdName[0]['std_name'] ?></td>
-								<td>
-									<input type="radio" name="std<?php echo $i+1?>" value="P" checked="checked" />Present
-									<input type="radio" name="std<?php echo $i+1?>" value="A" />Absent
-									<input type="radio" name="std<?php echo $i+1?>" value="L" />Leave
+								<td align="center">
+									<input type="radio" name="std<?php echo $i+1?>" value="P" checked="checked"/> <b  style="color: green">Present </b> &nbsp; &nbsp;| &nbsp; 
+									<input type="radio" name="std<?php echo $i+1?>" value="A" /> <b style="color: red">Absent </b> &nbsp; &nbsp;| &nbsp; 
+									<input type="radio" name="std<?php echo $i+1?>" value="L" /><b style="color: #F7C564;">Leave</b>
 								</td>
 							</tr>
 					<?php
@@ -86,9 +98,12 @@
 					?>
 					</table>
 				</div>
+			</div>	
+				
 
 			</div><hr>
-			<div class="col-md-2">
+			<div class="row">
+				<div class="col-md-2">
 	                <div class="form-group">
 	                	<?php foreach ($stdAttendId as $value) {
 	                		echo '<input type="hidden" name="stdAttendance[]" value="'.$value.'">';
@@ -97,13 +112,20 @@
 	                	<input type="hidden" name="length" value="<?php echo $length; ?>">
 	                	<input type="hidden" name="classid" value="<?php echo $classid; ?>">
 	                	<input type="hidden" name="date" value="<?php echo $date; ?>">
-	                    <button type="submit" name="save" class="btn btn-info form-control">Save Attendance</button>
 	                </div>    
-	        </div>
+	        	</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-5">
+					<button type="submit" name="save" class="btn btn-success form-control"><i class="glyphicon glyphicon-saved"></i>
+						<b>Save Attendance</b></button>
+				</div>
+			</div>
+			
 	    </form> 
 		<?php 
 		// closing of if isset
-			} ?>	
+			} ?>
 	</div>
 	<!-- container-fluid close -->	
 
@@ -132,8 +154,7 @@
 					])->execute();
 				}
 		}
-	 ?>
-
+	?>
 
 </body>
 </html>

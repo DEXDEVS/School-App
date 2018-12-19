@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ccd095d88767b368aef7b503998713e",
+    "content-hash": "6507124d5d5eae85ea95c3c3a9038973",
     "packages": [
         {
             "name": "2amigos/yii2-date-time-picker-widget",
