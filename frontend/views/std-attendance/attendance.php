@@ -4,9 +4,8 @@
 	<title>Attendance</title>
 </head>
 <body>
-<div class="container-fluid" style="margin-top: -10px">
-	<h1 class="well well-sm" align="center">Attendance</h1>	
-	<form  action = "index.php?r=std-attendance/attendance" method="POST">
+	<form  action = "index.php?r=std-attendance/attendance" method="POST" style="margin-top: -35px">
+		<h1 class="well well-sm text" align="center">Attendance</h1>
     	<div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -15,65 +14,81 @@
             </div>    
         </div>
         <div class="row">
-            <div class="col-md-6 col-md-offset-2">
+        	<div class="col-md-3">
+                <div class="form-group">
+                	<label>Current Date</label>
+                    <input class="form-control" data-date-format="mm/dd/yyyy" type="date" name="date" required="">
+                </div>    
+            </div>
+            <div class="col-md-3">
                 <div class="form-group">
                     <label>Select Class</label>
-                    <select class="form-control" name="classid" id="classId" required="">
+                    <select class="form-control" name="classid" id="classId">
 							<?php 
-								$className = Yii::$app->db->createCommand("SELECT * FROM std_class")->queryAll();
+								$className = Yii::$app->db->createCommand("SELECT * FROM std_class_name")->queryAll();
 								
 								  	foreach ($className as  $value) { ?>	
-									<option value="<?php echo $value["class_id"]; ?>">
+									<option value="<?php echo $value["class_name_id"]; ?>">
 										<?php echo $value["class_name"]; ?>	
 									</option>
 							<?php } ?>
 					</select>      
                 </div>    
-            </div> 
-            <div class="col-md-2">
+            </div>  
+            <div class="col-md-3">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-info form-control" style="margin-top: 25px;">
-                    <i class="glyphicon glyphicon-share"></i>	
-                	<b>Get Class</b></button>
+                    <label>Select Session</label>
+                    <select class="form-control" name="sessionid" id="sessionId">
+							<?php 
+								$sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions")->queryAll();
+								
+								  	foreach ($sessionName as  $value) { ?>	
+									<option value="<?php echo $value["session_id"]; ?>">
+										<?php echo $value["session_name"]; ?>	
+									</option>
+							<?php } ?>
+					</select>      
+                </div>    
+            </div>  
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Select Section</label>
+                    <select class="form-control" name="sectionid" id="section" >
+                    		<option value="">Select Section</option>
+					</select>      
+                </div>    
+            </div>              
+            <div class="col-md-2 col-md-offset-10">
+                <div class="form-group">
+                	<label></label>
+                    <button type="submit" name="submit" class="btn btn-success form-control" style="margin-top: -25px;">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>	
+                	<b>Take Attendance</b></button>
                 </div>    
             </div>    
         </div>
     </form>
-    
 
 <?php
-	if(isset($_POST["submit"])){
-		 
+	if(isset($_POST["submit"])){ 
 		$classid= $_POST["classid"];
-		$date = date('Y-m-d');
+		$sessionid = $_POST["sessionid"];
+		$sectionid = $_POST["sectionid"];
+		$date = $_POST["date"];
 
-		$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_id = '$classid'")->queryAll();
+		$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
 		?>
+	<div class="container-fluid" style="margin-top: -30px">
 		<hr>
 		<form method="POST" action="index.php?r=std-attendance/attendance">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
-					<table width="100%" class="table table-condensed table-hover">
-						<tr>
-							<th>Class</th>
-							<th>Date</th>
-						</tr>
-						<tr>
-							<td><?php echo $className[0]['class_name']; ?></td>
-							<td><?php echo $date; ?></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
-					<table width="100%" class="table table-striped table-condensed">
-						<tr></tr>
-						<tr class="label-primary" style="color: white;">
+				<div class="col-md-8">
+					<table width="100%" class="table table-responsive table-condensed table-hover">
+						<tr class="label-success" style="color: white;"> 
 							<th>Sr No</th>
 							<th>RollNo</th>
 							<th>Student Name</th>
-							<th style="text-align: center;">Attendance</th>
+							<th class="text-center">Attendance</th>
 						</tr>
 						
 						<?php $length = count($student);
@@ -88,7 +103,7 @@
 								<td align="center">
 									<input type="radio" name="std<?php echo $i+1?>" value="P" checked="checked"/> <b  style="color: green">Present </b> &nbsp; &nbsp;| &nbsp; 
 									<input type="radio" name="std<?php echo $i+1?>" value="A" /> <b style="color: red">Absent </b> &nbsp; &nbsp;| &nbsp; 
-									<input type="radio" name="std<?php echo $i+1?>" value="L" /><b style="color: #F7C564;">Leave</b>
+									<input type="radio" name="std<?php echo $i+1?>" value="L" /><b style="color: #F7C564;"> Leave</b>
 								</td>
 							</tr>
 					<?php
@@ -98,12 +113,52 @@
 					?>
 					</table>
 				</div>
-			</div>	
-				
+				<div class="row">
+					<div class="col-md-4">
+						
+						<?php 
+							// Select Class Name
+							$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classid'")->queryAll();
+							// Select Section 
+							$sessionName = Yii::$app->db->createCommand("SELECT session_name FROM std_sessions WHERE session_id = '$sessionid'")->queryAll();
+							// Select Section
+							$sectionName = Yii::$app->db->createCommand("SELECT section_name FROM std_sections WHERE section_id = '$sectionid'")->queryAll();
+						?>
 
-			</div><hr>
+						<table width="100%" class="table table-responsive table-bordered table-responsive table-condensed table-hover">
+							<tr class="label-success" style="color: white;"> 
+								<td align="center" colspan="2"><b>Class Info</b></td>
+							</tr>
+							<tr>
+								<th>Date</th>
+								<td><?php echo $date; ?></td>
+							</tr>
+							<tr>
+								<th>Class</th>
+								<td><?php echo $className[0]['class_name']; ?></td>
+							</tr>
+							<tr>
+								<th>Session</th>
+								<td><?php echo $sessionName[0]['session_name']; ?></td>
+							</tr>
+							<tr>
+								<th>Section </th>
+								<td><?php echo $sectionName[0]['section_name']; ?></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr>
+
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-2 col-md-offset-5">
+					<button type="submit" name="save" class="btn btn-success form-control"><i class="glyphicon glyphicon-saved"></i>
+						<b>Save Attendance</b></button>
+				</div>
+			</div>
+
+			<div class="col-md-2">
 	                <div class="form-group">
 	                	<?php foreach ($stdAttendId as $value) {
 	                		echo '<input type="hidden" name="stdAttendance[]" value="'.$value.'">';
@@ -111,27 +166,23 @@
 	                	?>
 	                	<input type="hidden" name="length" value="<?php echo $length; ?>">
 	                	<input type="hidden" name="classid" value="<?php echo $classid; ?>">
+	                	<input type="hidden" name="sessionid" value="<?php echo $sessionid; ?>">
+	                	<input type="hidden" name="sectionid" value="<?php echo $sectionid; ?>">
 	                	<input type="hidden" name="date" value="<?php echo $date; ?>">
 	                </div>    
-	        	</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2 col-md-offset-5">
-					<button type="submit" name="save" class="btn btn-success form-control"><i class="glyphicon glyphicon-saved"></i>
-						<b>Save Attendance</b></button>
-				</div>
-			</div>
-			
+	        </div>
 	    </form> 
 		<?php 
 		// closing of if isset
-			} ?>
+			} ?>	
 	</div>
 	<!-- container-fluid close -->	
 
 	<?php 	
 		if (isset($_POST["save"])) {
 				$classid = $_POST["classid"];
+				$sessionid = $_POST["sessionid"];
+				$sectionid = $_POST["sectionid"];
 				$date = $_POST["date"];
 				$length = $_POST["length"];
 				$stdAttendId = $_POST["stdAttendance"];
@@ -147,14 +198,43 @@
 				for($i=0; $i<$length; $i++){
 					$attendance = Yii::$app->db->createCommand()->insert('std_attendance',[
 						'teacher_id' => $teacherId[0]['emp_id'],
-						'class_id' => $classid,
+						'class_name_id' => $classid,
+						'session_id'=> $sessionid,
+						'section_id'=> $sectionid,
 						'date' => $date,
 						'student_id' => $stdAttendId[$i],
 						'status' => $status[$i],
 					])->execute();
 				}
 		}
-	?>
-
+	 ?>
 </body>
 </html>
+<?php
+$url = \yii\helpers\Url::to("index.php?r=std-attendance/fetch-section");
+
+$script = <<< JS
+$('#sessionId').on('change',function(){
+   var session_Id = $('#sessionId').val();
+  
+   $.ajax({
+        type:'post',
+        data:{session_Id:session_Id},
+        url: "$url",
+
+        success: function(result){
+     
+            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
+            var options = '';
+            for(var i=0; i<jsonResult.length; i++) { 
+		        options += '<option value="'+jsonResult[i].section_id+'">'+jsonResult[i].section_name+'</option>';
+		    }
+		    // Append to the html
+		    $('#section').append(options);
+        }         
+    });       
+});
+JS;
+$this->registerJs($script);
+?>
+</script>

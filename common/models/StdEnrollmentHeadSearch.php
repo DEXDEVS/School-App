@@ -18,7 +18,7 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
     public function rules()
     {
         return [
-            [['std_enroll_head_id', 'class_id', 'created_by', 'updated_by'], 'integer'],
+            [['std_enroll_head_id', 'class_name_id', 'session_id', 'section_id', 'created_by', 'updated_by'], 'integer'],
             [['std_enroll_head_name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -57,7 +57,9 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
 
         $query->andFilterWhere([
             'std_enroll_head_id' => $this->std_enroll_head_id,
-            'class_id' => $this->class_id,
+            'class_name_id' => $this->class_name_id,
+            'session_id' => $this->session_id,
+            'section_id' => $this->section_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,

@@ -9,14 +9,18 @@ use Yii;
  *
  * @property integer $std_attend_id
  * @property integer $teacher_id
- * @property integer $class_id
+ * @property integer $class_name_id
+ * @property integer $session_id
+ * @property integer $section_id
  * @property string $date
  * @property integer $student_id
  * @property string $status
  *
- * @property EmpInfo $teacher
- * @property StdClass $class
+ * @property StdClassName $className
  * @property StdPersonalInfo $student
+ * @property EmpInfo $teacher
+ * @property StdSessions $session
+ * @property StdSections $section
  */
 class StdAttendance extends \yii\db\ActiveRecord
 {
@@ -34,13 +38,15 @@ class StdAttendance extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['teacher_id', 'class_id', 'date', 'student_id', 'status'], 'required'],
-            [['teacher_id', 'class_id', 'student_id'], 'integer'],
+            [['teacher_id', 'class_name_id', 'session_id', 'section_id', 'date', 'student_id', 'status'], 'required'],
+            [['teacher_id', 'class_name_id', 'session_id', 'section_id', 'student_id'], 'integer'],
             [['date'], 'safe'],
             [['status'], 'string', 'max' => 1],
-            [['teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['teacher_id' => 'emp_id']],
-            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['class_id' => 'class_id']],
+            [['class_name_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_name_id' => 'class_name_id']],
             [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['student_id' => 'std_id']],
+            [['teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['teacher_id' => 'emp_id']],
+            [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
+            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSections::className(), 'targetAttribute' => ['section_id' => 'section_id']],
         ];
     }
 
@@ -51,12 +57,30 @@ class StdAttendance extends \yii\db\ActiveRecord
     {
         return [
             'std_attend_id' => 'Std Attend ID',
-            'teacher_id' => 'Teacher ID',
-            'class_id' => 'Class ID',
+            'teacher_id' => 'Teacher Name',
+            'class_name_id' => 'Class Name Name',
+            'session_id' => 'Session Name',
+            'section_id' => 'Section Name',
             'date' => 'Date',
-            'student_id' => 'Student ID',
+            'student_id' => 'Student Name',
             'status' => 'Status',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClassName()
+    {
+        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_name_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStudent()
+    {
+        return $this->hasOne(StdPersonalInfo::className(), ['std_id' => 'student_id']);
     }
 
     /**
@@ -70,16 +94,16 @@ class StdAttendance extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getClass()
+    public function getSession()
     {
-        return $this->hasOne(StdClass::className(), ['class_id' => 'class_id']);
+        return $this->hasOne(StdSessions::className(), ['session_id' => 'session_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudent()
+    public function getSection()
     {
-        return $this->hasOne(StdPersonalInfo::className(), ['std_id' => 'student_id']);
+        return $this->hasOne(StdSections::className(), ['section_id' => 'section_id']);
     }
 }

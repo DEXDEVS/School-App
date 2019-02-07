@@ -17,7 +17,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'teacher_subject_assign_detail_head_id',
-        'value'=>'teacherSubjectAssignDetailHead.teacher_subject_assign_head_name',
+        'value'=>'teacherSubjectAssignDetailHead.teacher_subject_assign_head_name'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -29,6 +29,10 @@ return [
         'attribute'=>'subject_id',
         'value'=>'subject.subject_name',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'no_of_lecture',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
@@ -38,8 +42,8 @@ return [
         // 'attribute'=>'updated_at',
     // ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'created_by',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_by',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

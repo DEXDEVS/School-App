@@ -95,13 +95,6 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
-.nav{
-    background-color: #5FDAFA;
-}
-.nav a{
-    color: #000;
-}
-
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
     padding: 15px;
@@ -125,4 +118,3 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
-

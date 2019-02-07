@@ -11,8 +11,11 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'fee_trans_id',
-            'std_class_id',
+            'class_name_id',
+            'session_id',
+            'section_id',
             'std_id',
+            'std_name',
             'month',
             'transaction_date',
             'total_amount',

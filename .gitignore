@@ -21,7 +21,19 @@ Thumbs.db
 #vendor
 
 # local uploads directory
-#backend/web/uploads
+backend/config
+
+# local uploads directory
+common/config
+
+# local uploads directory
+frontend/config
+
+# local uploads directory
+backend/web/uploads
+
+# local uploads directory
+backend/web/attachments
 
 # composer itself is not needed
 composer.phar

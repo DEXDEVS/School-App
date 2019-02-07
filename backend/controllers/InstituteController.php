@@ -101,7 +101,6 @@ class InstituteController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-<<<<<<< HEAD
                 $model->institute_logo = UploadedFile::getInstance($model,'institute_logo');
                 if(!empty($model->institute_logo)){
                     $imageName = $model->institute_name.'_photo'; 
@@ -116,13 +115,12 @@ class InstituteController extends Controller
                 $model->updated_by = '0'; 
                 $model->updated_at = '0';
                 $model->save();
-=======
+
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
                         $model->updated_by = '0';
                         $model->updated_at = '0';
                         $model->save();
->>>>>>> 525ac9510eea4767bb53fbe47414d4560fefbb23
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new Institute",
@@ -184,7 +182,7 @@ class InstituteController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
-<<<<<<< HEAD
+
                 $instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute where institute_id = $id")->queryAll();
                 $model->institute_logo = UploadedFile::getInstance($model,'institute_logo');
                 if(!empty($model->institute_logo)){
@@ -200,13 +198,12 @@ class InstituteController extends Controller
                 $model->created_by = $model->created_by;
                 $model->created_at = $model->created_at;
                 $model->save();
-=======
+
                         $model->updated_by = Yii::$app->user->identity->id;
                         $model->updated_at = new \yii\db\Expression('NOW()');
                         $model->created_by = $model->created_by;
                         $model->created_at = $model->created_at;
                         $model->save();
->>>>>>> 525ac9510eea4767bb53fbe47414d4560fefbb23
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Institute #".$id,

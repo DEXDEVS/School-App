@@ -5,12 +5,14 @@ namespace backend\controllers;
 use Yii;
 use common\models\StdPersonalInfo;
 use common\models\StdGuardianInfo;
+use common\models\StdIceInfo;
 use common\models\StdAcademicInfo;
 use common\models\StdFeeDetails;
 use common\models\StdPersonalInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\web\UploadedFile;
@@ -26,6 +28,20 @@ class StdPersonalInfoController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -57,26 +73,26 @@ class StdPersonalInfoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {   
-        $request = Yii::$app->request;
-        $model = $this->findModel($id);
-        if($request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                    'title'=> "<b>Student Personal: </b>".$model->std_name,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
-                ];    
-        }else{
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
-    }
+    // public function actionView($id)
+    // {   
+    //     $request = Yii::$app->request;
+    //     $model = $this->findModel($id);
+    //     if($request->isAjax){
+    //         Yii::$app->response->format = Response::FORMAT_JSON;
+    //         return [
+    //                 'title'=> "<b>Student Personal: </b>".$model->std_name,
+    //                 'content'=>$this->renderAjax('view', [
+    //                     'model' => $this->findModel($id),
+    //                 ]),
+    //                 'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+    //                         Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
+    //             ];    
+    //     }else{
+    //         return $this->render('view', [
+    //             'model' => $this->findModel($id),
+    //         ]);
+    //     }
+    // }
 
     /**
      * Creates a new StdPersonalInfo model.
@@ -88,8 +104,9 @@ class StdPersonalInfoController extends Controller
     {
         $request = Yii::$app->request;
         $model = new StdPersonalInfo();  
-        $stdGuardianInfo = new StdGuardianInfo;
-        $stdAcademicInfo = new StdAcademicInfo;
+        $stdGuardianInfo = new StdGuardianInfo();
+        $stdIceInfo = new StdIceInfo();
+        $stdAcademicInfo = new StdAcademicInfo();
         $stdFeeDetails = new StdFeeDetails();
 
         if($request->isAjax){
@@ -104,14 +121,15 @@ class StdPersonalInfoController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                         'stdGuardianInfo' => $stdGuardianInfo,
+                        'stdIceInfo' => $stdIceInfo,
                         'stdAcademicInfo' => $stdAcademicInfo,
                         'stdFeeDetails' => $stdFeeDetails,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
+                                Html::button('Save',['class'=>'btn btn-info','type'=>"submit",'id'=>'save'])
         
                 ];         
-            }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post())){
+            }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post())){
                         $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                         if(!empty($model->std_photo)){
                             $imageName = $model->std_name.'_photo'; 
@@ -134,7 +152,15 @@ class StdPersonalInfoController extends Controller
                         $stdGuardianInfo->updated_at = '0';
                         $stdGuardianInfo->save();
 
+                        $stdIceInfo->std_id = $model->std_id;
+                        $stdIceInfo->created_by = Yii::$app->user->identity->id; 
+                        $stdIceInfo->created_at = new \yii\db\Expression('NOW()');
+                        $stdIceInfo->updated_by = '0'; 
+                        $stdIceInfo->updated_at = '0';
+                        $stdIceInfo->save();
+
                         $stdAcademicInfo->std_id = $model->std_id;
+                        $stdAcademicInfo->std_enroll_status = 'unsign'; 
                         $stdAcademicInfo->created_by = Yii::$app->user->identity->id; 
                         $stdAcademicInfo->created_at = new \yii\db\Expression('NOW()');
                         $stdAcademicInfo->updated_by = '0'; 
@@ -206,10 +232,12 @@ class StdPersonalInfoController extends Controller
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
+                                Html::button('Save',['class'=>'btn btn-info','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
-                $stdPersonalInfo = Yii::$app->db->createCommand("SELECT * FROM std_personal_info where std_id = $id")->queryAll();
+                $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
+                var_dump($stdPersonalInfo);
+                die();
                 $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                 if(!empty($model->std_photo)){
                     $imageName = $model->std_name.'_photo'; 
@@ -227,7 +255,7 @@ class StdPersonalInfoController extends Controller
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "<b>Student Personal Info: </b>".$id,
-                    'content'=>$this->renderAjax('view', [
+                    'content'=>$this->renderAjax('student-details', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
@@ -247,7 +275,22 @@ class StdPersonalInfoController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
+            if ($model->load($request->post())) {
+                 $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
+                $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                if(!empty($model->std_photo)){
+                    $imageName = $model->std_name.'_photo'; 
+                    $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);
+                    //save the path in the db column
+                    $model->std_photo = 'uploads/'.$imageName.'.'.$model->std_photo->extension;
+                } else {
+                   $model->std_photo = $stdPersonalInfo[0]['std_photo']; 
+                }
+                $model->updated_by = Yii::$app->user->identity->id;
+                $model->updated_at = new \yii\db\Expression('NOW()');
+                $model->created_by = $model->created_by;
+                $model->created_at = $model->created_at;
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->std_id]);
             } else {
                 return $this->render('update', [
@@ -285,7 +328,20 @@ class StdPersonalInfoController extends Controller
 
     }
 
-    
+    public function actionFetchFee()
+    {   
+        return $this->render('fetch-fee');
+    }
+
+    public function actionView($id)
+    { 
+        return $this->render('student-details');
+    }
+
+    public function actionStdPhoto($id)
+    { 
+        return $this->render('std-photo');
+    }
 
      /**
      * Delete multiple existing StdPersonalInfo model.

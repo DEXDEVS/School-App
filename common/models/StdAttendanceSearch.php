@@ -18,7 +18,7 @@ class StdAttendanceSearch extends StdAttendance
     public function rules()
     {
         return [
-            [['std_attend_id', 'teacher_id', 'class_id', 'student_id'], 'integer'],
+            [['std_attend_id', 'teacher_id', 'class_name_id','session_id','section_id', 'student_id'], 'integer'],
             [['date', 'status'], 'safe'],
         ];
     }
@@ -58,7 +58,9 @@ class StdAttendanceSearch extends StdAttendance
         $query->andFilterWhere([
             'std_attend_id' => $this->std_attend_id,
             'teacher_id' => $this->teacher_id,
-            'class_id' => $this->class_id,
+            'class_name_id' => $this->class_name_id,
+            'session_id' => $this->session_id,
+            'session_id' => $this->session_id,
             'date' => $this->date,
             'student_id' => $this->student_id,
         ]);

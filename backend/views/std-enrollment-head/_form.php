@@ -11,7 +11,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'class_id')->textInput() ?>
+    <?= $form->field($model, 'class_name_id')->textInput() ?>
+
+    <?= $form->field($model, 'session_id')->textInput() ?>
+
+    <?= $form->field($model, 'section_id')->textInput() ?>
 
     <?= $form->field($model, 'std_enroll_head_name')->textInput(['maxlength' => true]) ?>
 

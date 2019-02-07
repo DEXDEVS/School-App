@@ -2,7 +2,7 @@
  * @package   yii2-grid
  * @author    Kartik Visweswaran <kartikv2@gmail.com>
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2018
- * @version   3.2.8
+ * @version   3.2.9
  *
  * Grid Export Validation Module for Yii's Gridview. Supports export of
  * grid data as CSV, HTML, or Excel.
@@ -256,7 +256,15 @@
             htmlContent = self.preProcess(htmlContent, expType);
             $table.html(htmlContent);
             $.each(cssStyles, function (key, value) {
-                $table.find(key).css(value);
+                $table.find(key).each(function() {
+                    var $el = $(this), styles = $el.attr('style') || '';
+                    $.each(value, function (fm, to) {
+                        styles += fm + ':' + to + ';'
+                    });
+                    if (styles) {
+                        $el.attr('style', styles);
+                    }
+                });
             });
             return $table;
         },
@@ -357,8 +365,8 @@
                 css = (cfg.cssFile && self.config.cssFile.length) ? '<link href="' + self.config.cssFile + '" rel="stylesheet">' : '';
             $table.find('td[data-raw-value]').each(function () {
                 $td = $(this);
-                if ($td.css('mso-number-format') || $td.css('mso-number-format') === 0 || $td.css(
-                    'mso-number-format') === '0') {
+                if ($td.css('mso-number-format') || $td.css('mso-number-format') === 0 ||
+                    $td.css('mso-number-format') === '0') {
                     $td.html($td.attr('data-raw-value')).removeAttr('data-raw-value');
                 }
             });

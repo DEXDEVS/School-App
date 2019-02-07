@@ -4,12 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
+class ComposerStaticInit0c51b51caa7b76089a6868de9dd1f3ad
 {
     public static $files = array (
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -21,12 +21,18 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
         'y' => 
         array (
             'yii\\swiftmailer\\' => 16,
+            'yii\\jui\\' => 8,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
             'yii\\composer\\' => 13,
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
+            'yii2fullcalendar\\' => 17,
+        ),
+        'r' => 
+        array (
+            'rmrevin\\yii\\fontawesome\\' => 24,
         ),
         'p' => 
         array (
@@ -48,13 +54,10 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
         array (
             'johnitvn\\ajaxcrud\\' => 18,
         ),
-        'h' => 
-        array (
-            'hosannahighertech\\lbootstrap\\' => 29,
-        ),
         'd' => 
         array (
             'dosamigos\\datetimepicker\\' => 25,
+            'dmstr\\' => 6,
         ),
         'c' => 
         array (
@@ -105,6 +108,7 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
         ),
         'C' => 
         array (
+            'Composer\\Installers\\' => 20,
             'Codeception\\PHPUnit\\' => 20,
             'Codeception\\Extension\\' => 22,
             'Codeception\\' => 12,
@@ -115,6 +119,10 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
         'yii\\swiftmailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer/src',
+        ),
+        'yii\\jui\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-jui',
         ),
         'yii\\gii\\' => 
         array (
@@ -139,6 +147,14 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'yii2fullcalendar\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/philippfrenzel/yii2fullcalendar',
+        ),
+        'rmrevin\\yii\\fontawesome\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rmrevin/yii2-fontawesome',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
@@ -186,13 +202,13 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
         array (
             0 => __DIR__ . '/..' . '/johnitvn/yii2-ajaxcrud/src',
         ),
-        'hosannahighertech\\lbootstrap\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/hosannahighertech/yii2-light-bootstrap',
-        ),
         'dosamigos\\datetimepicker\\' => 
         array (
             0 => __DIR__ . '/..' . '/2amigos/yii2-date-time-picker-widget/src',
+        ),
+        'dmstr\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dmstr/yii2-adminlte-asset',
         ),
         'cebe\\markdown\\' => 
         array (
@@ -274,6 +290,10 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
+        ),
         'Codeception\\PHPUnit\\' => 
         array (
             0 => __DIR__ . '/..' . '/codeception/phpunit-wrapper/src',
@@ -290,6 +310,13 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
     );
 
     public static $prefixesPsr0 = array (
+        'c' => 
+        array (
+            'cebe\\gravatar\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/cebe/yii2-gravatar',
+            ),
+        ),
         'P' => 
         array (
             'Prophecy\\' => 
@@ -880,10 +907,10 @@ class ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit0feb87a9f47f9a7c5271e9ac41a90712::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0c51b51caa7b76089a6868de9dd1f3ad::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0c51b51caa7b76089a6868de9dd1f3ad::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit0c51b51caa7b76089a6868de9dd1f3ad::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit0c51b51caa7b76089a6868de9dd1f3ad::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -16,22 +16,32 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_class_id',
-        'value'=>'stdClass.class_name',
+        'attribute'=>'class_name_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'session_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'section_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_id',
-        'value'=>'std.std_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'month',
+        'attribute'=>'std_name',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'transaction_date',
-    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'month',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'transaction_date',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'total_amount',

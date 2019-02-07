@@ -35,11 +35,13 @@ class Institute extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['institute_name', 'institute_logo', 'institute_account_no'], 'required'],
-            [['institute_account_no', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by', 'institute_logo'], 'safe'],
+            [['institute_name', 'institute_logo', 'institute_account_no', 'created_by', 'updated_by'], 'required'],
+
+            [['created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
             [['institute_name'], 'string', 'max' => 65],
             [['institute_logo'], 'string', 'max' => 200],
+            [['institute_account_no'], 'string', 'max' => 200],
         ];
     }
 
@@ -83,5 +85,5 @@ class Institute extends \yii\db\ActiveRecord
         }
         return $imageInfo;
     }
-    
+
 }

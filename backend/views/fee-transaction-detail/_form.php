@@ -2,7 +2,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use common\models\StdClass;
+use common\models\StdClassName;
+use common\models\StdSessions;
+use common\models\StdSections;
 use common\models\FeeType;
 use common\models\StdPersonalInfo;
 use dosamigos\datetimepicker\DateTimePicker;
@@ -17,25 +19,49 @@ use dosamigos\datetimepicker\DateTimePicker;
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
             <div class="col-md-4">
-                <?= $form->field($feeTransactionHead, 'std_class_id')->dropDownList(
-                    ArrayHelper::map(StdClass::find()->all(),'class_id','class_name'),
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 115px; top: 6px"></i>
+                <?= $form->field($feeTransactionHead, 'class_name_id')->dropDownList(
+                    ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1])->all(),'class_name_id','class_name'),
                     ['prompt'=>'Select Class',
                     'id' => 'classId',
                 ])?> 
             </div>
             <div class="col-md-4">
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 90px; top: 6px"></i>     
+                <?= $form->field($feeTransactionHead, 'session_id')->dropDownList(
+                    ArrayHelper::map(StdSessions::find()->where(['delete_status'=>1])->all(),'session_id','session_name'),
+                    [
+                        'prompt'=>'Select Session',
+                        'id' => 'sessionId',
+                        'onchange'=>
+                            '$.post("index.php?r=std-sections/lists&id='.'"+$(this).val(), function( data ){
+                                $("select#sectionId").html(data);
+                            });'
+                    ]);?>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 86px; top: 6px"></i> 
+                <?= $form->field($feeTransactionHead, 'section_id')->dropDownList(
+                    ArrayHelper::map(StdSections::find()->where(['delete_status'=>1])->all(),'section_id','section_name'),
+                    ['prompt'=>'Select Section',
+                    'id'=>'sectionId',
+                ])?> 
+            </div>
+
+            <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 58px; top: 6px"></i> 
                 <?= $form->field($feeTransactionHead, 'std_id')->dropDownList(
-                    ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
+                    ArrayHelper::map(StdPersonalInfo::find()->where(['delete_status'=>1])->all(),'std_id','std_name'),
                     ['prompt'=>'Select Student',
                     'id' => 'std',
                 ])?>
             </div>
             <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 60px; top: 6px"></i>
                 <?= $form->field($feeTransactionHead, 'month')->dropDownList([ '1' => 'January', '2' => 'Fabruary', '3' => 'March', '4' => 'April', '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'August', '9' => 'September', '10' => 'October', '11' => 'November', '12' => 'December', ], ['prompt' => 'Select Month','id'=>'month']) ?>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 130px; top: 6px"></i>
                 <label>Transaction Date</label>
                 <?= DateTimePicker::widget([
                     'model' => $feeTransactionHead,
@@ -50,31 +76,29 @@ use dosamigos\datetimepicker\DateTimePicker;
                     ]
                 ]);?>
             </div>
-            <div class="col-md-4">
+        </div>
+        <!-- Fee Transaction Detail-->
+        <div class="row">
+            <div class="col-md-3">
+                <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 119px; top: 6px"></i> -->
                 <?= $form->field($model, 'fee_type_id')->dropDownList(
-                    ArrayHelper::map(FeeType::find()->all(),'fee_type_id','fee_type_name'),
+                    ArrayHelper::map(FeeType::find()->where(['delete_status'=>1])->all(),'fee_type_id','fee_type_name'),
                     ['prompt'=>'Select FeeType','id'=>'feeType']
                 )?>  
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 99px; top: 6px"></i> -->
                 <?= $form->field($model, 'fee_amount')->textInput(['id'=>'feeAmount']) ?>
             </div>
+            <div class="col-md-3">
+                <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 105px; top: 6px"></i> -->
+                <?= $form->field($model, 'fee_discount')->textInput(['id'=> 'feeDiscount']) ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'discounted_value')->textInput(['id'=>'discountValue', 'readonly' => true]) ?>
+            </div>
         </div>
-    <!-- Fee Transaction Detail-->
-    <div class="row">
-        <div class="col-md-2">
-            
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'fee_discount')->textInput(['id'=> 'feeDiscount', 'value' => 0]) ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'discounted_value')->textInput(['id'=>'discountValue', 'readonly' => true]) ?>
-        </div>
-        <div class="col-md-2 invisible" >
-            <?= $form->field($model, 'net_total')->textInput(['id'=>'netTotal', 'readonly' => true]) ?>
-        </div>
-    </div>
+
     <div class="row">
         <div class="col-md-6">
             <?= $form->field($feeTransactionHead, 'total_amount')->textInput(['id'=>'totalAmount', 'readonly' => true]) ?>
@@ -83,7 +107,15 @@ use dosamigos\datetimepicker\DateTimePicker;
             <?= $form->field($feeTransactionHead, 'total_discount')->textInput(['id'=>'totalDiscount', 'readonly' => true]) ?>
         </div>
     </div>
-    <input type="button" name="" value ="Add" class="btn btn-success" id= "addInfo">
+
+    <div class="row"> 
+        <div class="col-md-4" >
+            <input type="button" name="" value ="Add" class="btn btn-success" id= "addInfo">
+        </div>        
+        <div class=" col-md-4 invisible">
+            <?= $form->field($model, 'net_total')->textInput(['id'=>'netTotal', 'readonly' => true]) ?>
+        </div>
+    </div>
     
     <div id="mydata">
         <br/>
@@ -100,7 +132,12 @@ use dosamigos\datetimepicker\DateTimePicker;
         </table>
         <br/>
     </div>
-    <input type="button" name="btn" class="btn btn-info" value="Confirm" id= "insert" >
+
+    <div class="row"> 
+        <div class="col-lg-4">
+            <input type="button" name="btn" class="btn btn-info" value="Confirm" id= "insert" >
+        </div>       
+    </div>
     
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
@@ -116,14 +153,14 @@ use dosamigos\datetimepicker\DateTimePicker;
 $url = \yii\helpers\Url::to("index.php?r=fee-transaction-detail/fetch-students");
 
 $script = <<< JS
-
-$('#classId').on('change',function(){
+$('#sectionId').on('change',function(){
    var classId = $('#classId').val();
+   var sessionId = $('#sessionId').val();
+   var sectionId = $('#sectionId').val();
    
    $.ajax({
         type:'post',
-        cache:false,
-        data:{classId:classId},
+        data:{class_Id:classId,session_Id:sessionId,section_Id:sectionId},
         url: "$url",
 
         success: function(result){
@@ -149,17 +186,15 @@ $('#classId').on('change',function(){
 //get student detail
 var netTotal = 0;
 $('#std').on('change',function(){
-   var studentId = $('#std').val();
+    var studentId = $('#std').val();
     $('#feeType').val('');
     $('#feeAmount').val('');
     $('#discountValue').val('');
     $('#feeDiscount').val('');
     $('#netTotal').val('');
     netTotal = 0;
-   
-   
-   
-   $.ajax({
+
+    $.ajax({
         type:'post',
         cache:false,
         data:{studentId:studentId},
@@ -168,7 +203,6 @@ $('#std').on('change',function(){
         success: function(result){
 
             var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-            console.log(jsonResult);
             var netAddmissionFee = jsonResult['net_addmission_fee'];
             var netMonthlyFee = jsonResult['net_monthly_fee'];
             $('#feeType').on('change',function(){
@@ -181,14 +215,13 @@ $('#std').on('change',function(){
                     $('#feeAmount').val(netMonthlyFee);
                    
                 }else {
-                    $('#feeAmount').val('');
-                    
+                    $('#feeAmount').val('');  
                 }      
             });   
         }         
     });       
 });
-let amountt =0;
+let amountt = 0;
 let discountt = 0;
     $('#feeDiscount').on('change',function(){
         var netValue = $('#feeAmount').val();
@@ -197,16 +230,10 @@ let discountt = 0;
         var feeDiscount = parseInt(discount);
 
         if(discount == feeDiscount + '%'){
-            
             amount = parseInt((total * feeDiscount)/100);
-
             $('#discountValue').val(amount);
-            
             amountt = total - amount;
-
-            netTotal += amountt;
-           // $('#netTotal').val(netTotal);
-            
+            netTotal += amountt; 
         } else {
             amountt = parseInt(total - feeDiscount);
             $('#discountValue').val(feeDiscount); 
@@ -220,10 +247,8 @@ let discountt = 0;
     let discountValueArray = new Array();
   //this code apply on the add button
      $('#addInfo').on('click',function(){
-
-            $('#netTotal').val(netTotal);
-            $('#totalAmount').val(netTotal);
-
+        var amountTotal = 0;
+        var discountTotal = 0;
 
             $('#infoTable').show();
             let fType = $('#feeType').val();
@@ -235,6 +260,18 @@ let discountt = 0;
            feeAmountArray.push(amountt);
            feeDiscountArray.push(fDiscount);
            discountValueArray.push(dValue);
+
+            for(let x=0; x<feeAmountArray.length; x++){
+                amountTotal += parseInt(feeAmountArray[x]);
+            }
+            $('#netTotal').val(parseInt(amountTotal));
+            $('#totalAmount').val(parseInt(amountTotal));
+
+            //Total Disscount
+            for(let x=0; x<discountValueArray.length; x++){
+                discountTotal += parseInt(discountValueArray[x]);
+            }
+            $('#totalDiscount').val(parseInt(discountTotal));
 
             var table = document.getElementById('infoTable');
             let rowCount = table.rows.length;
@@ -273,15 +310,14 @@ let discountt = 0;
             discountValueArray.splice(j,1); 
 
             for(let x=0; x<feeAmountArray.length; x++){
-                alert(feeAmountArray);
-                sum = sum + feeAmountArray[x];
+                sum += parseInt(feeAmountArray[x]);
             }
-
             $('#netTotal').val(sum);
             $('#totalAmount').val(sum);
             //Total Disscount
+
             for(let x=0; x<discountValueArray.length; x++){
-                summ = summ + discountValueArray[x];
+                summ += parseInt(discountValueArray[x]);
             }
             $('#totalDiscount').val(parseInt(summ));
         }

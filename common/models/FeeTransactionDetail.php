@@ -54,8 +54,8 @@ class FeeTransactionDetail extends \yii\db\ActiveRecord
     {
         return [
             'fee_trans_detail_id' => 'Fee Trans Detail ID',
-            'fee_trans_detail_head_id' => 'Fee Trans Detail Head ID',
-            'fee_type_id' => 'Fee Type ID',
+            'fee_trans_detail_head_id' => 'Fee Trans Detail Head Name',
+            'fee_type_id' => 'Fee Type Name',
             'fee_amount' => 'Fee Amount',
             'fee_discount' => 'Fee Discount',
             'discounted_value' => 'Discounted Value',

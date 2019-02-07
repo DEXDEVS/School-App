@@ -9,6 +9,7 @@ use common\models\FeeTransactionDetailSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -23,6 +24,20 @@ class FeeTransactionDetailController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index',  'create', 'view', 'update', 'delete', 'bulk-delete', 'fee-voucher', 'fetch-students', 'collect-voucher', 'update-voucher', 'generate-voucher', 'class-account','voucher','class-voucher'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -108,6 +123,8 @@ class FeeTransactionDetailController extends Controller
         
                 ];         
             }else if($feeTransactionHead->load($request->post()) && $model->load($request->post())){
+                        $stdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info where std_id = $feeTransactionHead->std_id")->queryAll();
+                        $feeTransactionHead->std_name = $stdName[0]['std_name'];
                         $feeTransactionHead->status = "Unpaid";
                         $feeTransactionHead->created_by = Yii::$app->user->identity->id; 
                         $feeTransactionHead->created_at = new \yii\db\Expression('NOW()');
@@ -241,7 +258,7 @@ class FeeTransactionDetailController extends Controller
     {   
         return $this->render('fetch-students');
     }
-
+    
     public function actionFeeVoucher()
     {
         return $this->render('fee-voucher');
@@ -260,6 +277,21 @@ class FeeTransactionDetailController extends Controller
     public function actionGenerateVoucher()
     {
         return $this->render('generate-voucher');
+    }
+
+    public function actionClassAccount()
+    {
+        return $this->render('class-account');
+    }
+
+    public function actionVoucher()
+    {
+        return $this->render('voucher');
+    }
+
+    public function actionClassVoucher()
+    {
+        return $this->render('class-voucher');
     }
 
     /**

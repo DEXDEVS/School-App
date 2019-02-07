@@ -8,6 +8,7 @@ use common\models\StdAttendanceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -22,6 +23,20 @@ class StdAttendanceController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index','attendance','view','update','delete','attendance','fetch-section','view-class-attendance'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -48,8 +63,8 @@ class StdAttendanceController extends Controller
     }
 
     public function beforeAction($action) {
-    $this->enableCsrfValidation = false;
-    return parent::beforeAction($action);
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
     }
 
     /**
@@ -203,6 +218,16 @@ class StdAttendanceController extends Controller
         return $this->render('attendance');
     }
 
+    public function actionFetchSection()
+    {   
+        return $this->render('fetch-section');
+    }
+
+    public function actionViewClassAttendance()
+    {   
+        return $this->render('view-class-attendance');
+    }
+
     /**
      * Delete an existing StdAttendance model.
      * For ajax request will return json object
@@ -276,10 +301,5 @@ class StdAttendanceController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionSendSms()
-    {
-        return $this->render('send-sms');
     }
 }

@@ -1,6 +1,14 @@
 Change Log: `yii2-grid`
 =======================
 
+## Version 3.2.9
+
+**Date:** 07-Dec-2018
+
+- (enh #864): Unique `columnKey` property in grid columns.
+- (enh #862): Enhance `ExpandRowColumn` behavior to support multiple expand row columns per grid.
+- (enh #859): Harmonized asset namespaces.
+
 ## Version 3.2.8
 
 **Date:** 09-Nov-2018

@@ -45,6 +45,9 @@ class EmpInfo extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
+    public $reference; 
+
     public static function tableName()
     {
         return 'emp_info';
@@ -70,6 +73,7 @@ class EmpInfo extends \yii\db\ActiveRecord
             [['emp_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpType::className(), 'targetAttribute' => ['emp_type_id' => 'emp_type_id']],
             [['emp_photo', 'degree_scan_copy'], 'image', 'extensions' => 'jpg'],
             [['emp_email'],'email'],
+            [['reference'],'string', 'max' => 84],
         ];
     }
 

@@ -30,60 +30,56 @@
 </head>
 <body>
 <?php
-	global $div;
 	if(isset($_POST["submit"])){
 		$classid = $_POST["classid"];
+		$sessionid = $_POST["sessionid"];
+		$sectionid = $_POST["sectionid"];
 		$month = $_POST["month"];
-		$months = Yii::$app->db->createCommand("SELECT * FROM month as m RIGHT JOIN fee_transaction_head as fth ON m.month_id = fth.month WHERE fth.month = '$month'")->queryAll();
-		if(!empty($months)){
-			$monthId = $months[0]["month_id"];
-		}
-		if(!empty($months) && $month == $monthId){
 
-			$institue = Yii::$app->db->createCommand("SELECT * FROM institute ")->queryAll();
-			$branch = Yii::$app->db->createCommand("SELECT * FROM branches WHERE branch_code = 002 ")->queryAll();
-			$ids = Yii::$app->db->createCommand("SELECT class_name_id,session_id,section_id FROM std_class WHERE class_id = '$classid'")->queryAll();
-			$stdIds = $ids[0];
-			$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$stdIds[class_name_id]'")->queryAll();
-			$sessionName = Yii::$app->db->createCommand("SELECT session_name FROM std_sessions WHERE session_id = '$stdIds[session_id]'")->queryAll();
-			$sectionName = Yii::$app->db->createCommand("SELECT section_name FROM std_sections WHERE section_id = '$stdIds[section_id]'")->queryAll();
-			$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_id = '$classid'")->queryAll();
+		// $months = Yii::$app->db->createCommand("SELECT * FROM month as m RIGHT JOIN fee_transaction_head as fth ON m.month_id = fth.month WHERE fth.month = '$month'")->queryAll();
+		// if(!empty($months)){
+		// 	$monthId = $months[0]["month_id"];
+		// }
+		if(!empty($month)){
+
+			$institue = Yii::$app->db->createCommand("SELECT * FROM institute")->queryAll();
+			$branch = Yii::$app->db->createCommand("SELECT * FROM branches WHERE branch_code = 001")->queryAll();
+			$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classid'")->queryAll();
+			$sessionName = Yii::$app->db->createCommand("SELECT session_name FROM std_sessions WHERE session_id = '$sessionid'")->queryAll();
+			$sectionName = Yii::$app->db->createCommand("SELECT section_name FROM std_sections WHERE section_id = '$sectionid'")->queryAll();
+			$student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
 			foreach ($student as $id =>$value) {
-				$div = $id;
 				$stdInfo = Yii::$app->db->createCommand("SELECT std_name , std_father_name  FROM std_personal_info WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
 				$feeDetail = Yii::$app->db->createCommand("SELECT *  FROM fee_transaction_detail as ftd INNER JOIN fee_transaction_head as fth ON fth.fee_trans_id = ftd.fee_trans_detail_head_id WHERE fth.std_id = '$value[std_enroll_detail_std_id]' AND fth.month = '$month'")->queryAll();
-				// var_dump($feeDetail);
-				// $stdMonth = $feeDetail['month'];
-				// if(!empty($stdMonth) && $stdMonth == $month ){
 				$feeType = Yii::$app->db->createCommand("SELECT fee_type_id,fee_type_name  FROM fee_type")->queryAll();
 ?>
-	<div id="<?php echo $div; ?>">
+<div class="container-fluid">
+	<div id="div1">
 		<div class="row">
 			<div class="col-md-4 image">
-				<img src="images/school_logo.jpg" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
+				<img src="images/brookfield_logo.jpg" class="image img-circle" width="65" height="65">
 				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
 				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 			<div class="col-md-4 image">
-				<img src="images/school_logo.jpg" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
+				<img src="images/brookfield_logo.jpg" class="image img-circle" width="65" height="65">
 				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
 				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 			<div class="col-md-4 image">
-				<img src="images/school_logo.jpg" class="img img-circle" width="65px" height="65px;" alt="image not found...!">
+				<img src="images/brookfield_logo.jpg" class="image img-circle" width="65" height="65">
 				<h2 class="h2"><?php echo $institue[0]['institute_name'] ?></h2>
 				<h4 class="h4"><?php echo $branch[0]['branch_location'] ?> | Rahim Yar Khan</h4>
 				<span class="span">Phone No: <?php echo $branch[0]['branch_contact_no'] ?></span>
 			</div>
 		</div><br>
-
 		<div class="row">
 			<div class="col-md-4">
 				<div style="border: 1px solid; line-height: 2; height: 28px">
 					<p align="center">
-						<b><?php echo $months[0]["month_name"] ." - ". date('Y'); ?></b>
+						<b><?php echo $feeDetail[0]['month']; ?></b>
 					</p>
 				</div>
 				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Student Copy <span style="float: right;">Voucher # <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
@@ -97,26 +93,26 @@
 			<div class="col-md-4">
 				<div style="border: 1px solid; line-height: 2; height: 28px">
 					<p align="center">
-						<b><?php echo $months[0]["month_name"] ." - ". date('Y'); ?></b>
+						<b><?php echo $feeDetail[0]['month']; ?></b>
 					</p>
 				</div>
 				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Institue Copy <span style="float: right;">Voucher # <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
 				<div style="border: 1px solid; line-height: 2; padding: 5px; height: 28px; margin-top: -10px">
 					<p style="font-size: 9px;">
-						<b>The Bank of Punjab, Abu Dhabi Road RYK. &nbsp;|&nbsp;&nbsp;Account Number: <?php echo $institue[0]['institute_account_no'] ?></b>
+						<b>Account Number: <?php echo $institue[0]['institute_account_no'] ?></b>
 					</p>
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div style="border: 1px solid; line-height: 2; height: 28px">
 					<p align="center">
-						<b><?php echo $months[0]["month_name"] ." - ". date('Y'); ?></b>
+						<b><?php $feeDetail[0]['month']; ?></b>
 					</p>
 				</div>
 				<p style="background-color: black; color: white; padding: 5px"><b>Fee Receipt / Bank Copy <span style="float: right;">Voucher # <?php echo $feeDetail[0]['fee_trans_detail_head_id'] ?></span></b></p>
 				<div style="border: 1px solid; line-height: 2; padding: 5px; height: 28px; margin-top: -10px">
 					<p style="font-size: 9px;">
-						<b>The Bank of Punjab, Abu Dhabi Road RYK. &nbsp;|&nbsp;&nbsp;Account Number: <?php echo $institue[0]['institute_account_no'] ?></b>
+						<b>Account Number: <?php echo $institue[0]['institute_account_no'] ?></b>
 					</p>
 				</div>
 			</div>
@@ -211,7 +207,7 @@
 		</div><hr>
 
 		<div class="row">
-			<div class="col-md-4" id="image">
+			<div class="col-md-4">
 				<table class="table feeTable" width="100%" border="" height="150px">
 					<tr>
 						<th>Sr #</th>
@@ -385,37 +381,20 @@
 		
 		<div class="row">
 			<div class="col-md-4">
-				<p style="font-size: 11px; text-align: justify;">A fine of Rs. 100 will be charged after due date. This voucher is not valid after the date of validity and bank will not receive it. For unpaid fee voucher, a fine of Rs. 200 will be charged in the voucher of next month.</p>
-				<p style="text-align: center;">Software Developerd By: Dexterous Developers (www.dexdevs.com)</p>
+				<p>A fine of Rs. 100 will be charged after due date. This voucher is not valid after the date of validity and bank will not receive it. For unpaid fee voucher, a fine of Rs. 200 will be charged in the voucher of next month.</p>
 			</div>
 			<div class="col-md-4">
-				<p style="font-size: 11px; text-align: justify;">A fine of Rs. 100 will be charged after due date. This voucher is not valid after the date of validity and bank will not receive it. For unpaid fee voucher, a fine of Rs. 200 will be charged in the voucher of next month.</p>
-				<p style="text-align: center;">Software Developerd By: Dexterous Developers (www.dexdevs.com)</p>
+				<p>A fine of Rs. 100 will be charged after due date. This voucher is not valid after the date of validity and bank will not receive it. For unpaid fee voucher, a fine of Rs. 200 will be charged in the voucher of next month.</p>
 			</div>
 			<div class="col-md-4">
-				<p style="font-size: 11px; text-align: justify;">A fine of Rs. 100 will be charged after due date. This voucher is not valid after the date of validity and bank will not receive it. For unpaid fee voucher, a fine of Rs. 200 will be charged in the voucher of next month.</p>
-				<p style="text-align: center;">Software Developerd By: Dexterous Developers (www.dexdevs.com)</p>
+				<p>A fine of Rs. 100 will be charged after due date. This voucher is not valid after the date of validity and bank will not receive it. For unpaid fee voucher, a fine of Rs. 200 will be charged in the voucher of next month.</p>
 			</div>
 		</div><hr>
 	</div>
-
-	<br><br><br><br><br>
-
 	<!-- print-content close -->
 	<?php 
-		}
-		//ending of foreach loop...
-	?>
-	
-	<right style="float: right;">
-	    <button class="btn btn-warning hidden-print invisible" id="btnprint" onclick="printCont()">
-	    	<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
-	</right>
-
-</div>
-<!-- container-fluid close -->
-
-<?php
+	//ending of foreach loop
+	}
 	// ending of if statement
 	} else {
 		echo 
@@ -427,28 +406,7 @@
 	}
 //ending of isset if
 }
-?>
+?> 
 
-</body>
-</html>
-
-<script>
-	
-	var div = <?php echo $div; ?>
-
-	function printCont(){
-		var i;
-		for(i=0; i<=div; i++){
-			printContent(i);
-		}	
-	}
-	
-	function printContent(i){
-		var restorepage = document.body.innerHTML;
-		var printcontent = document.getElementById(i).innerHTML;
-		document.body.innerHTML = printcontent;
-		window.print();
-		document.body.innerHTML = restorepage;
-	}
-
-</script>
+</div>
+<!-- container-fluid close -->

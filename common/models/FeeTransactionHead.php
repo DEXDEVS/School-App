@@ -8,9 +8,11 @@ use Yii;
  * This is the model class for table "fee_transaction_head".
  *
  * @property integer $fee_trans_id
- * @property integer $std_class_id
+ * @property integer $class_name_id
+ * @property integer $session_id
+ * @property integer $section_id
  * @property integer $std_id
- * @property string $month
+ * @property integer $month
  * @property string $transaction_date
  * @property double $total_amount
  * @property double $total_discount
@@ -23,8 +25,11 @@ use Yii;
  * @property integer $updated_by
  *
  * @property FeeTransactionDetail[] $feeTransactionDetails
+ * @property Month $month0
+ * @property StdClassName $className
+ * @property StdSessions $session
+ * @property StdSections $section
  * @property StdPersonalInfo $std
- * @property StdClass $stdClass
  */
 class FeeTransactionHead extends \yii\db\ActiveRecord
 {
@@ -42,13 +47,16 @@ class FeeTransactionHead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_class_id', 'std_id', 'month', 'transaction_date', 'total_amount', 'total_discount'], 'required'],
-            [['std_class_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
-            [['month', 'status'], 'string'],
-            [['transaction_date', 'created_at', 'updated_at', 'paid_amount', 'remaining', 'status', 'created_by', 'updated_by'], 'safe'],
+            [['class_name_id', 'session_id', 'section_id', 'std_id', 'month', 'transaction_date', 'total_amount', 'total_discount'], 'required'],
+            [['class_name_id', 'session_id', 'section_id', 'std_id', 'month', 'created_by', 'updated_by'], 'integer'],
+            [['transaction_date' , 'paid_amount', 'remaining', 'status', 'created_at', 'updated_at','created_by', 'updated_by','std_name'], 'safe'],
             [['total_amount', 'total_discount', 'paid_amount', 'remaining'], 'number'],
+            [['status'], 'string'],
+            [['month'], 'exist', 'skipOnError' => true, 'targetClass' => Month::className(), 'targetAttribute' => ['month' => 'month_id']],
+            [['class_name_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_name_id' => 'class_name_id']],
+            [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
+            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSections::className(), 'targetAttribute' => ['section_id' => 'section_id']],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
-            [['std_class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClass::className(), 'targetAttribute' => ['std_class_id' => 'class_id']],
         ];
     }
 
@@ -59,8 +67,11 @@ class FeeTransactionHead extends \yii\db\ActiveRecord
     {
         return [
             'fee_trans_id' => 'Fee Trans ID',
-            'std_class_id' => 'Std Class ID',
+            'class_name_id' => 'Class Name ID',
+            'session_id' => 'Session ID',
+            'section_id' => 'Section ID',
             'std_id' => 'Std ID',
+            'std_name' => 'Std Name',
             'month' => 'Month',
             'transaction_date' => 'Transaction Date',
             'total_amount' => 'Total Amount',
@@ -86,16 +97,40 @@ class FeeTransactionHead extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStd()
+    public function getMonth0()
     {
-        return $this->hasOne(StdPersonalInfo::className(), ['std_id' => 'std_id']);
+        return $this->hasOne(Month::className(), ['month_id' => 'month']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStdClass()
+    public function getClassName()
     {
-        return $this->hasOne(StdClass::className(), ['class_id' => 'std_class_id']);
+        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_name_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSession()
+    {
+        return $this->hasOne(StdSessions::className(), ['session_id' => 'session_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSection()
+    {
+        return $this->hasOne(StdSections::className(), ['section_id' => 'section_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStd()
+    {
+        return $this->hasOne(StdPersonalInfo::className(), ['std_id' => 'std_id']);
     }
 }

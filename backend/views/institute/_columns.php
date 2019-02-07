@@ -10,11 +10,11 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-<<<<<<< HEAD
+
     // [
-=======
+
     //     [
->>>>>>> 525ac9510eea4767bb53fbe47414d4560fefbb23
+
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'institute_id',
     // ],

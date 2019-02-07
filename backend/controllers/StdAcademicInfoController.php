@@ -8,6 +8,7 @@ use common\models\StdAcademicInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -22,6 +23,20 @@ class StdAcademicInfoController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -100,6 +115,7 @@ class StdAcademicInfoController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
+                $model->std_enroll_status = 'unsign'; 
                 $model->created_by = Yii::$app->user->identity->id; 
                 $model->created_at = new \yii\db\Expression('NOW()');
                 $model->updated_by = '0';
@@ -166,6 +182,7 @@ class StdAcademicInfoController extends Controller
                                 Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
+                $model->std_enroll_status = $model->std_enroll_status; 
                 $model->updated_by = Yii::$app->user->identity->id;
                 $model->updated_at = new \yii\db\Expression('NOW()');
                 $model->created_by = $model->created_by;
@@ -195,7 +212,7 @@ class StdAcademicInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->academic_id]);
+                return $this->redirect(['std-personal-info/view', 'id' => $model->academic_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,

@@ -11,12 +11,10 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'language' => 'ur',
-    'sourceLanguage' => 'en',
-     'modules' => [
+    'modules' => [
         'gridview' =>  [
-            'class' => '\kartik\grid\Module'
-        ], 
+            'class' => '\kartik\grid\Module',
+        ],
     ],
     'components' => [
         'request' => [

@@ -5,10 +5,11 @@ namespace backend\controllers;
 use Yii;
 use common\models\EmpInfo;
 use common\models\EmpReference;
-use backend\models\EmpInfoSearch;
+use common\models\EmpInfoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\web\UploadedFile;
@@ -24,6 +25,20 @@ class EmpInfoController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-details'],
+                        'allow' => true,
+                        'roles' => ['@','view'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -55,26 +70,32 @@ class EmpInfoController extends Controller
      * @param integer $id
      * @return mixed
      */
+    // public function actionView($id)
+    // {   
+    //     $request = Yii::$app->request;
+    //     if($request->isAjax){
+    //         Yii::$app->response->format = Response::FORMAT_JSON;
+    //         return [
+    //                 'title'=> "EmpInfo #".$id,
+    //                 'content'=>$this->renderAjax('view', [
+    //                     'model' => $this->findModel($id),
+    //                 ]),
+    //                 'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+    //                         Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+    //             ];    
+    //     }else{
+    //         return $this->render('view', [
+    //             'model' => $this->findModel($id),
+    //         ]);
+    //     }
+    // }
+
     public function actionView($id)
-    {   
-        $request = Yii::$app->request;
-        if($request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                    'title'=> "EmpInfo #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-        }else{
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
+    {
+       return $this->render('emp-details'); 
     }
 
+   
     /**
      * Creates a new EmpInfo model.
      * For ajax request will return json object
@@ -239,7 +260,30 @@ class EmpInfoController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
+            if ($model->load($request->post())) {
+                $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
+                        if(!empty($model->emp_photo)){
+                            $imageName = $model->emp_name.'_emp_photo'; 
+                            $model->emp_photo->saveAs('uploads/'.$imageName.'.'.$model->emp_photo->extension);
+                            //save the path in the db column
+                            $model->emp_photo = 'uploads/'.$imageName.'.'.$model->emp_photo->extension;
+                        } else {
+                           $model->emp_photo = $emp_info[0]['emp_photo'];  
+                        }
+                        $model->degree_scan_copy = UploadedFile::getInstance($model,'degree_scan_copy');
+                        if(!empty($model->degree_scan_copy)){
+                            $imageName = $model->emp_name.'_degree_scan_copy'; 
+                            $model->degree_scan_copy->saveAs('uploads/'.$imageName.'.'.$model->degree_scan_copy->extension);
+                            //save the path in the db column
+                            $model->degree_scan_copy = 'uploads/'.$imageName.'.'.$model->degree_scan_copy->extension;
+                        } else {
+                           $model->degree_scan_copy = $emp_info[0]['degree_scan_copy'];  
+                        }
+                        $model->updated_by = Yii::$app->user->identity->id;
+                        $model->updated_at = new \yii\db\Expression('NOW()');
+                        $model->created_by = $model->created_by;
+                        $model->created_at = $model->created_at;
+                        $model->save();
                 return $this->redirect(['view', 'id' => $model->emp_id]);
             } else {
                 return $this->render('update', [

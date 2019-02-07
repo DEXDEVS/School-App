@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => "SMART EDUCATION",
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,8 +37,7 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Student Attendance', 'url' => ['/std-attendance/attendance']],
-        ['label' => 'SMS', 'url' => ['/std-attendance/send-sms']],
+        ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
@@ -70,16 +69,13 @@ AppAsset::register($this);
     </div>
 </div>
 
-    <footer class="footer nav">
-        <div class="text-center">
-            <p style="color: black">
-                Copyrights &copy; <?php echo date('Y'); ?>. All Rights Reserved | Powered By: <a href="http://www.dexdevs.com/" target="_blank" style="color: #2452E7"><b>DEXDEVS</b></a>
-            </p>
-            <a href="index.html#" class="go-top">
-                <i class="fa fa-angle-up"></i>
-            </a>
-        </div>
-    </footer>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+
+        <p class="pull-right"><?= Yii::powered() ?></p>
+    </div>
+</footer>
 
 <?php $this->endBody() ?>
 </body>
