@@ -11,7 +11,7 @@
 	$branches = Yii::$app->db->createCommand("SELECT * FROM branches WHERE branch_id = $id")->queryAll();
   // institute query....
 	$institute = $branches[0]['institute_id'];
-	$instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute WHERE institute_id = $institute")->queryAll();
+	$instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute WHERE institute_id = 2")->queryAll();
   // sessions query....
 	$sessions = Yii::$app->db->createCommand("SELECT * FROM std_sessions WHERE session_branch_id = $id AND delete_status = 1")->queryAll();
 	$sessionid = $sessions[0]['session_id'];
@@ -51,7 +51,7 @@
             <!-- Profile Image -->
             <div class="box box-primary">
               <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="images/brookfiled_logo.jpg" alt="User profile picture">
+                <img class="profile-user-img img-responsive img-circle" src="<?php echo $instituteInfo[0]['institute_logo'];?>" alt="User profile picture" style="width: 150px; height: 120px">
                 <h3 class="profile-username text-center"></h3>
                 <p class="text-muted text-center">
                   <h4 align="center" style="color: #3C8DBC;"><?php echo $instituteInfo[0]['institute_name'];?></h4>

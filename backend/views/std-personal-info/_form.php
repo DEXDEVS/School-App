@@ -246,54 +246,42 @@ use common\models\StdSubjects;
     
         <h3 style="color: red; margin-top: -10px"> Fee Detail <small> ( Fields with <span style="color: red;">red stars </span>are required )</small> </h3>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <?= $form->field($stdFeeDetails, 'feeSession')->dropDownList(
                     ArrayHelper::map(StdSessions::find()->all(),'session_id','session_name'),
                         ['prompt'=>'Select Session','id'=>'sessionId']
                 )?>
             </div>
-            <div class="col-md-3">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 116px; top: 6px"></i>
                 <?= $form->field($stdFeeDetails, 'admission_fee')->textInput(['type' => 'number','id' => 'admissionFee']) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 190px; top: 6px"></i>
                 <?= $form->field($stdFeeDetails, 'addmission_fee_discount')->textInput(['type' => 'number','id' => 'admissionFeeDiscount']) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 151px; top: 6px"></i>
                 <?= $form->field($stdFeeDetails, 'net_addmission_fee')->textInput(['type' => 'number', 'id' => 'netAdmissionFee', 'readonly'=> true, 'onfocus' => 'showNetAdmissionFee();' ]) ?>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 105px; top: 6px"></i>
-               <?= $form->field($stdFeeDetails, 'fee_category')->dropDownList([ 'Annual' => 'Annual', 'Semester' => 'Semester', ], ['prompt' => 'Select Category']) ?> 
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 92px; top: 6px"></i>
                 <?= $form->field($stdFeeDetails, 'totalTuitionFee')->textInput(['type' => 'number','id' => 'totalTuitionFee']) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 114px; top: 6px"></i>
                 <?= $form->field($stdFeeDetails, 'concession_id')->dropDownList(
                         ArrayHelper::map(Concession::find()->where(['delete_status'=>1])->all(),'concession_id','concession_name'),
                         ['prompt'=>'Select Concession Type','id'=>'concession']
                     )?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 92px; top: 6px"></i>
                 <?= $form->field($stdFeeDetails, 'tuition_fee')->textInput(['type' => 'number','id' => 'tuitionFee']) ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 133px; top: 6px"></i>
-                <?= $form->field($stdFeeDetails, 'no_of_installment')->textInput(['type' => 'number','id' => 'noOfInstallment']) ?>
-            </div>
-            <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 195px; top: 6px"></i>
-                <?= $form->field($stdFeeDetails, 'net_tuition_fee')->textInput(['type' => 'number','id' => 'netTuitionFee','readonly'=> true, 'onfocus' => 'showNetTuitionFee();' ]) ?>
             </div>
         </div>
     </div>
@@ -334,38 +322,47 @@ use common\models\StdSubjects;
 	   	}
 	   	else if(con == '90'){
 	   		fee = (totalTuitionFee*90)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	   	else if(con == '80'){
 	   		fee = (totalTuitionFee*80)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	   	else if(con == '70'){
 	   		fee = (totalTuitionFee*70)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	   	else if(con == '60'){
 	   		fee = (totalTuitionFee*60)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	   	else if(con == '50'){
 	   		fee = (totalTuitionFee*50)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	   	else if(con == '40'){
 	   		fee = (totalTuitionFee*40)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	   	else if(con == '30'){
 	   		fee = (totalTuitionFee*30)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	   	else if(con == '25'){
 	   		fee = (totalTuitionFee*25)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	   	else{
 	   		fee = (totalTuitionFee*50)/100;
+            fee = totalTuitionFee-fee;
 	   		$('#tuitionFee').val(fee);
 	   	}
 	});

@@ -20,33 +20,27 @@ use common\models\StdSessions
                 ArrayHelper::map(StdSessions::find()->all(),'session_id','session_name')
             )?>
         </div>
+    </div>
+    <div class="row">    
         <div class="col-md-4">
             <?= $form->field($model, 'admission_fee')->textInput(['type' => 'number','id' => 'admissionFee']) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'addmission_fee_discount')->textInput(['type' => 'number','id' => 'admissionFeeDiscount']) ?>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'net_addmission_fee')->textInput(['type' => 'number', 'id' => 'netAdmissionFee', 'readonly'=> true, 'onfocus' => 'showNetAdmissionFee();' ]) ?>
         </div>
-        <div class="col-md-4">
-           <?= $form->field($model, 'fee_category')->dropDownList([ 'Annual' => 'Annual', 'Semester' => 'Semester', ], ['prompt' => 'Select Category']) ?> 
-        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'concession_id')->dropDownList(
                 ArrayHelper::map(Concession::find()->where(['delete_status'=>1])->all(),'concession_id','concession_name'),
                 ['prompt'=>'Select Concession Type']
             )?>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'tuition_fee')->textInput(['type' => 'number','id' => 'tuitionFee']) ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'no_of_installment')->textInput(['type' => 'number','id' => 'noOfInstallment']) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'net_tuition_fee')->textInput(['type' => 'number','id' => 'netTuitionFee','readonly'=> true, 'onfocus' => 'showNetTuitionFee();' ]) ?>

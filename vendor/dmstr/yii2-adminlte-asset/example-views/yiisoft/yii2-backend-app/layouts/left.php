@@ -6,6 +6,15 @@
     $userPhoto = $user[0]['user_photo'];
     // echo $userPhoto;  
 ?>
+<style type="text/css">
+    /*.main-sidebar{
+        background-color: #AA5397;
+        color: black;
+    }*/
+    .main-sidebar a{
+        color: #001F3F;
+    }*/
+</style>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -20,8 +29,6 @@
                     <?= Yii::$app->user->identity->username ?>
                     <!--  -->
                 </p>
-
-
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
@@ -56,10 +63,10 @@
                         'items' => [
                             ['label' => 'Class Name', 'icon' => 'caret-right', 'url' => 'index.php?r=std-class-name',],
                             ['label' => 'Subjects', 'icon' => 'caret-right', 'url' => 'index.php?r=subjects',],
-                            ['label' => 'Subjects Combination', 'icon' => 'caret-right', 'url' => 'index.php?r=std-subjects',],
+                            //['label' => 'Subjects Combination', 'icon' => 'caret-right', 'url' => 'index.php?r=std-subjects',],
                             ['label' => 'Employee Designation', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-designation',],
                             ['label' => 'Employee Type', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-type',],
-                            ['label' => 'Fee Type', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-type',],
+                            //['label' => 'Fee Type', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-type',],
                             ['label' => 'Fee Packages', 'icon' => 'caret-right', 'url' => 'index.php?r=std-fee-pkg',],
                         ],
                     ],

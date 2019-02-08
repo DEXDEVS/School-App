@@ -114,7 +114,7 @@ use yii\helpers\Url;
       <!-- Notice Row Start -->
       <div class="row">
         <!-- Notice Panel Start -->
-        <div class="col-md-6">
+        <div class="col-md-7">
           <!-- Custom Tabs (Pulled to the right) -->
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
@@ -302,7 +302,7 @@ use yii\helpers\Url;
         <!-- Notice Panel CLose -->
 
         <!-- Notice Panel Start -->
-        <div class="col-md-6">
+        <div class="col-md-5">
           <!-- Custom Tabs (Pulled to the right) -->
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">

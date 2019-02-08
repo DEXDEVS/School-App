@@ -16,6 +16,12 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 ?>
+<style type="text/css">
+    .panel-heading{
+        background-color: #AA5397;
+        color: white;
+    }
+</style>
 <div class="institute-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -38,7 +44,7 @@ CrudAsset::register($this);
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
-                'type' => 'primary', 
+                'type' => '', 
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Institutes listing',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([

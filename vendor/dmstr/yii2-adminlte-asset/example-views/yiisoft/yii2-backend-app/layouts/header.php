@@ -13,8 +13,16 @@ use yii\helpers\Html;
     $userPhoto = $user[0]['user_photo'];
     //echo $photo;
 ?>
-
-<header class="main-header">
+<style type="text/css">
+    .main-header{
+        background-color: #591747;
+        color: white;
+    }
+    .main-header a{
+        color: white;
+    }
+</style>
+<header class="main-header text-dark">
 
     <?= Html::a('<span class="logo-mini"><b>SE</b></span><span class="logo-lg">' . "<b>SMART EDUCATION</b>" . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
@@ -158,7 +166,7 @@ use yii\helpers\Html;
                         <i class="fa fa-th"></i>
                         <!-- <span class="label label-danger">9</span> -->
                     </a>
-                    <ul class="dropdown-menu" style="width: 340px; height: 400px;">
+                    <ul class="dropdown-menu" style="width: 340px; height: 400px; background-color: #AA5397;">
                         <li class="header"><p align="center"><b>Menus</b></p></li>
                         
                             <!-- inner menu: contains the actual data -->
@@ -214,7 +222,7 @@ use yii\helpers\Html;
                             <?= Yii::$app->user->identity->username ?>
                         </span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" style="background-color: #AA5397;">
                         <!-- User image -->
                         <li class="user-header" style="height: 200px">
                             <img src="images/anas.jpg" class="img-circle"

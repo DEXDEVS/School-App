@@ -37,7 +37,8 @@ if (Yii::$app->controller->action->id === 'login') {
         <link rel="shortcut icon" href="images/brookfield_logo.jpg" type="image/jpg">
         <?php $this->head() ?>
     </head>
-    <body class="hold-transition skin-blue-light sidebar-mini" >
+    
+    <body class="hold-transition sidebar-mini">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 
