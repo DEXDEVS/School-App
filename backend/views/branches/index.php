@@ -10,12 +10,24 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel common\models\BranchesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Branches';
+$this->title = 'Branches Information';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 ?>
+<style type="text/css">
+    .panel-heading{
+        background-color: #AA5397;
+        color: white;
+    }
+    h1{ 
+        color: #AA5397; 
+    }
+    th{
+        color: #AA5397;
+    }
+</style>
 <div class="branches-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -38,7 +50,7 @@ CrudAsset::register($this);
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
-                'type' => 'primary', 
+                'type' => '', 
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Branches listing',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([

@@ -21,6 +21,10 @@ use yii\helpers\Html;
     .main-header a{
         color: white;
     }
+    .panel-heading{
+        background-color: #AA5397;
+        color: white;
+    }
 </style>
 <header class="main-header text-dark">
 

@@ -7,13 +7,12 @@
     // echo $userPhoto;  
 ?>
 <style type="text/css">
-    /*.main-sidebar{
-        background-color: #AA5397;
-        color: black;
-    }*/
+    .main-sidebar{
+        color: #591747;
+    }
     .main-sidebar a{
-        color: #001F3F;
-    }*/
+        color: #591747;
+    }
 </style>
 <aside class="main-sidebar">
 

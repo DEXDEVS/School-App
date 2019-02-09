@@ -32,13 +32,6 @@ use kartik\select2\Select2;
                 <?= $form->field($model, 'section_intake')->input('number') ?>
             </div>
         </div>
-        <div class="row"> 
-            <div class="col-md-12">
-                <?= $form->field($model, 'section_subjects')->dropDownList(
-                    ArrayHelper::map(StdSubjects::find()->all(),'std_subject_id','std_subject_name')
-                )?>
-            </div>
-        </div>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

@@ -21,7 +21,7 @@ use kartik\select2\Select2;
             <div class="col-md-6">
                 <?= $form->field($stdEnrollmentHead, 'class_name_id')->dropDownList(
                     ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1])->all(),'class_name_id','class_name'),
-                    ['prompt'=>'','id'=>'classId']
+                    ['prompt'=>'Select Class','id'=>'classId']
                 )?>
             </div>
             <div class="col-md-6">

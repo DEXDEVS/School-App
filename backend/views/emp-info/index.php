@@ -10,12 +10,21 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel backend\models\EmpInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Emp Infos';
+$this->title = 'Employees Information';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 ?>
+<style type="text/css">
+    .panel-heading{
+        background-color: #AA5397;
+        color: white;
+    }
+    h1{ 
+        color: #AA5397; 
+    }
+</style>
 <div class="emp-info-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -27,18 +36,19 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Emp Infos','class'=>'btn btn-default']).
+                    ['role'=>'modal-remote','title'=> 'Create new Emp Infos','class'=>'btn btn-success']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
+                    ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
                     '{toggleData}'.
                     '{export}'
                 ],
             ],          
             'striped' => true,
             'condensed' => true,
-            'responsive' => true,          
+            'responsive' => true,
+            'hover' => true,          
             'panel' => [
-                'type' => 'primary', 
+                'type' => '', 
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Emp Infos listing',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([

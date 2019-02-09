@@ -31,11 +31,6 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'section_intake',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'section_subjects',
-        'value'=>'sectionSubjects.std_subject_name',
-    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',

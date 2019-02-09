@@ -42,13 +42,12 @@ class StdSections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['session_id', 'section_name', 'section_description', 'section_intake', 'section_subjects', 'created_by', 'updated_by'], 'required'],
-            [['session_id', 'section_intake', 'section_subjects', 'created_by', 'updated_by', 'delete_status'], 'integer'],
+            [['session_id', 'section_name', 'section_description', 'section_intake', 'created_by', 'updated_by'], 'required'],
+            [['session_id', 'section_intake', 'created_by', 'updated_by', 'delete_status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['section_name'], 'string', 'max' => 50],
             [['section_description'], 'string', 'max' => 100],
             [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
-            [['section_subjects'], 'exist', 'skipOnError' => true, 'targetClass' => StdSubjects::className(), 'targetAttribute' => ['section_subjects' => 'std_subject_id']],
         ];
     }
 
@@ -63,7 +62,6 @@ class StdSections extends \yii\db\ActiveRecord
             'section_name' => 'Section Name',
             'section_description' => 'Section Description',
             'section_intake' => 'Section Intake',
-            'section_subjects' => 'Section Subjects',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
@@ -115,8 +113,4 @@ class StdSections extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSectionSubjects()
-    {
-        return $this->hasOne(StdSubjects::className(), ['std_subject_id' => 'section_subjects']);
-    }
 }
