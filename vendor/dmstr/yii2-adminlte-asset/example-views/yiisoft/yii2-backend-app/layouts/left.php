@@ -13,6 +13,11 @@
     .main-sidebar a{
         color: #591747;
     }
+    a:hover{
+        font-weight: bold;
+        background-color: #ECF0F5;
+        color: #AA5397;
+    }
 </style>
 <aside class="main-sidebar">
 
@@ -33,16 +38,15 @@
         </div>
 
         <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
+        <!-- <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search..."/>
               <span class="input-group-btn">
-                <?= Yii::$app->user->identity->email ?>
                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
               </span>
             </div>
-        </form>
+        </form> -->
         <!-- /.search form -->
 
         <?= dmstr\widgets\Menu::widget(
@@ -59,6 +63,7 @@
                         'label' => 'System Settings',
                         'icon' => 'cog',
                         'url' => '#',
+                        'options' => ['class' => 'hello'],
                         'items' => [
                             ['label' => 'Class Name', 'icon' => 'caret-right', 'url' => 'index.php?r=std-class-name',],
                             ['label' => 'Subjects', 'icon' => 'caret-right', 'url' => 'index.php?r=subjects',],

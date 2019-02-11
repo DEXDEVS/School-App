@@ -21,7 +21,7 @@ use kartik\select2\Select2;
             <div class="col-md-6">
                 <?= $form->field($stdEnrollmentHead, 'class_name_id')->dropDownList(
                     ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1])->all(),'class_name_id','class_name'),
-                    ['prompt'=>'Select Class','id'=>'classId']
+                    ['prompt'=>'','id'=>'classId']
                 )?>
             </div>
             <div class="col-md-6">
@@ -58,11 +58,11 @@ use kartik\select2\Select2;
             </div>
         </div>
   
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
-	<?php } ?>
+    <?php if (!Yii::$app->request->isAjax){ ?>
+        <div class="form-group">
+            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+    <?php } ?>
 
     <?php ActiveForm::end(); ?>
     
