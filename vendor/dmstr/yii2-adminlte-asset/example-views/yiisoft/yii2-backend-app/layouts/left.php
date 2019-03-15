@@ -1,22 +1,23 @@
 <?php 
 
-    $userID = Yii::$app->user->id;
-    $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
-    // Student Photo...
-    $userPhoto = $user[0]['user_photo'];
+    // $userID = Yii::$app->user->id;
+    // $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+    // // Student Photo...
+    // $userPhoto = $user[0]['user_photo'];
     // echo $userPhoto;  
 ?>
 <style type="text/css">
     .main-sidebar{
-        color: #591747;
+        color: #ECF0F5;
+        background-color: #AA5397;
     }
     .main-sidebar a{
-        color: #591747;
+        color: #ECF0F5;
     }
     a:hover{
         font-weight: bold;
         background-color: #ECF0F5;
-        color: #AA5397;
+        color: #591747;
     }
 </style>
 <aside class="main-sidebar">
@@ -53,7 +54,7 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-                    ['label' => 'Menus', 'options' => ['class' => 'header center']],
+                    //['label' => 'Menus', 'options' => ['class' => 'header center']],
                     ['label' => 'Home', 'icon' => 'dashboard', 'url' => 'index.php'],
                     //['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
@@ -67,7 +68,7 @@
                         'items' => [
                             ['label' => 'Class Name', 'icon' => 'caret-right', 'url' => 'index.php?r=std-class-name',],
                             ['label' => 'Subjects', 'icon' => 'caret-right', 'url' => 'index.php?r=subjects',],
-                            //['label' => 'Subjects Combination', 'icon' => 'caret-right', 'url' => 'index.php?r=std-subjects',],
+                            ['label' => 'Subjects Combination', 'icon' => 'caret-right', 'url' => 'index.php?r=std-subjects',],
                             ['label' => 'Employee Designation', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-designation',],
                             ['label' => 'Employee Type', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-type',],
                             //['label' => 'Fee Type', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-type',],
@@ -86,25 +87,25 @@
                             ['label' => 'Branches', 'icon' => 'caret-right', 'url' => 'index.php?r=branches',],
                             ['label' => 'Sessions', 'icon' => 'caret-right', 'url' => 'index.php?r=std-sessions',],
                             ['label' => 'Sections', 'icon' => 'caret-right', 'url' => 'index.php?r=std-sections',],
-                            ['label' => 'Class', 'icon' => 'caret-right', 'url' => 'index.php?r=std-class',],
-                            ['label' => 'Students Enrolment', 'icon' => 'caret-right', 'url' => 'index.php?r=std-enrollment-head',],
-                            ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => 'index.php?r=teacher-subject-assign-detail',],
+                            //['label' => 'Class', 'icon' => 'caret-right', 'url' => 'index.php?r=std-class',],
                         ],
                     ],
                     // System Configuration close...
                     // ------------------------------------------------
                     // Student Registration start...
                     [
-                        'label' => 'Student Registration',
+                        'label' => 'Student Module',
                         'icon' => 'users',
-                        'url' => 'index.php?r=std-personal-info',
-                        // 'items' => [
-                        //     ['label' => 'Student Personal Info', 'icon' => 'caret-right', 'url' => 'index.php?r=std-personal-info',],
+                        'url' => '#',
+                        'items' => [
+                        ['label' => 'Student Registration', 'icon' => 'caret-right', 'url' => 'index.php?r=std-personal-info',],
+                        ['label' => 'Students Enrolment', 'icon' => 'caret-right', 'url' => 'index.php?r=std-enrollment-head',],
                         //     ['label' => 'Student Guardian Info', 'icon' => 'caret-right', 'url' => 'index.php?r=std-guardian-info',],
                         //     ['label' => 'Student ICE Info', 'icon' => 'caret-right', 'url' => 'index.php?r=std-ice-info',],
                         //     ['label' => 'Student Academic Info', 'icon' => 'caret-right', 'url' => 'index.php?r=std-academic-info',],
                         //     ['label' => 'Student Fee Details', 'icon' => 'caret-right', 'url' => 'index.php?r=std-fee-details',],
                         // ],
+                        ],
                     ],
                     // Student Registration close...
                     // ------------------------------------------------
@@ -112,14 +113,22 @@
                     [
                         'label' => 'Employee Registration',
                         'icon' => 'user-plus',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Employee Personal Info', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-info',],
-                            ['label' => 'Employee Reference', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-reference',]
-                        ],
+                        'url' => 'index.php?r=emp-info',
+                        // 'items' => [
+                        //     ['label' => 'Employee Personal Info', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-info',],
+                        //     ['label' => 'Employee Reference', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-reference',],
+                        // ],
+                    ],
+                    // Employee Registration close...
+                    // ------------------------------------------------
+                    // Assign Teacher start...
+                    [
+                        'label' => 'Assign Teacher',
+                        'icon' => 'fa fa-id-badge',
+                        'url' => 'index.php?r=teacher-subject-assign-detail',
                     ],
                     // ------------------------------------------------
-                    // Employee Registration close...
+                    // Assign Teacher close...
                     // ------------------------------------------------
                     // Fee Registration start...
                     [

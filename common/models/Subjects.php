@@ -34,8 +34,8 @@ class Subjects extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subject_name', 'subject_description', 'created_by', 'updated_by'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['subject_name', 'subject_description'], 'required'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['created_by', 'updated_by', 'delete_status'], 'integer'],
             [['subject_name'], 'string', 'max' => 32],
             [['subject_description'], 'string', 'max' => 100],

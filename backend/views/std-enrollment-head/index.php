@@ -10,12 +10,18 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel common\models\StdEnrollmentHeadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Std Enrollment Heads';
+$this->title = 'Student Enrollment';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 ?>
+<style type="text/css">
+    .panel-heading{
+        background-color: #AA5397;
+        color: white;
+    }
+</style>
 <div class="std-enrollment-head-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -38,8 +44,8 @@ CrudAsset::register($this);
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
-                'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Std Enrollment Heads listing',
+                'type' => '', 
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Student Enrollment listing',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',

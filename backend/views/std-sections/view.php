@@ -15,7 +15,6 @@ use yii\widgets\DetailView;
             'section_name',
             'section_description',
             'section_intake',
-            'section_subjects',
             'created_at',
             'updated_at',
             'created_by',

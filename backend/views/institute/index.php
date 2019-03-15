@@ -10,7 +10,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel common\models\InstituteSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Institutes';
+$this->title = 'Institute Name';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -45,7 +45,7 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => '', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Institutes listing',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Institute',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',

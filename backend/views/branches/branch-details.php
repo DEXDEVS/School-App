@@ -226,9 +226,15 @@
                               <td><?php echo $val['session_start_date'];?></td>
                               <td><?php echo $val['session_end_date'];?></td>
                               <td>
-                                <span class="label label-success">
-                                  <?php echo $val['status'];?>
-                                </span>
+                                <?php if ($val['status'] == "Active") { ?>
+                                  <span class="label label-success">
+                                    <?php echo $val['status'];?>
+                                  </span>
+                                <?php } else { ?>
+                                  <span class="label label-danger">
+                                    <?php echo $val['status'];?>
+                                  </span>
+                                <?php } ?>
                               </td>
                             </tr>
                         	<?php } ?>
@@ -252,25 +258,26 @@
                       <div class="col-md-12">
                         <table class="table table-striped table-hover table-responsive table-condensed table-bordered">
                           <thead>
-                          	<tr class="label-primary">
-                          		<th class="text-center">Sr #:</th>
-                          		<th>Section Name:</th>
-                          		<th>Section Description</th>
-                          		<th class="text-center">Section Intake</th>
-                          		<th class="text-center">Total Students</th>
-                          	</tr>
+                            <tr class="label-primary">
+                              <th class="text-center">Sr #:</th>
+                              <th style="width: 110px">Section Name</th>
+                              <th>Section Description</th>
+                              <th class="text-center">Section Intake</th>
+                              <th class="text-center">Enrolled Students</th>
+                              <th class="text-center">Remaining</th>
+                            </tr>
                           </thead>
                           <tbody>  
-                          	<?php foreach ($sections as $key => $val){ 
-                              $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id  
-                                FROM std_enrollment_detail as sed 
-                                INNER JOIN std_enrollment_head as seh 
-                                ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id 
-                                WHERE seh.section_id = $key+1")->queryAll();
+                            <?php 
+                              $countIntake = 0;
+                              $countStudent = 0;
+                              $countRemainingIntake = 0;
+                              foreach ($sections as $key => $val){ 
+                              $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.section_id = $key+1")->queryAll();
                                 $studentCount = count($students);
                             ?>  
                             <tr>
-                              <td class="text-center"><?php echo $key+1; ?></td>
+                              <td class="text-center"><b><?php echo $key+1; ?></b></td>
                               <td><?php echo $val['section_name'];?></td>
                               <td><?php echo $val['section_description'];?></td>
                               <td align="center">
@@ -279,12 +286,46 @@
                               <td align="center">
                                 <span class="label label-warning" style="border-radius: 50%; padding: 5px 7px"><b><?php echo $studentCount; ?></b></span>
                               </td>
+                              <td class="text-center">
+                                <span class="label label-danger text-center" style="border-radius: 50%; padding: 5px 7px"><b><?php echo $val['section_intake']-$studentCount; ?></b></span>
+                              </td>
                             </tr>
-                        	  <?php } ?>
+                            <?php 
+                              $countIntake          += $val['section_intake'];
+                              $countStudent         += $studentCount;
+                              $countRemainingIntake += $val['section_intake']-$studentCount;
+                          } ?>
                           </tbody>
                         </table>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12" style="margin-left: 10px auto;">
+                        <table class="table table-bordered table-hover table-condensed">
+                          <tr class="label-primary">
+                            <th colspan="3" class="text-center">Total</th>
+                          </tr>
+                          <tr class="label-info">
+                            <th class="text-center">Intake</th>
+                            <th class="text-center">Enrolled Students</th>
+                            <th class="text-center">Remaining</th>
+                          </tr>
+                          <tr align="center">
+                              <td width="78px">
+                                <span class="label label-primary text-center" style="border-radius: 50%; padding: 5px 7px">
+                                  <?php echo $countIntake; ?>
+                                </span>
+                              </td>
+                              <td width="88px">
+                                <span class="label label-warning text-center" style="border-radius: 50%; padding: 5px 7px">
+                                  <?php echo $countStudent; ?>
+                                </span>
+                              </td>
+                              <td width="105px">
+                                <span class="label label-danger text-center" style="border-radius: 50%; padding: 5px 7px">
+                                  <?php echo $countRemainingIntake; ?>
+                                </span>
+                              </td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
                   <!-- Sections info close -->

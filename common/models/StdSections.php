@@ -12,7 +12,6 @@ use Yii;
  * @property string $section_name
  * @property string $section_description
  * @property int $section_intake
- * @property int $section_subjects
  * @property string $created_at
  * @property string $updated_at
  * @property int $created_by
@@ -42,7 +41,7 @@ class StdSections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['session_id', 'section_name', 'section_description', 'section_intake', 'created_by', 'updated_by'], 'required'],
+            [['session_id', 'section_name', 'section_description', 'section_intake'], 'required'],
             [['session_id', 'section_intake', 'created_by', 'updated_by', 'delete_status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['section_name'], 'string', 'max' => 50],
