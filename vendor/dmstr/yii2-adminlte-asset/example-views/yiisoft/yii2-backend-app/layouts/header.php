@@ -6,12 +6,12 @@ use yii\helpers\Html;
 ?>
 
 <?php 
-
-    // $userID = Yii::$app->user->id;
-    // $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
-    // // Student Photo...
-    // $userPhoto = $user[0]['user_photo'];
+    $userID = Yii::$app->user->id;
+    $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+    // Student Photo...
+    $userPhoto = $user[0]['user_photo'];
     //echo $photo;
+
 ?>
 <style type="text/css">
     .main-header{

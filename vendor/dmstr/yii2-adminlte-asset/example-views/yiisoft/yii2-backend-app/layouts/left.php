@@ -1,10 +1,10 @@
 <?php 
 
-    // $userID = Yii::$app->user->id;
-    // $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
-    // // Student Photo...
-    // $userPhoto = $user[0]['user_photo'];
-    // echo $userPhoto;  
+    $userID = Yii::$app->user->id;
+    $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+    // Student Photo...
+    $userPhoto = $user[0]['user_photo'];
+    echo $userPhoto;  
 ?>
 <style type="text/css">
     .main-sidebar{

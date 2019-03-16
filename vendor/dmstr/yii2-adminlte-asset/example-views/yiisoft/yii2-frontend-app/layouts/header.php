@@ -6,16 +6,15 @@ use yii\helpers\Html;
 ?>
 
 <?php 
-    // $userID = Yii::$app->user->id;
-    // $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
-    // // Student Photo...
-    // $userPhoto = $user[0]['user_photo'];
-    //echo $photo;
+    $userID = Yii::$app->user->id;
+    $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+    // Student Photo...
+    $userPhoto = $user[0]['user_photo'];
 ?>
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini"><b>SE</b></span><span class="logo-lg">' . "<b>SMART EDUCATION</b>" . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini"><b>IC</b></span><span class="logo-lg">' . "<b>Institute on Cloud</b>" . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -207,60 +206,56 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?php // echo $userPhoto ?>" class="user-image" alt="User Image"/>
+                        <img src="<?php echo $userPhoto ?>" class="user-image" alt="User Image"/>
                         <span class="hidden-xs">
-                            <?php //Yii::$app->user->identity->username;  ?>
+                            <?php echo Yii::$app->user->identity->username;  ?>
                             <!--  -->
                         </span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header" style="height: 200px">
-                            <img src="<?php // echo $userPhoto ?>" class="img-circle"
-                                 alt="User Image"/>
+                            <img src="<?php echo $userPhoto ?>" class="img-circle" alt="User Image"/>
                             <p>
                                 <label for="">Contact Info</label><br>
-
-                                <!-- user_phone_no -->
-
                                 <!-- email -->
-                                <!-- - Web Developer
-                                <small>Member since Nov. 2012</small> -->
+                                <?= Yii::$app->user->identity->email;  ?>
                             </p>
                         </li><hr>
-                        <!-- Menu Body -->
-                        <!-- <li class="user-body">
-                            <div class="col-xs-12 text-center">
-                                <label for="">User Name</label>
-                                <a href="#"></a>
-                            </div>
-                        </li>
-                        <li class="user-body">    
-                            <div class="col-xs-12 text-center">
-                                <label for="">Email</label>
-                                <a href="#"></a>
-                            </div>
-                        </li> -->
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="#" class="btn btn-primary btn-flat btn-sm">Profile</a>
                             </div>
                             <div class="pull-right">
+                                <?php if(Yii::$app->user->identity->username == 'Superadmin' OR
+                                Yii::$app->user->identity->username == 'dexdevs'){?>
+                                <?= Html::a(
+                                    'Add User',
+                                    ['/signup'],
+                                    ['data-method' => 'post', 'class' => 'btn btn-success btn-flat btn-sm']
+                                ) ?>
+                                
                                 <?= Html::a(
                                     'Sign out',
                                     ['/site/logout'],
-                                    ['data-method' => 'post', 'class' => 'btn btn-danger btn-flat btn-sm']
-                                ) ?>
+                                    ['data-method' => 'post', 'class' => 'btn btn-danger btn-flat btn-sm']) ?>
+                                <?php } 
+                                    else { ?>
+                                        <?= Html::a(
+                                            'Sign out',
+                                            ['/site/logout'],
+                                            ['data-method' => 'post', 'class' => 'btn btn-danger btn-flat btn-sm']) ?>
+                                <?php } ?>
                             </div>
                         </li>
                     </ul>
                 </li>
 
                 <!-- User Account: style can be found in dropdown.less -->
-                <li>
+                <!-- <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </nav>

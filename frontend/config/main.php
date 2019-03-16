@@ -18,6 +18,8 @@ return [
     ],
     'components' => [
         'request' => [
+            'class' => 'common\components\Request',
+            'web'=> '/frontend/web',
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
@@ -41,14 +43,31 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'login' => 'site/login',
+                //'logout' => 'site/login',
+                'signup' => 'site/signup',
+                'home' => 'site/index',
+                
+                'attendance' => 'std-attendance',
+                'student-attendance' => 'std-attendance/attendance',
+                'class-attendance' => 'std-attendance/view-class-attendance',
+                'view-attendance' => 'std-attendance/view-attendance',
+                'test-attendance' => 'std-attendance/test-attendance',
+                'take-attendance' => 'std-attendance/take-attendance',
+                'datewise-class-attendance' => 'std-attendance/datewise-class-attendance',
+                'datewise-student-attendance' => 'std-attendance/datewise-student-attendance',
+                'daterangewise-class-attendance' => 'std-attendance/daterangewise-class-attendance',
+                'daterangewise-student-attendance' => 'std-attendance/daterangewise-student-attendance',
+                'activity-view' => 'std-attendance/activity-view',
+                'employe-dashboard'=>'site/employe-dashboard',
             ],
         ],
-        */
+        
     ],
     'params' => $params,
 ];
