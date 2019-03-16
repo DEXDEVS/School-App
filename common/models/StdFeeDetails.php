@@ -12,9 +12,10 @@ use Yii;
  * @property double $admission_fee
  * @property double $addmission_fee_discount
  * @property double $net_addmission_fee
+ * @property string $fee_category
  * @property int $concession_id
+ * @property int $no_of_installment
  * @property double $tuition_fee
- * @property double $net_tuition_fee
  * @property string $created_at
  * @property string $updated_at
  * @property int $created_by
@@ -43,9 +44,11 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'concession_id', 'tuition_fee', 'net_tuition_fee'], 'required'],
+            [['std_id', 'admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'fee_category', 'concession_id', 'no_of_installment', 'tuition_fee'], 'required'],
             [['std_id', 'concession_id', 'created_by', 'updated_by'], 'integer'],
-            [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'tuition_fee', 'net_tuition_fee'], 'number'],
+            [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'tuition_fee'], 'number'],
+            [['fee_category'], 'string'],
+            [['no_of_installment'], 'number', 'min' => 1, 'max'=> 6],
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
             [['concession_id'], 'exist', 'skipOnError' => true, 'targetClass' => Concession::className(), 'targetAttribute' => ['concession_id' => 'concession_id']],
@@ -60,14 +63,14 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     {
         return [
             'fee_id' => 'Fee ID',
-            'std_id' => 'Std ID',
+            'std_id' => 'Std Name',
             'admission_fee' => 'Admission Fee',
             'addmission_fee_discount' => 'Admission Fee Discount',
             'net_addmission_fee' => 'Net Admission Fee',
+            'fee_category' => 'Fee Category',
             'concession_id' => 'Fee Concession',
             'no_of_installment' => 'No of Installment',
             'tuition_fee' => 'Tuition Fee',
-            'net_tuition_fee' => 'Tuition Fee Par Installment',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

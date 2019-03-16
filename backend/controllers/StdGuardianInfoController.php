@@ -88,6 +88,15 @@ class StdGuardianInfoController extends Controller
         }
     }
 
+    public function actionValidation(){
+        $model = new StdGuardianInfo();
+
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+                Yii::$app->response->format = 'json';
+                return ActiveForm::validate($model);
+            }
+    }
+
     /**
      * Creates a new StdGuardianInfo model.
      * For ajax request will return json object
@@ -156,7 +165,7 @@ class StdGuardianInfoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id,$ids)
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
@@ -200,7 +209,7 @@ class StdGuardianInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['std-personal-info/view', 'id' => $model->std_guardian_info_id]);
+                return $this->redirect(['std-personal-info/view', 'id' => $ids]);
             } else {
                 return $this->render('update', [
                     'model' => $model,

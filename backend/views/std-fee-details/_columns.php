@@ -33,6 +33,10 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'fee_category',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'concession_id',
         'value'=>'concession.concession_name',
     ],
@@ -42,7 +46,7 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'net_tuition_fee',
+        'attribute'=>'no_of_installment',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

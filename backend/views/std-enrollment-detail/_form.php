@@ -48,7 +48,7 @@ use kartik\select2\Select2;
                 <?= $form->field($model, 'std_enroll_detail_std_id')->widget(Select2::classname(), [
                     'data' => ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
                     'language' => 'en',
-                    'options' => ['placeholder' => 'Select' , 'id'=>'std'],
+                    'options' => ['placeholder' => 'Select' , 'id'=>'stdent'],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'multiple' => true
@@ -85,15 +85,15 @@ $('#classId').on('change',function(){
             
             var len =jsonResult[0].length;
             var html = "";
-            $('#std').empty();
-            //$('#std').append("<option>"+"Select Student.."+"</option>");
+            $('#stdent').empty();
+            $('#stdent').append("<option>"+"Select Student.."+"</option>");
             for(var i=0; i<len; i++)
             {
             var stdId = jsonResult[0][i];
             var stdName = jsonResult[1][i];
             html += "<option value="+ stdId +">"+stdName+"</option>";
             }
-            $(".field-std select").append(html);
+            $(".field-stdent select").append(html);
 
         }         
     });       
