@@ -18,9 +18,9 @@ class StdFeeDetailsSearch extends StdFeeDetails
     public function rules()
     {
         return [
-            [['fee_id', 'std_id', 'concession_id', 'created_by', 'updated_by'], 'integer'],
-            [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'tuition_fee', 'net_tuition_fee'], 'number'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['fee_id', 'std_id', 'concession_id', 'no_of_installment', 'created_by', 'updated_by'], 'integer'],
+            [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'tuition_fee'], 'number'],
+            [['fee_category', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -63,13 +63,15 @@ class StdFeeDetailsSearch extends StdFeeDetails
             'addmission_fee_discount' => $this->addmission_fee_discount,
             'net_addmission_fee' => $this->net_addmission_fee,
             'concession_id' => $this->concession_id,
+            'no_of_installment' => $this->no_of_installment,
             'tuition_fee' => $this->tuition_fee,
-            'net_tuition_fee' => $this->net_tuition_fee,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+
+        $query->andFilterWhere(['like', 'fee_category', $this->fee_category]);
 
         return $dataProvider;
     }

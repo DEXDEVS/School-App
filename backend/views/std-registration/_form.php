@@ -338,7 +338,7 @@ use yii\helpers\Url;
                 <!-- Fee Installment end -->
             <!-- Fee detail end -->
             <div class="form-group">
-                <?= Html::submitButton(' Save', ['class' => 'btn btn-success btn-flat','id' => 'save']) ?>
+                <?= Html::submitButton(' Save', ['class' => 'btn btn-success btn-flat' ,'id'=>'save']) ?>
                 <a href="std-personal-info" class="btn btn-danger btn-flat">Back</a>
             </div>
             </div>
@@ -354,6 +354,14 @@ use yii\helpers\Url;
 
 </div>
 
+<script type="text/javascript">
+    // showNetMonthlyFee function...!
+    function showNetAdmissionFee() {
+        var value1 = document.getElementById('admissionFee').value;
+        var value2 = document.getElementById('admissionFeeDiscount').value;
+        document.getElementById('netAdmissionFee').value = value1 - value2 ;
+    }
+</script>
 <?php
 $url = \yii\helpers\Url::to("./std-registration/fetch-fee");
 
@@ -384,7 +392,7 @@ $('#inquiryNo').on('change',function(){
     }); 
 });
 
-// calculate totalMarks....
+    // calculate totalMarks....
     $('#totalMarks').on('change',function(){
         var tMarks = $('#totalMarks').val();
         var obtMarks = $('#obtainedMarks').val();
@@ -420,6 +428,41 @@ $('#inquiryNo').on('change',function(){
             $('#grade').val('F');
        }
     });
+
+     var noOfInstallment;
+    $('#noOfInstallment').on('change',function(){
+        for (var i = 1 ; i<= 6; i++) {
+            $('#amnt'+i).val('');
+            $('#f'+i).hide();
+        }
+        noOfInstallment = $('#noOfInstallment').val();
+        var tuitionFee = $('#tuitionFee').val();
+        var amountPerInstallment = parseInt(tuitionFee / noOfInstallment);
+
+        for (var i = 1 ; i<= noOfInstallment; i++) {
+            $('#f'+i).show();
+            $('#amnt'+i).val(amountPerInstallment);
+        }
+
+    });
+
+    $('#save').on('click',function(){
+        var amount = [];
+        var sum = 0;
+
+        for(var j=1; j<=noOfInstallment; j++){
+            amount[j] = $('#amnt'+j).val();   
+        }
+
+        for(var j=1; j<=noOfInstallment; j++){
+            sum += parseInt(amount[j]);   
+        }
+        var tuitionFee = $('#tuitionFee').val();
+        if(sum != tuitionFee){
+            alert("Sum of Installments = " + sum  + " Total tution Fee = " + tuitionFee + " Your total amount is not equal to total no. of installments");
+        }
+    }); 
+
 
     // calculate concession start....
     $('#concession').on('change',function(){
@@ -475,39 +518,7 @@ $('#inquiryNo').on('change',function(){
         var value2 = document.getElementById('admissionFeeDiscount').value;
         document.getElementById('netAdmissionFee').value = value1 - value2 ;
     }
-var noOfInstallment;
-var amount = [];
-var sum = 0;
-    $('#noOfInstallment').on('change',function(){
-        for (var i = 1 ; i<= 6; i++) {
-            $('#amnt'+i).val('');
-            $('#f'+i).hide();
 
-        }   
-        noOfInstallment = $('#noOfInstallment').val();
-        var tuitionFee = $('#tuitionFee').val();
-        var amountPerInstallment = parseInt(tuitionFee / noOfInstallment);
-        
-        for (var i = 1 ; i<= noOfInstallment; i++) {
-            $('#f'+i).show();
-            $('#amnt'+i).val(amountPerInstallment);
-            amount[i] = parseInt(amountPerInstallment);
-            alert(parseInt(amount[i]));
-        }
-    });
-
-$('#save').on('click',function(){
-    for(var j=1; j<=noOfInstallment; j++){
-        alert(parseInt(amount[j]));
-           sum += parseInt(amount[j]);
-        }
-        var tuitionFee = $('#tuitionFee').val();
-        if(sum != tuitionFee){
-            alert(sum);
-            alert(tuitionFee);
-            alert('Your total amount is not equal to total no. of installments')
-        }
-}); 
 
 $('#sessionId').on('change',function(){
    var classId = $('#classId').val();
