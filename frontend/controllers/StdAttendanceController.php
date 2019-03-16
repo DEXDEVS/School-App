@@ -31,7 +31,8 @@ class StdAttendanceController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','attendance','view','update','delete','attendance','fetch-section','view-class-attendance'],
+                     
+                        'actions' => ['logout', 'index','attendance','view','update','delete','attendance','fetch-section','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','activity-view','fetch-attendance-report'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,6 +47,7 @@ class StdAttendanceController extends Controller
             ],
         ];
     }
+
 
     /**
      * Lists all StdAttendance models.
@@ -92,6 +94,45 @@ class StdAttendanceController extends Controller
         }
     }
 
+    public function actionTestAttendance()
+    { 
+        return $this->render('test-attendance');
+    }
+
+    public function actionTakeAttendance()
+    { 
+        return $this->render('take-attendance');
+    }
+
+    public function actionViewAttendance()
+    { 
+        return $this->render('view-attendance');
+    }
+
+    public function actionDatewiseClassAttendance()
+    { 
+        return $this->render('datewise-class-attendance');
+    }
+
+    public function actionDaterangewiseClassAttendance()
+    { 
+        return $this->render('daterangewise-class-attendance');
+    }
+
+    public function actionDatewiseStudentAttendance()
+    { 
+        return $this->render('datewise-student-attendance');
+    }
+
+    public function actionDaterangewiseStudentAttendance()
+    { 
+        return $this->render('daterangewise-student-attendance');
+    }
+
+    public function actionActivityView()
+    { 
+        return $this->render('activity-view');
+    }
     /**
      * Creates a new StdAttendance model.
      * For ajax request will return json object

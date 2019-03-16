@@ -2,12 +2,12 @@
 namespace frontend\controllers;
 
 use Yii;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -28,15 +28,16 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['login', 'error'],
                         'allow' => true,
-                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+
+                        'actions' => ['logout','signup', 'index','employe-dashboard'],
+                        'actions' => ['logout','signup','index'],
+
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,27 +61,28 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
 
+
+    public function actionEmployeDashboard()
+    {
+        return $this->render('employe-dashboard');
+    }
     /**
      * Displays homepage.
      *
-     * @return mixed
+     * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('employe-dashboard');
     }
 
     /**
-     * Logs in a user.
+     * Login action.
      *
-     * @return mixed
+     * @return string
      */
     public function actionLogin()
     {
@@ -99,9 +101,9 @@ class SiteController extends Controller
     }
 
     /**
-     * Logs out the current user.
+     * Logout action.
      *
-     * @return mixed
+     * @return string
      */
     public function actionLogout()
     {
@@ -109,47 +111,6 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
-
-    /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
-
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
-
-
     public function actionSignup()
     {
         $model = new SignupForm();
@@ -157,16 +118,22 @@ class SiteController extends Controller
             $model->user_photo = UploadedFile::getInstance($model,'user_photo');
             if(!empty($model->user_photo)){
                 $imageName = $model->username.'_photo'; 
-                $model->user_photo->saveAs('suserphotos/'.$imageName.'.'.$model->user_photo->extension);
+                $model->user_photo->saveAs('userphotos/'.$imageName.'.'.$model->user_photo->extension);
+                $model->user_photo->saveAs('./admin/userphotos/'.$imageName.'.'.$model->user_photo->extension);
                 //save the path in the db column
-                $model->user_photo = 'backend/web/userphotos/'.$imageName.'.'.$model->user_photo->extension;
+                $model->user_photo = 'userphotos/'.$imageName.'.'.$model->user_photo->extension;
             } else {
                $model->user_photo = '0'; 
             }
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
+                // if (Yii::$app->getUser()->login($user)) {
+                //     return $this->goHome();
+                // }
+                $user->save();
+                Yii::$app->session->setFlash('success',"User created successfully");
+                return $this->goHome();
+            } else {
+                 Yii::$app->session->setFlash('success',"User not created");
             }
         }
 
