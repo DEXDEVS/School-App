@@ -12,15 +12,6 @@ return array (
       '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer/src',
     ),
   ),
-  'kartik-v/yii2-widget-activeform' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-activeform',
-    'version' => '1.5.7.0',
-    'alias' => 
-    array (
-      '@kartik/form' => $vendorDir . '/kartik-v/yii2-widget-activeform/src',
-    ),
-  ),
   'kartik-v/yii2-editable' => 
   array (
     'name' => 'kartik-v/yii2-editable',
@@ -37,15 +28,6 @@ return array (
     'alias' => 
     array (
       '@kartik/mpdf' => $vendorDir . '/kartik-v/yii2-mpdf/src',
-    ),
-  ),
-  'kartik-v/yii2-grid' => 
-  array (
-    'name' => 'kartik-v/yii2-grid',
-    'version' => '3.2.9.0',
-    'alias' => 
-    array (
-      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
     ),
   ),
   'yiisoft/yii2-gii' => 
@@ -182,6 +164,51 @@ return array (
     'alias' => 
     array (
       '@yii/bootstrap' => $vendorDir . '/yiisoft/yii2-bootstrap/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-activeform' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-activeform',
+    'version' => '1.5.8.0',
+    'alias' => 
+    array (
+      '@kartik/form' => $vendorDir . '/kartik-v/yii2-widget-activeform/src',
+    ),
+  ),
+  'kartik-v/yii2-sortable' => 
+  array (
+    'name' => 'kartik-v/yii2-sortable',
+    'version' => '1.2.1.0',
+    'alias' => 
+    array (
+      '@kartik/sortable' => $vendorDir . '/kartik-v/yii2-sortable/src',
+    ),
+  ),
+  'kartik-v/yii2-grid' => 
+  array (
+    'name' => 'kartik-v/yii2-grid',
+    'version' => '3.3.0.0',
+    'alias' => 
+    array (
+      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
+    ),
+  ),
+  'kartik-v/yii2-dynagrid' => 
+  array (
+    'name' => 'kartik-v/yii2-dynagrid',
+    'version' => '1.5.1.0',
+    'alias' => 
+    array (
+      '@kartik/dynagrid' => $vendorDir . '/kartik-v/yii2-dynagrid/src',
+    ),
+  ),
+  'kartik-v/yii2-export' => 
+  array (
+    'name' => 'kartik-v/yii2-export',
+    'version' => '1.3.9.0',
+    'alias' => 
+    array (
+      '@kartik/export' => $vendorDir . '/kartik-v/yii2-export/src',
     ),
   ),
 );

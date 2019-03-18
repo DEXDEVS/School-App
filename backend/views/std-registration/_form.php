@@ -308,34 +308,6 @@ use yii\helpers\Url;
                         <?= $form->field($stdFeeDetails, 'tuition_fee')->textInput(['type' => 'number','id' => 'tuitionFee']) ?>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 133px; top: 6px"></i>
-                        <?= $form->field($stdFeeDetails, 'no_of_installment')->textInput(['id' => 'noOfInstallment']) ?>
-                    </div>
-                </div>
-                <!-- Fee Installments start -->
-                <div class="row" >
-                    <div class="col-md-2" style="display:none;" id = "f1">
-                        <?= $form->field($stdFeeInstallments, 'amount1')->textInput(['id'=>'amnt1']) ?>               
-                    </div>   
-                    <div class="col-md-2" style="display:none;" id = "f2">
-                        <?= $form->field($stdFeeInstallments, 'amount2')->textInput(['id'=>'amnt2']) ?>
-                    </div>
-                    <div class="col-md-2" style="display:none;" id = "f3">
-                        <?= $form->field($stdFeeInstallments, 'amount3')->textInput(['id'=>'amnt3']) ?>
-                    </div>
-                    <div class="col-md-2" style="display:none;" id = "f4">
-                        <?= $form->field($stdFeeInstallments, 'amount4')->textInput(['id'=>'amnt4']) ?>
-                    </div>
-                    <div class="col-md-2" style="display:none;" id = "f5">
-                        <?= $form->field($stdFeeInstallments, 'amount5')->textInput(['id'=>'amnt5']) ?>
-                    </div>
-                    <div class="col-md-2" style="display:none;" id = "f6">
-                        <?= $form->field($stdFeeInstallments, 'amount6')->textInput(['id'=>'amnt6']) ?>
-                    </div>     
-                </div>
-                <!-- Fee Installment end -->
             <!-- Fee detail end -->
             <div class="form-group">
                 <?= Html::submitButton(' Save', ['class' => 'btn btn-success btn-flat' ,'id'=>'save']) ?>
@@ -523,13 +495,16 @@ $('#inquiryNo').on('change',function(){
 $('#sessionId').on('change',function(){
    var classId = $('#classId').val();
    var sessionId = $('#sessionId').val();
-   
+   alert('Class ID: ' + classId + 'Session ID: ' + sessionId);
    $.ajax({
         type:'post',
         data:{class_Id:classId,session_Id:sessionId},
         url: "$url",
         success: function(result){
+            // alert(result);
+            // console.log(result);
             var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
+            alert(jsonResult);
             var addmissionFee = jsonResult['admission_fee'];
             var monthlyFee = jsonResult['tutuion_fee'];
             $('#admissionFee').val(addmissionFee);
