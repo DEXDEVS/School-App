@@ -8,6 +8,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Users;
+use common\models\Branches;
+
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
@@ -39,10 +41,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= $form->field($model, 'password')->passwordInput() ?>
                     </div>
                     <div class="col-md-4">
-                        <?= $form->field($model, 'user_type')->textInput() ?>
-                    </div>
+                        <?= $form->field($model, 'branch_id')->dropDownList(
+                            ArrayHelper::map(Branches::find()->where(['delete_status'=>1])->all(),'branch_id','branch_name'), ['prompt'=>'Select Branch']
+                        )?>
+                    </div> 
                 </div>
                 <div class="row">
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'user_type')->textInput() ?>
+                    </div>
                     <div class="col-md-4">
                         <?= $form->field($model, 'user_photo')->fileInput(['maxlength' => true, 'class' => 'btn btn-default btn-block paperclip']) ?>
                     </div>   

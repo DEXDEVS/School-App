@@ -208,7 +208,7 @@ use yii\helpers\Html;
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?php echo $userPhoto ?>" class="user-image" alt="User Image"/>
                         <span class="hidden-xs">
-                            <?php echo Yii::$app->user->identity->username;  ?>
+                            <?= Yii::$app->user->identity->username;  ?>
                             <!--  -->
                         </span>
                     </a>

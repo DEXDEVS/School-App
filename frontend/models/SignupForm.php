@@ -18,6 +18,7 @@ class SignupForm extends Model
     public $password;
     public $user_photo;
     public $user_type;
+    public $branch_id;
 
     /**
      * @inheritdoc
@@ -27,7 +28,7 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             [['username'], 'required'],
-           // ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
             [['user_photo'], 'string', 'max' => 200],
 
@@ -41,7 +42,8 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 6],
             [['user_type','first_name','last_name'],'required'],
             [['first_name','last_name'],'string','max'=>20],
-            [['user_type'] ,'string']
+            [['user_type'] ,'string'],
+            [['branch_id'],'integer'],
         ];
     }
 
@@ -63,6 +65,7 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->user_photo = $this->user_photo;
         $user->user_type = $this->user_type;
+        $user->branch_id = $this->branch_id;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         
@@ -86,6 +89,11 @@ class SignupForm extends Model
             $imageInfo['url'] = $url.$filename; 
         }
         return $imageInfo;
+    }
+
+    public function getSessionBranch()
+    {
+        return $this->hasOne(Branches::className(), ['branch_id' => 'session_branch_id']);
     }
 
 }
