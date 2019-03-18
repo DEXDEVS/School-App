@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\Subjects;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdSubjects */
@@ -10,6 +12,10 @@ use yii\widgets\ActiveForm;
 <div class="std-subjects-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'class_id')->dropDownList(ArrayHelper::map(StdClassName::find()->all(),'class_name_id','class_name'),
+    	['prompt'=>'Select Class']
+	)?>
 
     <?= $form->field($model, 'std_subject_name')->textInput(['maxlength' => true]) ?>
 

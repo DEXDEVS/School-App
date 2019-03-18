@@ -21,6 +21,7 @@ use yii\helpers\Url;
 <div class="std-registration-form">
     <?php $form = ActiveForm::begin(); ?>
     <?php 
+    $branch_id = Yii::$app->user->identity->branch_id;
     $stdPersonalInfo = StdPersonalInfo::find()->orderBy(['std_id'=> SORT_DESC])->one();
     $id = $stdPersonalInfo['std_id']+1;
     $year = date('y');
@@ -209,11 +210,11 @@ use yii\helpers\Url;
                     <div class="col-md-4">
                         <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 172px; top: 6px"></i> -->
                             <?= $form->field($stdAcademicInfo, 'class_name_id')->dropDownList(
-                            ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1 , 'status'=>'Active'])->all(),'class_name_id','class_name'),
+                            ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1 , 'status'=>'Active','branch_id'=> $branch_id])->all(),'class_name_id','class_name'),
                             ['prompt'=>'Select Class', 'id'=>'classId']
                         )?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8" id="combination" style="display: none;">
                         <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 158px; top: 6px"></i> -->
                             <?= $form->field($stdAcademicInfo, 'subject_combination')->dropDownList(
                                 ArrayHelper::map(StdSubjects::find()->all(),'std_subject_id','std_subject_name'),
@@ -270,7 +271,7 @@ use yii\helpers\Url;
                 <div class="row">
                     <div class="col-md-3">
                         <?= $form->field($stdFeeDetails, 'feeSession')->dropDownList(
-                            ArrayHelper::map(StdSessions::find()->where(['status'=>'Active'])->all(),'session_id','session_name'),
+                            ArrayHelper::map(StdSessions::find()->where(['status'=>'Active','session_branch_id'=> $branch_id])->all(),'session_id','session_name'),
                                 ['prompt'=>'Select Session','id'=>'sessionId']
                         )?>
                     </div>
@@ -401,7 +402,7 @@ $('#inquiryNo').on('change',function(){
        }
     });
 
-     var noOfInstallment;
+var noOfInstallment;
     $('#noOfInstallment').on('change',function(){
         for (var i = 1 ; i<= 6; i++) {
             $('#amnt'+i).val('');
@@ -495,18 +496,15 @@ $('#inquiryNo').on('change',function(){
 $('#sessionId').on('change',function(){
    var classId = $('#classId').val();
    var sessionId = $('#sessionId').val();
-   alert('Class ID: ' + classId + 'Session ID: ' + sessionId);
    $.ajax({
         type:'post',
         data:{class_Id:classId,session_Id:sessionId},
         url: "$url",
         success: function(result){
-            // alert(result);
-            // console.log(result);
-            var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-            alert(jsonResult);
-            var addmissionFee = jsonResult['admission_fee'];
-            var monthlyFee = jsonResult['tutuion_fee'];
+            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+2));
+            var Result = jsonResult[0];
+            var addmissionFee = Result['admission_fee'];
+            var monthlyFee = Result['tutuion_fee'];
             $('#admissionFee').val(addmissionFee);
             $('#totalTuitionFee').val(monthlyFee);
         }         
@@ -515,7 +513,12 @@ $('#sessionId').on('change',function(){
 
 
 $('#classId').on('change',function(){
-   var classId = $('#classId').val();
+    $('#combination').hide();
+    var classId = $('#classId').val();
+    var text = $('#classId :selected').text();
+    if(text == '9th' || text == '10th'){
+        $('#combination').show();
+    }
    
    $.ajax({
         type:'post',

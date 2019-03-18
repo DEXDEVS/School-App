@@ -53,10 +53,10 @@ class StdInquiry extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['branch_id', 'std_inquiry_no', 'inquiry_session', 'std_name', 'std_father_name', 'gender', 'std_contact_no', 'std_father_contact_no', 'std_inquiry_date', 'std_intrested_class', 'std_previous_class', 'previous_institute', 'std_roll_no', 'std_obtained_marks', 'std_total_marks', 'std_percentage', 'refrence_name', 'refrence_contact_no', 'refrence_designation', 'std_address', 'comment'], 'required'],
+            [['std_inquiry_no', 'inquiry_session', 'std_name', 'std_father_name', 'gender', 'std_father_contact_no', 'std_inquiry_date', 'std_intrested_class', 'std_previous_class', 'previous_institute', 'std_roll_no', 'std_obtained_marks', 'std_total_marks', 'std_percentage'], 'required'],
             [['branch_id', 'std_obtained_marks', 'std_total_marks', 'created_by', 'updated_by'], 'integer'],
             [['gender', 'inquiry_status'], 'string'],
-            [['std_inquiry_date', 'created_at', 'updated_at','inquiry_status', 'created_by', 'updated_by'], 'safe'],
+            [['branch_id','std_inquiry_date', 'created_at', 'updated_at','inquiry_status', 'created_by', 'updated_by', 'refrence_name', 'refrence_contact_no', 'refrence_designation', 'std_address', 'comment', 'std_contact_no'], 'safe'],
             [['std_inquiry_no', 'std_contact_no', 'std_father_contact_no', 'refrence_contact_no'], 'string', 'max' => 15],
             [['inquiry_session'], 'string', 'max' => 20],
             [['std_name', 'std_father_name', 'refrence_name'], 'string', 'max' => 32],
