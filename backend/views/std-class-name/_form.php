@@ -2,6 +2,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datetimepicker\DateTimePicker;
+use common\models\Branches;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdClassName */
@@ -13,48 +15,21 @@ use dosamigos\datetimepicker\DateTimePicker;
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'class_name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'branch_id')->dropDownList(
+                    ArrayHelper::map(Branches::find()->where(['delete_status'=>1])->all(),'branch_id','branch_name'), ['prompt'=>'Select Branch']
+            )?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'class_name_description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'class_name')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'class_nature')->dropDownList([ 'Monthly' => 'Monthly', 'Annual' => 'Annual', 'Semester' => 'Semester', ], ['prompt' => '']) ?>
+            <?= $form->field($model, 'class_name_description')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ], ['prompt' => '']) ?>
         </div>  
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label>Start Date</label>
-                <?= DateTimePicker::widget([
-                    'model' => $model,
-                    'attribute' => 'class_start_date',
-                    'language' => 'en',
-                    'size' => 'ms',
-                    'clientOptions' => [
-                        'autoclose' => true,
-                        'todayBtn' => true
-                    ]
-                ]);?>
-        </div>
-        <div class="col-md-6">
-            <label>End Date</label>
-                <?= DateTimePicker::widget([
-                    'model' => $model,
-                    'attribute' => 'class_end_date',
-                    'language' => 'en',
-                    'size' => 'ms',
-                    'clientOptions' => [
-                        'autoclose' => true,
-                        'todayBtn' => true
-                    ]
-                ]);?>
-        </div>
-        
     </div>
  
 	<?php if (!Yii::$app->request->isAjax){ ?>

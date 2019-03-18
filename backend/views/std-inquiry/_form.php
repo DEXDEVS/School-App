@@ -27,7 +27,7 @@ $year = date('y');
         </div>
         <div class="col-md-4">
             <?php   $sDate = date('Y'); 
-                    $eDate = $sDate + 2;
+                    $eDate = $sDate + 1;
             ?>
             <?= $form->field($model, 'inquiry_session')->textInput(['maxlength' => true,'readonly'=> true,'value' => $sDate .' - '.$eDate]) ?>
         </div>
@@ -104,7 +104,8 @@ $year = date('y');
                         'allowClear' => true,
                         'multiple' => true
                     ],
-                ]); ?>
+                ]);
+            ?>
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 52px; top: 18px"></i>

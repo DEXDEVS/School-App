@@ -7,21 +7,25 @@ use Yii;
 /**
  * This is the model class for table "std_class_name".
  *
- * @property integer $class_name_id
+ * @property int $class_name_id
+ * @property int $branch_id
  * @property string $class_name
  * @property string $class_name_description
+ * @property string $status
  * @property string $created_at
  * @property string $updated_at
- * @property integer $created_by
- * @property integer $updated_by
+ * @property int $created_by
+ * @property int $updated_by
  *
- * @property StdAcademicInfo[] $stdAcademicInfos
- * @property StdClass[] $stdClasses
+ * @property Branches $branch
+ * @property StdEnrollmentHead[] $stdEnrollmentHeads
+ * @property StdFeePkg[] $stdFeePkgs
+ * @property StdSubjects[] $stdSubjects
  */
 class StdClassName extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -29,48 +33,69 @@ class StdClassName extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['class_name', 'class_name_description'], 'required'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
-            [['created_by', 'updated_by'], 'integer'],
+            [['branch_id', 'class_name', 'class_name_description', 'status'], 'required'],
+            [['branch_id', 'created_by', 'updated_by'], 'integer'],
+            [['class_nature', 'status'], 'string'],
+            [['created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
             [['class_name'], 'string', 'max' => 120],
             [['class_name_description'], 'string', 'max' => 255],
+            [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
             'class_name_id' => 'Class Name ID',
+            'branch_id' => 'Branch Name',
             'class_name' => 'Class Name',
             'class_name_description' => 'Class Name Description',
+            'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
+            
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStdAcademicInfos()
+    public function getBranch()
     {
-        return $this->hasMany(StdAcademicInfo::className(), ['class_name_id' => 'class_name_id']);
+        return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStdClasses()
+    public function getStdEnrollmentHeads()
     {
-        return $this->hasMany(StdClass::className(), ['class_name_id' => 'class_name_id']);
+        return $this->hasMany(StdEnrollmentHead::className(), ['class_name_id' => 'class_name_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStdFeePkgs()
+    {
+        return $this->hasMany(StdFeePkg::className(), ['class_id' => 'class_name_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStdSubjects()
+    {
+        return $this->hasMany(StdSubjects::className(), ['class_id' => 'class_name_id']);
     }
 }

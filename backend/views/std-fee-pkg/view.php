@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'std_fee_id',
-            'session_id',
+            'session_name',
             'class_id',
             'admission_fee',
             'tutuion_fee',

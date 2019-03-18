@@ -11,8 +11,10 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'class_name_id',
+            'branch_id',
             'class_name',
             'class_name_description',
+            'status',
             'created_at',
             'updated_at',
             'created_by',

@@ -41,7 +41,39 @@ class StdSectionsSearch extends StdSections
      */
     public function search($params)
     {
-        $query = StdSections::find();
+        if(Yii::$app->user->identity->username == 'Superadmin'){
+            $query = StdSections::find();
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            $this->load($params);
+
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+            $query->joinWith('session');
+            $query->andFilterWhere([
+                'section_id' => $this->section_id,
+                'section_intake' => $this->section_intake,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'created_by' => $this->created_by,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'section_name', $this->section_name])
+                ->andFilterWhere(['like', 'section_description', $this->section_description])
+                ->andFilterWhere(['like', 'std_sessions.session_name', $this->session_id]);
+
+            return $dataProvider;
+
+        } else {
+                $branch_id = Yii::$app->user->identity->branch_id;
+                $query = StdSections::find()->innerJoinWith('session')->where(['session_branch_id' => $branch_id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,7 +86,7 @@ class StdSectionsSearch extends StdSections
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->joinWith('session');
+
         $query->andFilterWhere([
             'section_id' => $this->section_id,
             'section_intake' => $this->section_intake,
@@ -70,4 +102,5 @@ class StdSectionsSearch extends StdSections
 
         return $dataProvider;
     }
+}
 }

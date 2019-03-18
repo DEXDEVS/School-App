@@ -18,9 +18,9 @@ class StdFeePkgSearch extends StdFeePkg
     public function rules()
     {
         return [
-            [['std_fee_id', 'session_id', 'class_id'], 'integer'],
+            [['std_fee_id', 'class_id', 'created_by', 'updated_by'], 'integer'],
+            [['session_name', 'created_at', 'updated_at', 'delete_status'], 'safe'],
             [['admission_fee', 'tutuion_fee'], 'number'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
         ];
     }
 
@@ -58,7 +58,6 @@ class StdFeePkgSearch extends StdFeePkg
 
         $query->andFilterWhere([
             'std_fee_id' => $this->std_fee_id,
-            'session_id' => $this->session_id,
             'class_id' => $this->class_id,
             'admission_fee' => $this->admission_fee,
             'tutuion_fee' => $this->tutuion_fee,
@@ -67,6 +66,9 @@ class StdFeePkgSearch extends StdFeePkg
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
+
+        $query->andFilterWhere(['like', 'session_name', $this->session_name])
+            ->andFilterWhere(['like', 'delete_status', $this->delete_status]);
 
         return $dataProvider;
     }

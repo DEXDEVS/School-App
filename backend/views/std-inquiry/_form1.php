@@ -84,7 +84,16 @@ use common\models\StdClassName;
     <div class="row">
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 101px; top: 18px"></i>
-            <?= $form->field($model, 'std_previous_class')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'std_previous_class')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(StdClassName::find()->all(),'class_name','class_name'),
+                    'language' => 'en',
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'multiple' => true
+                    ],
+                ]);
+            ?>
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 154px; top: 18px"></i>

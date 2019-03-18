@@ -16,11 +16,19 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'branch.branch_name',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_name_description',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -31,12 +39,12 @@ return [
         // 'attribute'=>'updated_at',
     // ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'created_by',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_by',
     // ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'updated_by',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_by',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',

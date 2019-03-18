@@ -10,43 +10,41 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_fee_id',
-    // ],
-    [
+        [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'session_name',
-        //'value'=> 'session.session_name',
+        'attribute'=>'Institute_name_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'class_id',
-        'value' => 'class.class_name',
+        'attribute'=>'Institute_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'admission_fee',
+        'attribute'=>'Institutte_address',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'tutuion_fee',
+        'attribute'=>'Institute_contact_no',
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'created_at',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'head_name',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_by',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'updated_at',
+        // 'attribute'=>'updated_by',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'updated_by',
+        // 'attribute'=>'created_at',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_at',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',

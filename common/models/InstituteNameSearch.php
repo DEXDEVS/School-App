@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\StdClassName;
+use common\models\InstituteName;
 
 /**
- * StdClassNameSearch represents the model behind the search form about `common\models\StdClassName`.
+ * InstituteNameSearch represents the model behind the search form about `common\models\InstituteName`.
  */
-class StdClassNameSearch extends StdClassName
+class InstituteNameSearch extends InstituteName
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class StdClassNameSearch extends StdClassName
     public function rules()
     {
         return [
-            [['class_name_id', 'branch_id', 'created_by', 'updated_by'], 'integer'],
-            [['class_name', 'class_name_description', 'status', 'created_at', 'updated_at', 'delete_status'], 'safe'],
+            [['Institute_name_id', 'created_by', 'updated_by'], 'integer'],
+            [['Institute_name', 'Institutte_address', 'Institute_contact_no', 'head_name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class StdClassNameSearch extends StdClassName
      */
     public function search($params)
     {
-        $query = StdClassName::find();
+        $query = InstituteName::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,18 +56,17 @@ class StdClassNameSearch extends StdClassName
         }
 
         $query->andFilterWhere([
-            'class_name_id' => $this->class_name_id,
-            'branch_id' => $this->branch_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'Institute_name_id' => $this->Institute_name_id,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'class_name', $this->class_name])
-            ->andFilterWhere(['like', 'class_name_description', $this->class_name_description])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'delete_status', $this->delete_status]);
+        $query->andFilterWhere(['like', 'Institute_name', $this->Institute_name])
+            ->andFilterWhere(['like', 'Institutte_address', $this->Institutte_address])
+            ->andFilterWhere(['like', 'Institute_contact_no', $this->Institute_contact_no])
+            ->andFilterWhere(['like', 'head_name', $this->head_name]);
 
         return $dataProvider;
     }
