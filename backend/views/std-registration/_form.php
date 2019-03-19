@@ -60,7 +60,7 @@ use yii\helpers\Url;
                 </div>  
                 <div class="col-md-4">
                    <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 156px; top: 6px"></i> -->
-                    <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '999999999999', 'id' => 'std_contact_no']) ?>
+                    <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', 'id' => 'std_contact_no']) ?>
                 </div>     
             </div>
             <div class="row"> 
@@ -157,11 +157,11 @@ use yii\helpers\Url;
                 </div>
                 <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 166px; top: 6px"></i>
-                    <?= $form->field($stdGuardianInfo, 'guardian_contact_no_1')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '999999999999']) ?>
+                    <?= $form->field($stdGuardianInfo, 'guardian_contact_no_1')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999']) ?>
                 </div>
                 <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 168px; top: 6px"></i>
-                    <?= $form->field($stdGuardianInfo, 'guardian_contact_no_2')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '999999999999']) ?>
+                    <?= $form->field($stdGuardianInfo, 'guardian_contact_no_2')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999']) ?>
                 </div>
             </div>
             <div class="row">
@@ -190,7 +190,7 @@ use yii\helpers\Url;
                     <?= $form->field($stdIceInfo, 'std_ice_relation')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-4">
-                        <?= $form->field($stdIceInfo, 'std_ice_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '999999999999']) ?>
+                        <?= $form->field($stdIceInfo, 'std_ice_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999']) ?>
                 </div>
             </div>
             <div class="row">
@@ -290,19 +290,12 @@ use yii\helpers\Url;
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 105px; top: 6px"></i>
-                       <?= $form->field($stdFeeDetails, 'fee_category')->dropDownList([ 'Annual' => 'Annual', 'Semester' => 'Semester', ], ['prompt' => 'Select Category']) ?> 
-                    </div>
-                    <div class="col-md-3">
                         <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 92px; top: 6px"></i>
                         <?= $form->field($stdFeeDetails, 'totalTuitionFee')->textInput(['type' => 'number','id' => 'totalTuitionFee', 'readonly'=> true]) ?>
                     </div>
                     <div class="col-md-3">
                         <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 114px; top: 6px"></i>
-                        <?= $form->field($stdFeeDetails, 'concession_id')->dropDownList(
-                                ArrayHelper::map(Concession::find()->where(['delete_status'=>1])->all(),'concession_id','concession_name'),
-                                ['prompt'=>'Select Concession Type','id'=>'concession']
-                            )?>
+                        <?= $form->field($stdFeeDetails, 'concession_id')->textInput(['type' => 'number', 'id' => 'concession']) ?>
                     </div>
                     <div class="col-md-3">
                         <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 92px; top: 6px"></i>
@@ -311,7 +304,7 @@ use yii\helpers\Url;
                 </div>
             <!-- Fee detail end -->
             <div class="form-group">
-                <?= Html::submitButton(' Save', ['class' => 'btn btn-success btn-flat' ,'id'=>'save']) ?>
+                <?= Html::submitButton(' Save', ['class' => 'btn btn-success btn-flat']) ?>
                 <a href="std-personal-info" class="btn btn-danger btn-flat">Back</a>
             </div>
             </div>
@@ -419,79 +412,15 @@ var noOfInstallment;
 
     });
 
-    $('#save').on('click',function(){
-        var amount = [];
-        var sum = 0;
-
-        for(var j=1; j<=noOfInstallment; j++){
-            amount[j] = $('#amnt'+j).val();   
-        }
-
-        for(var j=1; j<=noOfInstallment; j++){
-            sum += parseInt(amount[j]);   
-        }
-        var tuitionFee = $('#tuitionFee').val();
-        if(sum != tuitionFee){
-            alert("Sum of Installments = " + sum  + " Total tution Fee = " + tuitionFee + " Your total amount is not equal to total no. of installments");
-        }
-    }); 
-
-
     // calculate concession start....
     $('#concession').on('change',function(){
-        var concession = $('#concession :selected').text();
+        var concession = $('#concession').val();
         var totalTuitionFee = $('#totalTuitionFee').val();
-        var fee;
-        var con = parseInt(concession);
-        if (con == '100') {
-            $('#tuitionFee').val(10);
-        }
-        else if(con == '90'){
-            fee = (totalTuitionFee*90)/100;
-            $('#tuitionFee').val(fee);
-        }
-        else if(con == '80'){
-            fee = (totalTuitionFee*80)/100;
-            $('#tuitionFee').val(fee);
-        }
-        else if(con == '70'){
-            fee = (totalTuitionFee*70)/100;
-            $('#tuitionFee').val(fee);
-        }
-        else if(con == '60'){
-            fee = (totalTuitionFee*60)/100;
-            $('#tuitionFee').val(fee);
-        }
-        else if(con == '50'){
-            fee = (totalTuitionFee*50)/100;
-            $('#tuitionFee').val(fee);
-        }
-        else if(con == '40'){
-            fee = (totalTuitionFee*40)/100;
-            $('#tuitionFee').val(fee);
-        }
-        else if(con == '30'){
-            fee = (totalTuitionFee*30)/100;
-            $('#tuitionFee').val(fee);
-        }
-        else if(con == '25'){
-            fee = (totalTuitionFee*25)/100;
-            $('#tuitionFee').val(fee);
-        }
-        else{
-            fee = (totalTuitionFee*50)/100;
-            $('#tuitionFee').val(fee);
-        }
+        var fee = parseInt(totalTuitionFee - concession);
+        $('#tuitionFee').val(fee);
     });
+
     // calculate concession end....
-
-    // showNetMonthlyFee function...!
-    function showNetAdmissionFee() {
-        var value1 = document.getElementById('admissionFee').value;
-        var value2 = document.getElementById('admissionFeeDiscount').value;
-        document.getElementById('netAdmissionFee').value = value1 - value2 ;
-    }
-
 
 $('#sessionId').on('change',function(){
    var classId = $('#classId').val();

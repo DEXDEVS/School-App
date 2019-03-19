@@ -44,14 +44,13 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'fee_category', 'concession_id', 'no_of_installment', 'tuition_fee'], 'required'],
-            [['std_id', 'concession_id', 'created_by', 'updated_by'], 'integer'],
+            [['std_id', 'admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'concession_id', 'tuition_fee'], 'required'],
+            [['std_id', 'created_by', 'updated_by'], 'integer'],
             [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'tuition_fee'], 'number'],
-            [['fee_category'], 'string'],
+            [['concession_id'], 'number'],
             [['no_of_installment'], 'number', 'min' => 1, 'max'=> 6],
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
-            [['concession_id'], 'exist', 'skipOnError' => true, 'targetClass' => Concession::className(), 'targetAttribute' => ['concession_id' => 'concession_id']],
             [['feeSession','totalTuitionFee'],'string', 'max' => 50],
         ];
     }
@@ -67,8 +66,6 @@ class StdFeeDetails extends \yii\db\ActiveRecord
             'admission_fee' => 'Admission Fee',
             'addmission_fee_discount' => 'Admission Fee Discount',
             'net_addmission_fee' => 'Net Admission Fee',
-            'fee_category' => 'Fee Category',
-            'concession_id' => 'Fee Concession',
             'no_of_installment' => 'No of Installment',
             'tuition_fee' => 'Tuition Fee',
             'created_at' => 'Created At',
@@ -86,11 +83,4 @@ class StdFeeDetails extends \yii\db\ActiveRecord
         return $this->hasOne(StdPersonalInfo::className(), ['std_id' => 'std_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConcession()
-    {
-        return $this->hasOne(Concession::className(), ['concession_id' => 'concession_id']);
-    }
 }

@@ -56,15 +56,17 @@ class StdRegistration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status', 'created_by', 'updated_by'], 'required'],
-            [['std_DOB', 'created_at', 'updated_at'], 'safe'],
+            [['std_reg_no', 'std_name', 'std_father_name', 'std_DOB', 'std_gender', 'std_permanent_address','std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
+            [['std_DOB','std_contact_no', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'std_email'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
-            [['std_contact_no'], 'string', 'max' => 12],
+            [['std_contact_no'], 'string', 'max' => 15],
             [['std_permanent_address', 'std_temporary_address', 'std_b_form'], 'string', 'max' => 255],
             [['std_email'], 'string', 'max' => 84],
             [['std_photo'], 'string', 'max' => 200],
+            ['std_email','email'],
+            [['std_photo'], 'image', 'extensions' => 'jpg'],
         ];
     }
 
@@ -154,4 +156,21 @@ class StdRegistration extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StdIceInfo::className(), ['std_id' => 'std_id']);
     }
+
+    public function getPhotoInfo(){
+        $path = Url::to('@web/uploads/');
+        $url = Url::to('@web/uploads/');
+        $filename = $this->std_name.'_photo'.'.jpg';
+        $alt = $this->std_name."'s image not exist!";
+
+        $imageInfo = ['alt'=>$alt];
+
+        if(file_exists($path.$filename)){
+            $imageInfo['url'] = $url.'default.jpg';
+        }  else {
+            $imageInfo['url'] = $url.$filename; 
+        }
+        return $imageInfo;
+    }
+    
 }

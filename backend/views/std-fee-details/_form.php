@@ -37,79 +37,12 @@ use common\models\StdSessions
     </div>
     <div class="row">
         <div class="col-md-4">
-           <?= $form->field($model, 'fee_category')->dropDownList([ 'Annual' => 'Annual', 'Semester' => 'Semester', ], ['prompt' => 'Select Category']) ?> 
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'concession_id')->dropDownList(
-                    ArrayHelper::map(Concession::find()->where(['delete_status'=>1])->all(),'concession_id','concession_name'),
-                    ['prompt'=>'Select Concession Type']
-                )?>
+            <?= $form->field($model, 'concession_id')->textInput(['type' => 'number', 'id' => 'concession'])?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'tuition_fee')->textInput(['type' => 'number','id' => 'tuitionFee']) ?>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'no_of_installment')->textInput(['id' => 'noOfInstallment']) ?>
-        </div>
-    </div>
-    <div class="row" >
-        <div class="col-md-2">
-            <?= $form->field($stdFeeInstallments, 'amount1')->textInput() ?>               
-        </div>   
-        <div class="col-md-2">
-            <?= $form->field($stdFeeInstallments, 'amount2')->textInput() ?>
-        </div>
-        <div class="col-md-2">
-            <?= $form->field($stdFeeInstallments, 'amount3')->textInput() ?>
-        </div>
-        <div class="col-md-2">
-            <?= $form->field($stdFeeInstallments, 'amount4')->textInput() ?>
-        </div>
-        <div class="col-md-2">
-            <?= $form->field($stdFeeInstallments, 'amount5')->textInput() ?>
-        </div>
-        <div class="col-md-2">
-            <?= $form->field($stdFeeInstallments, 'amount6')->textInput() ?>
-        </div>     
-    </div>
-    
-   <!--  <div class="row" >
-        <?php for ($i=1; $i <= 3 ; $i++) {  ?> 
-            <?php if ($i==1) { ?>
-                <div class="col-md-2">
-                    <?= $form->field($stdFeeInstallments, 'amount1')->textInput() ?>               
-                </div>
-            <?php } ?>
-            <?php if ($i==2) { ?>   
-                <div class="col-md-2">
-                    <?= $form->field($stdFeeInstallments, 'amount2')->textInput() ?>
-                </div>
-            <?php } ?>
-            <?php if ($i==3) { ?>
-                <div class="col-md-2">
-                    <?= $form->field($stdFeeInstallments, 'amount3')->textInput() ?>
-                </div>
-            <?php } ?>
-            <?php if ($i==4) { ?>
-                <div class="col-md-2">
-                    <?= $form->field($stdFeeInstallments, 'amount4')->textInput() ?>
-                </div>
-            <?php } ?>
-            <?php if ($i==5) { ?>
-                <div class="col-md-2">
-                    <?= $form->field($stdFeeInstallments, 'amount5')->textInput() ?>
-                </div>
-            <?php } ?>
-            <?php if ($i==6) { ?>
-                <div class="col-md-2">
-                    <?= $form->field($stdFeeInstallments, 'amount6')->textInput() ?>
-                </div>   
-            <?php } ?>
-        <?php } ?>  
-    </div>
-         -->
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
@@ -130,7 +63,7 @@ use common\models\StdSessions
     // showNetTuitionFee function...!
     function showNetTuitionFee() {
         var value1 = document.getElementById('tuitionFee').value;
-        var value2 = document.getElementById('noOfInstallment').value;
+        var value2 = document.getElementById('concession').value;
         document.getElementById('netTuitionFee').value = parseInt(value1 / value2);
     }
 </script>
