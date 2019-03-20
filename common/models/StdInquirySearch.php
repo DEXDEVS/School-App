@@ -41,7 +41,7 @@ class StdInquirySearch extends StdInquiry
      */
      public function search($params)
     {
-        if(Yii::$app->user->identity->username == 'Superadmin'){
+        if(Yii::$app->user->identity->user_type == 'Superadmin'){
             $query = StdInquiry::find();
 
             $dataProvider = new ActiveDataProvider([

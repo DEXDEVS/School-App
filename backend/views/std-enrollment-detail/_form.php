@@ -7,7 +7,7 @@ use common\models\StdSessions;
 use common\models\StdSections;
 use common\models\StdPersonalInfo;
 use kartik\select2\Select2;
-
+$branch_id = Yii::$app->user->identity->branch_id;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StdEnrollmentDetail */
@@ -20,18 +20,18 @@ use kartik\select2\Select2;
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($stdEnrollmentHead, 'class_name_id')->dropDownList(
-                    ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1])->all(),'class_name_id','class_name'),
+                    ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1,'branch_id'=> $branch_id])->all(),'class_name_id','class_name'),
                     ['prompt'=>'','id'=>'classId']
                 )?>
             </div>
             <div class="col-md-6">
                 <?= $form->field($stdEnrollmentHead, 'session_id')->dropDownList(
-                    ArrayHelper::map(StdSessions::find()->where(['delete_status'=>1])->all(),'session_id','session_name'),
+                    ArrayHelper::map(StdSessions::find()->where(['delete_status'=>1,'session_branch_id'=> $branch_id])->all(),'session_id','session_name'),
                     [
                         'prompt'=>'Select Session',
                         'id' => 'sessionId',
                         'onchange'=>
-                            '$.post("index.php?r=std-sections/lists&id='.'"+$(this).val(), function( data ){
+                            '$.post("std-sections/lists&id='.'"+$(this).val(), function( data ){
                                 $("select#sectionId").html(data);
                             });'
                     ]);?>

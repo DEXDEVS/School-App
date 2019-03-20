@@ -31,7 +31,7 @@ class StdSectionsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete','lists','bulk-delete'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete','bulk-delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -257,13 +257,16 @@ class StdSectionsController extends Controller
      */
 
     public function actionLists($id){
-
+        $branch_id = Yii::$app->user->identity->branch_id;
+        echo $branch_id;
         $countSection = StdSections::find()
-            ->where(['session_id' => $id])
+            ->join('session')
+            ->where(['session_id' => $id , 'session_branch_id'=> $branch_id])
             ->count();
 
         $sections = StdSections::find()
-            ->where(['session_id' => $id])
+            ->join('session')
+            ->where(['session_id' => $id , 'session_branch_id'=> $branch_id])
             ->all();
 
         if($countSection > 0){
