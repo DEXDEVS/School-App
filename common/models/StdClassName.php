@@ -40,7 +40,6 @@ class StdClassName extends \yii\db\ActiveRecord
         return [
             [['branch_id', 'class_name', 'class_name_description', 'status'], 'required'],
             [['branch_id', 'created_by', 'updated_by'], 'integer'],
-            [['class_nature', 'status'], 'string'],
             [['created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
             [['class_name'], 'string', 'max' => 120],
             [['class_name_description'], 'string', 'max' => 255],

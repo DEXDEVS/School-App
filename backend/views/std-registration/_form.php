@@ -214,7 +214,7 @@ use yii\helpers\Url;
                             ['prompt'=>'Select Class', 'id'=>'classId']
                         )?>
                     </div>
-                    <div class="col-md-8" id="combination" style="display: none;">
+                    <div class="col-md-8">
                         <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 158px; top: 6px"></i> -->
                             <?= $form->field($stdAcademicInfo, 'subject_combination')->dropDownList(
                                 ArrayHelper::map(StdSubjects::find()->all(),'std_subject_id','std_subject_name'),
@@ -413,7 +413,7 @@ var noOfInstallment;
     });
 
     // calculate concession start....
-    $('#concession').on('change',function(){
+    $('#tuitionFee').on('focus',function(){
         var concession = $('#concession').val();
         var totalTuitionFee = $('#totalTuitionFee').val();
         var fee = parseInt(totalTuitionFee - concession);
@@ -442,12 +442,7 @@ $('#sessionId').on('change',function(){
 
 
 $('#classId').on('change',function(){
-    $('#combination').hide();
     var classId = $('#classId').val();
-    var text = $('#classId :selected').text();
-    if(text == '9th' || text == '10th'){
-        $('#combination').show();
-    }
    
    $.ajax({
         type:'post',

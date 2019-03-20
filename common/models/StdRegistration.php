@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "std_personal_info".
  *
  * @property int $std_id
+ * @property int $branch_id
  * @property string $std_reg_no
  * @property string $std_name
  * @property string $std_father_name
@@ -29,6 +30,7 @@ use Yii;
  * @property string $updated_at
  * @property int $created_by
  * @property int $updated_by
+ * @property int $delete_status
  *
  * @property FeeTransactionHead[] $feeTransactionHeads
  * @property StdAcademicInfo[] $stdAcademicInfos
@@ -37,6 +39,7 @@ use Yii;
  * @property StdFeeDetails[] $stdFeeDetails
  * @property StdGuardianInfo[] $stdGuardianInfos
  * @property StdIceInfo[] $stdIceInfos
+ * @property Branches $branch
  */
 class StdRegistration extends \yii\db\ActiveRecord
 {
@@ -49,7 +52,7 @@ class StdRegistration extends \yii\db\ActiveRecord
     }
 
     public $stdInquiryNo;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -59,7 +62,7 @@ class StdRegistration extends \yii\db\ActiveRecord
             [['std_reg_no', 'std_name', 'std_father_name', 'std_DOB', 'std_gender', 'std_permanent_address','std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
             [['std_DOB','std_contact_no', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'std_email'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
-            [['created_by', 'updated_by'], 'integer'],
+            [['branch_id','created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
             [['std_contact_no'], 'string', 'max' => 15],
             [['std_permanent_address', 'std_temporary_address', 'std_b_form'], 'string', 'max' => 255],
@@ -67,6 +70,8 @@ class StdRegistration extends \yii\db\ActiveRecord
             [['std_photo'], 'string', 'max' => 200],
             ['std_email','email'],
             [['std_photo'], 'image', 'extensions' => 'jpg'],
+            [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],
+
         ];
     }
 
@@ -77,6 +82,7 @@ class StdRegistration extends \yii\db\ActiveRecord
     {
         return [
             'std_id' => 'Std ID',
+            'branch_id' => 'Branch ID',
             'std_reg_no' => 'Std Reg No',
             'std_name' => 'Std Name',
             'std_father_name' => 'Std Father Name',
@@ -98,6 +104,7 @@ class StdRegistration extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
+            'delete_status' => 'Delete Status',
         ];
     }
 
@@ -157,6 +164,14 @@ class StdRegistration extends \yii\db\ActiveRecord
         return $this->hasMany(StdIceInfo::className(), ['std_id' => 'std_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBranch()
+    {
+        return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
+    }
+    
     public function getPhotoInfo(){
         $path = Url::to('@web/uploads/');
         $url = Url::to('@web/uploads/');
@@ -172,5 +187,4 @@ class StdRegistration extends \yii\db\ActiveRecord
         }
         return $imageInfo;
     }
-    
 }

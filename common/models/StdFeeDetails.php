@@ -14,7 +14,6 @@ use Yii;
  * @property double $net_addmission_fee
  * @property string $fee_category
  * @property int $concession_id
- * @property int $no_of_installment
  * @property double $tuition_fee
  * @property string $created_at
  * @property string $updated_at
@@ -44,12 +43,11 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'concession_id', 'tuition_fee'], 'required'],
+            [['std_id', 'admission_fee', 'net_addmission_fee', 'tuition_fee'], 'required'],
             [['std_id', 'created_by', 'updated_by'], 'integer'],
             [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'tuition_fee'], 'number'],
             [['concession_id'], 'number'],
-            [['no_of_installment'], 'number', 'min' => 1, 'max'=> 6],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by','addmission_fee_discount', 'concession_id'], 'safe'],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
             [['feeSession','totalTuitionFee'],'string', 'max' => 50],
         ];
@@ -66,7 +64,7 @@ class StdFeeDetails extends \yii\db\ActiveRecord
             'admission_fee' => 'Admission Fee',
             'addmission_fee_discount' => 'Admission Fee Discount',
             'net_addmission_fee' => 'Net Admission Fee',
-            'no_of_installment' => 'No of Installment',
+            'concession_id'=> 'Concession Amount',
             'tuition_fee' => 'Tuition Fee',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

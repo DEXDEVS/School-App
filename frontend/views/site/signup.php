@@ -48,7 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <?= $form->field($model, 'user_type')->textInput() ?>
+                        <?= $form->field($model, 'user_type')->dropDownList(
+                            ArrayHelper::map(Users::find()->all(),'user_name','user_name'), ['prompt'=>'Select User Type']
+                        )?>
                     </div>
                     <div class="col-md-4">
                         <?= $form->field($model, 'user_photo')->fileInput(['maxlength' => true, 'class' => 'btn btn-default btn-block paperclip']) ?>

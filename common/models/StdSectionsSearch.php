@@ -41,7 +41,7 @@ class StdSectionsSearch extends StdSections
      */
     public function search($params)
     {
-        if(Yii::$app->user->identity->username == 'Superadmin'){
+        if(Yii::$app->user->identity->user_type == 'Superadmin'){
             $query = StdSections::find();
 
             $dataProvider = new ActiveDataProvider([
@@ -72,8 +72,8 @@ class StdSectionsSearch extends StdSections
             return $dataProvider;
 
         } else {
-                $branch_id = Yii::$app->user->identity->branch_id;
-                $query = StdSections::find()->innerJoinWith('session')->where(['session_branch_id' => $branch_id]);
+            $branch_id = Yii::$app->user->identity->branch_id;
+            $query = StdSections::find()->innerJoinWith('session')->where(['session_branch_id' => $branch_id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

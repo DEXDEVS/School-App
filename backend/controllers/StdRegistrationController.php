@@ -95,7 +95,9 @@ class StdRegistrationController extends Controller
 
         if ($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post())) {
 
-            $model->std_photo = UploadedFile::getInstance($model,'std_photo');
+                $branch_id = Yii::$app->user->identity->branch_id;
+                $model->branch_id = $branch_id;
+                $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                 if(!empty($model->std_photo)){
                     $imageName = $model->std_name.'_photo'; 
                     $model->std_photo->saveAs('uploads/'.$imageName.'.'.$model->std_photo->extension);

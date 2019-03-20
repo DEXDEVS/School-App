@@ -17,7 +17,7 @@ class StdRegistrationSearch extends StdRegistration
     public function rules()
     {
         return [
-            [['std_id', 'created_by', 'updated_by'], 'integer'],
+            [['branch_id','std_id', 'created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -59,6 +59,7 @@ class StdRegistrationSearch extends StdRegistration
         // grid filtering conditions
         $query->andFilterWhere([
             'std_id' => $this->std_id,
+            'branch_id' => $this->branch_id,
             'std_DOB' => $this->std_DOB,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

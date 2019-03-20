@@ -25,6 +25,7 @@ $options = ['data-lightbox'=>'profile image','data-title'=>$photoInfo['alt']];
         'model' => $model,
         'attributes' => [
             'std_id',
+            'branch_id',
             'std_name',
             'std_father_name',
             'std_contact_no',

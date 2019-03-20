@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "std_fee_pkg".
  *
  * @property int $std_fee_id
- * @property string $session_name
+ * @property int $session_id
  * @property int $class_id
  * @property double $admission_fee
  * @property double $tutuion_fee
@@ -19,6 +19,7 @@ use Yii;
  * @property int $delete_status
  *
  * @property StdClassName $class
+ * @property StdSessions $session
  */
 class StdFeePkg extends \yii\db\ActiveRecord
 {
@@ -36,12 +37,12 @@ class StdFeePkg extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['session_name', 'class_id', 'admission_fee', 'created_by', 'updated_by'], 'required'],
-            [['class_id', 'created_by', 'updated_by', 'delete_status'], 'integer'],
+            [['session_id', 'class_id', 'admission_fee', 'created_by', 'updated_by'], 'required'],
+            [['session_id', 'class_id', 'created_by', 'updated_by', 'delete_status'], 'integer'],
             [['admission_fee', 'tutuion_fee'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
-            [['session_name'], 'string', 'max' => 20],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_id' => 'class_name_id']],
+            [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
         ];
     }
 
@@ -52,8 +53,8 @@ class StdFeePkg extends \yii\db\ActiveRecord
     {
         return [
             'std_fee_id' => 'Std Fee ID',
-            'session_name' => 'Session Name',
-            'class_id' => 'Class ID',
+            'session_id' => 'Session Name',
+            'class_id' => 'Class Name',
             'admission_fee' => 'Admission Fee',
             'tutuion_fee' => 'Tutuion Fee',
             'created_at' => 'Created At',
@@ -70,5 +71,13 @@ class StdFeePkg extends \yii\db\ActiveRecord
     public function getClass()
     {
         return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSession()
+    {
+        return $this->hasOne(StdSessions::className(), ['session_id' => 'session_id']);
     }
 }

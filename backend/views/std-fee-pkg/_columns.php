@@ -16,8 +16,8 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'session_name',
-        //'value'=> 'session.session_name',
+        'attribute'=>'session_id',
+        'value'=> 'session.session_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

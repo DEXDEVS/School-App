@@ -57,7 +57,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     {
         return [
             [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
-            [['std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address'], 'safe'],
+            [['branch_id','std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
@@ -67,7 +67,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             [['std_photo'], 'string', 'max' => 200],
             ['std_email','email'],
             [['std_photo'], 'image', 'extensions' => 'jpg'],
-            
+            [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],
         ];
     }
 
@@ -156,6 +156,14 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     public function getStdIceInfos()
     {
         return $this->hasMany(StdIceInfo::className(), ['std_id' => 'std_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBranch()
+    {
+        return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
     }
 
     public function getPhotoInfo(){

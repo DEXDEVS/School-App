@@ -18,8 +18,8 @@ class StdFeePkgSearch extends StdFeePkg
     public function rules()
     {
         return [
-            [['std_fee_id', 'class_id', 'created_by', 'updated_by'], 'integer'],
-            [['session_name', 'created_at', 'updated_at', 'delete_status'], 'safe'],
+            [['std_fee_id', 'class_id', 'session_id','created_by', 'updated_by'], 'integer'],
+            [[ 'created_at', 'updated_at', 'delete_status'], 'safe'],
             [['admission_fee', 'tutuion_fee'], 'number'],
         ];
     }
@@ -42,34 +42,69 @@ class StdFeePkgSearch extends StdFeePkg
      */
     public function search($params)
     {
-        $query = StdFeePkg::find();
+        if(Yii::$app->user->identity->user_type == 'SuperAdmin'){
+            $branch_id = Yii::$app->user->identity->branch_id;
+            $query = StdFeePkg::find()->innerJoinWith('session')->where(['session_branch_id' => $branch_id]);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
 
-        $this->load($params);
+            $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+
+            $query->andFilterWhere([
+                'std_fee_id' => $this->std_fee_id,
+                'class_id' => $this->class_id,
+                'session_id', $this->session_id,
+                'admission_fee' => $this->admission_fee,
+                'tutuion_fee' => $this->tutuion_fee,
+                'created_at' => $this->created_at,
+                'created_by' => $this->created_by,
+                'updated_at' => $this->updated_at,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'delete_status', $this->delete_status]);
+
+            return $dataProvider;
+
+        } else {
+            $branch_id = Yii::$app->user->identity->branch_id;
+            $query = StdFeePkg::find()->innerJoinWith('session')->where(['session_branch_id' => $branch_id]);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            $this->load($params);
+
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+
+            $query->andFilterWhere([
+                'std_fee_id' => $this->std_fee_id,
+                'class_id' => $this->class_id,
+                'session_id', $this->session_id,
+                'admission_fee' => $this->admission_fee,
+                'tutuion_fee' => $this->tutuion_fee,
+                'created_at' => $this->created_at,
+                'created_by' => $this->created_by,
+                'updated_at' => $this->updated_at,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'delete_status', $this->delete_status]);
+
             return $dataProvider;
         }
-
-        $query->andFilterWhere([
-            'std_fee_id' => $this->std_fee_id,
-            'class_id' => $this->class_id,
-            'admission_fee' => $this->admission_fee,
-            'tutuion_fee' => $this->tutuion_fee,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-        ]);
-
-        $query->andFilterWhere(['like', 'session_name', $this->session_name])
-            ->andFilterWhere(['like', 'delete_status', $this->delete_status]);
-
-        return $dataProvider;
     }
 }
