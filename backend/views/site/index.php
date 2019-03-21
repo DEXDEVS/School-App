@@ -686,10 +686,10 @@ Modal::end();
       else{
         var am = "AM";
       }
-      if (hours < 10) {
+      if (hours < 12) {
           hours = "0" + hours;
       }
-      if (mins < 10) {
+      if (mins < 12) {
           mins = "0" + mins;
       }
       if (secs < 10) {
