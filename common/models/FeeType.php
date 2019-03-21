@@ -10,8 +10,6 @@ use Yii;
  * @property integer $fee_type_id
  * @property string $fee_type_name
  * @property string $fee_type_description
- * @property string $starting_date
- * @property string $ending_date
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
@@ -40,6 +38,7 @@ class FeeType extends \yii\db\ActiveRecord
             [['created_by', 'updated_by',], 'integer'],
             [['fee_type_name'], 'string', 'max' => 64],
             [['fee_type_description'], 'string', 'max' => 120],
+            ['fee_type_name','unique'],
         ];
     }
 
@@ -52,8 +51,6 @@ class FeeType extends \yii\db\ActiveRecord
             'fee_type_id' => 'Fee Type ID',
             'fee_type_name' => 'Fee Type Name',
             'fee_type_description' => 'Fee Type Description',
-            'starting_date' => 'Starting Date',
-            'ending_date' => 'Ending Date',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

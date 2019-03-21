@@ -150,7 +150,7 @@ use dosamigos\datetimepicker\DateTimePicker;
 </div>
 
 <?php
-$url = \yii\helpers\Url::to("index.php?r=fee-transaction-detail/fetch-students");
+$url = \yii\helpers\Url::to("fee-transaction-detail/fetch-students");
 
 $script = <<< JS
 $('#sectionId').on('change',function(){
@@ -164,7 +164,6 @@ $('#sectionId').on('change',function(){
         url: "$url",
 
         success: function(result){
-            console.log(result);
             var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
             
             var len =jsonResult[0].length;

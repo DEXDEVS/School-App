@@ -11,6 +11,7 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'fee_trans_id',
+            'branch_id',
             'class_name_id',
             'session_id',
             'section_id',
@@ -27,6 +28,7 @@ use yii\widgets\DetailView;
             'updated_at',
             'created_by',
             'updated_by',
+            'delete_status',
         ],
     ]) ?>
 

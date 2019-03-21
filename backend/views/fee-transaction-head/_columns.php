@@ -16,6 +16,10 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'branch_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_name_id',
     ],
     [
@@ -26,14 +30,14 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'section_id',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_id',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_name',
-    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_id',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_name',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'month',
@@ -77,6 +81,10 @@ return [
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_by',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'delete_status',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',

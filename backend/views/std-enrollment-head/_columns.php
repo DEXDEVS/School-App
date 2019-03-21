@@ -14,6 +14,11 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'std_enroll_head_id',
     // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'branch_id',
+        'value'=>'branch.branch_name',
+    ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'class_name_id',
@@ -46,13 +51,17 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_by',
     // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'delete_status',
+    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
-        }, 
+        },
         'viewOptions'=>['role'=>'','title'=>'View','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
         'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 

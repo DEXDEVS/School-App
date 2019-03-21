@@ -10,7 +10,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel common\models\TeacherSubjectAssignHeadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Teacher Subject Assign Heads');
+$this->title = Yii::t('app', 'Teacher Subject Assign');
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -26,7 +26,7 @@ CrudAsset::register($this);
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
+                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['teacher-subject-assign-detail/create'],
                     ['role'=>'modal-remote','title'=> 'Create new Teacher Subject Assign Heads','class'=>'btn btn-success']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
@@ -39,7 +39,7 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Teacher Subject Assign Heads listing',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Teacher Subject Assign',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
