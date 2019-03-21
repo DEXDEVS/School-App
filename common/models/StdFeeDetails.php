@@ -44,9 +44,8 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     {
         return [
             [['std_id', 'admission_fee', 'net_addmission_fee', 'tuition_fee'], 'required'],
-            [['std_id', 'created_by', 'updated_by'], 'integer'],
+            [['std_id', 'created_by', 'updated_by','concession_id'], 'integer'],
             [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'tuition_fee'], 'number'],
-            [['concession_id'], 'number'],
             [['created_at', 'updated_at', 'created_by', 'updated_by','addmission_fee_discount', 'concession_id'], 'safe'],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],
             [['feeSession','totalTuitionFee'],'string', 'max' => 50],

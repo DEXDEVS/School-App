@@ -6,6 +6,7 @@
 <body>
 	
 	<?php
+  // branch_id..
 	$id = $_GET['id'];
   // branches query....
 	$branches = Yii::$app->db->createCommand("SELECT * FROM branches WHERE branch_id = $id")->queryAll();
@@ -17,17 +18,20 @@
 	$sessionid = $sessions[0]['session_id'];
 	$countSessions = count($sessions);
   // sections query....
-	$sections = Yii::$app->db->createCommand("SELECT * FROM std_sections WHERE session_id = $sessionid AND delete_status = 1")->queryAll();
+	$sections = Yii::$app->db->createCommand("SELECT * FROM std_sections
+  INNER join std_sessions
+  ON std_sections.session_id = std_sessions.session_id
+  WHERE std_sessions.session_id = $sessionid AND std_sessions.delete_status = 1")->queryAll();
 	$sectionId = $sections[0]['section_id'];
 	$countSections = count($sections);
   // classes query...
-	$classes = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE delete_status = 1")->queryAll();
+	$classes = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE branch_id = '$id' AND  delete_status = 1")->queryAll();
 	$countclasses = count($classes);  
   // employee query...
-	$employees = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE delete_status = 1")->queryAll();
-  $teacher = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_designation_id = 4 AND delete_status = 1")->queryAll();
+	$employees = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_branch_id  = '$id' AND delete_status = 1")->queryAll();
+  $teacher = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_branch_id  = '$id' AND  emp_designation_id = 4 AND delete_status = 1")->queryAll();
   // Employee Designation...
-  $empDesignation = Yii::$app->db->createCommand("SELECT * FROM emp_designation WHERE delete_status = 1")->queryAll();
+  $empDesignation = Yii::$app->db->createCommand("SELECT * FROM emp_designation WHERE  delete_status = 1")->queryAll();
   $empDesignationCount = count($empDesignation);  
   //var_dump($empDesignationCount);
 	$employeeCount = count($employees);
@@ -40,7 +44,7 @@
         	</h1>
   	    <ol class="breadcrumb" style="color: #3C8DBC;">
   	        <li><a href="index.php" style="color: #3C8DBC;"><i class="fa fa-dashboard"></i> Home</a></li>
-  	        <li><a href="index.php?r=branches" style="color: #3C8DBC;">Back</a></li>
+  	        <li><a href="branches" style="color: #3C8DBC;">Back</a></li>
   	    </ol>
       </section>
       <!--  -->
