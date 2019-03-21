@@ -26,7 +26,7 @@ $fieldOptions2 = [
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body" style=" border-top: 3px solid #1A3562;">
-        <img src="images/cloudlogo2.png" width="320px" height="200px" style="border: 1px solid #28C0CE; border-radius: 5px 25px 5px 25px;"><br>
+        <img src="images/cloudlogo2.png" class="img-responsive" style="border: 1px solid #28C0CE; border-radius: 5px 25px 5px 25px;"><br>
         <p class="login-box-msg" style="color: #183663;"><b>Sign in to start your session</b></p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>

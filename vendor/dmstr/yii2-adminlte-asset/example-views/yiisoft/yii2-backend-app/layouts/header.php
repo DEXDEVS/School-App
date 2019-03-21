@@ -10,8 +10,6 @@ use yii\helpers\Html;
     $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
     $userPhoto = $user[0]['user_photo'];
-    //echo $photo;
-
 ?>
 <style type="text/css">
     .main-header{
@@ -214,7 +212,7 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?php echo $userPhoto; ?>" class="user-image" alt="User Image"/>
+                        <img src="<?php echo '../frontend/web/'.$userPhoto; ?>" class="user-image" alt="User Image"/>
                         <span class="hidden-xs">
                             <!--  -->
                             <?= Yii::$app->user->identity->username ?>
@@ -223,7 +221,7 @@ use yii\helpers\Html;
                     <ul class="dropdown-menu" style="background-color: #AA5397;">
                         <!-- User image -->
                         <li class="user-header" style="height: 200px">
-                            <img src="<?php echo $userPhoto; ?>" class="img-circle"
+                            <img src="<?php echo '../frontend/web/'.$userPhoto; ?>" class="img-circle"
                                  alt="User Image"/>
                             <p>
                                 <label for="">Contact Info</label><br>
