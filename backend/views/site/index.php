@@ -88,7 +88,12 @@ use yii\helpers\Url;
             <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
             <div class="info-box-content">
               <h4 style="float: left;">Message of the day!</h4>  
-              <h4 style="float:right"><?php echo date('D d-M-Y');?></h4>
+              <h4 style="float:right">
+                <span id="hr"></span>
+                <span id="min"></span>
+                <span id="sec"></span> -
+                <?php echo date('l d-M-Y');?> 
+              </h4>  
               <br><br>
               <div class="progress">
                 <div class="progress-bar" style="width: 100%"></div>
@@ -152,8 +157,13 @@ use yii\helpers\Url;
                       <div class="col-md-2">
                         <span class="label label-success" style="padding: 3px;">
                           <i class="fa fa-calendar"></i>
-                          <?php echo date('D d-M-Y'); ?>
                         </span>
+                        <h4 style="float:right">
+                          <span id="hr"></span>
+                          <span id="min"></span>
+                          <span id="sec"></span> -
+                          <?php echo date('l d-M-Y');?> 
+                        </h4>
                       </div>
                       <div class="col-md-10">
                         <h4 style="margin: 0px 20px">
@@ -662,3 +672,32 @@ Modal::end();
     text-decoration: none;
   }
 </style>
+
+<script type="text/javascript">
+  function clock() {
+      const fullDate = new Date();
+      let hours = fullDate.getHours();
+      let mins = fullDate.getMinutes();
+      let secs = fullDate.getSeconds();
+      if (hours>12) {
+        var am = "PM"
+        hours=hours-12;
+      }
+      else{
+        var am = "AM";
+      }
+      if (hours < 10) {
+          hours = "0" + hours;
+      }
+      if (mins < 10) {
+          mins = "0" + mins;
+      }
+      if (secs < 10) {
+          secs = "0" + secs;
+      }
+      document.getElementById('hr').innerHTML = hours+':';
+      document.getElementById('min').innerHTML = mins+':';
+      document.getElementById('sec').innerHTML = secs+' '+am;
+  }
+  setInterval(clock, 1000)
+</script>
