@@ -281,7 +281,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="col-md-3">
                         <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 190px; top: 6px"></i>
-                        <?= $form->field($stdFeeDetails, 'addmission_fee_discount')->textInput(['type' => 'number','id' => 'admissionFeeDiscount']) ?>
+                        <?= $form->field($stdFeeDetails, 'addmission_fee_discount')->textInput(['type' => 'number','id' => 'admissionFeeDiscount','value'=> 0]) ?>
                     </div>
                     <div class="col-md-3">
                         <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 151px; top: 6px"></i>
@@ -295,7 +295,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="col-md-3">
                         <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 114px; top: 6px"></i>
-                        <?= $form->field($stdFeeDetails, 'concession_id')->textInput(['type' => 'number', 'id' => 'concession']) ?>
+                        <?= $form->field($stdFeeDetails, 'concession_id')->textInput(['type' => 'number', 'id' => 'concession','value'=>0]) ?>
                     </div>
                     <div class="col-md-3">
                         <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 92px; top: 6px"></i>

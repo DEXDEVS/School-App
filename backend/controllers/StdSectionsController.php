@@ -260,13 +260,12 @@ class StdSectionsController extends Controller
         $branch_id = Yii::$app->user->identity->branch_id;
         echo $branch_id;
         $countSection = StdSections::find()
-            ->join('session')
-            ->where(['session_id' => $id , 'session_branch_id'=> $branch_id])
+            ->where(['session_id' => $id])
             ->count();
 
         $sections = StdSections::find()
             ->join('session')
-            ->where(['session_id' => $id , 'session_branch_id'=> $branch_id])
+            ->where(['session_id' => $id])
             ->all();
 
         if($countSection > 0){
