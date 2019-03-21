@@ -27,14 +27,8 @@ $branch_id = Yii::$app->user->identity->branch_id;
             <div class="col-md-6">
                 <?= $form->field($stdEnrollmentHead, 'session_id')->dropDownList(
                     ArrayHelper::map(StdSessions::find()->where(['delete_status'=>1,'session_branch_id'=> $branch_id])->all(),'session_id','session_name'),
-                    [
-                        'prompt'=>'Select Session',
-                        'id' => 'sessionId',
-                        'onchange'=>
-                            '$.post("std-sections/lists&id='.'"+$(this).val(), function( data ){
-                                $("select#sectionId").html(data);
-                            });'
-                    ]);?>
+                    ['prompt'=>'Select Session', 'id' => 'sessionId']
+                );?>
             </div>
         </div>
         <div class="row">

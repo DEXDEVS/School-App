@@ -73,8 +73,7 @@ class StdSectionsSearch extends StdSections
 
         } else {
             $branch_id = Yii::$app->user->identity->branch_id;
-            $id = 4;
-            $query = StdSections::find()->innerJoinWith('session')->where(['session_id' => $id , 'session_branch_id' => $branch_id]);
+            $query = StdSections::find()->innerJoinWith('session')->where(['session_branch_id' => $branch_id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
