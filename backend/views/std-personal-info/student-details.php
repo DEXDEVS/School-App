@@ -514,7 +514,7 @@
                           <thead>
                             <tr>
                               <th>Fee Category:</th>
-                              <td>Annual</td>
+                              <td>Monthly</td>
                             </tr>
                             <tr>
                               <th>Admission Fee:</th>
@@ -535,32 +535,9 @@
                           </thead>
                         </table>
                       </div>
-                      <div class="col-md-6">
-                         <table class="table table-striped table-hover">
-                          <thead>
-                            <!-- <tr>
-                              <th>Net Tuition Fee:</th>
-                              <td><?php //echo  $stdFeeInfo[0]['net_tuition_fee'] ?></td>
-                            </tr> -->
-                            <tr>
-                              <th>Number Of Installments:</th>
-                              <td><?php echo  $stdFeeInfo[0]['no_of_installment'] ?></td>
-                            </tr>
-                            <?php foreach ($stdFeeInstallmentDetails as $key => $value) {
-                              $instNo = $stdFeeInstallmentDetails[$key]['installment_no'];
-                              $instAmount = $stdFeeInstallmentDetails[$key]['installment_amount'];
-                              $instName = Yii::$app->db->createCommand("SELECT installment_name FROM installment WHERE installment_id = '$instNo'")->queryAll();
-                             ?>
-                            <tr>
-                              <th><?php echo $instName[0]['installment_name']; ?></th>
-                              <td>
-                                <?php echo $instAmount; ?>
-                              </td>
-                            </tr>
-                            <?php } ?>
-                          </thead>
-                        </table> 
-                      </div>
+                      <!-- <div class="col-md-6">
+                         
+                      </div> -->
                     </div>
                   <!-- Fee info close -->
                 </div>
