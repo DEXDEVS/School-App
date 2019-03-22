@@ -18,8 +18,8 @@ class FeeTransactionHeadSearch extends FeeTransactionHead
     public function rules()
     {
         return [
-            [['fee_trans_id', 'class_name_id', 'session_id', 'section_id', 'std_id', 'month', 'created_by', 'updated_by'], 'integer'],
-            [['transaction_date', 'status', 'created_at', 'updated_at','std_name'], 'safe'],
+            [['fee_trans_id', 'branch_id', 'class_name_id', 'session_id', 'section_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
+            [['std_name', 'month', 'transaction_date', 'status', 'created_at', 'updated_at'], 'safe'],
             [['total_amount', 'total_discount', 'paid_amount', 'remaining'], 'number'],
         ];
     }
@@ -58,11 +58,11 @@ class FeeTransactionHeadSearch extends FeeTransactionHead
 
         $query->andFilterWhere([
             'fee_trans_id' => $this->fee_trans_id,
+            'branch_id' => $this->branch_id,
             'class_name_id' => $this->class_name_id,
             'session_id' => $this->session_id,
             'section_id' => $this->section_id,
             'std_id' => $this->std_id,
-            'month' => $this->month,
             'transaction_date' => $this->transaction_date,
             'total_amount' => $this->total_amount,
             'total_discount' => $this->total_discount,
@@ -74,8 +74,9 @@ class FeeTransactionHeadSearch extends FeeTransactionHead
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'status', $this->status])
-              ->andFilterWhere(['like', 'std_name', $this->std_name]);
+        $query->andFilterWhere(['like', 'std_name', $this->std_name])
+            ->andFilterWhere(['like', 'month', $this->month])
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

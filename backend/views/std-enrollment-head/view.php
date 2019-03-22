@@ -11,6 +11,7 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'std_enroll_head_id',
+            'branch_id',
             'class_name_id',
             'session_id',
             'section_id',

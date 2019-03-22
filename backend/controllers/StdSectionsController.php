@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\helpers\Json;
 
 /**
  * StdSectionsController implements the CRUD actions for StdSections model.
@@ -31,7 +32,7 @@ class StdSectionsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete','bulk-delete'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete','bulk-delete','get-section','lists'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -257,16 +258,13 @@ class StdSectionsController extends Controller
      */
 
     public function actionLists($id){
-        $branch_id = Yii::$app->user->identity->branch_id;
-        echo $branch_id;
         $countSection = StdSections::find()
-            ->join('session')
-            ->where(['session_id' => $id , 'session_branch_id'=> $branch_id])
+            ->where(['session_id' => $id])
             ->count();
 
         $sections = StdSections::find()
             ->join('session')
-            ->where(['session_id' => $id , 'session_branch_id'=> $branch_id])
+            ->where(['session_id' => $id])
             ->all();
 
         if($countSection > 0){
@@ -278,6 +276,11 @@ class StdSectionsController extends Controller
         }
     } 
 
+    public function actionGetSection($sessionId){
+        // fine the zip code from the locations table
+        $section = StdSections::find()->where(['session_id' =>$sessionId])->all();
+        echo Json::encode($section); 
+    }
     public function actionBulkDelete()
     {        
         $request = Yii::$app->request;

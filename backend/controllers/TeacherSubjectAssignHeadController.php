@@ -31,7 +31,7 @@ class TeacherSubjectAssignHeadController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','teacher-subject-assign-details-view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -68,25 +68,30 @@ class TeacherSubjectAssignHeadController extends Controller
      * @param integer $id
      * @return mixed
      */
+
     public function actionView($id)
-    {   
-        $request = Yii::$app->request;
-        if($request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                    'title'=> "<b>Teacher Subject AssignHead: </b>".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
-                ];    
-        }else{
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
+    { 
+        return $this->render('teacher-subject-assign-details-view');
     }
+    // public function actionView($id)
+    // {   
+    //     $request = Yii::$app->request;
+    //     if($request->isAjax){
+    //         Yii::$app->response->format = Response::FORMAT_JSON;
+    //         return [
+    //                 'title'=> "<b>Teacher Subject AssignHead: </b>".$id,
+    //                 'content'=>$this->renderAjax('view', [
+    //                     'model' => $this->findModel($id),
+    //                 ]),
+    //                 'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+    //                         Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
+    //             ];    
+    //     }else{
+    //         return $this->render('view', [
+    //             'model' => $this->findModel($id),
+    //         ]);
+    //     }
+    // }
 
     /**
      * Creates a new TeacherSubjectAssignHead model.
@@ -114,7 +119,7 @@ class TeacherSubjectAssignHeadController extends Controller
                                 Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post()) && $model->validate() && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "<b>Create new Teacher Subject Assign Head</b>",

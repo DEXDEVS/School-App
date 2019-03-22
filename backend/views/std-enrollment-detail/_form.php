@@ -30,10 +30,6 @@ $branch_id = Yii::$app->user->identity->branch_id;
                     [
                         'prompt'=>'Select Session',
                         'id' => 'sessionId',
-                        'onchange'=>
-                            '$.post("std-sections/lists&id='.'"+$(this).val(), function( data ){
-                                $("select#sectionId").html(data);
-                            });'
                     ]);?>
             </div>
         </div>
@@ -46,7 +42,7 @@ $branch_id = Yii::$app->user->identity->branch_id;
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'std_enroll_detail_std_id')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(StdPersonalInfo::find()->all(),'std_id','std_name'),
+                    'data' => ArrayHelper::map(StdPersonalInfo::find()->where(['branch_id'=> $branch_id])->all(),'std_id','std_name'),
                     'language' => 'en',
                     'options' => ['placeholder' => 'Select' , 'id'=>'stdent'],
                     'pluginOptions' => [
@@ -71,6 +67,21 @@ $branch_id = Yii::$app->user->identity->branch_id;
 $url = \yii\helpers\Url::to("index.php?r=std-enrollment-detail/fetch-students");
 
 $script = <<< JS
+//here you write all your javascript stuff
+$('#sessionId').change(function(){
+    var sessionId = $(this).val();
+    $.get('std-sections/get-section',{sessionId : sessionId},function(data){
+        var data =  $.parseJSON(data)
+        $('#sectionId').empty();
+        $('#sectionId').append("<option>"+"Select Section"+"</option>");
+        var options = '';
+            for(var i=0; i<data.length; i++) { 
+                options += '<option value="'+data[i].section_id+'">'+data[i].section_name+'</option>';
+            }
+        // Append to the html
+        $('#sectionId').append(options);
+    });
+});
 $('#classId').on('change',function(){
    var classId = $('#classId').val();
    
