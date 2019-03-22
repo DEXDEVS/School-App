@@ -51,7 +51,7 @@ class Emails extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'emial_id' => 'Emial ID',
+            'emial_id' => 'Email ID',
             'receiver_name' => 'Receiver Name',
             'receiver_email' => 'Receiver Email',
             'email_subject' => 'Subject',

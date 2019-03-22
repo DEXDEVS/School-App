@@ -18,8 +18,8 @@ class StdFeePkgSearch extends StdFeePkg
     public function rules()
     {
         return [
-            [['std_fee_id', 'class_id', 'session_id','created_by', 'updated_by'], 'integer'],
-            [[ 'created_at', 'updated_at', 'delete_status'], 'safe'],
+            [['std_fee_id','created_by', 'updated_by'], 'integer'],
+            [[ 'session_id', 'class_id', 'created_at', 'updated_at', 'delete_status'], 'safe'],
             [['admission_fee', 'tutuion_fee'], 'number'],
         ];
     }
@@ -44,7 +44,7 @@ class StdFeePkgSearch extends StdFeePkg
     {
         if(Yii::$app->user->identity->user_type == 'SuperAdmin'){
             $branch_id = Yii::$app->user->identity->branch_id;
-            $query = StdFeePkg::find()->innerJoinWith('session')->where(['session_branch_id' => $branch_id]);
+            $query = StdFeePkg::find();
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
@@ -57,11 +57,12 @@ class StdFeePkgSearch extends StdFeePkg
                 // $query->where('0=1');
                 return $dataProvider;
             }
-
+            $query->joinWith('session');
+            $query->joinWith('class');
             $query->andFilterWhere([
                 'std_fee_id' => $this->std_fee_id,
-                'class_id' => $this->class_id,
-                'session_id', $this->session_id,
+                //'class_id' => $this->class_id,
+                //'session_id', $this->session_id,
                 'admission_fee' => $this->admission_fee,
                 'tutuion_fee' => $this->tutuion_fee,
                 'created_at' => $this->created_at,
@@ -70,7 +71,9 @@ class StdFeePkgSearch extends StdFeePkg
                 'updated_by' => $this->updated_by,
             ]);
 
-            $query->andFilterWhere(['like', 'delete_status', $this->delete_status]);
+            $query->andFilterWhere(['like', 'delete_status', $this->delete_status])
+                ->andFilterWhere(['like', 'std_sessions.session_name', $this->session_id])
+                ->andFilterWhere(['like', 'std_class_name.class_name', $this->class_id]);
 
             return $dataProvider;
 
@@ -89,11 +92,12 @@ class StdFeePkgSearch extends StdFeePkg
                 // $query->where('0=1');
                 return $dataProvider;
             }
-
+            
+            $query->joinWith('class');
             $query->andFilterWhere([
                 'std_fee_id' => $this->std_fee_id,
-                'class_id' => $this->class_id,
-                'session_id', $this->session_id,
+                // 'class_id' => $this->class_id,
+                // 'session_id', $this->session_id,
                 'admission_fee' => $this->admission_fee,
                 'tutuion_fee' => $this->tutuion_fee,
                 'created_at' => $this->created_at,
@@ -102,7 +106,9 @@ class StdFeePkgSearch extends StdFeePkg
                 'updated_by' => $this->updated_by,
             ]);
 
-            $query->andFilterWhere(['like', 'delete_status', $this->delete_status]);
+            $query->andFilterWhere(['like', 'delete_status', $this->delete_status])
+            ->andFilterWhere(['like', 'std_sessions.session_name', $this->session_id])
+                ->andFilterWhere(['like', 'std_class_name.class_name', $this->class_id]);
 
             return $dataProvider;
         }

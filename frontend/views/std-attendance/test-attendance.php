@@ -181,15 +181,17 @@ transition: all 0.4s ease-in-out;
         $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
         $headId = $teacherId[0]['teacher_subject_assign_head_id'];
 
+        
 		$classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d INNER JOIN teacher_subject_assign_head as h ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
 		$countClassIds = count($classId);
-   
     	for ($i=0; $i <$countClassIds ; $i++) {
     	 $id = $classId[$i]['class_id'];
     	 $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id
     		FROM std_enrollment_head as seh
     		INNER JOIN teacher_subject_assign_detail as tsad
     		ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id'")->queryAll();
+         
+   var_dump($CLASSName);
         $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
         FROM teacher_subject_assign_detail as tsad
         WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$headId'")->queryAll();
@@ -201,7 +203,7 @@ transition: all 0.4s ease-in-out;
                     <div class="box-header with-border" style="background-color:#d6484838;padding: 15px;">
                         <h3 class="box-title">
                             <b>
-                            <?php echo $CLASSName[0]['std_enroll_head_name']; ?>
+                            <?php //echo $CLASSName[0]['std_enroll_head_name']; ?>
                             </b>
                         </h3>
                         <div class="box-tools pull-right">
@@ -258,9 +260,9 @@ transition: all 0.4s ease-in-out;
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">
             <b>
-                <?php echo $CLASSName[0]['std_enroll_head_name']; ?>
+                <?php //echo $CLASSName[0]['std_enroll_head_name']; ?>
             </b><br>
-          <?php echo $subjectsNames[0]['subject_name']; ?>  
+          <?php //echo $subjectsNames[0]['subject_name']; ?>  
         </h4>
       </div>
       <form method="" action="">

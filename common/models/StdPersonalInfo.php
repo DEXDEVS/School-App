@@ -80,6 +80,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             'std_id' => 'ID',
             'std_reg_no' => 'Registration No',
             'std_name' => 'Student Name',
+            'branch_id' => 'Branch Name',
             'std_father_name' => 'Father Name',
             'std_contact_no' => 'Contact No',
             'std_DOB' => 'DOB',

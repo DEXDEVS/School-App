@@ -14,10 +14,10 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'teacher_subject_assign_head_id',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'teacher_id',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'teacher_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'teacher_subject_assign_head_name',

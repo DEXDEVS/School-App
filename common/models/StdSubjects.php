@@ -40,7 +40,7 @@ class StdSubjects extends \yii\db\ActiveRecord
     {
         return [
             'std_subject_id' => 'Std Subject ID',
-            'class_id' => 'Class ID',
+            'class_id' => 'Class',
             'std_subject_name' => 'Std Subject Name',
         ];
     }

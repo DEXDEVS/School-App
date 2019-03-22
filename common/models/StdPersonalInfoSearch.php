@@ -18,8 +18,8 @@ class StdPersonalInfoSearch extends StdPersonalInfo
     public function rules()
     {
         return [
-            [['branch_id','std_id', 'created_by', 'updated_by'], 'integer'],
-            [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status', 'created_at', 'updated_at'], 'safe'],
+            [['std_id', 'created_by', 'updated_by'], 'integer'],
+            [['branch_id','std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -55,10 +55,10 @@ class StdPersonalInfoSearch extends StdPersonalInfo
                 // $query->where('0=1');
                 return $dataProvider;
             }
-
+            $query->joinWith('branch');
             $query->andFilterWhere([
                 'std_id' => $this->std_id,
-                'branch_id' => $this->branch_id,
+                //'branch_id' => $this->branch_id,
                 'std_DOB' => $this->std_DOB,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
@@ -68,6 +68,7 @@ class StdPersonalInfoSearch extends StdPersonalInfo
 
             $query->andFilterWhere(['like', 'std_reg_no', $this->std_reg_no])
                 ->andFilterWhere(['like', 'std_name', $this->std_name])
+                ->andFilterWhere(['like', 'branches.branch_name', $this->branch_id])
                 ->andFilterWhere(['like', 'std_father_name', $this->std_father_name])
                 ->andFilterWhere(['like', 'std_contact_no', $this->std_contact_no])
                 ->andFilterWhere(['like', 'std_gender', $this->std_gender])

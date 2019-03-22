@@ -49,10 +49,17 @@
                         'icon' => 'user-plus',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Student Attendance', 'icon' => 'caret-right', 'url' => 'index.php?r=std-attendance',],
-                            ['label' => 'View Class Attendance', 'icon' => 'caret-right', 'url' => 'index.php?r=std-attendance/view-class-attendance',]
+                            ['label' => 'Student Attendance', 'icon' => 'caret-right', 'url' => ["./attendance"],],
+                            ['label' => 'View Class Attendance', 'icon' => 'caret-right', 'url' => ["./class-attendance"],]
                         ],
                     ],
+
+                    [
+                        'label' => 'Classes',
+                        'icon' => 'users',
+                        'url' => './test-attendance',
+                    ],
+                    
                     // ------------------------------------------------
                     // Student Attendance end...
                     // ------------------------------------------------
