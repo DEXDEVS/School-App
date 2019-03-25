@@ -51,21 +51,16 @@
             <div class="col-md-12">
                 <table class="table table-bordered table-responsive table-condensed" border="1" style="text-align: center;">
                     <tr class="bg-navy">
-                        <th rowspan="2" style="text-align: center">Sr #</th>
-                        <th rowspan="2" style="text-align: center">Roll #</th>
-                        <th rowspan="2" style="text-align: center">Student Name</th>
-                        <th rowspan="2" style="text-align: center">Admission Fee</th>
-                        <th rowspan="2" style="text-align: center">Tuition Fee</th>
-                        <th rowspan="2" style="text-align: center">Late Fee Fine</th>
-                        <th rowspan="2" style="text-align: center">Absent Fine</th>
-                        <th rowspan="2" style="text-align: center">Library Dues</th>
-                        <th rowspan="2" style="text-align: center">Transportation Fee</th>
-                        <th colspan="3" style="text-align: center;">Amount</th>
-                    </tr>
-                    <tr style="background-color: #87CEFA">
-                        <th style="text-align: center">Total</th>
-                        <th style="text-align: center">Discount</th>
-                        <th style="text-align: center">Net</th>
+                        <th style="text-align: center">Sr #</th>
+                        <th style="text-align: center">Roll #</th>
+                        <th style="text-align: center">Student Name</th>
+                        <th style="text-align: center">Admission Fee</th>
+                        <th style="text-align: center">Tuition Fee</th>
+                        <th style="text-align: center">Late Fee Fine</th>
+                        <th style="text-align: center">Absent Fine</th>
+                        <th style="text-align: center">Library Dues</th>
+                        <th style="text-align: center">Transportation Fee</th>
+                        <th style="text-align: center;">Total Amount</th>
                     </tr>
                     <?php 
                         $length = count($student);
@@ -115,12 +110,6 @@
                         </td>
                         <td>
                             <input class="form-control" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name=" total_amount[]" value="<?php echo $netTotal ; ?>"  style="width: 80px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control" type="number" id="discountAmount_<?php echo $id; ?>" name="discount_amount[]" onChange="totalDiscount(<?php echo $id; ?>)" value="0" style="width: 70px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control" type="number" id="netTotal_<?php echo $id; ?>" readonly="" name="net_total[]" value="<?php echo $netTotal; ?>" style="width: 80px; border: none;">
                         </td>
                     </tr>
                 <?php } ?>
