@@ -39,17 +39,17 @@
         // Select Students...
         $student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id,sed.std_roll_no FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
         foreach ($student as $id =>$value) {
-				$stdInfo = Yii::$app->db->createCommand("SELECT std_name , std_father_name  FROM std_personal_info WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
-				$stdId = $value['std_enroll_detail_std_id'];
-				$feeDetail = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_detail as ftd INNER JOIN fee_transaction_head as fth ON fth.fee_trans_id = ftd.fee_trans_detail_head_id WHERE fth.std_id = '$stdId' AND fth.month = '$month'")->queryAll();
-				if(!empty($feeDetail)){
+			$stdInfo = Yii::$app->db->createCommand("SELECT std_name , std_father_name  FROM std_personal_info WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
+			$stdId = $value['std_enroll_detail_std_id'];
+			$feeDetail = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_detail as ftd INNER JOIN fee_transaction_head as fth ON fth.fee_trans_id = ftd.fee_trans_detail_head_id WHERE fth.std_id = '$stdId' AND fth.month = '$month'")->queryAll();
+			// if(!empty($feeDetail)){
+	
+			// 	$installmentId = $feeDetail[0]['installment_no'];
+			// 	$installment = Yii::$app->db->createCommand("SELECT installment_name FROM installment WHERE installment_id = '$installmentId'")->queryAll();
+			$feeMonth = date('F, Y', strtotime($month));
 		
-					$installmentId = $feeDetail[0]['installment_no'];
-					$installment = Yii::$app->db->createCommand("SELECT installment_name FROM installment WHERE installment_id = '$installmentId'")->queryAll();
-					$installmentName = $installment[0]['installment_name'];
-				
-					$feeType = Yii::$app->db->createCommand("SELECT fee_type_id,fee_type_name  FROM fee_type")->queryAll();
-    			?>
+			$feeType = Yii::$app->db->createCommand("SELECT fee_type_id,fee_type_name  FROM fee_type")->queryAll();
+    	?>
 
 			<div class="container-fluid">
 				<div class="row">
@@ -152,7 +152,7 @@
 												<td align="center"><?php echo ($index +1);?></td>
 												<td colspan="2">
 													<?php if ($feeType[$index]['fee_type_name'] == 'Tuition Fee') {
-														echo $feeType[$index]['fee_type_name']. ' (' .$installmentName.')';
+														echo $feeType[$index]['fee_type_name']. ' (' .$feeMonth.')';
 													}
 													else{
 													echo $feeType[$index]['fee_type_name'];
@@ -174,11 +174,11 @@
 							</div>
 							<?php
 							$currentTotal  = $feeDetail[0]['total_amount'];
-							$installNo     = $feeDetail[0]['installment_no'];
-							$installmentNo = $installNo -1;
+							$feeMonth     = $feeDetail[0]['month'];
+							//$installmentNo = $feeMonth -1;
 							$remaining = 0;
 							$remainig= 0;
-							$remain = Yii::$app->db->createCommand("SELECT status ,remaining, total_amount, paid_amount FROM fee_transaction_head WHERE installment_no = $installmentNo AND std_id = $stdId")->queryAll();
+							$remain = Yii::$app->db->createCommand("SELECT status ,remaining, total_amount, paid_amount FROM fee_transaction_head WHERE month = $feeMonth AND std_id = $stdId")->queryAll();
 							if (empty($remain)) {
 								$remainig = 0;
 							} else if($remain[0]['status'] == 'Partially Paid') {
@@ -274,7 +274,7 @@
 			</div>";
 	}
 	//ending of isset if
-}
+// }
 ?>
 </body>
 </html>
