@@ -16,6 +16,7 @@
                 </div>    
             </div>    
         </div>
+    <?php $branch_id = Yii::$app->user->identity->branch_id; ?>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -23,7 +24,7 @@
                     <select class="form-control" name="classid" id="classId" required="required">
                         <option>Select Class</option>
                             <?php 
-                                $className = Yii::$app->db->createCommand("SELECT * FROM std_class_name where delete_status=1")->queryAll();
+                                $className = Yii::$app->db->createCommand("SELECT * FROM std_class_name where delete_status=1 AND branch_id = $branch_id")->queryAll();
                                 
                                     foreach ($className as  $value) { ?>    
                                     <option value="<?php echo $value["class_name_id"]; ?>">
@@ -39,7 +40,7 @@
                     <select class="form-control" name="sessionid" id="sessionId" required="">
                             <option value="">Select Session</option>
                             <?php 
-                                $sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1")->queryAll();
+                                $sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND session_branch_id = $branch_id")->queryAll();
                                     foreach ($sessionName as  $value) { ?>  
                                     <option value="<?php echo $value["session_id"]; ?>">
                                         <?php echo $value["session_name"]; ?>   
@@ -62,20 +63,6 @@
                 <div class="form-group">
                     <label>Select Month</label>
                     <input type="month" class="form-control" name="monthYear" required="">   
-                </div>    
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Installment No</label>
-                    <select name="installment_no" class="form-control" required>
-                        <option>Select Installment No</option>
-                        <option value="1">1st Installment</option>
-                        <option value="2">2nd Installment</option>
-                        <option value="3">3rd Installment</option>
-                        <option value="4">4th Installment</option>
-                        <option value="5">5th Installment</option>
-                        <option value="6">6th Installment</option>
-                    </select>
                 </div>    
             </div>
             <div class="col-md-3">
@@ -110,6 +97,8 @@ $('#sessionId').on('change',function(){
         success: function(result){
             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
             var options = '';
+            $('#section').empty();
+            $('#section').append("<option>"+"Select Section"+"</option>");
             for(var i=0; i<jsonResult.length; i++) { 
                 options += '<option value="'+jsonResult[i].section_id+'">'+jsonResult[i].section_name+'</option>';
             }
