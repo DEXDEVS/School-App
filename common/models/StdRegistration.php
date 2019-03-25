@@ -82,7 +82,7 @@ class StdRegistration extends \yii\db\ActiveRecord
     {
         return [
             'std_id' => 'Std ID',
-            'branch_id' => 'Branch ID',
+            'branch_id' => 'Branch Name',
             'std_reg_no' => 'Std Reg No',
             'std_name' => 'Std Name',
             'std_father_name' => 'Std Father Name',

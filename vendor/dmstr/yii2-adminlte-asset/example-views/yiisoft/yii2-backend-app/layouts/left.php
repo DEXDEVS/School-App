@@ -27,7 +27,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?php echo $userPhoto; ?>" class="img-circle" alt="User Image"/>
+                <img src="<?php echo '../frontend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p>
@@ -86,7 +86,7 @@
                         'items' => [
                             ['label' => 'Institute', 'icon' => 'caret-right', 'url' => ["/institute"],],
                             ['label' => 'Branches', 'icon' => 'caret-right', 'url' => ["/branches"],],
-                            ['label' => 'Departments', 'icon' => 'caret-right', 'url' => ["/departments"],],
+                            //['label' => 'Departments', 'icon' => 'caret-right', 'url' => ["/departments"],],
                             ['label' => 'Sessions', 'icon' => 'caret-right', 'url' => ["/std-sessions"],],
                             ['label' => 'Sections', 'icon' => 'caret-right', 'url' => ["/std-sections"],],
                             //['label' => 'Class', 'icon' => 'caret-right', 'url' => ["/std-class"],],

@@ -59,19 +59,19 @@
             </div>    
         </div>
         <div class="row">              
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Select Month</label>
                     <input type="month" class="form-control" name="monthYear" required="">   
                 </div>    
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Date</label>
                     <input type="date" class="form-control" name="date" required="">     
                 </div>    
             </div> 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group" style="margin-top: 24px;">
                     <button type="submit" name="submit" class="btn btn-success btn-flat btn-block"><i class="fa fa-check-square-o" aria-hidden="true"></i><b> Get Class</b></button>
                 </div>    
