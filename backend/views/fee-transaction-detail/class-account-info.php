@@ -51,16 +51,21 @@
             <div class="col-md-12">
                 <table class="table table-bordered table-responsive table-condensed" border="1" style="text-align: center;">
                     <tr class="bg-navy">
-                        <th style="text-align: center">Sr #</th>
-                        <th style="text-align: center">Roll #</th>
-                        <th style="text-align: center">Student Name</th>
-                        <th style="text-align: center">Admission Fee</th>
-                        <th style="text-align: center">Tuition Fee</th>
-                        <th style="text-align: center">Late Fee Fine</th>
-                        <th style="text-align: center">Absent Fine</th>
-                        <th style="text-align: center">Library Dues</th>
-                        <th style="text-align: center">Transportation Fee</th>
-                        <th style="text-align: center;">Total Amount</th>
+                        <th rowspan="2" style="text-align: center">Sr #</th>
+                        <th rowspan="2" style="text-align: center">Roll #</th>
+                        <th rowspan="2" style="text-align: center">Student Name</th>
+                        <th rowspan="2" style="text-align: center">Admission Fee</th>
+                        <th rowspan="2" style="text-align: center">Tuition Fee</th>
+                        <th rowspan="2" style="text-align: center">Late Fee Fine</th>
+                        <th rowspan="2" style="text-align: center">Absent Fine</th>
+                        <th rowspan="2" style="text-align: center">Library Dues</th>
+                        <th rowspan="2" style="text-align: center">Transportation Fee</th>
+                        <th colspan="3" style="text-align: center;">Amount</th>
+                    </tr>
+                    <tr style="background-color: #87CEFA">
+                        <th style="text-align: center">Total</th>
+                        <th style="text-align: center">Discount</th>
+                        <th style="text-align: center">Net</th>
                     </tr>
                     <?php 
                         $length = count($student);
@@ -109,7 +114,7 @@
                             <input class="form-control" type="number" id="transportFee_<?php echo $id; ?>" name="transport_fee[]"  onChange="transportationFee(<?php echo $id; ?>)" style="width: 100px; border: none;">
                         </td>
                         <td>
-                            <input class="form-control" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name=" total_amount[]" value="<?php echo $netTotal ; ?>"  style="width: 80px; border: none;">
+                            <input class="form-control" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name="total_amount[]" value="<?php echo $netTotal ; ?>"  style="width: 80px; border: none;">
                         </td>
                     </tr>
                 <?php } ?>
@@ -145,32 +150,32 @@
 </div> 
 <?php  
     global $length; 
-        if (isset($_POST["save"])) {
-                $classid            = $_POST["classid"];
-                $sessionid          = $_POST["sessionid"];
-                $sectionid          = $_POST["sectionid"];
-                $date               = $_POST["date"];
-                $month              = $_POST["month"];
-                //$installmentNo      = $_POST["installment_no"];
-                $length             = $_POST["length"];
-                $studentId          = $_POST["studentId"];
-                $studentName        = $_POST["studentName"];
-                $total_amount       = $_POST["total_amount"];
-                $discount_amount    = $_POST["discount_amount"];
-                $net_total          = $_POST["net_total"];
-                // detail values....
-                $admission_fee      = $_POST["admission_fee"];
-                $tuition_fee        = $_POST["tuition_fee"];
-                $late_fee_fine      = $_POST["late_fee_fine"];
-                $absent_fine        = $_POST["absent_fine"];
-                $library_dues       = $_POST["library_dues"];
-                $transport_fee      = $_POST["transport_fee"];
-                $feeType            = Array('1','2','3','4','5','6');
-                $updateStatus       =-1;
+    if (isset($_POST["save"])) {
+        $classid            = $_POST["classid"];
+        $sessionid          = $_POST["sessionid"];
+        $sectionid          = $_POST["sectionid"];
+        $date               = $_POST["date"];
+        $month              = $_POST["month"];
+        //$installmentNo      = $_POST["installment_no"];
+        $length             = $_POST["length"];
+        $studentId          = $_POST["studentId"];
+        $studentName        = $_POST["studentName"];
+        $total_amount       = $_POST["total_amount"];
+        // detail values....
+        $admission_fee      = $_POST["admission_fee"];
+        $tuition_fee        = $_POST["tuition_fee"];
+        $late_fee_fine      = $_POST["late_fee_fine"];
+        $absent_fine        = $_POST["absent_fine"];
+        $library_dues       = $_POST["library_dues"];
+        $transport_fee      = $_POST["transport_fee"];
+        $feeType            = Array('1','2','3','4','5','6');
+        $updateStatus       =-1;
 
-               
-                $headTransId = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
-                if(empty($headTransId)){
+       
+        $headTransId = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
+        $transaction = \Yii::$app->db->beginTransaction();
+        try {
+            if(empty($headTransId)){
                     for($i=0; $i<$length; $i++){
                         $feeHead = Yii::$app->db->createCommand()->insert('fee_transaction_head',[
                             'class_name_id' => $classid,
@@ -181,8 +186,7 @@
                             'std_name' => $studentName[$i],
                             'month'=> $month,
                             'transaction_date' => $date,
-                            'total_amount'=> $net_total[$i],
-                            'total_discount'=> $discount_amount[$i],
+                            'total_amount'=> $total_amount[$i],
                             'status'=>'unpaid',
                             'created_by' => Yii::$app->user->identity->id,
                         ])->execute();
@@ -236,17 +240,11 @@
                         }
                     //end of for loop
                     }
-                    // echo 
-                    //     "<div class='row container-fluid' style='margin:0px -10px 0px 15px;'>
-                    //         <div class='col-md-12 alert alert-success text-success' style='text-align: center'>
-                    //             <p>You have <b>Successfully </b>maintain this class account....!</p>
-                    //         </div>
-                    //     </div>";
                     // success alert message...
                     Yii::$app->session->setFlash('success', "You have successfully maintain this class account...!"); 
                     //return $this->render('./fee-transaction-detail-class-account');
                  // end of if
-                } else {
+            } else {
                 $transId = $headTransId[0]['fee_trans_id'];
                 for($i=0; $i<$length; $i++){
                     $feeHead = Yii::$app->db->createCommand()->update('fee_transaction_head', [
@@ -258,8 +256,7 @@
                         'std_name' => $studentName[$i],
                         'month'=> $month,
                         'transaction_date' => $date,
-                        'total_amount'=> $net_total[$i],
-                        'total_discount'=> $discount_amount[$i],
+                        //'total_amount'=> $total_amount[$i],
                         'status'=>'unpaid',
                         'updated_by' => Yii::$app->user->identity->id],
                         ['fee_trans_id' => $transId+$i]
@@ -428,17 +425,18 @@
                     //end of  m for loop
                     }
                 // end of j loop    
-                }          
-                // echo 
-                //     "<div class='row container-fluid' style='margin:0px 0px 0px 0px;'>
-                //         <div class='col-md-12 alert alert-warning' style='text-align: center'>
-                //             <p>You have <b>Successfully </b>update this class account....!</p>
-                //         </div>
-                //     </div>";
-                // 
+                }       
+                //
+
                 Yii::$app->session->setFlash('warning', "You have successfully update this class account...!"); 
                 //return $this->render('./fee-transaction-detail-class-account');  
         // end of else 
+        }
+        $transaction->commit();
+            return $this->redirect(['./class-account']);
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
         }
     //end of isset
     }
