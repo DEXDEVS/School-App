@@ -5,16 +5,58 @@
     <title>Document</title>
 </head>
 <body>
+     
+<?php 
+    if(isset($_GET['sub_id'])){
+        $sub_id = $_GET['sub_id'];  
+        $class_id = $_GET['class_id'];
+        $emp_id = $_GET['emp_id'];     
+?>
+
+    <div class="conatiner-fluid">
+        <div class="row">
+            <div class="col-md-3 col-md-offset-9">
+                    <a href="./view-attendance?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&emp_id=<?php echo $emp_id;?>"  style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+            </div>
+    </div>
+    <br>
+        <div class="box box-danger">
+            <div class="box-header" style="padding:0px;background-color:#d6484838;">
+                <h2 class="text-center text-danger">Date Wise Class Attendance</h2>
+            </div>
+            <div class="box-body">
+                <form method="POST">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input class="form-control" data-date-format="dd/mm/yyyy" type="date" name="date" required="">
+                    </div>    
+                </div><br><br>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-success btn-flat form-control" style="margin-top: -25px;">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>    
+                        <b>View Attendance</b></button>
+                    </div>    
+                </div> 
+                <input type="hidden" name="sub_id" value="<?php echo $sub_id; ?>">
+                <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
+                <input type="hidden" name="emp_id" value="<?php echo $emp_id; ?>">
+            </div>
+        </form>
+            </div>
+        </div>
+    </div>
     <?php
+    // closing of $_GET.... 
+    }
 
-        if (isset($_POST['submit'])) {
-            $date = $_POST["date"];
-        }
-
-       if(isset($_GET["sub_id"])){ 
-        $sub_id = $_GET["sub_id"];
-        $class_id = $_GET["class_id"];
-        $emp_id = $_GET["emp_id"];
+    if(isset($_POST["submit"])){ 
+        $sub_id = $_POST["sub_id"];
+        $class_id = $_POST["class_id"];
+        $emp_id = $_POST["emp_id"];
+        $date = $_POST["date"];
 
         $branch_id = Yii::$app->user->identity->branch_id;
         $students = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,sed.std_enroll_detail_std_id,sed.std_enroll_detail_std_name, sed.std_roll_no
@@ -31,25 +73,21 @@
     $sessionid = $classDetail[0]['session_id'];
     $sectionid = $classDetail[0]['section_id'];
     
-?>      
-     <div class="row">
-            <div class="col-md-3 col-md-offset-9">
-                    <a href="./view-attendance?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&emp_id=<?php echo $emp_id;?>" style="float: right; margin-right:2px;background-color:#5CB85C;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
-            </div>
-    </div><br>
+?> 
+<div class="container-fluid">     
     <div class="row">
         <div class="col-md-3">
-            <div class="box box-danger"style="border-color:#5CB85C;">
+            <div class="box box-danger">
                 <div class="box-header">
-                    <h3 class="text-center" style="font-family: georgia;">Class Attendance</h3><hr style="border-color:#d0f2d0;">
+                    <h3 class="text-center" style="font-family: georgia;">Class Attendance</h3><hr style="border-color:#d6484838;">
                 </div>
                 <div class="box-body">
                     <li style="list-style-type: none;">
-                            <p class="text-center" style="padding:4px; background-color:#5CB85C; color:white;">Date</p>
-                            <p style="background-color:#d0f2d0;color: red;text-align: center;">
+                            <p class="bg-red text-center" style="padding:4px;">Date</p>
+                            <p style="background-color:#d6484838;color: red;text-align: center;">
                                 <u><?php echo $date; ?></u>
                             </p>
-                    </li><hr style="border-color:#d0f2d0;"><br>
+                    </li><hr style="border-color:#d6484838;"><br>
                     <li style="list-style-type: none;margin-top: -20px;">
                         <b>Class:</b>
                         <p>
@@ -61,23 +99,23 @@
                         <p>
                             <?php echo $subName[0]['subject_name']; ?>
                         </p>
-                    </li><hr style="border-color:#d0f2d0;"><br>
+                    </li><hr style="border-color:#d6484838;"><br>
                 </div>
             </div>
         </div>
         <div class="col-md-9">
-            <div class="box box-danger" style="border-color:#5CB85C;">
+            <div class="box box-danger">
                 <div class="box-header" style="padding:3px;">
-                    <h2 class="text-center" style="font-family: georgia;color:#5CB85C;">Date Wise</h2><hr style="border-color:#d0f2d0;">
+                    <h2 class="text-center text-danger" style="font-family: georgia;">Date Wise</h2><hr style="border-color:#d6484838;">
                 </div>
                 <div class="box-body">
                     <div class="row">
                 <div class="col-md-12">
                     <form method="POST" action="datewise-class-attendance">
-                    <table class="table table-hover table-responsive">
+                    <table class="table table-hover">
                         <thead>
-                            <tr style="background-color:#d0f2d0; ">
-                                <th>Sr #.</th>
+                            <tr style="background-color:#d6484838; ">
+                                <th >Sr #.</th>
                                 <th >Roll #.</th>
                                 <th >Name</th>
                                 <th>Attendance</th>
@@ -118,6 +156,7 @@
             </div>
         </div>
     </div>
+</div>
 <?php
 //closing of $_POST
 }

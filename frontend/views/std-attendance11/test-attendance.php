@@ -165,20 +165,16 @@ transition: all 0.4s ease-in-out;
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 col-md-offset-9">
-            <a href="./home"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
-        </div>
-    </div><br>
-    <div class="box box-default" style=" border-color:#605CA8;" >
+    <div class="box box-danger">
         <div class="box-header">
-           <h2 class="text-center" style="color:#605CA8; font-family: georgia;"><img src="backend/web/uploads/teacher.jpg" height="40px" width="40px"> List of Classes</h2><hr  style=" border-color:#c8c6f2;" > 
+           <h2 class="text-center text-danger">List of Classes</h2><hr style="border-color:#d6484838;"> 
         </div>
         <div class="box-body">
             <?php
 
         $branch_id = Yii::$app->user->identity->branch_id;
         $empEmail = Yii::$app->user->identity->email;
+
         $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$empEmail'")->queryAll();
         $empId = $empId[0]['emp_id'];
         $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
@@ -186,29 +182,29 @@ transition: all 0.4s ease-in-out;
 
 		$classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d INNER JOIN teacher_subject_assign_head as h ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
 		$countClassIds = count($classId);
-   
     	for ($i=0; $i <$countClassIds ; $i++) {
     	 $id = $classId[$i]['class_id'];
+
     	 $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id
     		FROM std_enrollment_head as seh
     		INNER JOIN teacher_subject_assign_detail as tsad
     		ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
+
         $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
         FROM teacher_subject_assign_detail as tsad
         WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$headId'")->queryAll();
-        
             ?>
 
            <div class="col-md-6">
-                <div class="box box-danger collapsed-box" style=" border-color:#605CA8;">
-                    <div class="box-header" style="background-color:#c8c6f2;padding: 15px;">
+                <div class="box box-danger collapsed-box" >
+                    <div class="box-header with-border" style="background-color:#d6484838;padding: 15px;">
                         <h3 class="box-title">
                             <b>
                             <?php echo $CLASSName[0]['std_enroll_head_name']; ?>
                             </b>
                         </h3>
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">  <br><i class="fa fa-plus" style="font-size:15px;color:#605CA8;"></i>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">  <br><i class="fa fa-plus" style="font-size:15px;"></i>
                             </button>
                         </div>
                         <!-- /.box-tools -->
@@ -225,8 +221,8 @@ transition: all 0.4s ease-in-out;
                                 FROM subjects WHERE subject_id = '$SubID'")->queryAll();
                         ?>
                         <td>
-                            <a href="./activity-view?sub_id=<?php echo $SubID;?>&class_id=<?php echo $id;?>&emp_id=<?php echo $empId;?>" class="btn btn-default"  style=" border-color:#605CA8;" >
-                               <i class="fa fa-book" style="background-color:#605CA8; border:1px solid; padding:5px ;border-radius:50px;font-size:25px; color:white;"> 
+                            <a href="./activity-view?sub_id=<?php echo $SubID;?>&class_id=<?php echo $id;?>&emp_id=<?php echo $empId;?>" class="btn btn-default">
+                               <i class="fa fa-book" style="background-color:#d9534f; border:1px solid; padding:5px ;border-radius:50px;font-size:25px; color:white;"> 
                                 
                                </i><br>
                                <?php echo $subjectsNames[0]['subject_name']; ?>  
@@ -261,9 +257,9 @@ transition: all 0.4s ease-in-out;
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">
             <b>
-                <?php echo $CLASSName[0]['std_enroll_head_name']; ?>
+                <?php //echo $CLASSName[0]['std_enroll_head_name']; ?>
             </b><br>
-          <?php echo $subjectsNames[0]['subject_name']; ?>  
+          <?php //echo $subjectsNames[0]['subject_name']; ?>  
         </h4>
       </div>
       <form method="" action="">
@@ -491,3 +487,45 @@ transition: all 0.4s ease-in-out;
 </div> 
 </body>
 </html>
+<?php 
+if (isset($_POST["save"])) {
+    $classnameid = $_POST["classnameid"];
+    $sessionid = $_POST["sessionid"];
+    $sectionid = $_POST["sectionid"];
+    $emp_id = $_POST["emp_id"];
+    //$branch_id = $_POST["branch_id"];
+    $sub_id = $_POST["sub_id"];
+    $date = $_POST["date"];
+    $countstd = $_POST["countstd"];
+    $stdAttendId = $_POST["stdAttendance"];
+    
+    for($i=0; $i<$countstd;$i++){
+        $q=$i+1;
+        $std = "std".$q;
+        $status[$i] = $_POST["$std"];
+
+    }
+    
+    $transection = $conn->beginTransaction();
+    try{
+        for($i=0; $i<$countstd; $i++){
+        $attendance = $conn->createCommand()->insert('std_attendance',[
+            'branch_id' => $branch_id,
+            'teacher_id' => $emp_id,
+            'class_name_id' => $classnameid,
+            'session_id'=> $sessionid,
+            'section_id'=> $sectionid,
+            'subject_id'=> $sub_id,
+            'date' => $date,
+            'student_id' => $stdAttendId[$i],
+            'status' => $status[$i],
+        ])->execute();
+        }
+        $transection->commit();
+    } catch(Exception $e){
+        $transection->rollback();
+    }
+    Yii::$app->session->setFlash('success', "Attendance marked successfully...!");
+// closing of if isset
+}
+?>

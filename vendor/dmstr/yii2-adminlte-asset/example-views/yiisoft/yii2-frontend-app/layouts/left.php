@@ -57,7 +57,7 @@
                     [
                         'label' => 'Classes',
                         'icon' => 'users',
-                        'url' => './test-attendance',
+                        'url' => './list-of-classes',
                     ],
                     
                     // ------------------------------------------------

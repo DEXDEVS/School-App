@@ -12,6 +12,7 @@ $branch_id = Yii::$app->user->identity->branch_id;
 /* @var $this yii\web\View */
 /* @var $model common\models\StdEnrollmentDetail */
 /* @var $form yii\widgets\ActiveForm */
+$in = 1;
 ?>
 
 <div class="std-enrollment-detail-form">
@@ -45,9 +46,11 @@ $branch_id = Yii::$app->user->identity->branch_id;
                     'data' => ArrayHelper::map(StdPersonalInfo::find()->where(['branch_id'=> $branch_id])->all(),'std_id','std_name'),
                     'language' => 'en',
                     'options' => ['placeholder' => 'Select' , 'id'=>'stdent'],
+                    'showToggleAll' => true,
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'multiple' => true
+                        'multiple' => true,
+                        'maximumSelectionLength'=> $in,
                     ],
                 ]);
                 ?>
@@ -67,6 +70,7 @@ $branch_id = Yii::$app->user->identity->branch_id;
 $url = \yii\helpers\Url::to("index.php?r=std-enrollment-detail/fetch-students");
 
 $script = <<< JS
+var intake;
 //here you write all your javascript stuff
 $('#sessionId').change(function(){
     var sessionId = $(this).val();
@@ -80,6 +84,14 @@ $('#sessionId').change(function(){
             }
         // Append to the html
         $('#sectionId').append(options);
+    });
+});
+$('#sectionId').change(function(){
+    var sectionId = $(this).val();
+    $.get('std-sections/get-section-intake',{sectionId : sectionId},function(data){
+        var data =  $.parseJSON(data)
+        intake = data[0].section_intake;
+        alert(intake);
     });
 });
 $('#classId').on('change',function(){
@@ -113,3 +125,4 @@ JS;
 $this->registerJs($script);
 ?>
 </script>
+

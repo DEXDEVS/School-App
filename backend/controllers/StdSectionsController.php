@@ -32,7 +32,7 @@ class StdSectionsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete','bulk-delete','get-section','lists'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete','bulk-delete','get-section','get-section-intake','lists'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -280,6 +280,11 @@ class StdSectionsController extends Controller
         // fine the zip code from the locations table
         $section = StdSections::find()->where(['session_id' =>$sessionId])->all();
         echo Json::encode($section); 
+    }
+    public function actionGetSectionIntake($sectionId){
+        // fine the zip code from the locations table
+        $sectionIntake = StdSections::find()->where(['section_id' =>$sectionId])->all();
+        echo Json::encode($sectionIntake); 
     }
     public function actionBulkDelete()
     {        
