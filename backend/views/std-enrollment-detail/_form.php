@@ -67,7 +67,7 @@ $in = 1;
     
 </div>
 <?php
-$url = \yii\helpers\Url::to("index.php?r=std-enrollment-detail/fetch-students");
+$url = \yii\helpers\Url::to("std-enrollment-detail/fetch-students");
 
 $script = <<< JS
 var intake;
@@ -94,33 +94,47 @@ $('#sectionId').change(function(){
         alert(intake);
     });
 });
-$('#classId').on('change',function(){
-   var classId = $('#classId').val();
-   
-   $.ajax({
-        type:'post',
-        data:{class_Id:classId},
-        url: "$url",
-
-        success: function(result){
-            console.log(result);
-            var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-            
-            var len =jsonResult[0].length;
-            var html = "";
-            $('#stdent').empty();
-            $('#stdent').append("<option>"+"Select Student.."+"</option>");
-            for(var i=0; i<len; i++)
-            {
-            var stdId = jsonResult[0][i];
-            var stdName = jsonResult[1][i];
-            html += "<option value="+ stdId +">"+stdName+"</option>";
+$('#classId').change(function(){
+    var classId = $(this).val();
+    $.get('std-personal-info/get-student',{classId : classId},function(data){
+        var data =  $.parseJSON(data)
+        $('#stdent').empty();
+        $('#stdent').append("<option>"+"Select Student"+"</option>");
+        var options = '';
+            for(var i=0; i<data.length; i++) { 
+                options += '<option value="'+data[i].section_id+'">'+data[i].section_name+'</option>';
             }
-            $(".field-stdent select").append(html);
-
-        }         
-    });       
+        // Append to the html
+        $('#stdent').append(options);
+    });
 });
+// $('#classId').on('change',function(){
+//    var classId = $('#classId').val();
+   
+//    $.ajax({
+//         type:'post',
+//         data:{class_Id:classId},
+//         url: "$url",
+
+//         success: function(result){
+//             console.log(result);
+//             var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
+            
+//             var len =jsonResult[0].length;
+//             var html = "";
+//             $('#stdent').empty();
+//             $('#stdent').append("<option>"+"Select Student.."+"</option>");
+//             for(var i=0; i<len; i++)
+//             {
+//             var stdId = jsonResult[0][i];
+//             var stdName = jsonResult[1][i];
+//             html += "<option value="+ stdId +">"+stdName+"</option>";
+//             }
+//             $(".field-stdent select").append(html);
+
+//         }         
+//     });       
+// });
 JS;
 $this->registerJs($script);
 ?>

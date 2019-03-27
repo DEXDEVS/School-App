@@ -10,22 +10,23 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'fee_trans_id',
-    ],
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'fee_trans_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'branch_id',
+        'value' => 'branch.branch_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_name_id',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'session_id',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'session_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'section_id',
@@ -34,14 +35,14 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'std_id',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'std_name',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'month',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'std_name',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'month',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'transaction_date',

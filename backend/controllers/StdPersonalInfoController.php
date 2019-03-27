@@ -19,6 +19,7 @@ use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\web\UploadedFile;
+use yii\helpers\Json;
 
 /**
  * StdPersonalInfoController implements the CRUD actions for StdPersonalInfo model.
@@ -39,7 +40,7 @@ class StdPersonalInfoController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form','get-student'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -374,6 +375,15 @@ class StdPersonalInfoController extends Controller
     public function actionStdPhoto($id)
     { 
         return $this->render('std-photo');
+    }
+
+    public function actionGetStudent($classId){
+        // fine the zip code from the locations table
+        $student = StdPersonalInfo::find()
+                ->innerJoinWith('stdAcademicInfos')
+                ->where(['class_name_id' => $classId, 'std_enroll_status'=> 'unsign'])
+                ->all();
+        echo Json::encode($student); 
     }
 
      /**
