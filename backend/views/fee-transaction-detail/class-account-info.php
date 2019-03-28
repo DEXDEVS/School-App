@@ -173,6 +173,7 @@
 
        
         $headTransId = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
+
         $transaction = \Yii::$app->db->beginTransaction();
         try {
             if(empty($headTransId)){
@@ -238,8 +239,8 @@
                             }
                             //end of J for loop
                         }
-                    //end of for loop
                     }
+                    //end of for loop
                     // success alert message...
                     Yii::$app->session->setFlash('success', "You have successfully maintain this class account...!"); 
                     //return $this->render('./fee-transaction-detail-class-account');
@@ -426,14 +427,12 @@
                     }
                 // end of j loop    
                 }       
-                //
-
-                Yii::$app->session->setFlash('warning', "You have successfully update this class account...!"); 
                 //return $this->render('./fee-transaction-detail-class-account');  
-        // end of else 
-        }
-        $transaction->commit();
-            return $this->redirect(['./class-account']);
+            // end of else 
+            }
+            $transaction->commit();
+            Yii::$app->session->setFlash('warning', "You have successfully update this class account...!"); 
+            //return $this->redirect(['./class-account']);
         } catch (Exception $e) {
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");

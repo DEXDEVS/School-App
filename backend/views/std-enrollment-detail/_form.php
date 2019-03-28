@@ -45,12 +45,12 @@ $in = 1;
                 <?= $form->field($model, 'std_enroll_detail_std_id')->widget(Select2::classname(), [
                     'data' => ArrayHelper::map(StdPersonalInfo::find()->where(['branch_id'=> $branch_id])->all(),'std_id','std_name'),
                     'language' => 'en',
-                    'options' => ['placeholder' => 'Select' , 'id'=>'stdent'],
+                    'options' => ['placeholder' => 'Select'],
                     'showToggleAll' => true,
                     'pluginOptions' => [
                         'allowClear' => true,
                         'multiple' => true,
-                        'maximumSelectionLength'=> $in,
+                        'maximumSelectionLength'=> 2,
                     ],
                 ]);
                 ?>
