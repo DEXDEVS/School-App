@@ -85,6 +85,11 @@
 			</div>
 		</div>
 	</div>
+	<div class="box box-default container-fluid">
+	<div class="box-header">
+		<h2>Exam Schedule</h2>
+	</div>
+	<div class="box-body" style="background-color:#fafafa;">
 	<form method="post">
 	<table class="table table-stripped">
 	<?php 
@@ -122,16 +127,16 @@
 				<tr>
 					<td>
 						
-							<div class="row">
-								<div class="col-md-2" style="border:1px solid;height:133px;box-shadow: 1px 10px 10px 1px;">
-									<h3>
+							<div class="row" style="border-bottom:3px solid #ebd6e7; ">
+								<div class="col-md-2" style="border:1px solid;height:133px;box-shadow: 1px 10px 10px 1px;background-color: #ebd6e7;color:#AA5397;border-radius: 8px;">
+									<h3 style="line-height:2.5;text-align: center;">
 									<i class="fa fa-book"></i>
 									<?php echo $subject;?>
 									</h3>
 								</div>
 								<div class="col-md-10">
 									<div class="row">
-										<div class="col-md-2">
+										<div class="col-md-4">
 											<div class="form-group">
 											<label>Date</label>
 											<input type="date" name="date[]" class="form-control">
@@ -187,7 +192,7 @@
 											<input type="text" name="passingmarks[]" class="form-control">
 											</div>
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-4">
 											<div class="form-group">
 											<label>Invagilator</label>
 											<select name="Invagilator[]" class="form-control">
@@ -240,6 +245,8 @@
 	 </div>
 
 	 </form>
+	</div>
+</div>
 	 <?php 
 	if(isset($_POST['save']))
 	{
