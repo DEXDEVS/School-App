@@ -40,9 +40,9 @@ class MarksWeitage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical'], 'required'],
+            [['exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory'], 'required'],
             [['exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by', 'practical'], 'safe'],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
             [['exam_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ExamsCategory::className(), 'targetAttribute' => ['exam_category_id' => 'exam_category_id']],
         ];
