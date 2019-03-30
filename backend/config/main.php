@@ -102,6 +102,7 @@ return [
                 'sms' => 'sms/index',
                 'absent-sms' => 'sms/absent-sms',
                 'custom-sms' => 'custom-sms/index',
+                'manage-exams' => 'exams-schedule/manage-exams',
 
             ],
         ],
