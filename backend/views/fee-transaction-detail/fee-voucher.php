@@ -15,6 +15,7 @@
                 </div>    
             </div>    
         </div>
+        <?php $branch_id = Yii::$app->user->identity->branch_id; ?>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -22,7 +23,7 @@
                     <select class="form-control" name="classid" id="classId" required="">
                         <option>Select Class</option>
 							<?php 
-								$className = Yii::$app->db->createCommand("SELECT * FROM std_class_name where delete_status=1")->queryAll();
+								$className = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE delete_status=1 AND branch_id = '$branch_id'")->queryAll();
 								    foreach ($className as  $value) { ?>	
 									<option value="<?php echo $value["class_name_id"]; ?>">
 										<?php echo $value["class_name"]; ?>	
@@ -37,7 +38,7 @@
                     <select class="form-control" name="sessionid" id="sessionId" required="">
                             <option value="">Select Session</option>
 							<?php 
-								$sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1")->queryAll();
+								$sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND session_branch_id = '$branch_id'")->queryAll();
 								
 								  	foreach ($sessionName as  $value) { ?>	
 									<option value="<?php echo $value["session_id"]; ?>">
@@ -74,15 +75,8 @@
 
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>Issue Date</label>
+                    <label>Due Date</label>
                     <input type="date" name="due_date" class="form-control" required="">
-                </div>    
-            </div>
-
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea rows="1" name="message" class="form-control"></textarea>
                 </div>    
             </div>
 		
