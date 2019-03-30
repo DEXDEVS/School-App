@@ -116,21 +116,37 @@ class StdInquiryController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->validate()){
-                $branch_id = Yii::$app->user->identity->branch_id;
-                $model->branch_id = $branch_id;
-                $preClass = $model->std_previous_class[0];
-                $model->std_previous_class = $preClass;
-                $institute = $model->previous_institute[0];
-                $model->previous_institute = $institute;
-                $intrestedClass = $model->std_intrested_class[0];
-                $model->std_intrested_class = $intrestedClass;
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $branch_id = Yii::$app->user->identity->branch_id;
+                    $model->branch_id = $branch_id;
+                    $preClass = $model->std_previous_class[0];
+                    $model->std_previous_class = $preClass;
+                    $institute = $model->previous_institute[0];
+                    $model->previous_institute = $institute;
+                    $intrestedClass = $model->std_intrested_class[0];
+                    $model->std_intrested_class = $intrestedClass;
 
-                
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0';
-                $model->updated_at = '0';
-                $model->save();
+                    
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0';
+                    $model->updated_at = '0';
+                    $model->save();
+
+                    $transaction->commit();
+                        Yii::$app->session->setFlash('warning', "You have successfully add record...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
+
+                $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have successfully add Inquiry...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new StdInquiry",
@@ -192,6 +208,8 @@ class StdInquiryController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
                         $branch_id = Yii::$app->user->identity->branch_id;
                         $model->branch_id = $branch_id;
                         $preClass = $model->std_previous_class[0];
@@ -205,6 +223,13 @@ class StdInquiryController extends Controller
                         $model->created_by = $model->created_by;
                         $model->created_at = $model->created_at;
                         $model->save();
+
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('warning', "You have successfully update record...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "StdInquiry #".$id,

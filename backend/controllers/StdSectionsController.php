@@ -117,11 +117,20 @@ class StdSectionsController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
+                $transaction = \Yii::$app->db->beginTransaction();
+                    try {
                     $model->created_by = Yii::$app->user->identity->id; 
                     $model->created_at = new \yii\db\Expression('NOW()');
                     $model->updated_by = '0';
                     $model->updated_at = '0';
-                    $model->save();
+                    $model->save();                       
+
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have successfully add section...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new StdSections",
@@ -183,11 +192,20 @@ class StdSectionsController extends Controller
                                 Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
+                $transaction = \Yii::$app->db->beginTransaction();
+                    try {
                     $model->updated_by = Yii::$app->user->identity->id;
                     $model->updated_at = new \yii\db\Expression('NOW()');
                     $model->created_by = $model->created_by;
                     $model->created_at = $model->created_at;
-                    $model->save();
+                    $model->save();                       
+
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have successfully update section...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "<b>Student Section: </b>".$id,

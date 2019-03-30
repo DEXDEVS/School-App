@@ -116,36 +116,44 @@ class EmailsController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-                // upload the attachment...
-                $model->email_attachment = UploadedFile::getInstance($model, 'email_attachment');
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    // upload the attachment...
+                    $model->email_attachment = UploadedFile::getInstance($model, 'email_attachment');
 
-                if ($model->email_attachment) {
-                    $time = time();
-                    $model->email_attachment->saveAs('attachments/'.$time. '.' . $model->email_attachment->extension);
-                    $model->email_attachment='attachments/' . $time. '.' . $model->email_attachment->extension;
+                    if ($model->email_attachment) {
+                        $time = time();
+                        $model->email_attachment->saveAs('attachments/'.$time. '.' . $model->email_attachment->extension);
+                        $model->email_attachment='attachments/' . $time. '.' . $model->email_attachment->extension;
+                    }
+                    if ($model->email_attachment) {
+                        $value = Yii::$app->mailer->compose()
+                        ->setFrom(['anasshafqat02@gmail.com' => 'Dexterous Developers'])
+                        ->setTo($model->receiver_email)
+                        ->setSubject($model->email_subject)
+                        ->setHtmlBody($model->email_content)
+                        ->attach($model->email_attachment)
+                        ->send();
+                    }else{
+                        $value = Yii::$app->mailer->compose()
+                        ->setFrom(['anasshafqat02@gmail.com' => 'Dexterous Developers'])
+                        ->setTo($model->receiver_email)
+                        ->setSubject($model->email_subject)
+                        ->setHtmlBody($model->email_content)
+                        ->attach($model->email_attachment)
+                        ->send(); 
+                    }
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0';
+                    $model->updated_at = '0'; 
+                    $model->save();
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "Email send successfully..!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
                 }
-                if ($model->email_attachment) {
-                    $value = Yii::$app->mailer->compose()
-                    ->setFrom(['anasshafqat02@gmail.com' => 'Dexterous Developers'])
-                    ->setTo($model->receiver_email)
-                    ->setSubject($model->email_subject)
-                    ->setHtmlBody($model->email_content)
-                    ->attach($model->email_attachment)
-                    ->send();
-                }else{
-                    $value = Yii::$app->mailer->compose()
-                    ->setFrom(['anasshafqat02@gmail.com' => 'Dexterous Developers'])
-                    ->setTo($model->receiver_email)
-                    ->setSubject($model->email_subject)
-                    ->setHtmlBody($model->email_content)
-                    ->attach($model->email_attachment)
-                    ->send(); 
-                }
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0';
-                $model->updated_at = '0'; 
-                $model->save();
 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',

@@ -118,6 +118,8 @@ class StdFeeDetailsController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->validate() && $stdFeeInstallments->load($request->post()) && $stdFeeInstallments->validate()){
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
                         $count = $model->no_of_installment;
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
@@ -161,6 +163,13 @@ class StdFeeDetailsController extends Controller
                             $stdFeeInstallments->updated_at = '0';
                             $stdFeeInstallments->save();
                         }
+
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('warning', "You have successfully add fee details...!");
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                    }
                         
 
                 return [
@@ -225,13 +234,20 @@ class StdFeeDetailsController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->validate()){
-                    $model->updated_by = Yii::$app->user->identity->id;
-                    $model->updated_at = new \yii\db\Expression('NOW()');
-                    $model->created_by = $model->created_by;
-                    $model->created_at = $model->created_at;
-                    $model->save();
+                $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        $model->updated_by = Yii::$app->user->identity->id;
+                        $model->updated_at = new \yii\db\Expression('NOW()');
+                        $model->created_by = $model->created_by;
+                        $model->created_at = $model->created_at;
+                        $model->save();
 
-                    
+                    $transaction->commit();
+                        Yii::$app->session->setFlash('warning', "You have successfully update fee details...!");
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                    }                    
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "StdFeeDetails #".$id,

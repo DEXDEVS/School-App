@@ -125,6 +125,8 @@ class EmpInfoController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $empRefModel->load($request->post())){
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
                         if(!empty($model->emp_photo)){
                             $imageName = $model->emp_name.'_emp_photo'; 
@@ -151,6 +153,13 @@ class EmpInfoController extends Controller
 
                         $empRefModel->emp_id = $model->emp_id;
                         $empRefModel->save();
+
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('warning', "You have successfully add employee...!");
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                    }
 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
@@ -214,6 +223,8 @@ class EmpInfoController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
                         if(!empty($model->emp_photo)){
                             $imageName = $model->emp_name.'_emp_photo'; 
@@ -237,6 +248,13 @@ class EmpInfoController extends Controller
                         $model->created_by = $model->created_by;
                         $model->created_at = $model->created_at;
                         $model->save();
+
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('warning', "You have successfully update employee Info...!");
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                    }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "EmpInfo #".$id,
@@ -261,6 +279,8 @@ class EmpInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post())) {
+            $transaction = \Yii::$app->db->beginTransaction();
+                try {
                 $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
                         if(!empty($model->emp_photo)){
                             $imageName = $model->emp_name.'_emp_photo'; 
@@ -285,6 +305,12 @@ class EmpInfoController extends Controller
                         $model->created_at = $model->created_at;
                         $model->save();
                 return $this->redirect(['view', 'id' => $model->emp_id]);
+                $transaction->commit();
+                Yii::$app->session->setFlash('warning', "You have successfully update employee Info...!");
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+            }
             } else {
                 return $this->render('update', [
                     'model' => $model,

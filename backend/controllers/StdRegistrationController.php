@@ -148,8 +148,9 @@ class StdRegistrationController extends Controller
                     $stdFeeDetails->updated_by = '0'; 
                     $stdFeeDetails->updated_at = '0';
                     $stdFeeDetails->save();
+                    
                     $transection->commit();
-                    return $this->redirect(['view', 'id' => $model->std_id]);
+                    return $this->redirect(['std-personal-info/index', 'id' => $model->std_id]);
                 } catch(Exception $e) {
                     $transection->rollback();
                 }

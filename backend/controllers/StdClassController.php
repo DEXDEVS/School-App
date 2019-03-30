@@ -101,18 +101,27 @@ class StdClassController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-                $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name where class_name_id = $model->class_name_id")->queryAll();
-                $session = Yii::$app->db->createCommand("SELECT session_name FROM std_sessions where session_id = $model->session_id")->queryAll();
-                $section = Yii::$app->db->createCommand("SELECT section_name FROM std_sections where section_id = $model->section_id")->queryAll();
-                                    
-                $model->class_name = $className[0]['class_name'].'-'.$session[0]['session_name'].
-                                            '-'.$section[0]['section_name'];
-                                            
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0'; 
-                $model->updated_at = '0';
-                $model->save();
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name where class_name_id = $model->class_name_id")->queryAll();
+                    $session = Yii::$app->db->createCommand("SELECT session_name FROM std_sessions where session_id = $model->session_id")->queryAll();
+                    $section = Yii::$app->db->createCommand("SELECT section_name FROM std_sections where section_id = $model->section_id")->queryAll();
+                                        
+                    $model->class_name = $className[0]['class_name'].'-'.$session[0]['session_name'].
+                                                '-'.$section[0]['section_name'];
+                                                
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0'; 
+                    $model->updated_at = '0';
+                    $model->save();
+
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have successfully insert record...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new StdClass",
@@ -174,11 +183,20 @@ class StdClassController extends Controller
                                 Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
-                $model->updated_by = Yii::$app->user->identity->id;
-                $model->updated_at = new \yii\db\Expression('NOW()');
-                $model->created_by = $model->created_by;
-                $model->created_at = $model->created_at;
-                $model->save();
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
+
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have successfully update record...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "StdClass #".$id,

@@ -101,26 +101,29 @@ class InstituteController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-                $model->institute_logo = UploadedFile::getInstance($model,'institute_logo');
-                if(!empty($model->institute_logo)){
-                    $imageName = $model->institute_name.'_photo'; 
-                    $model->institute_logo->saveAs('uploads/'.$imageName.'.'.$model->institute_logo->extension);
-                    //save the path in the db column
-                    $model->institute_logo = 'uploads/'.$imageName.'.'.$model->institute_logo->extension;
-                } else {
-                   $model->institute_logo = '0'; 
-                }
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0'; 
-                $model->updated_at = '0';
-                $model->save();
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $model->institute_logo = UploadedFile::getInstance($model,'institute_logo');
+                    if(!empty($model->institute_logo)){
+                        $imageName = $model->institute_name.'_photo'; 
+                        $model->institute_logo->saveAs('uploads/'.$imageName.'.'.$model->institute_logo->extension);
+                        //save the path in the db column
+                        $model->institute_logo = 'uploads/'.$imageName.'.'.$model->institute_logo->extension;
+                    } else {
+                       $model->institute_logo = '0'; 
+                    }
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0'; 
+                    $model->updated_at = '0';
+                    $model->save();
 
-                        $model->created_by = Yii::$app->user->identity->id; 
-                        $model->created_at = new \yii\db\Expression('NOW()');
-                        $model->updated_by = '0';
-                        $model->updated_at = '0';
-                        $model->save();
+                $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have successfully add institute...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new Institute",
@@ -182,28 +185,30 @@ class InstituteController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute where institute_id = $id")->queryAll();
+                    $model->institute_logo = UploadedFile::getInstance($model,'institute_logo');
+                    if(!empty($model->institute_logo)){
+                        $imageName = $model->institute_name.'_photo'; 
+                        $model->institute_logo->saveAs('uploads/'.$imageName.'.'.$model->institute_logo->extension);
+                        //save the path in the db column
+                        $model->institute_logo = 'uploads/'.$imageName.'.'.$model->institute_logo->extension;
+                    } else {
+                       $model->institute_logo = $instituteInfo[0]['institute_logo']; 
+                    }
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
 
-                $instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute where institute_id = $id")->queryAll();
-                $model->institute_logo = UploadedFile::getInstance($model,'institute_logo');
-                if(!empty($model->institute_logo)){
-                    $imageName = $model->institute_name.'_photo'; 
-                    $model->institute_logo->saveAs('uploads/'.$imageName.'.'.$model->institute_logo->extension);
-                    //save the path in the db column
-                    $model->institute_logo = 'uploads/'.$imageName.'.'.$model->institute_logo->extension;
-                } else {
-                   $model->institute_logo = $instituteInfo[0]['institute_logo']; 
+                $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have successfully update institute...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
                 }
-                $model->updated_by = Yii::$app->user->identity->id;
-                $model->updated_at = new \yii\db\Expression('NOW()');
-                $model->created_by = $model->created_by;
-                $model->created_at = $model->created_at;
-                $model->save();
-
-                        $model->updated_by = Yii::$app->user->identity->id;
-                        $model->updated_at = new \yii\db\Expression('NOW()');
-                        $model->created_by = $model->created_by;
-                        $model->created_at = $model->created_at;
-                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Institute #".$id,
