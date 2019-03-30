@@ -15,7 +15,7 @@
 <body>
 
 <div class="container-fluid" style="margin-top: -30px;">
-	<h1 class="well well-sm bg-navy" align="center">Voucher Collection</h1>
+	<h1 class="well well-sm bg-navy" align="center">Monthly Voucher Collection</h1>
     <form method="POST">
     	<div class="row">
             <div class="col-md-4">
@@ -42,22 +42,23 @@
         <div class="col-md-12 x_content"></div>
     </div>
 
-    <?php
+<?php
 
-    	if(isset($_POST["submit"])){
+    if(isset($_POST["submit"])){
         global $voucherNo;
 		$regNo = $_POST["reg_no"];
 
         $stdId = Yii::$app->db->createCommand("SELECT std_id FROM std_personal_info WHERE std_reg_no= '$regNo'")->queryAll();
+        if(empty($stdId)){
+            Yii::$app->session->setFlash('warning', "This registration number not exist! Select valid registration no");
+        } else {
         $std_id = $stdId[0]['std_id'];
     	$transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head WHERE std_id = '$std_id'")->queryAll();
         $voucherNo = $transactionHead[0]['fee_trans_id'];
         $transactionDetail = Yii::$app->db->createCommand("SELECT fee_type_id,fee_amount,collected_fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = '$voucherNo'")->queryAll();
         $count = count($transactionDetail);
         $status = $transactionHead[0]['status'];
-        $remainingAmount = $transactionHead[0]['remaining'];
-
-        if ($status == "Partially Paid" OR $status == "Unpaid") {
+        if ($status == "Unpaid") {
 
         $studentID = $transactionHead[0]['std_id'];
         $classID = $transactionHead[0]['class_name_id'];
@@ -108,12 +109,7 @@
                             <td width="150px"><?php echo $feeTypeName[0]['fee_type_name'];?></td>
                             <td width="80px">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" value="<?php echo $netFee;?>"  readonly="" style="width:80px">
-                                </div>
-                            </td>
-                            <td width="80px">
-                                <div class="form-group">
-                                    <input type="text" name="amount<?php echo $i;?>" class="form-control" required="" style="width:80px">
+                                    <input type="number" name="amount<?php echo $i;?>" class="form-control" value="<?php echo $netFee;?>"  readonly="" style="width:80px">
                                 </div>
                             </td>
                         </tr>
@@ -130,34 +126,21 @@
                 <tr>
                     <th>Total Amount</th>
                     <div class="form-group">
-                        <?php
-                        if ($remainingAmount==0) { ?>
-                            <td>
-                                <input type="text" name="total_amount" class="form-control" id="total_amount" readonly="" value="<?php echo $transactionHead[0]['total_amount'] ?>" style="width: 70px;"/>
-                            </td>
-                        <?php } else{ ?>
                         <td>
-                            <input type="text" name="total_amount" class="form-control" id="total_amount" readonly="" value="<?php echo $transactionHead[0]['remaining'] ?>" style="width: 70px"/>
-                        </td>
-                        <?php } ?>
+                            <input type="text" name="total_amount" class="form-control" id="total_amount" readonly="" value="<?php echo $transactionHead[0]['total_amount'] ?>" style="width: 70px;"/>
+                        </td> 
                     </div>
                 </tr>
                 <tr>
                     <th>Total Discount</th>
                     <td>
-                        <input type="text" class="form-control" readonly="" value="<?php echo $transactionHead[0]['total_discount'] ?>" style="width: 70px"/>
+                        <input type="number" class="form-control" name="total_discount" value="0" id="totalDiscount" style="width: 70px"/>
                     </td>
                 </tr>
                 <tr>
                     <th>Paid Amount</th>
                     <td>
-                        <input type="number" class="form-control" id="paid_amount" name="paid_amount" onchange="setAmount()" required="" style="width: 70px"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Remaining Amount</th>
-                    <td>
-                        <input type="text" class="form-control" id="remaining_amount" name="remaining_amount" readonly="" style="width: 70px"/>
+                        <input type="number" class="form-control" id="paid_amount" name="paid_amount" onfocus="setAmount()" required="" style="width: 70px"/>
                     </td>
                 </tr>
                 <tr>
@@ -170,12 +153,7 @@
             <tbody>
                 <tr>
                     <td>
-                       <button formaction="fee-transaction-detail-collect-voucher" type="submit" name="save" id="btn" class="btn btn-success btn-flat  btn-block" style="padding: 5px 27px; display: none;"><span class="fa fa-check-square" aria-hidden="true"></span><b> Collect Voucher</b></button>
-                       <div id="date" style="display: none;">
-                            <label>New Voucher Due Date</label>
-                            <input type="date" name="date" class="form-control" id="date1" onchange="jstophp()"><br>
-                        </div>
-                        <button formaction="./partial-voucher-detail?id=<?php echo $voucherNo?>" type="submit" name="save" id="partialButton" class="btn btn-warning btn-flat  btn-block" style="display: none;"><i class="fa fa-print"></i><b> Save & Generate Partial Voucher</b></button>
+                       <button formaction="monthly-voucher" type="submit" name="save" id="btn" class="btn btn-success btn-flat  btn-block" style="padding: 5px 27px;><span class="fa fa-check-square" aria-hidden="true"></span><b> Collect Voucher</b></button>
                     </td>
                 </tr>
             </tbody>
@@ -198,13 +176,14 @@
 </div>
 <!-- modified collect voucher close -->
 <?php 
+        }
+        // if close...
+        else{
+            // alert message...
+            Yii::$app->session->setFlash('warning', "This voucher has already paid...!");
+        }
     }
-    // if close...
-    else{
-        // alert message...
-        Yii::$app->session->setFlash('warning', "This voucher has already paid...!");
-    }
- }
+}
 // isset close.... 
 ?>
 
@@ -212,7 +191,6 @@
 if(isset($_POST['save'])){
     $voucherNo        = $_POST["voucherNo"];
     $paidAmount       = $_POST["paid_amount"];
-    $remainingAmount  = $_POST["remaining_amount"];
     $status           = $_POST["status"];
     $typeIdArray      = $_POST["typeIdArray"];
     $length = count($typeIdArray);
@@ -220,26 +198,24 @@ if(isset($_POST['save'])){
         $amount = "amount".$i;
         $feeAmount[$i] = $_POST["$amount"];
     }
+    $transaction = \Yii::$app->db->beginTransaction();
+    try {
+        $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount,  'status' => $status], ['fee_trans_id' => $voucherNo])->execute();
+        for ($i=0; $i <$length; $i++) { 
+            $collectedAmount = Yii::$app->db->createCommand("SELECT collected_fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = $voucherNo AND fee_type_id = $typeIdArray[$i]")->queryAll();
 
-    $paid_amount = Yii::$app->db->createCommand("SELECT paid_amount FROM fee_transaction_head WHERE fee_trans_id = '$voucherNo'")->queryAll();
-   $amountPaid = $paidAmount  + $paid_amount[0]['paid_amount'];
-
-    $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $amountPaid, 'remaining'=> $remainingAmount , 'status' => $status], ['fee_trans_id' => $voucherNo])->execute();
-    for ($i=0; $i <$length; $i++) { 
-        $collectedAmount = Yii::$app->db->createCommand("SELECT collected_fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = $voucherNo AND fee_type_id = $typeIdArray[$i]")->queryAll();
+            $updateTransactionDetail = Yii::$app->db->createCommand()->update('fee_transaction_detail', ['collected_fee_amount'=> $feeAmount[$i]], ['fee_trans_detail_head_id' => $voucherNo, 'fee_type_id'=> $typeIdArray[$i]])->execute();
+        }
         
-        $amountCollected = $feeAmount[$i] + $collectedAmount[0]['collected_fee_amount'];
-
-        $updateTransactionDetail = Yii::$app->db->createCommand()->update('fee_transaction_detail', ['collected_fee_amount'=> $amountCollected], ['fee_trans_detail_head_id' => $voucherNo, 'fee_type_id'=> $typeIdArray[$i]])->execute();
-    }
-    
-    if ($updateTransactionHead) {
-        // success alert message...
-        Yii::$app->session->setFlash('success', "Voucher paid Successfully...!"); 
-        } else {
-        // failure alert message
-        Yii::$app->session->setFlash('danger', "Voucher not paid, Try again...!");      
-    }
+        if ($updateTransactionHead) {
+            $transaction->commit();
+            // success alert message...
+            Yii::$app->session->setFlash('success', "Voucher paid Successfully...!"); 
+            } 
+    } catch (Exception $e) {
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
+        }
 }
 ?>  
 
@@ -250,31 +226,12 @@ if(isset($_POST['save'])){
 <script type="text/javascript">
    function setAmount(){
         var totalAmount = parseInt(document.getElementById('total_amount').value);
-        var paidAmount = parseInt(document.getElementById('paid_amount').value);
-        $('#paid_amount2').val(paidAmount); 
-        var remainingAmount = parseInt(totalAmount - paidAmount);
+        var totalDiscount = parseInt(document.getElementById('totalDiscount').value);
+        var remainingAmount = parseInt(totalAmount - totalDiscount);
+        $('#paid_amount').val(remainingAmount); 
         paid = "Paid";
-        partialyPaid = "Partially Paid";
-        document.getElementById('remaining_amount').value = remainingAmount;
-        $('#remaining_amount2').val(remainingAmount);
-        if (remainingAmount==0) {
-            $('#status').val(paid);
-            $('#status2').val(paid); 
-        }
-        else{
-            $('#status').val(partialyPaid);
-            $('#status2').val(partialyPaid);
-        }
-        var status = $('#status').val();
-        if (status == "Partially Paid") {
-            $('#date').show();
-            $('#partialButton').show();
-            $('#btn').hide();
-        }else{
-            $('#btn').show();
-            $('#partialButton').hide();
-            $('#date').hide();
-        }
+        //partialyPaid = "Partially Paid";
+        $('#status').val(paid);
     }
     
 
