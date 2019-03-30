@@ -10,6 +10,7 @@ use common\models\StdGuardianInfo;
 use common\models\StdIceInfo;
 use common\models\StdAcademicInfo;
 use common\models\StdFeeDetails;
+use common\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -101,6 +102,7 @@ class StdRegistrationController extends Controller
                 $transection = $conn->beginTransaction();
                 try{
                     $branch_id = Yii::$app->user->identity->branch_id;
+                    $password = '123456';
                     $model->branch_id = $branch_id;
                     $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                     if(!empty($model->std_photo)){
@@ -118,6 +120,17 @@ class StdRegistrationController extends Controller
                     $model->updated_by = '0'; 
                     $model->updated_at = '0';
                     $model->save();
+
+                    $user = new User();
+                    $user->first_name = $model->std_name;
+                    $user->username = $model->std_name;
+                    $user->email = $model->std_email;
+                    $user->user_photo = $model->std_photo;
+                    $user->user_type = 'Student';
+                    $user->branch_id = $branch_id;
+                    $user->setPassword($password);
+                    $user->generateAuthKey();
+                    $user->save();
                     // stdGuardianInfo...
                     $stdGuardianInfo->std_id = $model->std_id;
                     $stdGuardianInfo->created_by = Yii::$app->user->identity->id; 
@@ -125,6 +138,17 @@ class StdRegistrationController extends Controller
                     $stdGuardianInfo->updated_by = '0'; 
                     $stdGuardianInfo->updated_at = '0';
                     $stdGuardianInfo->save();
+
+                    $user = new User();
+                    $user->first_name = $stdGuardianInfo->guardian_name;
+                    $user->username = $stdGuardianInfo->guardian_name;
+                    $user->email = $stdGuardianInfo->guardian_email;
+                    $user->user_photo = $model->std_photo;
+                    $user->user_type = 'Parent';
+                    $user->branch_id = $branch_id;
+                    $user->setPassword($password);
+                    $user->generateAuthKey();
+                    $user->save();
                     // stdIceInfo...
                     $stdIceInfo->std_id = $model->std_id;
                     $stdIceInfo->created_by = Yii::$app->user->identity->id; 

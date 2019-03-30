@@ -93,6 +93,8 @@ return [
                 'voucher' => 'fee-transaction-detail/voucher',
                 'partial-voucher-detail' => 'fee-transaction-detail/partial-voucher-detail',
                 'partial-voucher-head' => 'fee-transaction-detail/partial-voucher-head',
+                'monthly-voucher' => 'fee-transaction-detail/monthly-voucher',
+                'yearly-voucher' => 'fee-transaction-detail/yearly-voucher',
 
 
                 'emails-create' => 'emails/create',
