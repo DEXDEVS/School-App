@@ -104,7 +104,12 @@
 			$exam_start_time 	= $_POST["exam_start_time"];
 			$exam_end_time 		= $_POST["exam_end_time"];
 			$room 				= $_POST["room"];
-/*  */		echo $exam_category;
+
+		$marks = Yii::$app->db->createCommand("SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category'")->queryAll();
+
+		if(empty($marks)){
+			Yii::$app->session->setFlash('warning',"Marks waitage for this category is not set.");
+		} else {
 			$subjects = Yii::$app->db->createCommand("SELECT s.section_subjects,h.section_id
 			FROM std_sections as s
 			INNER JOIN std_enrollment_head as h
@@ -135,21 +140,22 @@
 				$subarray[$i] = $subjectId[0]['subject_id'];
 
 				$marks = Yii::$app->db->createCommand("
-				SELECT * FROM marks_weitage WHERE subject_id = '$subarray[$i]'
+				SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category' AND subject_id = '$subarray[$i]'
 					")->queryAll();
-				$totalMarks = $marks[0]['presentation']+$marks[0]['assignment']+$marks[0]['attendance']+$marks[0]['dressing']+$marks[0]['theory']+$marks[0]['practical'];
 
-				if ($totalMarks == 100) {
-					$passmarks = 33;
-				}
-				elseif ($totalMarks == 75) {
-					$passmarks = 25;
-				}
-				elseif ($totalMarks == 50) {
-					$passmarks = 17;
-				} else {
-					$passmarks = 0;
-				}
+					$totalMarks = $marks[0]['presentation']+$marks[0]['assignment']+$marks[0]['attendance']+$marks[0]['dressing']+$marks[0]['theory']+$marks[0]['practical'];
+
+					if ($totalMarks == 100) {
+						$passmarks = 33;
+					}
+					elseif ($totalMarks == 75) {
+						$passmarks = 25;
+					}
+					elseif ($totalMarks == 50) {
+						$passmarks = 17;
+					} else {
+						$passmarks = 0;
+					}
 
 				?>
 
@@ -256,7 +262,9 @@
 				</tr>
 			
 
-		<?php	} ?>
+		<?php
+			//end of for loop
+			} ?>
 	
 
 	<?php 
@@ -283,7 +291,11 @@
 	<input type="hidden" name="subjCount" value="<?php echo $subjCount;?>">
 	 </form>
 	</div>
-		<?php	}
+		<?php	
+		}
+		//closing of else
+	}
+	// closing of isset
 	 ?>
 	 
 </div>
@@ -306,6 +318,9 @@
 		$passingmarks 	= $_POST["passingmarks"];
 		$subjCount 		= $_POST["subjCount"];
 
+	$transection = Yii::$app->db->beginTransaction();
+	try{
+
 		$examCriteria = Yii::$app->db->createCommand()->insert('exams_criteria',[
             			'exam_category_id' 		=> $exam_category,
 						'std_enroll_head_id' 	=> $headId ,
@@ -327,24 +342,30 @@
 				  exam_end_time 		= '$exam_end_time' AND
 				  exam_room 			= '$room'
 			")->queryAll();
-			var_dump($examCriteriaId);
-			//$criteriaId = $examCriteriaId[0]['exam_criteria_id'];
-			//echo $criteriaId;
+			$criteriaId = $examCriteriaId[0]['exam_criteria_id'];
 			
-		// for ($i=0; $i <$subjCount ; $i++) { 
-		// 	$examSchedule = Yii::$app->db->createCommand()->insert('exams_schedule',[
-  //           			'exam_criteria_id' 	=> $criteriaId,
-		// 				'subject_id' 		=> $subarray[$i],
-		// 				'emp_id' 			=> $Invagilator[$i],
-		// 				'date'				=> $date[$i] ,
-		// 				'full_marks'		=> $fullmarks[$i],
-		// 				'passing_marks'		=> $passingmarks[$i],
-		// 				'created_by'		=> Yii::$app->user->identity->id, 
-		// 			])->execute();
+		for ($i=0; $i <$subjCount ; $i++) { 
+			$examSchedule = Yii::$app->db->createCommand()->insert('exams_schedule',[
+            			'exam_criteria_id' 	=> $criteriaId,
+						'subject_id' 		=> $subarray[$i],
+						'emp_id' 			=> $Invagilator[$i],
+						'date'				=> $date[$i] ,
+						'full_marks'		=> $fullmarks[$i],
+						'passing_marks'		=> $passingmarks[$i],
+						'created_by'		=> Yii::$app->user->identity->id, 
+					])->execute();
 				
-		// 	} // closing of for loop
+			} // closing of for loop
+			if($examSchedule){
+				$transection->commit();
+				Yii::$app->session->setFlash('success', "Exams Schedule managed successfully...!");
+			}
 		} // closing of exam criteria
-	
+	//closing of try block
+	} catch(Exception $e){
+		$transection->rollback();
+		Yii::$app->session->setFlash('warning', "Exam Schedule not managed. Try again!");
+	}
 }
 // closing of isset
 ?>
