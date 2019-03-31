@@ -103,6 +103,8 @@ return [
                 'absent-sms' => 'sms/absent-sms',
                 'custom-sms' => 'custom-sms/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
+                'exam-lists' => 'exams-category/exam-lists',
+                'view-datesheet' => 'exams-category/view-datesheet',
 
             ],
         ],

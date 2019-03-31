@@ -31,7 +31,7 @@ class ExamsCategoryController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','exam-lists','view-datesheet'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -47,6 +47,15 @@ class ExamsCategoryController extends Controller
         ];
     }
 
+    public function actionView($id)
+    {
+       return $this->render('exam-lists'); 
+    }
+
+    public function actionViewDatesheet()
+    {
+       return $this->render('view-datesheet'); 
+    }
     /**
      * Lists all ExamsCategory models.
      * @return mixed
@@ -68,25 +77,25 @@ class ExamsCategoryController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {   
-        $request = Yii::$app->request;
-        if($request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                    'title'=> "ExamsCategory #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-        }else{
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
-    }
+    // public function actionView($id)
+    // {   
+    //     $request = Yii::$app->request;
+    //     if($request->isAjax){
+    //         Yii::$app->response->format = Response::FORMAT_JSON;
+    //         return [
+    //                 'title'=> "ExamsCategory #".$id,
+    //                 'content'=>$this->renderAjax('view', [
+    //                     'model' => $this->findModel($id),
+    //                 ]),
+    //                 'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+    //                         Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+    //             ];    
+    //     }else{
+    //         return $this->render('view', [
+    //             'model' => $this->findModel($id),
+    //         ]);
+    //     }
+    // }
 
     /**
      * Creates a new ExamsCategory model.
