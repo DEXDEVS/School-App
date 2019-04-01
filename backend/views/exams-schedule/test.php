@@ -5,19 +5,30 @@
 	// getting `class_id`
 	$classId = $_GET['classID'];
 	// geeting all info from `exams_criteria` table and `exams_schedule` table
-	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND
-		std_enroll_head_id = '$classId'
+	$manageExamData = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.std_enroll_head_id,c.exam_start_date,c.exam_end_date,c.exam_start_time,c.exam_end_time,c.exam_room,
+		s.subject_id,s.date
+		FROM exams_criteria as c
+		INNER JOIN exams_schedule as s
+		ON c.exam_criteria_id = s.exam_criteria_id
+		WHERE c.exam_category_id = '$examCateogryId'
+		AND c.std_enroll_head_id = '$classId' 
 					")->queryAll();
-	$classId = $examCriteriaData[0]['std_enroll_head_id'];
+	$classId = $manageExamData[0]['std_enroll_head_id'];
 	// getting classes name `std_enroll_head_name` from `std_enrollment_head` against `std_enroll_head_id`
 	$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classId'
 					")->queryAll();
-	$count = count($examCriteriaData);
+	$countmanageExam = count($manageExamData);
 	// getting exam `category_name` from `exams_cateogry`
 	$examCategoryName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCateogryId'
 					")->queryAll();
 
  ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -40,10 +51,10 @@
 										<b>Exam Time</b><br>
 										<center>
 											<?php 
-											echo date('h:i:A',strtotime($examCriteriaData[0]['exam_start_time']));
+											echo date('h:i:A',strtotime($manageExamData[0]['exam_start_time']));
 											?>
 											<b>TO</b>&nbsp;<?php 
-											echo date('h:i:A',strtotime($examCriteriaData[0]['exam_end_time']));
+											echo date('h:i:A',strtotime($manageExamData[0]['exam_end_time']));
 											?>
 										</center>
 									</tr>
@@ -54,7 +65,7 @@
 									<tr>
 										<b>Exam Room</b><br>
 										<center>
-											<?php echo $examCriteriaData[0]['exam_room']; ?>
+											<?php echo $manageExamData[0]['exam_room']; ?>
 										</center>
 									</tr>
 							</table>
@@ -70,30 +81,7 @@
 							</table>
 						</div>
 					</div><hr>
-					<?php 	
-
-						for ($i=0; $i <$count ; $i++) {
-						$criteriaID = $examCriteriaData[$i]['exam_criteria_id'];		
-						$examScheduleData = Yii::$app->db->createCommand("SELECT * FROM exams_schedule WHERE exam_criteria_id = '$criteriaID'
-							")->queryAll();
-						$countSubjects = count($examScheduleData);
-
-						?>
-						<div class="row">
-							<div class="col-md-6">
-								<p style="font-weight: bold;"><?php echo $examCategoryName[0]['category_name']." Schedule ".($i+1); ?>  
-							</p>
-							</div>
-							<div class="col-md-6">
-							<p style="float: right;font-weight: bold;">
-								<?php 	
-
-							echo date('d-M-Y',strtotime($examCriteriaData[$i]['exam_start_date']))." To ".
-							date('d-M-Y',strtotime($examCriteriaData[$i]['exam_end_date']));?>
-							</p>
-							</div>
-						</div>
-						<div class="row">
+					<div class="row">
 						<div class="col-md-12">
 							<table class="table table-hover">
 								<thead>
@@ -105,24 +93,23 @@
 								</thead>
 								<tbody>
 									<?php 
-									
-										for ($j=0; $j <$countSubjects ; $j++) { 
-											$subjectId = $examScheduleData[$j]['subject_id'];
-											$subjectName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subjectId'
+									for ($i=0; $i <$countmanageExam ; $i++) { 
+										$subjectId = $manageExamData[$i]['subject_id'];
+										$subjectName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subjectId'
 										")->queryAll();
-										
+
 									 ?>
 									<tr align="center">
 										<td>
 											<?php
 											echo 
-											date('F d, Y',strtotime($examScheduleData[$j]['date']));
+											date('F d, Y',strtotime($manageExamData[$i]['date']));
 											?>	
 										</td>
 										<td>
 											<?php 
 											//Our YYYY-MM-DD date string.
-											$date = $examScheduleData[$j]['date'];
+											$date = $manageExamData[$i]['date'];
 
 											//Get the day of the week using PHP's date function.
 											$dayOfWeek = date("l", strtotime($date));
@@ -139,12 +126,13 @@
 								</tbody>
 							</table>
 						</div>
-					</div> <hr>
-					 <?php }?>
-
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+</body>
+</html>
+
 

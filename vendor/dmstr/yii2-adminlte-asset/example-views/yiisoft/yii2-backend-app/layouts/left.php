@@ -210,10 +210,13 @@
                         'items' => [
                             ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
                             ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
-                            ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
+                            ['label' => 'Marks Weitage', 'icon' => 'caret-right', 'url' => ["/marks-weitage"],],
+                            // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
                             ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
                             ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
-                            ['label' => 'Marks Weitage', 'icon' => 'caret-right', 'url' => ["/marks-weitage"],],
+                            ['label' => 'Manage marks Sheet', 'icon' => 'caret-right', 'url' => ["/manage-marks-sheet "],],
+                            ['label' => 'View marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
+                            
                         ],
                     ],
                     // Exams module close here
