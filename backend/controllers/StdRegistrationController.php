@@ -102,7 +102,7 @@ class StdRegistrationController extends Controller
                 $transection = $conn->beginTransaction();
                 try{
                     $branch_id = Yii::$app->user->identity->branch_id;
-                    $password = '123456';
+                    $password = rand();
                     $model->branch_id = $branch_id;
                     $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                     if(!empty($model->std_photo)){
@@ -122,15 +122,15 @@ class StdRegistrationController extends Controller
                     $model->save();
 
                     $user = new User();
-                    $user->first_name = $model->std_name;
-                    $user->username = $model->std_name;
+                    $user->branch_id = $branch_id;
+                    $user->username = $model->std_b_form;
                     $user->email = $model->std_email;
                     $user->user_photo = $model->std_photo;
                     $user->user_type = 'Student';
-                    $user->branch_id = $branch_id;
                     $user->setPassword($password);
                     $user->generateAuthKey();
                     $user->save();
+
                     // stdGuardianInfo...
                     $stdGuardianInfo->std_id = $model->std_id;
                     $stdGuardianInfo->created_by = Yii::$app->user->identity->id; 
@@ -140,12 +140,11 @@ class StdRegistrationController extends Controller
                     $stdGuardianInfo->save();
 
                     $user = new User();
-                    $user->first_name = $stdGuardianInfo->guardian_name;
-                    $user->username = $stdGuardianInfo->guardian_name;
+                    $user->branch_id = $branch_id;
+                    $user->username = $stdGuardianInfo->guardian_cnic;
                     $user->email = $stdGuardianInfo->guardian_email;
                     $user->user_photo = $model->std_photo;
                     $user->user_type = 'Parent';
-                    $user->branch_id = $branch_id;
                     $user->setPassword($password);
                     $user->generateAuthKey();
                     $user->save();
@@ -173,7 +172,7 @@ class StdRegistrationController extends Controller
                     $stdFeeDetails->updated_at = '0';
                     $stdFeeDetails->save();
                     $transection->commit();
-                    return $this->redirect(['view', 'id' => $model->std_id]);
+                    return $this->redirect(['std-personal-info/index']);
                 } catch(Exception $e) {
                     $transection->rollback();
                 }
