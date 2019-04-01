@@ -125,6 +125,8 @@ class FeeTransactionDetailController extends Controller
         
                 ];         
             }else if($feeTransactionHead->load($request->post()) && $model->load($request->post())){
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
                         $stdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info where std_id = $feeTransactionHead->std_id")->queryAll();
                         $feeTransactionHead->std_name = $stdName[0]['std_name'];
                         $feeTransactionHead->status = "Unpaid";
@@ -162,6 +164,14 @@ class FeeTransactionDetailController extends Controller
                             $model->updated_by = 0;
                             $model->save();
                         }
+                        
+                        $transaction->commit();
+                            Yii::$app->session->setFlash('warning', "You have successfully insert record...!");
+                        } catch (Exception $e) {
+                            $transaction->rollBack();
+                            Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                        }
+                    
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new FeeTransactionDetail",

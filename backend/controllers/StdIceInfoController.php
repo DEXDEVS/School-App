@@ -114,11 +114,20 @@ class StdIceInfoController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0';
-                $model->updated_at = '0'; 
-                $model->save();
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0';
+                    $model->updated_at = '0'; 
+                    $model->save();
+                $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "You have successfully add record...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new StdIceInfo",

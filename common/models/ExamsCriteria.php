@@ -15,7 +15,7 @@ use Yii;
  * @property string $exam_start_time
  * @property string $exam_end_time
  * @property string $exam_room
- * @property string $created_at
+ * @property string $created_at 
  * @property string $updated_at
  * @property int $created_by
  * @property int $updated_by
