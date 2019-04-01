@@ -33,16 +33,16 @@ class SignupForm extends Model
             [['user_photo'], 'string', 'max' => 200],
 
             ['email', 'trim'],
-            ['email', 'required'],
+            //['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
-            [['user_type','first_name'],'required'],
+            [['user_type'],'required'],
             [['first_name','last_name'],'string','max'=>20],
-            ['last_name','safe']
+            [['last_name','first_name'],'safe']
             [['user_type'] ,'string'],
             [['branch_id'],'integer'],
         ];
