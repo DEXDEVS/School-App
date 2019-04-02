@@ -19,7 +19,8 @@ class MarksHeadSearch extends MarksHead
     {
         return [
             [['marks_head_id', 'exam_category_id', 'class_head_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['grand_total'], 'number'],
+            [['percentage', 'grade', 'exam_status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -60,11 +61,16 @@ class MarksHeadSearch extends MarksHead
             'exam_category_id' => $this->exam_category_id,
             'class_head_id' => $this->class_head_id,
             'std_id' => $this->std_id,
+            'grand_total' => $this->grand_total,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'percentage', $this->percentage])
+            ->andFilterWhere(['like', 'grade', $this->grade])
+            ->andFilterWhere(['like', 'exam_status', $this->exam_status]);
 
         return $dataProvider;
     }

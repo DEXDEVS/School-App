@@ -217,7 +217,6 @@ $conn = \Yii::$app->db;
 					                	<input type="hidden" name="classnameid" value="<?php echo $classnameid; ?>" style="width: 30px">
 									
 										<input type="hidden" name="sessionid" value="<?php echo $sessionid; ?>" style="width: 30px">
-									</td>
 								
 					                	<input type="hidden" name="sectionid" value="<?php echo $sectionid; ?>" style="width: 30px">
 								

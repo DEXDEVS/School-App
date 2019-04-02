@@ -32,7 +32,7 @@ class StdAttendanceController extends Controller
                     ],
                     [
                      
-                        'actions' => ['logout', 'index','list-of-classes','view','update','delete','fetch-section','attendance','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','activity-view','fetch-attendance-report'],
+                        'actions' => ['logout', 'index','list-of-classes','view','update','delete','fetch-section','attendance','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','activity-view','fetch-attendance-report','marks-sheet'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -132,6 +132,11 @@ class StdAttendanceController extends Controller
     public function actionActivityView()
     { 
         return $this->render('activity-view');
+    }
+
+     public function actionMarksSheet()
+    { 
+        return $this->render('marks-sheet');
     }
     /**
      * Creates a new StdAttendance model.

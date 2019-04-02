@@ -19,7 +19,7 @@ class MarksDetailsSearch extends MarksDetails
     {
         return [
             [['marks_detail_id', 'marks_head_id', 'subject_id', 'obtained_marks', 'created_by', 'updated_by'], 'integer'],
-            [['exam_attendance', 'exam_status', 'created_at', 'updated_at'], 'safe'],
+            [['exam_attendance', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -66,8 +66,7 @@ class MarksDetailsSearch extends MarksDetails
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'exam_attendance', $this->exam_attendance])
-            ->andFilterWhere(['like', 'exam_status', $this->exam_status]);
+        $query->andFilterWhere(['like', 'exam_attendance', $this->exam_attendance]);
 
         return $dataProvider;
     }

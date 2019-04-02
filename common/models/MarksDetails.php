@@ -12,7 +12,6 @@ use Yii;
  * @property int $subject_id
  * @property int $obtained_marks
  * @property string $exam_attendance
- * @property string $exam_status
  * @property int $created_by
  * @property int $updated_by
  * @property string $created_at
@@ -37,11 +36,10 @@ class MarksDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['marks_head_id', 'subject_id', 'obtained_marks', 'exam_attendance', 'exam_status', 'created_by', 'updated_by'], 'required'],
+            [['marks_head_id', 'subject_id', 'obtained_marks', 'exam_attendance', 'created_by', 'updated_by'], 'required'],
             [['marks_head_id', 'subject_id', 'obtained_marks', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['exam_attendance'], 'string', 'max' => 8],
-            [['exam_status'], 'string', 'max' => 6],
             [['marks_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => MarksHead::className(), 'targetAttribute' => ['marks_head_id' => 'marks_head_id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
         ];
@@ -58,7 +56,6 @@ class MarksDetails extends \yii\db\ActiveRecord
             'subject_id' => 'Subject ID',
             'obtained_marks' => 'Obtained Marks',
             'exam_attendance' => 'Exam Attendance',
-            'exam_status' => 'Exam Status',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             'created_at' => 'Created At',

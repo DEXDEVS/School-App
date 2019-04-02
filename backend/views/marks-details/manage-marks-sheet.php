@@ -62,16 +62,18 @@
 	{
 		$examCategory = $_POST['exam_category'];
 		$classHead = $_POST['class_head'];
+
+		$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCategory' AND
+		std_enroll_head_id = '$classHead ' AND exam_status = 'conducted'
+					")->queryAll();
+		$classId = $examCriteriaData[0]['std_enroll_head_id'];
 		
 		$students = Yii::$app->db->createCommand("SELECT std_roll_no,std_enroll_detail_std_id,std_enroll_detail_std_name
 			FROM std_enrollment_detail
 			WHERE std_enroll_detail_head_id = '$classHead'")->queryAll();
 		$countStudents = count($students);
 
-		$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCategory' AND
-		std_enroll_head_id = '$classHead '
-					")->queryAll();
-		$classId = $examCriteriaData[0]['std_enroll_head_id'];
+		
 		// getting classes name `std_enroll_head_name` from `std_enrollment_head` against `std_enroll_head_id`
 		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classId'
 						")->queryAll();
@@ -95,6 +97,7 @@
 		<div class="box-header">
 			<h3>Add Marks</h3>
 		</div>
+		<form method="POST">
 		<div class="box-body">
 			<?php  
 
@@ -137,13 +140,27 @@
 					</tr>
 				</thead>
 				<tbody>
+					<?php 
+
+					for ($k=0; $k <$countStudents ; $k++) { 
+					
+					 ?>
 					<tr>
-						<td></td>
+						<td><?php echo $students[0]['std_roll_no']; ?></td>
+						<td><?php echo $students[0]['std_enroll_detail_std_name']; ?></td>
+						<?php 
+						for ($m=0; $m <$countSubjects ; $m++) {?>
+						<td>
+							<input type="text" name="">
+						</td>
+						<?php } ?>
 					</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 			<?php } ?>
 		</div>
+	</form>
 	</div>
 </div>
 <?php	} // closing of isset
