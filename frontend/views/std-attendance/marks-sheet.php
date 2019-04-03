@@ -38,7 +38,6 @@ if(isset($_GET['class_id']))
 		FROM std_enrollment_detail
 		WHERE std_enroll_detail_head_id = '$classID'")->queryAll();
 		$countStudents = count($students);
-		var_dump($students);
 
  ?>
 <!DOCTYPE html>
@@ -120,12 +119,12 @@ if(isset($_GET['class_id']))
 											<?php echo $students[0]['std_enroll_detail_std_name']; ?>
 										</td>
 										<td>
-											<input type="checkbox" name="stdAttendance[$j]">Abs <br>
+											<!-- <input type="radio" name="stdAtten<?php //echo $j+1; ?>" value="P">Abs <br> -->
 											<input type="number" name="marks<?php echo $j+1;?>">
 										</td>
 										<?php 
 										$stdID = $students[$j]['std_enroll_detail_std_id'];
-										$stdMarksId[$j] = $stdID;
+										$studentId[$j] = $stdID;
 										
 										?>
 									</tr>
@@ -133,7 +132,7 @@ if(isset($_GET['class_id']))
 									//closing of for loop j ?>
 								</tbody>
 							</table>
-							<?php foreach ($stdMarksId as $value) {
+							<?php foreach ($studentId as $value) {
 				                		echo '<input type="hidden" name="stdId[]" value="'.$value.'" style="width: 30px">';
 				                	}
 				                	?>
@@ -166,14 +165,22 @@ if(isset($_POST['save'])){
 	$classHeadId 	= $_POST['classHeadId'];
 	$subId 			= $_POST['subId'];
 	$stdId 			= $_POST['stdId'];
-	$stdAttendance[] 	= $_POST['stdAttendance'];
 
 	for($i=0; $i<$countStudents;$i++){
 		$q=$i+1;
 		$marks = "marks".$q;
 		$obtMarks[$i] = $_POST["$marks"];
+		// $stdAtten = "stdAtten".$q;
+		// $stdAttend[$i] = $_POST["$stdAtten"];
+	}
 
-				}
+	if(isset($_POST["$stdAtten"]))
+	{
+		$stdAttend[$i] = $_POST["$stdAtten"];
+	}
+	else{
+		$obtMarks[$i] = $_POST["$marks"];
+	}
 
 	$transection = Yii::$app->db->beginTransaction();
 	try{
@@ -194,7 +201,7 @@ if(isset($_POST['save'])){
 	            			'marks_head_id' 	=> $marksHeadid,
 							'subject_id' 		=> $subId,
 							'obtained_marks'	=> $obtMarks[$j],
-							'exam_attendance'   => $stdAttendance[$j],
+							'exam_attendance'   => 'P',
 							'created_by'		=> Yii::$app->user->identity->id, 
 						])->execute();
 					

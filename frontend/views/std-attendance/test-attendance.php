@@ -171,20 +171,20 @@ transition: all 0.4s ease-in-out;
             $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$empEmail'")->queryAll();
             $empId = $empId[0]['emp_id'];
             $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
-            $headId = $teacherId[0]['teacher_subject_assign_head_id'];
+            $teacherHeadId = $teacherId[0]['teacher_subject_assign_head_id'];
 
             $classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d INNER JOIN teacher_subject_assign_head as h ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
             $countClassIds = count($classId);
        
             for ($i=0; $i <$countClassIds ; $i++) {
-             $id = $classId[$i]['class_id'];
-             $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id
+            $id = $classId[$i]['class_id'];
+            $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name
                 FROM std_enrollment_head as seh
                 INNER JOIN teacher_subject_assign_detail as tsad
                 ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
             $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
             FROM teacher_subject_assign_detail as tsad
-            WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$headId'")->queryAll(); ?>
+            WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$teacherHeadId'")->queryAll(); ?>
            <div class="col-md-6">
                 <div class="box box-danger collapsed-box" style=" border-color:#605CA8;">
                     <div class="box-header" style="background-color:#c8c6f2;padding: 15px;">
