@@ -119,36 +119,33 @@
         $subjectAlias[$key] = $subAls[0]['subject_alias'];
         }
 
-        //get current month and date
+        $dateArray = array();
+        $dayArray = array();
+        //get current month name and year
         $currentMonth =date('F Y');
-        $m = date('m-Y');
-        $lastDateOfMonth = date("Y-m-t", strtotime($currentMonth));
-        $lastDate = explode('-', $lastDateOfMonth);
-        $lDate = $lastDate[2];
-
-        $temp = $lDate / 7;
-        if($temp == 4){
-            $rowCount = 4;
-        } else {
-            $rowCount = 5;
+        $month  = date('m');
+        $year  = date('Y');
+        $days = cal_days_in_month(CAL_GREGORIAN, $month,$year);
+        for($i = 0; $i< $days; $i++){
+            $a = $i+1;
+           $day  = date('Y-m-'.$a);
+           $dayArray[] = date("D", strtotime($day));
+           $dateArray[] = date("Y-m-d", strtotime($day));                
         }
-        $d=0;
+print_r($dateArray);
+print_r($dayArray);
+                
+        
+        // $lastDateOfMonth = date("Y-m-t", strtotime($currentMonth));
+        // $lastDate = explode('-', $lastDateOfMonth);
+        // $lDate = $lastDate[2];
 
-        // getting sunday of the current month....
-        function getSundays($m){ 
-            $date = "$m-01";
-            $first_day = date('N',strtotime($date));
-            $first_day = 7 - $first_day + 1;
-            $last_day =  date('t',strtotime($date));
-            $days = array();
-            for($i=$first_day; $i<=$last_day; $i=$i+7 ){
-                $days[] = $i;
-            }
-            return  $days;
-        }
-
-        $days = getSundays(2016,04);
-        print_r($days);
+        // $temp = $lDate / 7;
+        // if($temp == 4){
+        //     $rowCount = 4;
+        // } else {
+        //     $rowCount = 5;
+        // }
         ?> 
 
 <div class="container-fluid">
@@ -160,7 +157,7 @@
                 <h3 class="box-title" style="float: right;"><?php echo "Attendance ( ".$currentMonth." )"; ?></h3>
             </div>
             <!-- /.box-header -->
-            <?php for ($row=0; $row <$rowCount ; $row++) {  ?>
+            <?php for ($row=0; $row <5 ; $row++) {  ?>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover table-bordered table-striped">
             
@@ -169,22 +166,19 @@
 					<th rowspan="2">Roll<br>#</th>
 					<th rowspan="2">Student<br>Name</th>
 					<?php 
-                        $countDate=0;
+                        
                         for ($date=1; $date <= 7 ; $date++) { 
-                             $d++;
-                             if ($d <= $lDate) {
-                                echo "<th colspan='6' style='text-align: center;'>$d-$m</th>";  
-                                $countDate++;
-                             }
+                             
+                        echo "<th colspan='6' style='text-align: center;'>$d-$m</th>";  
                         }
 					?>
                 </tr>
                 <tr>
                 	<?php 
-                    for ($r=0; $r <$countDate ; $r++) { 
+                    for ($r=0; $r <4 ; $r++) { 
                         //loop to print subjects
                 		for ($s=0; $s <$subjectlength ; $s++) { ?>
-						<th style='padding: 1px 5px'><?php echo $subjectAlias[$s]; ?></th>
+						<th style='padding: 1px 5px'><?php //echo $subjectAlias[$s]; ?></th>
 					<?php	
                         }
                     } 
@@ -209,19 +203,7 @@
                                       } 
                                 ?>
                                 <td><?php echo $stdName[0]['std_name']; ?></td>
-                                <?php for ($k=1; $k <=$countDate ; $k++) {
-                                        
-                                            for ($j=0; $j<$subjectlength ; $j++) {  
-                                    ?>
-                                    <td>
-                                        
-                                    </td>
-
-                                <?php       // end of j loop
-                                            } 
-                                        
-                                    //end of k loop      
-                                    } ?>
+                                
                         </tr>
                     <?php //end of std loop 
                         } ?> 
