@@ -63,19 +63,19 @@
 
                 <ul class="list-group list-group-unbordered">
                   <li class="list-group-item">
-                    <b>Principal:</b>
-                      <a class="pull-right">
+                    <b>Principal:</b><br>
+                      <a>
                         <?php echo $branches[0]['branch_head_name'];?>
                       </a>
                   </li>
                   <li class="list-group-item">
-                    <b>Contact #:</b>
-                      <a class="pull-right">
+                    <b>Contact #:</b><br>
+                      <a>
                         <?php echo $branches[0]['branch_head_contact_no'];?>
                       </a>
                   </li>
                   <li class="list-group-item">
-                    <b>Email:</b>
+                    <b>Email:</b><br>
                     <a>
                       <?php echo $branches[0]['branch_head_email'];?>
                     </a>
