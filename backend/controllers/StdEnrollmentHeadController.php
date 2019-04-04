@@ -31,7 +31,7 @@ class StdEnrollmentHeadController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','std-enrollment-detail'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','std-enrollment-detail','std-promote'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,6 +72,17 @@ class StdEnrollmentHeadController extends Controller
     { 
         return $this->render('std-enrollment-detail');
     }
+
+    public function actionStdPromote()
+    { 
+        return $this->render('std-promote');
+    }
+
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
     // public function actionView($id)
     // {   
     //     $request = Yii::$app->request;
