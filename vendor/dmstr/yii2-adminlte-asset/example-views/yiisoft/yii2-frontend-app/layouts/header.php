@@ -10,6 +10,9 @@ use yii\helpers\Html;
     $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
     $userPhoto = $user[0]['user_photo'];
+    if(empty($userPhoto)){
+        $userPhoto = 'backend/web/images/default.png';
+    }
 ?>
 
 <header class="main-header">
@@ -206,16 +209,34 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?php echo $userPhoto ?>" class="user-image" alt="User Image"/>
+                        <img src="<?php echo $userPhoto; ?>" class="user-image" alt="User Image"/>
                         <span class="hidden-xs">
-                            <?= Yii::$app->user->identity->username;  ?>
+                            <?php 
+                            //var_dump($userPhoto);
+                                $cnic = Yii::$app->user->identity->username;
+                                if (Yii::$app->user->identity->user_type == 'Student') {
+                                    $userName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_b_form = '$cnic'")->queryAll();
+                                    echo $userName[0]['std_name'];
+                                }
+                                else if(Yii::$app->user->identity->user_type == 'Parent') {
+                                    $userName = Yii::$app->db->createCommand("SELECT guardian_name FROM std_guardian_info WHERE guardian_cnic = '$cnic'")->queryAll();
+                                    echo $userName[0]['guardian_name'];
+                                }
+                                else if(Yii::$app->user->identity->user_type == 'Employee') {
+                                    $userName = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info WHERE emp_cnic = '$cnic'")->queryAll();
+                                    echo $userName[0]['emp_name'];
+                                }
+                                else{
+                                    echo Yii::$app->user->identity->username;
+                                }
+                            ?>
                             <!--  -->
                         </span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header" style="height: 200px">
-                            <img src="<?php echo $userPhoto ?>" class="img-circle" alt="User Image"/>
+                            <img src="<?php echo $userPhoto; ?>" class="img-circle" alt="User Image"/>
                             <p>
                                 <label for="">Contact Info</label><br>
                                 <!-- email -->

@@ -108,33 +108,7 @@ $('#classId').change(function(){
         $('#stdent').append(options);
     });
 });
-// $('#classId').on('change',function(){
-//    var classId = $('#classId').val();
-   
-//    $.ajax({
-//         type:'post',
-//         data:{class_Id:classId},
-//         url: "$url",
 
-//         success: function(result){
-//             console.log(result);
-//             var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-            
-//             var len =jsonResult[0].length;
-//             var html = "";
-//             $('#stdent').empty();
-//             $('#stdent').append("<option>"+"Select Student.."+"</option>");
-//             for(var i=0; i<len; i++)
-//             {
-//             var stdId = jsonResult[0][i];
-//             var stdName = jsonResult[1][i];
-//             html += "<option value="+ stdId +">"+stdName+"</option>";
-//             }
-//             $(".field-stdent select").append(html);
-
-//         }         
-//     });       
-// });
 JS;
 $this->registerJs($script);
 ?>

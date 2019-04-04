@@ -48,6 +48,7 @@ class SiteController extends Controller
      */
     public function actions()
     {
+        //throw new NotFoundHttpException("Something unexpected happened");
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',

@@ -31,6 +31,7 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  * @property int $delete_status
+ * @property int $std_password
  *
  * @property FeeTransactionHead[] $feeTransactionHeads
  * @property StdAcademicInfo[] $stdAcademicInfos
@@ -60,7 +61,7 @@ class StdRegistration extends \yii\db\ActiveRecord
     {
         return [
             [['std_reg_no', 'std_name', 'std_father_name', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
-            [['std_DOB','std_contact_no', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'std_email','std_photo'], 'safe'],
+            [['std_DOB','std_contact_no', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'std_email','std_photo','std_password'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
             [['branch_id','created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
