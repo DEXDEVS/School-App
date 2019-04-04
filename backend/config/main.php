@@ -105,6 +105,8 @@ return [
                 'manage-exams' => 'exams-schedule/manage-exams',
                 'exam-lists' => 'exams-category/exam-lists',
                 'view-datesheet' => 'exams-category/view-datesheet',
+                'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
+                'view-marks-sheet' => 'marks-details/view-marks-sheet',
 
             ],
         ],

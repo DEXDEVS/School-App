@@ -118,8 +118,6 @@ class TeacherSubjectAssignDetailController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $teacherSubjectAssignHead->load($request->post())){
-                $transaction = \Yii::$app->db->beginTransaction();
-                    try {
                 $techer_enrollment_head = Yii::$app->db->createCommand("SELECT * FROM teacher_subject_assign_head where teacher_id = $teacherSubjectAssignHead->teacher_id")->queryAll();
                 if(!empty($techer_enrollment_head)){
                     $teacherAssignHead = $techer_enrollment_head[0]['teacher_subject_assign_head_id'];
@@ -144,18 +142,9 @@ class TeacherSubjectAssignDetailController extends Controller
                             $model->save(false);
                         }
                     }
-
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('warning', "You have successfully add record...!");
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
-                }
                     // select2 add multiple students end...! 
 
                 } else {
-                    $transaction = \Yii::$app->db->beginTransaction();
-                    try {
                     $teacher_name = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info where emp_id = $teacherSubjectAssignHead->teacher_id")->queryAll();
 
                     $teacherSubjectAssignHead->teacher_subject_assign_head_name = $teacher_name[0]['emp_name'];
@@ -188,14 +177,8 @@ class TeacherSubjectAssignDetailController extends Controller
                     }
                     // select2 add multiple students end...! 
 
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('warning', "You have successfully add record...!");
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
-                }
                     // end of else     
-                    }          
+                }          
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "<b>Create new Teacher Subject Assign Detail</b>",

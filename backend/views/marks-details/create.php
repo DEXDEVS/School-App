@@ -4,10 +4,10 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\StdAttendance */
+/* @var $model common\models\MarksDetails */
 
 ?>
-<div class="std-attendance-create">
+<div class="marks-details-create">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

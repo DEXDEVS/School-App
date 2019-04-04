@@ -43,7 +43,7 @@ class ExamsCriteria extends \yii\db\ActiveRecord
             [['exam_category_id', 'std_enroll_head_id', 'exam_start_date', 'exam_end_date', 'exam_start_time', 'exam_end_time', 'exam_room'], 'required'],
             [['exam_category_id', 'std_enroll_head_id', 'created_by', 'updated_by'], 'integer'],
             [['exam_start_date', 'exam_end_date', 'exam_start_time', 'exam_end_time', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
-            [['exam_room'], 'string', 'max' => 15],
+            [['exam_room'], 'string', 'max' => 30],
             [['exam_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ExamsCategory::className(), 'targetAttribute' => ['exam_category_id' => 'exam_category_id']],
             [['std_enroll_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdEnrollmentHead::className(), 'targetAttribute' => ['std_enroll_head_id' => 'std_enroll_head_id']],
         ];

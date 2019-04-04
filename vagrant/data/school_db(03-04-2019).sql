@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2019 at 03:51 PM
+-- Generation Time: Apr 03, 2019 at 06:39 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -520,7 +520,7 @@ CREATE TABLE `emp_info` (
 --
 
 INSERT INTO `emp_info` (`emp_id`, `emp_reg_no`, `emp_name`, `emp_father_name`, `emp_cnic`, `emp_contact_no`, `emp_perm_address`, `emp_temp_address`, `emp_marital_status`, `emp_fb_ID`, `emp_gender`, `emp_photo`, `emp_dept_id`, `emp_designation_id`, `emp_type_id`, `emp_salary_type`, `group_by`, `emp_branch_id`, `emp_email`, `emp_qualification`, `emp_passing_year`, `emp_institute_name`, `degree_scan_copy`, `emp_salary`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 'EMP-Y19-1', 'Kinza Mustafa', 'G Mustafa', '45678-9876545-6', '56', 'RYK', 'RYK', 'Single', 'Kinza@gmail.com', 'Female', 'uploads/Kinza Mustafa_emp_photo.jpg', '1', 1, 4, 'Salaried', 'Faculty', 5, 'kinza.fatima.522@gmail.com', 'BSCS', 2017, 'IUB', 'uploads/Kinza Mustafa_degree_scan_copy.jpg', 10000, '2019-02-22 07:24:29', '2019-02-20 09:30:25', 3, 9, 1),
+(1, 'EMP-Y19-1', 'Kinza Mustafa', 'G Mustafa', '45102-0511722-2', '+92-987-6543', 'RYK', 'RYK', 'Single', 'Kinza@gmail.com', 'Female', 'uploads/Kinza Mustafa_emp_photo.jpg', '1', 4, 4, 'Salaried', 'Faculty', 5, 'kinza.fatima.522@gmail.com', 'BSCS', 2017, 'IUB', 'uploads/Kinza Mustafa_degree_scan_copy.jpg', 90000, '2019-04-02 16:54:43', '2019-04-02 16:54:43', 3, 5, 1),
 (2, 'EMP-Y19-2', 'Nadia', 'Gull', '88888-8888888-8', '66', 'ryk', 'ryk', 'Single', 'fghj@gmail.com', 'Female', 'uploads/nadia_emp_photo.jpg', '1', 4, 5, 'Per Lecture', 'Faculty', 5, 'fghj@gmail.com', 'BSCS', 2019, 'fghjk', 'uploads/Nadia_degree_scan_copy.png', 1300, '2019-02-24 06:45:28', '2019-02-24 06:45:28', 3, 9, 1),
 (3, 'EMP-Y19-3', 'Nauman', 'shahid', '24654-5468546-5', '65', 'RYK', 'RYK', 'Single', 'nauman@gmail.com', 'Male', 'uploads/Nauman_emp_photo.jpg', '1,7', 4, 5, 'Per Lecture', 'Faculty', 5, 'nauman@gmail.com', 'BSCS', 2108, 'Superior', 'uploads/Nauman_degree_scan_copy.jpg', 1400, '2019-02-23 14:08:59', '2019-02-23 14:08:59', 8, 9, 1),
 (4, 'EMP-Y19-4', 'Ayesha', 'Ali', '46545-4654654-6', '65', 'RYK', 'RYK', 'Single', 'ayesha@gmail.com', 'Female', 'uploads/Ayesha_emp_photo.png', '1', 9, 4, 'Salaried', 'Faculty', 5, 'ayesha@gmail.com', 'BSCS', 2018, 'Superior', 'uploads/Ayesha_degree_scan_copy.xps', 40000, '2019-03-03 15:31:57', '2019-03-03 15:31:57', 8, 3, 1),
@@ -662,7 +662,7 @@ INSERT INTO `exams_category` (`exam_category_id`, `category_name`, `description`
 (2, 'Weekly Tests', 'Weekly Class Tests', '2019-03-11 09:34:40', '0000-00-00 00:00:00', 0, 0),
 (3, 'First Term', 'First Term Exams', '2019-03-11 09:35:27', '0000-00-00 00:00:00', 0, 0),
 (4, 'Mid Term', 'Mid Term Exams', '2019-03-11 09:35:49', '0000-00-00 00:00:00', 0, 0),
-(5, 'Final Term', 'Final Term Exams', '2019-03-11 09:36:04', '0000-00-00 00:00:00', 0, 0),
+(5, 'Final Term Examination', 'Final Term Exams', '2019-03-31 15:08:04', '0000-00-00 00:00:00', 0, 0),
 (6, 'December Test', 'December Test / Exams', '2019-03-11 09:36:44', '0000-00-00 00:00:00', 0, 0),
 (7, 'Quiz', 'Subject Quiz', '2019-03-11 09:37:15', '0000-00-00 00:00:00', 0, 0),
 (8, 'Assignment', 'Class Assignment', '2019-03-11 09:37:35', '0000-00-00 00:00:00', 0, 0),
@@ -683,7 +683,8 @@ CREATE TABLE `exams_criteria` (
   `exam_end_date` date NOT NULL,
   `exam_start_time` time NOT NULL,
   `exam_end_time` time NOT NULL,
-  `exam_room` varchar(15) NOT NULL,
+  `exam_room` varchar(30) NOT NULL,
+  `exam_status` varchar(30) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) NOT NULL,
@@ -694,8 +695,15 @@ CREATE TABLE `exams_criteria` (
 -- Dumping data for table `exams_criteria`
 --
 
-INSERT INTO `exams_criteria` (`exam_criteria_id`, `exam_category_id`, `std_enroll_head_id`, `exam_start_date`, `exam_end_date`, `exam_start_time`, `exam_end_time`, `exam_room`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 5, 1, '2019-03-01', '2019-03-04', '23:00:00', '12:00:00', 'Room-2', '2019-03-31 12:58:48', '0000-00-00 00:00:00', 1, 0);
+INSERT INTO `exams_criteria` (`exam_criteria_id`, `exam_category_id`, `std_enroll_head_id`, `exam_start_date`, `exam_end_date`, `exam_start_time`, `exam_end_time`, `exam_room`, `exam_status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 5, 1, '2019-04-01', '2019-04-15', '23:00:00', '12:00:00', 'Computer Lab - 2', 'conducted', '2019-04-01 18:53:02', '0000-00-00 00:00:00', 1, 0),
+(2, 5, 1, '2019-04-06', '2019-04-10', '08:00:00', '12:00:00', 'Computer Lab - 1', '', '2019-04-01 06:02:55', '0000-00-00 00:00:00', 1, 0),
+(3, 5, 2, '2019-04-20', '2019-04-24', '08:00:00', '12:00:00', 'Computer Lab - 2', '', '2019-04-01 06:34:08', '0000-00-00 00:00:00', 1, 0),
+(4, 2, 2, '2019-04-01', '2019-04-06', '10:00:00', '11:00:00', 'Room-1', '', '2019-04-01 07:31:24', '0000-00-00 00:00:00', 1, 0),
+(5, 2, 2, '2019-04-08', '2019-04-13', '10:00:00', '11:00:00', 'Room-1', '', '2019-04-01 07:32:27', '0000-00-00 00:00:00', 1, 0),
+(6, 2, 2, '2019-04-15', '2019-04-20', '10:00:00', '11:00:00', 'Room-1', '', '2019-04-01 07:33:18', '0000-00-00 00:00:00', 1, 0),
+(7, 2, 2, '2019-04-22', '2019-04-27', '10:00:00', '11:00:00', 'Room-1', '', '2019-04-01 07:34:06', '0000-00-00 00:00:00', 1, 0),
+(8, 5, 2, '2019-05-04', '2019-05-08', '08:00:00', '12:00:00', 'Computer Lab - 2', '', '2019-04-01 08:43:10', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -722,10 +730,38 @@ CREATE TABLE `exams_schedule` (
 --
 
 INSERT INTO `exams_schedule` (`exam_schedule_id`, `exam_criteria_id`, `subject_id`, `emp_id`, `date`, `full_marks`, `passing_marks`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 1, 1, 1, '2019-03-01', 100, 33, '2019-03-31 12:58:48', '0000-00-00 00:00:00', 1, 0),
-(2, 1, 2, 9, '2019-03-02', 100, 33, '2019-03-31 12:58:48', '0000-00-00 00:00:00', 1, 0),
-(3, 1, 4, 1, '2019-03-04', 100, 33, '2019-03-31 12:58:48', '0000-00-00 00:00:00', 1, 0),
-(4, 1, 9, 9, '2019-03-04', 50, 17, '2019-03-31 12:58:48', '0000-00-00 00:00:00', 1, 0);
+(1, 1, 1, 2, '2019-04-01', 100, 33, '2019-04-01 05:48:41', '0000-00-00 00:00:00', 1, 0),
+(2, 1, 2, 4, '2019-04-03', 100, 33, '2019-04-01 05:48:41', '0000-00-00 00:00:00', 1, 0),
+(3, 1, 4, 9, '2019-04-12', 100, 33, '2019-04-01 05:48:41', '0000-00-00 00:00:00', 1, 0),
+(4, 1, 9, 7, '2019-04-16', 50, 17, '2019-04-01 05:48:41', '0000-00-00 00:00:00', 1, 0),
+(5, 2, 1, 1, '2019-04-06', 100, 33, '2019-04-01 06:02:55', '0000-00-00 00:00:00', 1, 0),
+(6, 2, 2, 3, '2019-04-08', 110, 0, '2019-04-01 06:02:55', '0000-00-00 00:00:00', 1, 0),
+(7, 2, 4, 4, '2019-04-09', 110, 0, '2019-04-01 06:02:55', '0000-00-00 00:00:00', 1, 0),
+(8, 2, 9, 2, '2019-04-10', 60, 0, '2019-04-01 06:02:55', '0000-00-00 00:00:00', 1, 0),
+(9, 3, 1, 1, '2019-04-20', 100, 33, '2019-04-01 06:34:08', '0000-00-00 00:00:00', 1, 0),
+(10, 3, 2, 2, '2019-04-22', 100, 33, '2019-04-01 06:34:09', '0000-00-00 00:00:00', 1, 0),
+(11, 3, 4, 3, '2019-04-23', 100, 33, '2019-04-01 06:34:09', '0000-00-00 00:00:00', 1, 0),
+(12, 3, 9, 8, '2019-04-24', 60, 0, '2019-04-01 06:34:09', '0000-00-00 00:00:00', 1, 0),
+(13, 4, 1, 1, '2019-04-01', 15, 0, '2019-04-01 07:31:25', '0000-00-00 00:00:00', 1, 0),
+(14, 4, 2, 2, '2019-04-03', 15, 0, '2019-04-01 07:31:25', '0000-00-00 00:00:00', 1, 0),
+(15, 4, 4, 3, '2019-04-04', 15, 0, '2019-04-01 07:31:25', '0000-00-00 00:00:00', 1, 0),
+(16, 4, 9, 6, '2019-04-06', 15, 0, '2019-04-01 07:31:25', '0000-00-00 00:00:00', 1, 0),
+(17, 5, 1, 3, '2019-04-08', 15, 0, '2019-04-01 07:32:27', '0000-00-00 00:00:00', 1, 0),
+(18, 5, 2, 4, '2019-04-09', 15, 0, '2019-04-01 07:32:27', '0000-00-00 00:00:00', 1, 0),
+(19, 5, 4, 6, '2019-04-11', 15, 0, '2019-04-01 07:32:27', '0000-00-00 00:00:00', 1, 0),
+(20, 5, 9, 8, '2019-04-13', 15, 0, '2019-04-01 07:32:27', '0000-00-00 00:00:00', 1, 0),
+(21, 6, 1, 3, '2019-04-15', 15, 0, '2019-04-01 07:33:18', '0000-00-00 00:00:00', 1, 0),
+(22, 6, 2, 6, '2019-04-17', 15, 0, '2019-04-01 07:33:18', '0000-00-00 00:00:00', 1, 0),
+(23, 6, 4, 7, '2019-04-18', 15, 0, '2019-04-01 07:33:18', '0000-00-00 00:00:00', 1, 0),
+(24, 6, 9, 9, '2019-04-20', 15, 0, '2019-04-01 07:33:18', '0000-00-00 00:00:00', 1, 0),
+(25, 7, 1, 9, '2019-04-22', 15, 0, '2019-04-01 07:34:06', '0000-00-00 00:00:00', 1, 0),
+(26, 7, 2, 7, '2019-04-24', 15, 0, '2019-04-01 07:34:06', '0000-00-00 00:00:00', 1, 0),
+(27, 7, 4, 4, '2019-04-25', 15, 0, '2019-04-01 07:34:06', '0000-00-00 00:00:00', 1, 0),
+(28, 7, 9, 9, '2019-04-27', 15, 0, '2019-04-01 07:34:06', '0000-00-00 00:00:00', 1, 0),
+(29, 8, 1, 1, '2019-05-04', 100, 33, '2019-04-01 08:43:10', '0000-00-00 00:00:00', 1, 0),
+(30, 8, 2, 5, '2019-04-08', 100, 33, '2019-04-01 08:43:10', '0000-00-00 00:00:00', 1, 0),
+(31, 8, 4, 7, '2019-04-09', 100, 33, '2019-04-01 08:43:10', '0000-00-00 00:00:00', 1, 0),
+(32, 8, 9, 9, '2019-04-10', 60, 0, '2019-04-01 08:43:10', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -926,6 +962,59 @@ INSERT INTO `institute_name` (`Institute_name_id`, `Institute_name`, `Institutte
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `marks_details`
+--
+
+CREATE TABLE `marks_details` (
+  `marks_detail_id` int(11) NOT NULL,
+  `marks_head_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `obtained_marks` int(11) NOT NULL,
+  `exam_attendance` varchar(8) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `marks_details`
+--
+
+INSERT INTO `marks_details` (`marks_detail_id`, `marks_head_id`, `subject_id`, `obtained_marks`, `exam_attendance`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 70, 'P', 5, 0, '2019-04-02 18:15:53', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `marks_head`
+--
+
+CREATE TABLE `marks_head` (
+  `marks_head_id` int(11) NOT NULL,
+  `exam_category_id` int(11) NOT NULL,
+  `class_head_id` int(11) NOT NULL,
+  `std_id` int(11) NOT NULL,
+  `grand_total` double NOT NULL,
+  `percentage` varchar(10) NOT NULL,
+  `grade` varchar(3) NOT NULL,
+  `exam_status` varchar(6) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `marks_head`
+--
+
+INSERT INTO `marks_head` (`marks_head_id`, `exam_category_id`, `class_head_id`, `std_id`, `grand_total`, `percentage`, `grade`, `exam_status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 5, 1, 1, 0, '', '', '', 5, 0, '2019-04-02 18:15:53', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `marks_weitage`
 --
 
@@ -933,10 +1022,10 @@ CREATE TABLE `marks_weitage` (
   `marks_weitage_id` int(11) NOT NULL,
   `exam_category_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
-  `presentation` int(5) NOT NULL,
-  `assignment` int(5) NOT NULL,
-  `attendance` int(5) NOT NULL,
-  `dressing` int(5) NOT NULL,
+  `presentation` double NOT NULL,
+  `assignment` double NOT NULL,
+  `attendance` double NOT NULL,
+  `dressing` double NOT NULL,
   `theory` int(5) NOT NULL,
   `practical` int(5) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -951,9 +1040,13 @@ CREATE TABLE `marks_weitage` (
 
 INSERT INTO `marks_weitage` (`marks_weitage_id`, `exam_category_id`, `subject_id`, `presentation`, `assignment`, `attendance`, `dressing`, `theory`, `practical`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 (1, 5, 1, 5, 5, 5, 5, 60, 20, '2019-03-29 11:23:21', '0000-00-00 00:00:00', 0, 0),
-(2, 5, 2, 5, 5, 5, 5, 80, 0, '2019-03-30 20:13:44', '0000-00-00 00:00:00', 0, 0),
-(3, 5, 4, 5, 5, 5, 5, 80, 0, '2019-03-30 20:14:06', '0000-00-00 00:00:00', 0, 0),
-(4, 5, 9, 5, 5, 5, 5, 30, 0, '2019-03-30 20:15:07', '0000-00-00 00:00:00', 0, 0);
+(2, 5, 2, 5, 5, 5, 5, 80, 0, '2019-04-01 06:06:41', '0000-00-00 00:00:00', 0, 0),
+(3, 5, 4, 5, 5, 5, 5, 80, 0, '2019-04-01 06:06:47', '0000-00-00 00:00:00', 0, 0),
+(4, 5, 9, 5, 5, 5, 5, 30, 10, '2019-04-01 06:01:17', '0000-00-00 00:00:00', 0, 0),
+(5, 2, 1, 0, 0, 0, 0, 15, 0, '2019-04-01 07:00:53', '0000-00-00 00:00:00', 0, 0),
+(6, 2, 2, 0, 0, 0, 0, 15, 0, '2019-04-01 07:01:08', '0000-00-00 00:00:00', 0, 0),
+(7, 2, 4, 0, 0, 0, 0, 15, 0, '2019-04-01 07:01:23', '0000-00-00 00:00:00', 0, 0),
+(8, 2, 9, 0, 0, 0, 0, 15, 0, '2019-04-01 07:01:45', '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1135,6 +1228,7 @@ INSERT INTO `std_academic_info` (`academic_id`, `std_id`, `class_name_id`, `subj
 
 CREATE TABLE `std_attendance` (
   `std_attend_id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
   `teacher_id` int(11) NOT NULL,
   `class_name_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
@@ -1149,11 +1243,14 @@ CREATE TABLE `std_attendance` (
 -- Dumping data for table `std_attendance`
 --
 
-INSERT INTO `std_attendance` (`std_attend_id`, `teacher_id`, `class_name_id`, `session_id`, `section_id`, `subject_id`, `date`, `student_id`, `status`) VALUES
-(1, 1, 1, 4, 1, 5, '2019-03-01 00:00:00', 1, 'L'),
-(2, 1, 1, 4, 1, 5, '2019-03-01 00:00:00', 2, 'P'),
-(3, 1, 1, 4, 1, 5, '2019-03-13 05:03:45', 1, 'P'),
-(4, 1, 1, 4, 1, 5, '2019-03-13 05:03:45', 2, 'A');
+INSERT INTO `std_attendance` (`std_attend_id`, `branch_id`, `teacher_id`, `class_name_id`, `session_id`, `section_id`, `subject_id`, `date`, `student_id`, `status`) VALUES
+(1, 5, 1, 12, 6, 5, 1, '2019-04-01 00:00:00', 1, 'P'),
+(2, 5, 1, 12, 6, 5, 2, '2019-04-01 00:00:00', 1, 'A'),
+(3, 5, 1, 1, 4, 3, 10, '2019-04-01 00:00:00', 5, 'A'),
+(4, 5, 1, 1, 4, 3, 10, '2019-04-01 00:00:00', 8, 'P'),
+(5, 5, 1, 1, 4, 3, 10, '2019-04-02 00:00:00', 5, 'P'),
+(6, 5, 1, 1, 4, 3, 10, '2019-04-02 00:00:00', 8, 'L'),
+(7, 5, 1, 12, 6, 5, 1, '2019-04-02 00:00:00', 1, 'A');
 
 -- --------------------------------------------------------
 
@@ -1248,7 +1345,7 @@ CREATE TABLE `std_enrollment_head` (
 --
 
 INSERT INTO `std_enrollment_head` (`std_enroll_head_id`, `branch_id`, `class_name_id`, `session_id`, `section_id`, `std_enroll_head_name`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 6, 12, 6, 5, '8th -2019 - 2020-ICB1', '2019-03-21 14:46:38', '0000-00-00 00:00:00', 4, 0, 1),
+(1, 5, 12, 6, 5, '8th -2019 - 2020-ICB1', '2019-04-02 05:55:39', '0000-00-00 00:00:00', 4, 0, 1),
 (2, 5, 1, 4, 3, 'KG-1-2019 - 2020 -Green', '2019-03-21 14:49:02', '0000-00-00 00:00:00', 1, 0, 1);
 
 -- --------------------------------------------------------
@@ -1521,9 +1618,9 @@ CREATE TABLE `std_sections` (
 INSERT INTO `std_sections` (`section_id`, `session_id`, `section_name`, `section_description`, `section_intake`, `section_subjects`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
 (1, 4, 'Red', 'Red', 25, 1, '2019-03-16 07:10:30', '2019-03-16 07:10:30', 3, 1, 1),
 (2, 4, 'Blue', 'Blue', 25, 2, '2019-03-16 07:10:47', '2019-03-16 07:10:47', 3, 1, 1),
-(3, 4, 'Green', 'Green', 25, 3, '2019-03-16 07:11:01', '2019-03-16 07:11:01', 3, 1, 1),
+(3, 4, 'Green', 'Green', 25, 5, '2019-04-01 06:29:22', '2019-03-16 07:11:01', 3, 1, 1),
 (4, 4, 'Pink', 'Pink', 25, 4, '2019-03-16 07:11:53', '2019-03-16 07:11:53', 3, 1, 1),
-(5, 6, 'ICB1', 'ICS Boys part 1', 30, 5, '2019-03-18 06:40:23', '0000-00-00 00:00:00', 3, 0, 1),
+(5, 6, 'ICB1', 'ICS Boys part 1', 30, 15, '2019-04-02 17:21:50', '0000-00-00 00:00:00', 3, 0, 1),
 (6, 6, 'ICB2', 'ICS Boys part II', 30, 6, '2019-03-18 06:40:28', '0000-00-00 00:00:00', 3, 0, 1);
 
 -- --------------------------------------------------------
@@ -1577,7 +1674,7 @@ INSERT INTO `std_subjects` (`std_subject_id`, `class_id`, `std_subject_name`) VA
 (2, 14, 'Biology,Chemistry,Physics,English A,English B,Urdu A,Urdu B,Pak-Studies'),
 (3, 13, 'Computer,Chemistry,Physics,English A,English B,Urdu A,Urdu B,Islamiat'),
 (4, 14, 'Computer,Chemistry,Physics,English A,English B,Urdu A,Urdu B,Pak-Studies'),
-(5, 1, 'Math,English A,Urdu A,Islamiat'),
+(5, 1, 'Drawing,Math,English A,Urdu A,Islamiat,History / Pak-Studies'),
 (6, 2, 'Math,English A,Urdu A,Islamiat'),
 (7, 3, 'Math,English A,Urdu A,Islamiat'),
 (8, 4, 'Math,English A,Urdu A,Islamiat'),
@@ -1587,7 +1684,7 @@ INSERT INTO `std_subjects` (`std_subject_id`, `class_id`, `std_subject_name`) VA
 (12, 8, 'Math,English A,Urdu A,Islamiat'),
 (13, 9, 'Math,English A,Urdu A,Islamiat'),
 (14, 11, 'Math,English A,Urdu A,Islamiat'),
-(15, 12, 'Math,English A,Urdu A,Islamiat');
+(15, 12, 'Math,English A,Urdu A,Islamiat,Science,Computer');
 
 -- --------------------------------------------------------
 
@@ -1613,19 +1710,19 @@ CREATE TABLE `subjects` (
 
 INSERT INTO `subjects` (`subject_id`, `subject_name`, `subject_alias`, `subject_description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
 (1, 'Math', 'M', 'Math', '2019-03-16 06:31:18', '0000-00-00 00:00:00', 0, 0, 1),
-(2, 'English A', 'E', 'English A', '2019-03-16 06:32:47', '0000-00-00 00:00:00', 0, 0, 1),
-(3, 'English B', 'U', 'English B', '2019-03-16 06:33:01', '0000-00-00 00:00:00', 0, 0, 1),
-(4, 'Urdu A', 'P', 'Urdu A', '2019-03-16 06:33:17', '0000-00-00 00:00:00', 0, 0, 1),
-(5, 'Urdu B', 'B', 'Urdu B', '2019-03-16 06:33:27', '0000-00-00 00:00:00', 0, 0, 1),
-(6, 'Science', 'I', 'Science', '2019-03-16 06:33:42', '0000-00-00 00:00:00', 0, 0, 1),
-(7, 'History / Pak-Studies', 'Cm', 'History / Pak-Studies', '2019-03-16 06:34:19', '0000-00-00 00:00:00', 0, 0, 1),
-(8, 'Computer', 'Ch', 'Computer', '2019-03-16 06:34:39', '0000-00-00 00:00:00', 0, 0, 1),
-(9, 'Islamiat', 'Ps', 'Islamiat', '2019-03-16 06:35:03', '2018-12-31 11:57:46', 0, 1, 0),
-(10, 'Drawing', 'Ec', 'Drawing', '2019-03-16 06:35:15', '0000-00-00 00:00:00', 9, 0, 1),
-(11, 'Biology', 'St', 'Biology', '2019-03-16 06:36:11', '0000-00-00 00:00:00', 0, 0, 1),
-(12, 'Physics', 'M', 'Physics', '2019-03-16 06:36:24', '0000-00-00 00:00:00', 0, 0, 1),
-(13, 'Chemistry', 'E', 'Chemistry', '2019-03-16 06:36:38', '0000-00-00 00:00:00', 0, 0, 1),
-(14, 'Islamiat (Elective)', 'U', 'Islamiat (Elective)', '2019-03-16 06:37:18', '0000-00-00 00:00:00', 0, 0, 1);
+(2, 'English A', 'Ea', 'English A', '2019-04-02 14:22:52', '0000-00-00 00:00:00', 0, 0, 1),
+(3, 'English B', 'Eb', 'English B', '2019-04-02 14:22:48', '0000-00-00 00:00:00', 0, 0, 1),
+(4, 'Urdu A', 'Ua', 'Urdu A', '2019-04-02 14:23:04', '0000-00-00 00:00:00', 0, 0, 1),
+(5, 'Urdu B', 'Ub', 'Urdu B', '2019-04-02 14:23:14', '0000-00-00 00:00:00', 0, 0, 1),
+(6, 'Science', 'S', 'Science', '2019-04-02 14:20:44', '0000-00-00 00:00:00', 0, 0, 1),
+(7, 'History / Pak-Studies', 'Pak', 'History / Pak-Studies', '2019-04-02 14:23:35', '0000-00-00 00:00:00', 0, 0, 1),
+(8, 'Computer', 'Cm', 'Computer', '2019-04-02 14:23:38', '0000-00-00 00:00:00', 0, 0, 1),
+(9, 'Islamiat', 'I', 'Islamiat', '2019-04-02 14:23:42', '2018-12-31 11:57:46', 0, 1, 0),
+(10, 'Drawing', 'D', 'Drawing', '2019-04-02 14:23:48', '0000-00-00 00:00:00', 9, 0, 1),
+(11, 'Biology', 'B', 'Biology', '2019-04-02 14:23:52', '0000-00-00 00:00:00', 0, 0, 1),
+(12, 'Physics', 'Ph', 'Physics', '2019-04-02 14:23:59', '0000-00-00 00:00:00', 0, 0, 1),
+(13, 'Chemistry', 'Ch', 'Chemistry', '2019-04-02 14:24:04', '0000-00-00 00:00:00', 0, 0, 1),
+(14, 'Islamiat (Elective)', 'I(e)', 'Islamiat (Elective)', '2019-04-02 14:23:29', '0000-00-00 00:00:00', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1651,11 +1748,9 @@ CREATE TABLE `teacher_subject_assign_detail` (
 --
 
 INSERT INTO `teacher_subject_assign_detail` (`teacher_subject_assign_detail_id`, `teacher_subject_assign_detail_head_id`, `class_id`, `subject_id`, `no_of_lecture`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(8, 8, 1, 5, '2 Lectures', '2019-02-25 06:46:22', '0000-00-00 00:00:00', 9, 0, 1),
-(9, 8, 1, 8, '2 Lectures', '2019-02-25 06:46:22', '0000-00-00 00:00:00', 9, 0, 1),
-(10, 8, 5, 7, '2 Lectures', '2019-03-05 10:13:54', '0000-00-00 00:00:00', 9, 0, 1),
-(11, 9, 5, 6, '1 Lecture', '2019-03-05 10:14:01', '0000-00-00 00:00:00', 3, 0, 1),
-(12, 9, 4, 6, '1 Lecture', '2019-03-03 15:25:07', '0000-00-00 00:00:00', 3, 0, 1);
+(1, 10, 2, 10, '1 Lecture', '2019-04-02 05:41:23', '0000-00-00 00:00:00', 1, 0, 1),
+(2, 10, 1, 1, '1 Lecture', '2019-04-02 05:41:46', '0000-00-00 00:00:00', 1, 0, 1),
+(3, 10, 1, 2, '1 Lecture', '2019-04-02 05:41:46', '0000-00-00 00:00:00', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1679,8 +1774,8 @@ CREATE TABLE `teacher_subject_assign_head` (
 --
 
 INSERT INTO `teacher_subject_assign_head` (`teacher_subject_assign_head_id`, `teacher_id`, `teacher_subject_assign_head_name`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(8, 1, 'Kinza Mustafa', '2019-02-25 06:46:22', '0000-00-00 00:00:00', 9, 0, 1),
-(9, 9, 'Zia ur Rehman', '2019-03-03 15:25:07', '0000-00-00 00:00:00', 3, 0, 1);
+(9, 9, 'Zia ur Rehman', '2019-03-03 15:25:07', '0000-00-00 00:00:00', 3, 0, 1),
+(10, 1, 'Kinza Mustafa', '2019-04-02 05:41:23', '0000-00-00 00:00:00', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1713,7 +1808,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `branch_id`, `first_name`, `last_name`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `user_type`, `user_photo`, `is_block`, `status`, `created_at`, `updated_at`) VALUES
 (1, 5, 'Dexterous', 'Developers', 'dexdevs', 'pQEdYTAVV_wLtqIALoSZ-vELIA0mdsOx', '$2y$13$ClHehtUhZZQqsocCsPnEwer2wfQd4gTcpwSOJTkWnvoMD/oFzfCpG', NULL, 'anas@dexdevs.com', 'dexdevs', 'userphotos/dexdevs_photo.png', 1, 10, 1552727256, 1552727256),
 (3, 5, 'Super', 'Admin', 'Superadmin', 'xqZuT3vxOiZ-rsN56V6wjZhi7VXMpKnD', '$2y$13$9TnNqeWAHECax0kmKSBzK.tGW/ePQm6IkutslR9ITYIXocjs4nnX.', NULL, 'superadmin@gmail.com', 'Superadmin', 'userphotos/Superadmin_photo.png', 1, 10, 1552883449, 1552883449),
-(4, 6, 'Dexterous', 'Developers', 'dexdevsdeveloper', 'm4vI7EWTZ61_eTBrJf_tliCWdgRfCKzM', '$2y$13$k6pJmBNM4hrkgZh0SYhcC.dZLxMLOjsJtVo55TV4QiVIJ4F6t7lIW', NULL, 'admin@dexdevs.com', 'dexdevs2', 'userphotos/dexdevs2_photo.png', 1, 10, 1552894313, 1552894313);
+(4, 6, 'Dexterous', 'Developers', 'dexdevsdeveloper', 'm4vI7EWTZ61_eTBrJf_tliCWdgRfCKzM', '$2y$13$k6pJmBNM4hrkgZh0SYhcC.dZLxMLOjsJtVo55TV4QiVIJ4F6t7lIW', NULL, 'admin@dexdevs.com', 'dexdevs2', 'userphotos/dexdevs2_photo.png', 1, 10, 1552894313, 1552894313),
+(5, 5, 'kinza', 'mustafa', '45102-0511722-2', 'btMs8qhxAC0KX6rrAtc-o3rOXJ0sd5G5', '$2y$13$gfQvZ3uqgcRKSJIHO.jdMen8fGXZrByjRL1vURjzU7ttHaPOcu572', NULL, 'kinza.fatima.522@gmail.com', 'Teacher', 'userphotos/kinza_photo.jpg', 1, 10, 1554181707, 1554181707);
 
 -- --------------------------------------------------------
 
@@ -1956,6 +2052,23 @@ ALTER TABLE `institute_name`
   ADD PRIMARY KEY (`Institute_name_id`);
 
 --
+-- Indexes for table `marks_details`
+--
+ALTER TABLE `marks_details`
+  ADD PRIMARY KEY (`marks_detail_id`),
+  ADD KEY `marks_head_id` (`marks_head_id`,`subject_id`),
+  ADD KEY `subject_id` (`subject_id`);
+
+--
+-- Indexes for table `marks_head`
+--
+ALTER TABLE `marks_head`
+  ADD PRIMARY KEY (`marks_head_id`),
+  ADD KEY `exam_category_id` (`exam_category_id`,`class_head_id`,`std_id`),
+  ADD KEY `class_head_id` (`class_head_id`),
+  ADD KEY `std_id` (`std_id`);
+
+--
 -- Indexes for table `marks_weitage`
 --
 ALTER TABLE `marks_weitage`
@@ -2018,7 +2131,8 @@ ALTER TABLE `std_attendance`
   ADD KEY `student_id` (`student_id`),
   ADD KEY `session_id` (`session_id`),
   ADD KEY `section_id` (`section_id`),
-  ADD KEY `subject_id` (`subject_id`);
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `branch_id` (`branch_id`);
 
 --
 -- Indexes for table `std_class_name`
@@ -2267,13 +2381,13 @@ ALTER TABLE `exams_category`
 -- AUTO_INCREMENT for table `exams_criteria`
 --
 ALTER TABLE `exams_criteria`
-  MODIFY `exam_criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `exam_criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `exams_schedule`
 --
 ALTER TABLE `exams_schedule`
-  MODIFY `exam_schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `exam_schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `fee_transaction_detail`
@@ -2318,10 +2432,22 @@ ALTER TABLE `institute_name`
   MODIFY `Institute_name_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `marks_details`
+--
+ALTER TABLE `marks_details`
+  MODIFY `marks_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `marks_head`
+--
+ALTER TABLE `marks_head`
+  MODIFY `marks_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `marks_weitage`
 --
 ALTER TABLE `marks_weitage`
-  MODIFY `marks_weitage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `marks_weitage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `month`
@@ -2357,7 +2483,7 @@ ALTER TABLE `std_academic_info`
 -- AUTO_INCREMENT for table `std_attendance`
 --
 ALTER TABLE `std_attendance`
-  MODIFY `std_attend_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `std_attend_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `std_class_name`
@@ -2447,19 +2573,19 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `teacher_subject_assign_detail`
 --
 ALTER TABLE `teacher_subject_assign_detail`
-  MODIFY `teacher_subject_assign_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `teacher_subject_assign_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `teacher_subject_assign_head`
 --
 ALTER TABLE `teacher_subject_assign_head`
-  MODIFY `teacher_subject_assign_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `teacher_subject_assign_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -2560,6 +2686,21 @@ ALTER TABLE `fee_transaction_head`
   ADD CONSTRAINT `fee_transaction_head_ibfk_9` FOREIGN KEY (`section_id`) REFERENCES `std_sections` (`section_id`);
 
 --
+-- Constraints for table `marks_details`
+--
+ALTER TABLE `marks_details`
+  ADD CONSTRAINT `marks_details_ibfk_1` FOREIGN KEY (`marks_head_id`) REFERENCES `marks_head` (`marks_head_id`),
+  ADD CONSTRAINT `marks_details_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
+
+--
+-- Constraints for table `marks_head`
+--
+ALTER TABLE `marks_head`
+  ADD CONSTRAINT `marks_head_ibfk_1` FOREIGN KEY (`exam_category_id`) REFERENCES `exams_category` (`exam_category_id`),
+  ADD CONSTRAINT `marks_head_ibfk_2` FOREIGN KEY (`class_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`),
+  ADD CONSTRAINT `marks_head_ibfk_3` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`);
+
+--
 -- Constraints for table `marks_weitage`
 --
 ALTER TABLE `marks_weitage`
@@ -2574,22 +2715,71 @@ ALTER TABLE `std_academic_info`
   ADD CONSTRAINT `std_academic_info_ibfk_3` FOREIGN KEY (`subject_combination`) REFERENCES `std_subjects` (`std_subject_id`);
 
 --
+-- Constraints for table `std_attendance`
+--
+ALTER TABLE `std_attendance`
+  ADD CONSTRAINT `std_attendance_ibfk_1` FOREIGN KEY (`class_name_id`) REFERENCES `std_class_name` (`class_name_id`),
+  ADD CONSTRAINT `std_attendance_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `std_sections` (`section_id`),
+  ADD CONSTRAINT `std_attendance_ibfk_3` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`),
+  ADD CONSTRAINT `std_attendance_ibfk_4` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`),
+  ADD CONSTRAINT `std_attendance_ibfk_5` FOREIGN KEY (`teacher_id`) REFERENCES `emp_info` (`emp_id`),
+  ADD CONSTRAINT `std_attendance_ibfk_6` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`),
+  ADD CONSTRAINT `std_attendance_ibfk_7` FOREIGN KEY (`student_id`) REFERENCES `std_personal_info` (`std_id`);
+
+--
 -- Constraints for table `std_class_name`
 --
 ALTER TABLE `std_class_name`
   ADD CONSTRAINT `std_class_name_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`);
 
 --
+-- Constraints for table `std_enrollment_detail`
+--
+ALTER TABLE `std_enrollment_detail`
+  ADD CONSTRAINT `std_enrollment_detail_ibfk_1` FOREIGN KEY (`std_enroll_detail_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`),
+  ADD CONSTRAINT `std_enrollment_detail_ibfk_2` FOREIGN KEY (`std_enroll_detail_std_id`) REFERENCES `std_personal_info` (`std_id`);
+
+--
+-- Constraints for table `std_enrollment_head`
+--
+ALTER TABLE `std_enrollment_head`
+  ADD CONSTRAINT `std_enrollment_head_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`),
+  ADD CONSTRAINT `std_enrollment_head_ibfk_2` FOREIGN KEY (`class_name_id`) REFERENCES `std_class_name` (`class_name_id`),
+  ADD CONSTRAINT `std_enrollment_head_ibfk_3` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`),
+  ADD CONSTRAINT `std_enrollment_head_ibfk_4` FOREIGN KEY (`section_id`) REFERENCES `std_sections` (`section_id`);
+
+--
 -- Constraints for table `std_sections`
 --
 ALTER TABLE `std_sections`
-  ADD CONSTRAINT `std_sections_ibfk_1` FOREIGN KEY (`section_subjects`) REFERENCES `std_subjects` (`std_subject_id`);
+  ADD CONSTRAINT `std_sections_ibfk_1` FOREIGN KEY (`section_subjects`) REFERENCES `std_subjects` (`std_subject_id`),
+  ADD CONSTRAINT `std_sections_ibfk_2` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`);
 
 --
 -- Constraints for table `std_subjects`
 --
 ALTER TABLE `std_subjects`
   ADD CONSTRAINT `std_subjects_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `std_class_name` (`class_name_id`);
+
+--
+-- Constraints for table `teacher_subject_assign_detail`
+--
+ALTER TABLE `teacher_subject_assign_detail`
+  ADD CONSTRAINT `teacher_subject_assign_detail_ibfk_1` FOREIGN KEY (`teacher_subject_assign_detail_head_id`) REFERENCES `teacher_subject_assign_head` (`teacher_subject_assign_head_id`),
+  ADD CONSTRAINT `teacher_subject_assign_detail_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`),
+  ADD CONSTRAINT `teacher_subject_assign_detail_ibfk_3` FOREIGN KEY (`class_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`);
+
+--
+-- Constraints for table `teacher_subject_assign_head`
+--
+ALTER TABLE `teacher_subject_assign_head`
+  ADD CONSTRAINT `teacher_subject_assign_head_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `emp_info` (`emp_id`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

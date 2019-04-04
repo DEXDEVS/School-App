@@ -10,43 +10,46 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'std_attend_id',
+        [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'marks_detail_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'marks_head_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'subject_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'obtained_marks',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'exam_attendance',
+    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'exam_status',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'teacher_id',
-        'value'=>'teacher.emp_name'
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'class_name_id',
-        'value'=>'className.class_name'
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'session_id',
-        'value'=>'session.session_name'
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'section_id',
-        'value'=>'section.section_name'
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'date',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'student_id',
-        'value'=>'student.std_name'
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'status',
-    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_by',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_by',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_at',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_at',
+    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

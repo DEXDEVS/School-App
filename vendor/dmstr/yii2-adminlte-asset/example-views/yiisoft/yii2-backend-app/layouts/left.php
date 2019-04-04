@@ -144,8 +144,10 @@
                             //['label' => 'Manage Fee Vouchers', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-transaction-detail',],
                             ['label' => 'Manage Class Fee Accounts', 'icon' => 'caret-right', 'url' => "./class-account"],
                             ['label' => 'Generate Student Vouchers', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-fee-voucher"],
-                            ['label' => 'Collect Student Vouchers', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-collect-voucher"],
-                             ['label' => 'Class Fee Report', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-class-account-fee-report"]
+                            ['label' => 'Monthly Collection', 'icon' => 'caret-right', 'url' => "./monthly-voucher"],
+                            ['label' => 'Yearly Collection', 'icon' => 'caret-right', 'url' => "./yearly-voucher"],
+                            //['label' => 'Collect Student Vouchers', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-collect-voucher"],
+                            ['label' => 'Class Fee Report', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-class-account-fee-report"]
                         ],
                     ],
                     // ------------------------------------------------
@@ -210,10 +212,13 @@
                         'items' => [
                             ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
                             ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
-                            ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
+                            ['label' => 'Marks Weitage', 'icon' => 'caret-right', 'url' => ["/marks-weitage"],],
+                            // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
                             ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
                             ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
-                            ['label' => 'Marks Weitage', 'icon' => 'caret-right', 'url' => ["/marks-weitage"],],
+                            ['label' => 'Manage marks Sheet', 'icon' => 'caret-right', 'url' => ["/manage-marks-sheet "],],
+                            ['label' => 'View marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
+                            
                         ],
                     ],
                     // Exams module close here

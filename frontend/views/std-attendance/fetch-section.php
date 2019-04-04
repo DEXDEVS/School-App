@@ -1,9 +1,11 @@
 <?php
+	$branch_id = Yii::$app->user->identity->branch_id;
+
 	if(isset($_POST['session_Id']))  {
 		$classId = $_POST['class_Id'];
 		$sessionId = $_POST['session_Id'];
 
-		$sections = Yii::$app->db->createCommand("SELECT seh.section_id, sect.section_name FROM std_enrollment_head as seh INNER JOIN std_sections as sect ON seh.section_id = sect.section_id WHERE seh.class_name_id = '$classId' AND seh.session_id = '$sessionId'")->queryAll();
+		$sections = Yii::$app->db->createCommand("SELECT seh.section_id, sect.section_name FROM std_enrollment_head as seh INNER JOIN std_sections as sect ON seh.section_id = sect.section_id WHERE seh.class_name_id = '$classId' AND seh.session_id = '$sessionId' AND seh.branch_id = '$branch_id'")->queryAll();
 
 		echo json_encode($sections);
 	}
@@ -12,7 +14,7 @@
 		$sessionId = $_POST['session'];
 		$sectionId = $_POST['section'];
 
-		$subjectId = Yii::$app->db->createCommand("SELECT tsad.subject_id FROM teacher_subject_assign_detail as tsad INNER JOIN std_enrollment_head as seh ON tsad.class_id = seh.std_enroll_head_id WHERE seh.class_name_id = '$classId' AND seh.session_id = '$sessionId' AND seh.section_id = '$sectionId' ")->queryAll();
+		$subjectId = Yii::$app->db->createCommand("SELECT tsad.subject_id FROM teacher_subject_assign_detail as tsad INNER JOIN std_enrollment_head as seh ON tsad.class_id = seh.std_enroll_head_id WHERE seh.class_name_id = '$classId' AND seh.session_id = '$sessionId' AND seh.section_id = '$sectionId' AND seh.branch_id = '$branch_id'")->queryAll();
 
 		 $subId = array();
 		 $subName = array();
@@ -30,7 +32,7 @@
 	else if(isset($_POST['class_Id'])){
 		$classId = $_POST['class_Id'];
 	
-		$sessions = Yii::$app->db->createCommand("SELECT seh.session_id, sess.session_name FROM std_enrollment_head as seh INNER JOIN std_sessions as sess ON  seh.session_id = sess.session_id WHERE seh.class_name_id = '$classId'")->queryAll();
+		$sessions = Yii::$app->db->createCommand("SELECT seh.session_id, sess.session_name FROM std_enrollment_head as seh INNER JOIN std_sessions as sess ON  seh.session_id = sess.session_id WHERE seh.class_name_id = '$classId' AND seh.branch_id = '$branch_id '")->queryAll();
 
 		echo json_encode($sessions);
 	} ?>

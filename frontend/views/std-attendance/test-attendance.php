@@ -165,40 +165,26 @@ transition: all 0.4s ease-in-out;
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 col-md-offset-9">
-            <a href="./home"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
-        </div>
-    </div><br>
-    <div class="box box-default" style=" border-color:#605CA8;" >
-        <div class="box-header">
-           <h2 class="text-center" style="color:#605CA8; font-family: georgia;"><img src="backend/web/uploads/teacher.jpg" height="40px" width="40px"> List of Classes</h2><hr  style=" border-color:#c8c6f2;" > 
-        </div>
-        <div class="box-body">
-            <?php
+    <?php
+            $branch_id = Yii::$app->user->identity->branch_id;
+            $empEmail = Yii::$app->user->identity->email;
+            $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$empEmail'")->queryAll();
+            $empId = $empId[0]['emp_id'];
+            $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
+            $teacherHeadId = $teacherId[0]['teacher_subject_assign_head_id'];
 
-        $branch_id = Yii::$app->user->identity->branch_id;
-        $empEmail = Yii::$app->user->identity->email;
-        $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$empEmail'")->queryAll();
-        $empId = $empId[0]['emp_id'];
-        $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
-        $headId = $teacherId[0]['teacher_subject_assign_head_id'];
-
-		$classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d INNER JOIN teacher_subject_assign_head as h ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
-		$countClassIds = count($classId);
-   
-    	for ($i=0; $i <$countClassIds ; $i++) {
-    	 $id = $classId[$i]['class_id'];
-    	 $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id
-    		FROM std_enrollment_head as seh
-    		INNER JOIN teacher_subject_assign_detail as tsad
-    		ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
-        $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
-        FROM teacher_subject_assign_detail as tsad
-        WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$headId'")->queryAll();
-        
-            ?>
-
+            $classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d INNER JOIN teacher_subject_assign_head as h ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
+            $countClassIds = count($classId);
+       
+            for ($i=0; $i <$countClassIds ; $i++) {
+            $id = $classId[$i]['class_id'];
+            $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name
+                FROM std_enrollment_head as seh
+                INNER JOIN teacher_subject_assign_detail as tsad
+                ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
+            $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
+            FROM teacher_subject_assign_detail as tsad
+            WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$teacherHeadId'")->queryAll(); ?>
            <div class="col-md-6">
                 <div class="box box-danger collapsed-box" style=" border-color:#605CA8;">
                     <div class="box-header" style="background-color:#c8c6f2;padding: 15px;">
@@ -215,11 +201,10 @@ transition: all 0.4s ease-in-out;
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
-                    	<?php 
-                    		foreach ($subjectsIDs as $key => $value) {
+                        <?php 
+                            foreach ($subjectsIDs as $key => $value) {
                                     
-                    			$SubID = $value['subject_id'];
+                                $SubID = $value['subject_id'];
                                 //$count = count($SubID);
                                 $subjectsNames = Yii::$app->db->createCommand("SELECT subject_name
                                 FROM subjects WHERE subject_id = '$SubID'")->queryAll();
@@ -232,262 +217,15 @@ transition: all 0.4s ease-in-out;
                                <?php echo $subjectsNames[0]['subject_name']; ?>  
                             </a>
                         </td>
-                        
-                    <?php   
-                        //end of foreach
-
-                        } 
-
-                                
-                        ?>
-                    	
+                        <?php //end of foreach
+                            } ?>
                     </div>
                     <!-- /.box-body -->
                 </div>
               <!-- /.box -->
             </div>
-  <?php 
-
-    //end of for loop
-    } 
-    ?>
-
-
-    <div class="modal fade col-md-12" id="<?php echo $value['subject_id']; ?>">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">
-            <b>
-                <?php echo $CLASSName[0]['std_enroll_head_name']; ?>
-            </b><br>
-          <?php echo $subjectsNames[0]['subject_name']; ?>  
-        </h4>
-      </div>
-      <form method="" action="">
-        <div class="modal-body">
-         
-          <div class="row container-fluid">
-    <div class="box box-danger">
-        <div class="box-header" style="background-color:#d6484838;">
-            <h2 style="text-align: center;">Teacher Activity Panel</h2>
-        </div>
-        
-        <div class="box-body">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" >
-                    <div class="offer offer-radius offer-danger">
-                        <div class="shape">
-                            <div class="shape-text">
-                                <span class="glyphicon glyphicon glyphicon-th"></span>                          
-                            </div>
-                        </div>
-                        <div class="offer-content">
-                            <h4 class="">
-                            Attendance
-                            </h4>
-                            <a href="./take-attendance?sub_id=<?php echo $SubID;?>&class_id=<?php echo $id; ?>&emp_id=<?php echo $empId; ?>">Take attendance</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="offer offer-radius offer-success">
-                        <div class="shape">
-                            <div class="shape-text">
-                                <span class="glyphicon glyphicon glyphicon-eye-open"></span>                            
-                            </div>
-                        </div>
-                        <div class="offer-content">
-                            <h4 class="">
-                                Reports
-                            </h4>
-                            <a href="./view-attendance?sub_id=<?php echo $SubID;?>&class_id=<?php echo $id; ?>&emp_id=<?php echo $empId; ?>">View attendance reports</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="offer offer-radius offer-primary">
-                        <div class="shape">
-                            <div class="shape-text">
-                                <span class="glyphicon  glyphicon-user"></span>                         
-                            </div>
-                        </div>
-                        <div class="offer-content">
-                            <h4 class="">
-                                Assignment
-                            </h4>
-                            <a href="">View assignment</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="offer offer-radius offer-info">
-                        <div class="shape">
-                            <div class="shape-text">
-                                <span class="glyphicon  glyphicon-bell"></span>                         
-                            </div>
-                        </div>
-                        <div class="offer-content">
-                            <h4 class="">
-                                Quiz
-                            </h4>
-                            <a href="">View Quiz</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <form method="" action="">
-                <div class="modal-body">
-                    <div class="row container-fluid">
-                        <div class="box box-success">
-                            <div class="box-header" style="background-color:#dff0d8;">
-                            <h2 style="text-align: center;">Teacher Activity Panel</h2>
-                             </div>
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" >
-                                        <div class="offer offer-radius offer-danger">
-                                            <div class="shape">
-                                                <div class="shape-text">
-                                                    <span class="glyphicon glyphicon glyphicon-th"></span>                          
-                                                </div>
-                                            </div>
-                                            <div class="offer-content">
-                                                <h4 class="">
-                                                Attendance
-                                                </h4>
-                                                <a href="./take-attendance?sub_id=<?php echo $SubID;?>&class_id=<?php echo $id; ?>&emp_id=<?php echo $empId; ?>">Take attendance</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <div class="offer offer-radius offer-success">
-                                            <div class="shape">
-                                                <div class="shape-text">
-                                                    <span class="glyphicon glyphicon glyphicon-eye-open"></span>                            
-                                                </div>
-                                            </div>
-                                            <div class="offer-content">
-                                                <h4 class="">
-                                                    Reports
-                                                </h4>
-                                                <a href="./view-attendance?sub_id=<?php echo $SubID;?>&class_id=<?php echo $id; ?>&emp_id=<?php echo $empId; ?>">View attendance reports</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <div class="offer offer-radius offer-primary">
-                                            <div class="shape">
-                                                <div class="shape-text">
-                                                    <span class="glyphicon  glyphicon-user"></span>                         
-                                                </div>
-                                            </div>
-                                            <div class="offer-content">
-                                                <h4 class="">
-                                                    Assignment
-                                                </h4>
-                                                <a href="">View assignment</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <div class="offer offer-radius offer-info">
-                                            <div class="shape">
-                                                <div class="shape-text">
-                                                    <span class="glyphicon  glyphicon-bell"></span>                         
-                                                </div>
-                                            </div>
-                                            <div class="offer-content">
-                                                <h4 class="">
-                                                    Quiz
-                                                </h4>
-                                                <a href="">View Quiz</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- row 2 start -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" >
-                                        <div class="offer offer-radius offer-warning">
-                                            <div class="shape">
-                                                <div class="shape-text">
-                                                    <span class="glyphicon glyphicon glyphicon-edit"></span>                            
-                                                </div>
-                                            </div>
-                                            <div class="offer-content">
-                                                <!-- class="lead" -->
-                                                <h4 class="">
-                                                Marks Sheet
-                                                </h4>
-                                                <a href="">Add marks</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <div class="offer offer-radius offer-pink">
-                                            <div class="shape">
-                                                <div class="shape-text">
-                                                    <span class="glyphicon glyphicon glyphicon-eye-open"></span>                            
-                                                </div>
-                                            </div>
-                                            <div class="offer-content">
-                                                <h4 class="">
-                                                    Presen<br>tations
-                                                </h4>
-                                                <a href="">Manage presentation</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <div class="offer offer-radius offer-seagreen">
-                                            <div class="shape">
-                                                <div class="shape-text">
-                                                    <span class="glyphicon  glyphicon-user"></span>                         
-                                                </div>
-                                            </div>
-                                            <div class="offer-content">
-                                                <h4 class="">
-                                                    Assignment
-                                                </h4>
-                                                <a href="">View assignment</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <div class="offer offer-radius offer-brown">
-                                            <div class="shape">
-                                                <div class="shape-text">
-                                                    <span class="glyphicon  glyphicon-home"></span>                         
-                                                </div>
-                                            </div>
-                                            <div class="offer-content">
-                                                <h4 class="">
-                                                    Quiz
-                                                </h4>
-                                                <a href="">View Quiz</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- row 2 close -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    <!-- /.modal-content -->
-    </div>
-  <!-- /.modal-dialog -->
-</div>  
-        </div>
-    </div>
+  <?php  //end of for loop
+    } ?>
 </div> 
 </body>
 </html>

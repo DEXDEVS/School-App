@@ -7,16 +7,16 @@ use johnitvn\ajaxcrud\CrudAsset;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\StdAttendanceSearch */
+/* @var $searchModel common\models\MarksDetailsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Std Attendances';
+$this->title = 'Marks Details';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 ?>
-<div class="std-attendance-index">
+<div class="marks-details-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
@@ -26,10 +26,10 @@ CrudAsset::register($this);
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['attendance'],
-                    ['role'=>'','title'=> 'Create Students Attendance','class'=>'btn btn-success']).
+                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
+                    ['role'=>'modal-remote','title'=> 'Create new Marks Details','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
+                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.
                     '{export}'
                 ],
@@ -38,8 +38,8 @@ CrudAsset::register($this);
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
-                'type' => 'success', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Std Attendances listing',
+                'type' => 'primary', 
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Marks Details listing',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',

@@ -118,8 +118,7 @@ class StdEnrollmentDetailController extends Controller
         
                 ];         
             }else if($stdEnrollmentHead->load($request->post()) && $model->load($request->post())){
-                $transaction = \Yii::$app->db->beginTransaction();
-                try {
+                
                     $branch_id = Yii::$app->user->identity->branch_id;
                     $std_enrollment_head = Yii::$app->db->createCommand("SELECT * FROM std_enrollment_head where class_name_id = $stdEnrollmentHead->class_name_id AND session_id = $stdEnrollmentHead->session_id AND section_id = $stdEnrollmentHead->section_id")->queryAll();
 
@@ -163,13 +162,6 @@ class StdEnrollmentDetailController extends Controller
                             $model->updated_at = '0'; 
                             $model->save();
                             $updateStdAcademicInfo = Yii::$app->db->createCommand("UPDATE  std_academic_info SET std_enroll_status = '$std_enroll_status' WHERE std_id = '$value'")->execute();
-                    } 
-
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('warning', "Students enrolled in class successfully...!");
-                    } catch (Exception $e) {
-                        $transaction->rollBack();
-                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
                     }   
                 }
                 else {

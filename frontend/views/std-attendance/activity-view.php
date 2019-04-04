@@ -142,7 +142,7 @@ transition: all 0.4s ease-in-out;
                         <p style="background-color:#c8c6f2;color: ;text-align: center;">
                             <u><?php echo $date; ?></u>
                         </p>
-                    </li><hr  style=" border-color:#c8c6f2;" >br>
+                    </li><hr  style=" border-color:#c8c6f2;" ><br>
                     <li style="list-style-type: none;margin-top: -20px;">
                         <b>Class:</b>
                         <p>
@@ -240,7 +240,7 @@ transition: all 0.4s ease-in-out;
 							<h3 class="lead">
 							Marks Sheet
 							</h3>
-							<a href="">Add marks</a>
+							<a href="./marks-sheet?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&emp_id=<?php echo $emp_id ?>">Add marks</a>
 						</div>
 					</div>
 				</div>

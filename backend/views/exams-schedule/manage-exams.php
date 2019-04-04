@@ -210,8 +210,8 @@
 												<?php 
 
 												$teacher = Yii::$app->db->createCommand("
-												SELECT teacher_id,teacher_subject_assign_head_name
-												FROM  teacher_subject_assign_head
+												SELECT emp_id,emp_name
+												FROM emp_info WHERE group_by ='Faculty'
 												")->queryAll();
 												$countteacher = count($teacher);
 												 ?>
@@ -219,10 +219,10 @@
 												<?php 
 												for ($j=0; $j <$countteacher ; $j++) { ?>
 												<option value="<?php
-														echo $teacher[$j]['teacher_id'];
+														echo $teacher[$j]['emp_id'];
 												?>">
 												<?php
-														echo $teacher[$j]['teacher_subject_assign_head_name'];
+														echo $teacher[$j]['emp_name'];
 												?>
 												</option>
 												<?php } ?>
@@ -342,6 +342,7 @@
 				  exam_end_time 		= '$exam_end_time' AND
 				  exam_room 			= '$room'
 			")->queryAll();
+
 			$criteriaId = $examCriteriaId[0]['exam_criteria_id'];
 			
 		for ($i=0; $i <$subjCount ; $i++) { 
@@ -364,6 +365,7 @@
 	//closing of try block
 	} catch(Exception $e){
 		$transection->rollback();
+		echo $e;
 		Yii::$app->session->setFlash('warning', "Exam Schedule not managed. Try again!");
 	}
 }
