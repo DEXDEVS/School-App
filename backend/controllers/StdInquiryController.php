@@ -140,13 +140,6 @@ class StdInquiryController extends Controller
                     $transaction->rollBack();
                     Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
                 }
-
-                $transaction->commit();
-                    Yii::$app->session->setFlash('warning', "You have successfully add Inquiry...!");
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                    Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
-                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new StdInquiry",
