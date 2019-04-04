@@ -18,7 +18,6 @@
         $month     = $_POST["month"];
         $issueDate = $_POST["issue_date"];
         $dueDate   = $_POST["due_date"];
-        $message   = $_POST["message"];
         // change the format of dates....
         $issueDate  = date('d-m-Y', strtotime($issueDate));
         $dueDate  = date('d-m-Y', strtotime($dueDate));
