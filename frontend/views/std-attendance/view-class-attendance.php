@@ -19,7 +19,7 @@
             <?php
                 $branch_id = Yii::$app->user->identity->branch_id;
                 $empCnic = Yii::$app->user->identity->username;
-                $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_cnic = '$empCnic'")->queryAll();
+                $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_cnic = '$empCnic' AND emp.emp_branch_id = '$branch_id'")->queryAll();
                 $teacher_id = $empId[0]['emp_id'];
                 $classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d INNER JOIN teacher_subject_assign_head as h ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$teacher_id'")->queryAll();
             ?>
@@ -64,6 +64,7 @@
             </div>             
             <div class="col-md-2 col-md-offset-10">
                 <div class="form-group">
+                    <input type="hidden" name="branchid" value="<?php echo $branch_id;?>">
                     <label></label>
                     <button type="submit" name="submit" class="btn btn-success form-control" style="margin-top: -25px;">
                     <i class="fa fa-sign-in" aria-hidden="true"></i>    
@@ -79,18 +80,24 @@
         $sessionid = $_POST["sessionid"];
         $sectionid = $_POST["sectionid"];
 
+        $branch_id = Yii::$app->user->identity->branch_id;
         //Select studnet roll no and name
-        $student = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_id, sed.std_enroll_detail_std_id, sed.std_roll_no FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
+        $student = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_id, sed.std_enroll_detail_std_id, sed.std_roll_no FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid' AND seh.branch_id = '$branch_id '")->queryAll();
         $studentLength = count($student);
 
         //creating array for student attendance
         $attendanceArr = array();
-        for( $sId=0; $sId<$studentLength; $sId++) {
-            $stdId = $student[$sId]['std_enroll_detail_std_id'];
-            $attendance = Yii::$app->db->createCommand("SELECT subject_id,CAST(date AS DATE),status,student_id FROM std_attendance WHERE class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND student_id = '$stdId' ")->queryAll();
-            $attendanceArr[$sId] = $attendance;
-        }
-        
+        // for( $sId=0; $sId<$studentLength; $sId++) {
+        //     $stdId = $student[$sId]['std_enroll_detail_std_id'];
+        //     $attendance = Yii::$app->db->createCommand("SELECT subject_id,CAST(date AS DATE),status,student_id FROM std_attendance WHERE class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND student_id = '$stdId' ")->queryAll();
+        //     $attendanceArr[$sId] = $attendance;
+        // }
+        // $attendanceCount = count($attendanceArr);
+        // foreach ($attendanceArr as $key => $value) {
+        //     print_r($value); 
+        //     echo "<br>";
+        // }
+                                      
             
         // Selected Class Name
         $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classid'")->queryAll();
@@ -132,20 +139,19 @@
            $dayArray[] = date("D", strtotime($day));
            $dateArray[] = date("Y-m-d", strtotime($day));                
         }
-print_r($dateArray);
-print_r($dayArray);
-                
         
-        // $lastDateOfMonth = date("Y-m-t", strtotime($currentMonth));
-        // $lastDate = explode('-', $lastDateOfMonth);
-        // $lDate = $lastDate[2];
+        $lastDateOfMonth = date("Y-m-t", strtotime($currentMonth));
+        $lastDate = explode('-', $lastDateOfMonth);
+        $lastDate = $lastDate[2];
 
-        // $temp = $lDate / 7;
-        // if($temp == 4){
-        //     $rowCount = 4;
-        // } else {
-        //     $rowCount = 5;
-        // }
+        $temp = $lastDate / 7;
+        if($temp == 4){
+            $rowCount = 4;
+        } else {
+            $rowCount = 5;
+        }
+        $dateCount = 0;
+        $countAtt = 0;
         ?> 
 
 <div class="container-fluid">
@@ -157,7 +163,7 @@ print_r($dayArray);
                 <h3 class="box-title" style="float: right;"><?php echo "Attendance ( ".$currentMonth." )"; ?></h3>
             </div>
             <!-- /.box-header -->
-            <?php for ($row=0; $row <5 ; $row++) {  ?>
+            <?php for ($row=0; $row <$rowCount ; $row++) {  ?>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover table-bordered table-striped">
             
@@ -166,19 +172,27 @@ print_r($dayArray);
 					<th rowspan="2">Roll<br>#</th>
 					<th rowspan="2">Student<br>Name</th>
 					<?php 
-                        
-                        for ($date=1; $date <= 7 ; $date++) { 
-                             
-                        echo "<th colspan='6' style='text-align: center;'>$d-$m</th>";  
+                    $subjectCount =0;    
+                        for ($date=0; $date < 7 ; $date++) { 
+                            
+                           if($dateCount < $lastDate){
+                               echo "<th colspan='6' style='text-align: center;'>$dateArray[$dateCount]  $dayArray[$dateCount]</th>";
+                               $attendance = Yii::$app->db->createCommand("SELECT subject_id,status,student_id FROM std_attendance WHERE class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND CAST(date AS DATE) = '$dateArray[$dateCount]' ")->queryAll();
+                               $attendanceArr[$subjectCount] = $attendance;
+                              $countAtt = count($attendanceArr);
+                                $subjectCount++;
+                            }   
+                            $dateCount++;  
                         }
+                         print_r($attendance[0]['subject_id']);
 					?>
                 </tr>
                 <tr>
                 	<?php 
-                    for ($r=0; $r <4 ; $r++) { 
+                    for ($r=0; $r <$subjectCount ; $r++) { 
                         //loop to print subjects
                 		for ($s=0; $s <$subjectlength ; $s++) { ?>
-						<th style='padding: 1px 5px'><?php //echo $subjectAlias[$s]; ?></th>
+						<th style='padding: 1px 5px'><?php echo $subjectAlias[$s]; ?></th>
 					<?php	
                         }
                     } 
@@ -186,23 +200,33 @@ print_r($dayArray);
                 </tr>
 
                 <?php   for( $std=0; $std<$studentLength; $std++) { 
-                            $stdAttendance = 0;
                     ?>
                             <tr>
                                 <td><?php echo $std+1; ?></td>
                                 <td><?php echo $student[$std]['std_roll_no']; ?></td>
                                 <?php $stdId = $student[$std]['std_enroll_detail_std_id'];
                                       $stdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info  WHERE std_id = '$stdId'")->queryAll(); 
-                                      $attSubject = $attendance[0]['subject_id'];
-                                      $subAls = Yii::$app->db->createCommand("SELECT subject_alias FROM subjects WHERE subject_id = '$attSubject' ")->queryAll();
-                                      $subjAlias = $subAls[0]['subject_alias'];
-                                      $attendanceCount = count($attendance);
-                                      for ($y=0; $y<$attendanceCount; $y++){
-                                //var_dump($attendanceArr[$std][$y]);
-                                //echo "<br>";
-                                      } 
+                                      $subjectName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects  WHERE subject_id = '$stdId'")->queryAll(); 
+                                      
                                 ?>
                                 <td><?php echo $stdName[0]['std_name']; ?></td>
+
+                                <?php 
+                                for ($r=0; $r <$subjectCount ; $r++) {
+                                    //$subId = $attendance[0]['subject_id'];
+                                     // var_dump($subId);
+                                    for ($s=0; $s <$subjectlength ; $s++) { 
+                                        
+                                        ?> 
+                                    <td><?php
+                                            
+                               
+                                        ?>
+                                    </td>
+                                <?php   
+                        }
+                    } 
+                    ?>
                                 
                         </tr>
                     <?php //end of std loop 
