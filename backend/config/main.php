@@ -62,6 +62,7 @@ return [
                 'branches-view' => 'branches/view',
                 'departments-view' => 'departments/view',
                 'std-enrollment-head-view' => 'std-enrollment-head/view',
+                'std-enrollment-head' => 'std-enrollment-head/index',
                 //'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-promote' => 'std-enrollment-head/std-promote',
                 'teacher-subject-assign-head-view' => 'teacher-subject-assign-head/view',

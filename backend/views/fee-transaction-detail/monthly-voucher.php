@@ -32,6 +32,11 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
+                    <input type="month" class="form-control" name="monthYear" required="" placeholder="Select Month...">   
+                </div>    
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
                     <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> Show Voucher Details</b></button>
                 </div>    
             </div>   
@@ -47,13 +52,17 @@
     if(isset($_POST["submit"])){
         global $voucherNo;
 		$regNo = $_POST["reg_no"];
+        $monthYear = $_POST["monthYear"];
 
         $stdId = Yii::$app->db->createCommand("SELECT std_id FROM std_personal_info WHERE std_reg_no= '$regNo'")->queryAll();
         if(empty($stdId)){
             Yii::$app->session->setFlash('warning', "This registration number not exist! Select valid registration no");
         } else {
         $std_id = $stdId[0]['std_id'];
-    	$transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head WHERE std_id = '$std_id'")->queryAll();
+    	$transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head WHERE std_id = '$std_id' AND month = '$monthYear'")->queryAll();
+        if(empty($transactionHead)){
+            Yii::$app->session->setFlash('warning', "Please select the valid month");
+        } else {
         $voucherNo = $transactionHead[0]['fee_trans_id'];
         $transactionDetail = Yii::$app->db->createCommand("SELECT fee_type_id,fee_amount,collected_fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = '$voucherNo'")->queryAll();
         $count = count($transactionDetail);
@@ -182,6 +191,9 @@
             // alert message...
             Yii::$app->session->setFlash('warning', "This voucher has already paid...!");
         }
+    // end of reg_no else
+    }
+    // end of month else
     }
 }
 // isset close.... 

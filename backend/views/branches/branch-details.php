@@ -63,19 +63,19 @@
 
                 <ul class="list-group list-group-unbordered">
                   <li class="list-group-item">
-                    <b>Principal:</b>
-                      <a class="pull-right">
+                    <b>Principal:</b><br>
+                      <a>
                         <?php echo $branches[0]['branch_head_name'];?>
                       </a>
                   </li>
                   <li class="list-group-item">
-                    <b>Contact #:</b>
-                      <a class="pull-right">
+                    <b>Contact #:</b><br>
+                      <a>
                         <?php echo $branches[0]['branch_head_contact_no'];?>
                       </a>
                   </li>
                   <li class="list-group-item">
-                    <b>Email:</b>
+                    <b>Email:</b><br>
                     <a>
                       <?php echo $branches[0]['branch_head_email'];?>
                     </a>
@@ -394,16 +394,23 @@
                                 FROM emp_info as emp 
                                 INNER JOIN emp_designation as emInfo 
                                 ON emInfo.emp_designation_id = emp.emp_designation_id 
-                                WHERE emInfo.emp_designation_id = $key+1")->queryAll();
+                                WHERE emp.emp_branch_id = '$id' AND emInfo.emp_designation_id = $key+1")->queryAll();
                                 $empCount = count($emp);
                               ?>
-                                <td class="text-center"><?php echo $key+1; ?></td>
-                                <td><?php echo $value['emp_designation'] ?></td>
+                                <?php 
+                                    if ($value['emp_designation']=='Principal') {
+                                      echo '';
+                                    } else{ ?>
+                                <td class="text-center"><?php echo $key; ?></td>      
+                                <td>  
+                                  <?php echo $value['emp_designation']; ?>
+                                </td>
                                 <td align="center">
                                   <span class="label-warning" style="border-radius: 50%; padding: 3px 7px">
                                     <?php echo $empCount ?>
                                   </span>
                                 </td>
+                                <?php } ?>
                             </tr>
                             <?php } ?>
                           </tbody>

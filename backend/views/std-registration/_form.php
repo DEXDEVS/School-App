@@ -74,8 +74,8 @@ use yii\helpers\Url;
                         'size' => 'ms',
                         'clientOptions' => [
                             'autoclose' => true,
-                            'format' => 'yyyy-mm-dd HH:ii:ss',
-                            'startDate' => date('1960-01-01'),
+                            'format' => 'yyyy-mm-dd',
+                            'startDate' => date('2000-01-01'),
                             'endDate' => date(''),
                             'todayBtn' => true
                         ]
@@ -342,18 +342,20 @@ $('#inquiryNo').on('change',function(){
         data:{stdInquiryNo:stdInquiryNo},
         url: "$url",
         success: function(result){
-            var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-            $('#std_name').val(jsonResult['std_name']);
-            $('#std_father_name').val(jsonResult['std_father_name']);
-            $('#std_contact_no').val(jsonResult['std_contact_no']);
-            $('#std_father_contact_no').val(jsonResult['std_father_contact_no']);
-            $('#previous_class').val(jsonResult['std_previous_class']);
-            $('#previous_class_rollno').val(jsonResult['std_roll_no']);
-            $('#obtainedMarks').val(jsonResult['std_obtained_marks']);
-            $('#totalMarks').val(jsonResult['std_total_marks']);
-            $('#percentage').val(jsonResult['std_percentage']);
-            $('#std_permanent_address').val(jsonResult['std_address']);
-            $('#std_temporary_address').val(jsonResult['std_address']);
+            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+2));
+            console.log(jsonResult);
+            var student = jsonResult[0];
+            $('#std_name').val(student['std_name']);
+            $('#std_father_name').val(student['std_father_name']);
+            $('#std_contact_no').val(student['std_contact_no']);
+            $('#std_father_contact_no').val(student['std_father_contact_no']);
+            $('#previous_class').val(student['std_previous_class']);
+            $('#previous_class_rollno').val(student['std_roll_no']);
+            $('#obtainedMarks').val(student['std_obtained_marks']);
+            $('#totalMarks').val(student['std_total_marks']);
+            $('#percentage').val(student['std_percentage']);
+            $('#std_permanent_address').val(student['std_address']);
+            $('#std_temporary_address').val(student['std_address']);
         }         
     }); 
 });
@@ -449,7 +451,6 @@ $('#classId').on('change',function(){
         data:{class_Id:classId},
         url: "$url",
         success: function(result){ 
-        console.log(result);  
             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
             var options = '';
             $('#subjectId').empty();
