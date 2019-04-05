@@ -167,8 +167,8 @@ transition: all 0.4s ease-in-out;
 <div class="container-fluid">
     <?php
             $branch_id = Yii::$app->user->identity->branch_id;
-            $empEmail = Yii::$app->user->identity->email;
-            $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$empEmail'")->queryAll();
+            $empCnic = Yii::$app->user->identity->username;
+            $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_cnic = '$empCnic'")->queryAll();
             $empId = $empId[0]['emp_id'];
             $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
             $teacherHeadId = $teacherId[0]['teacher_subject_assign_head_id'];

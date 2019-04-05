@@ -67,6 +67,7 @@ return [
                 'activity-view' => 'std-attendance/activity-view',
                 'employe-dashboard'=>'site/employe-dashboard',
                 'marks-sheet'=>'std-attendance/marks-sheet',
+                'view-datesheet'=>'std-attendance/view-datesheet',
             ],
         ],
         
