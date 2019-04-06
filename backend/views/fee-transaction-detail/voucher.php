@@ -18,7 +18,6 @@
         $month     = $_POST["month"];
         $issueDate = $_POST["issue_date"];
         $dueDate   = $_POST["due_date"];
-        $message   = $_POST["message"];
         // change the format of dates....
         $issueDate  = date('d-m-Y', strtotime($issueDate));
         $dueDate  = date('d-m-Y', strtotime($dueDate));
@@ -60,16 +59,16 @@
 						<div class="col-md-<?php echo $j; ?>" style="border-right: black dashed 2px;">
 							<div class="row">
 								<div class="col-md-3">
-									<img src="images/brookfield_logo.jpg" class="img-circle img-responsive" style="float: left;" width="100px" >
+									<img src="images/abc_logo.jpg" class="img-circle img-responsive" style="float: left;" width="100px" >
 								</div>
 								<div class="col-md-9">
-									<h3>
+									<h3 style="margin-left: 50px;">
 										<?php echo $institue[0]['institute_name'] ?>
 									</h3>
-									<h4 style="margin-top: -5px; margin-left: 120px;">
+									<h4 style="margin-top: -5px; margin-left: 100px;">
 										Rahim Yar Khan
 									</h4>
-									<p style="margin-top: -5px; margin-left: 50px;">
+									<p style="margin-top: -5px; margin-left: 100px;">
 										<small><b>A/C:<?php echo $institue[0]['institute_account_no'] ?></b></small>
 									</p>
 								</div>
@@ -148,26 +147,26 @@
 											<th style="text-align: center;">Amount</th>
 										</tr>
 										<?php foreach ($feeType as $index => $value) { ?>
-											<tr>
-												<td align="center"><?php echo ($index +1);?></td>
-												<td colspan="2">
-													<?php if ($feeType[$index]['fee_type_name'] == 'Tuition Fee') {
-														echo $feeType[$index]['fee_type_name']. ' (' .$feeMonth.')';
-													}
-													else{
-													echo $feeType[$index]['fee_type_name'];
-													}?>		
-												</td>
-												<td align="center">
-													<?php
-														foreach ($feeDetail as $key => $value) { 
-															if($feeDetail[$key]['fee_type_id'] == $feeType[$index]['fee_type_id'] ){
-																echo $feeDetail[$key]['fee_amount'];
-															}		
-														} 
-													?>
-												</td>
-											</tr>
+										<tr>
+											<td align="center"><?php echo ($index +1);?></td>
+											<td colspan="2">
+												<?php if ($feeType[$index]['fee_type_name'] == 'Tuition Fee') {
+													echo $feeType[$index]['fee_type_name']. ' (' .date('F, Y', strtotime($months[0]["month"])).')';
+												}
+												else{
+												echo $feeType[$index]['fee_type_name'];
+												}?>		
+											</td>
+											<td align="center">
+												<?php
+													foreach ($feeDetail as $key => $value) { 
+														if($feeDetail[$key]['fee_type_id'] == $feeType[$index]['fee_type_id'] ){
+															echo $feeDetail[$key]['fee_amount'];
+														}		
+													} 
+												?>
+											</td>
+										</tr>
 										<?php } ?>	
 									</table>
 								</div>

@@ -3,6 +3,7 @@
 	$stdInquiryNo = $_POST['stdInquiryNo'];
 
  	$inquiryDetail = Yii::$app->db->createCommand("SELECT * FROM std_inquiry WHERE std_inquiry_no = '$stdInquiryNo'")->queryAll();
+ 	
  	echo json_encode($inquiryDetail);
  	}
 	else if(isset($_POST['session_Id'])){

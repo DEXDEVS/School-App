@@ -12,12 +12,18 @@ use kartik\export\ExportMenu;
 /* @var $searchModel common\models\StdPersonalInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Student Personal Information');
+$this->title = Yii::t('app', 'Student\'s Information');
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 ?>
+<style type="text/css">
+    .panel-heading{
+        background-color: #AA5397;
+        color: white;
+    }
+</style>
 <?php Pjax::begin(['id'=>'stdPersonal']); ?>
 <div class="std-personal-info-index">
     <div id="ajaxCrudDatatable">
@@ -63,7 +69,7 @@ CrudAsset::register($this);
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
-                'type' => 'primary', 
+                'type' => '', 
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Student Personal Information',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([

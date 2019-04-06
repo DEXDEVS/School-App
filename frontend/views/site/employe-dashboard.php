@@ -69,12 +69,12 @@ use yii\helpers\Url;
           <div class="small-box bg-red">
             <div class="inner">
               <h3>65</h3>
-              <p>Unique Visitors</p>
+              <p>View Date Sheet</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-eye-open" style="font-size: 70px;"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="./view-datesheet" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

@@ -60,6 +60,7 @@
                         <th style="text-align: center">Absent Fine</th>
                         <th style="text-align: center">Library Dues</th>
                         <th style="text-align: center">Transportation Fee</th>
+                        <th style="text-align: center">Examinatin Fee</th>
                         <th style="text-align: center">Total Amount</th>
                     </tr>
                     <?php 
@@ -113,6 +114,9 @@
                         </td>
                         <td>
                             <input class="form-control" type="number" id="transportFee_<?php echo $id; ?>" name="transport_fee[]"  onChange="transportationFee(<?php echo $id; ?>)" style="width: 100px; border: none;">
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" id="examFee_<?php echo $id; ?>" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 100px; border: none;">
                         </td>
                         <td>
                             <input class="form-control" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name="total_amount[]" value="<?php echo $netTotal ; ?>"  style="width: 80px; border: none;">
@@ -178,6 +182,14 @@
     }
     function transportationFee(i) {
             var transportFee = parseInt($('#transportFee_'+i).val());
+            totalAmount = parseInt($('#totalAmount_'+i).val());
+            var sum = 0;
+            sum = totalAmount + transportFee;
+            $('#totalAmount_'+i).val(sum);
+            $('#netTotal_'+i).val(sum);
+    }
+    function examinationFee(i) {
+            var transportFee = parseInt($('#examFee_'+i).val());
             totalAmount = parseInt($('#totalAmount_'+i).val());
             var sum = 0;
             sum = totalAmount + transportFee;
