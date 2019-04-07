@@ -329,6 +329,7 @@
 						'exam_start_time'		=> $exam_start_time,
 						'exam_end_time'			=> $exam_end_time ,
 						'exam_room' 			=> $room ,
+						'created_at'			=> new \yii\db\Expression('NOW()'),
 						'created_by'			=> Yii::$app->user->identity->id, 
 					])->execute();
 		if ($examCriteria) {
@@ -353,6 +354,7 @@
 						'date'				=> $date[$i] ,
 						'full_marks'		=> $fullmarks[$i],
 						'passing_marks'		=> $passingmarks[$i],
+							'created_at'		=> new \yii\db\Expression('NOW()'),
 						'created_by'		=> Yii::$app->user->identity->id, 
 					])->execute();
 				

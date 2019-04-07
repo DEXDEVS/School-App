@@ -213,9 +213,7 @@
                                         ?> 
                                     <td><?php
                                     if(!empty($attendanceArr[$s][$std]['status'])){
-
-
-                                     echo $attendanceArr[$s][$std]['status']; 
+                                        echo $attendanceArr[$s][$std]['status']; 
                                     } else {
                                         echo "";
                                     }
