@@ -68,16 +68,19 @@
 			WHERE c.std_enroll_head_id = '$classHead'
 			AND c.exam_category_id = '$examCategory'
 			")->queryAll();
-		$countSubjects = count($examSchedule);
+		if(empty($examSchedule)){
+			Yii::$app->session->setFlash('warning',"Exams not conducted yet.");
+		} else {
+			$countSubjects = count($examSchedule);
 
-		$students = Yii::$app->db->createCommand("SELECT d.std_enroll_detail_std_id,d.std_roll_no, d.std_enroll_detail_std_name FROM std_enrollment_detail as d
-			INNER JOIN std_enrollment_head as h 
-			ON d.std_enroll_detail_head_id = h.std_enroll_head_id
-			WHERE h.std_enroll_head_id = '$classHead';
-			")->queryAll();
-		$stdCount = count($students);
+			$students = Yii::$app->db->createCommand("SELECT d.std_enroll_detail_std_id,d.std_roll_no, d.std_enroll_detail_std_name FROM std_enrollment_detail as d
+				INNER JOIN std_enrollment_head as h 
+				ON d.std_enroll_detail_head_id = h.std_enroll_head_id
+				WHERE h.std_enroll_head_id = '$classHead';
+				")->queryAll();
+			$stdCount = count($students);
 
-		$subjectId = array();
+			$subjectId = array();
 	?>	
 <div class="container-fluid">
 	<div class="box bos-default">
@@ -144,7 +147,7 @@
 								<td><?php echo $grandTotal."/".$total; ?></td>
 								<td><?php 
 									$percent = ($grandTotal/$total)*100;
-									echo (int)$percent;
+									echo round($percent,2);
 								 ?></td>
 								<td></td>
 						</tr>
@@ -155,7 +158,9 @@
 		</form>
 	</div>
 </div>
-<?php	} // closing of isset
+<?php	
+} //closing of else
+} // closing of isset
  ?>
 </body>
 </html>

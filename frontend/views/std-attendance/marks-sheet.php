@@ -225,7 +225,6 @@ if(isset($_POST['save'])){
 	//closing of try block
 	} catch(Exception $e){
 		$transection->rollback();
-		echo $e;
 		Yii::$app->session->setFlash('warning', "Mark Sheet not managed. Try again!");
 	}
 	//closing of catch

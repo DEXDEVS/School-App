@@ -318,6 +318,8 @@
 		$passingmarks 	= $_POST["passingmarks"];
 		$subjCount 		= $_POST["subjCount"];
 
+		var_dump($exam_category);
+
 	$transection = Yii::$app->db->beginTransaction();
 	try{
 
@@ -354,7 +356,7 @@
 						'date'				=> $date[$i] ,
 						'full_marks'		=> $fullmarks[$i],
 						'passing_marks'		=> $passingmarks[$i],
-							'created_at'		=> new \yii\db\Expression('NOW()'),
+						'created_at'		=> new \yii\db\Expression('NOW()'),
 						'created_by'		=> Yii::$app->user->identity->id, 
 					])->execute();
 				
