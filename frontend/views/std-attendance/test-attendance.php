@@ -167,8 +167,8 @@ transition: all 0.4s ease-in-out;
 <div class="container-fluid">
     <?php
             $branch_id = Yii::$app->user->identity->branch_id;
-            $empEmail = Yii::$app->user->identity->email;
-            $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$empEmail'")->queryAll();
+            $empCnic = Yii::$app->user->identity->username;
+            $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_cnic = '$empCnic'")->queryAll();
             $empId = $empId[0]['emp_id'];
             $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
             $teacherHeadId = $teacherId[0]['teacher_subject_assign_head_id'];
@@ -181,7 +181,7 @@ transition: all 0.4s ease-in-out;
             $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name
                 FROM std_enrollment_head as seh
                 INNER JOIN teacher_subject_assign_detail as tsad
-                ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
+                ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id'")->queryAll();
             $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
             FROM teacher_subject_assign_detail as tsad
             WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$teacherHeadId'")->queryAll(); ?>

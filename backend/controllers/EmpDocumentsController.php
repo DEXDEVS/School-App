@@ -1,21 +1,22 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
-use common\models\StdAttendance;
-use common\models\StdAttendanceSearch;
+use common\models\EmpDocuments;
+use common\models\EmpDocumentsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\UploadedFile;
 
 /**
- * StdAttendanceController implements the CRUD actions for StdAttendance model.
+ * EmpDocumentsController implements the CRUD actions for EmpDocuments model.
  */
-class StdAttendanceController extends Controller
+class EmpDocumentsController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,8 +32,7 @@ class StdAttendanceController extends Controller
                         'allow' => true,
                     ],
                     [
-                     
-                        'actions' => ['logout', 'index','list-of-classes','view','update','delete','fetch-section','attendance','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','activity-view','fetch-attendance-report','marks-sheet','view-datesheet'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete', 'download-doc', 'delete-doc'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -43,19 +43,19 @@ class StdAttendanceController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
+                    'download-doc' => ['post'],
                 ],
             ],
         ];
     }
 
-
     /**
-     * Lists all StdAttendance models.
+     * Lists all EmpDocuments models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new StdAttendanceSearch();
+        $searchModel = new EmpDocumentsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -64,13 +64,9 @@ class StdAttendanceController extends Controller
         ]);
     }
 
-    public function beforeAction($action) {
-        $this->enableCsrfValidation = false;
-        return parent::beforeAction($action);
-    }
 
     /**
-     * Displays a single StdAttendance model.
+     * Displays a single EmpDocuments model.
      * @param integer $id
      * @return mixed
      */
@@ -80,7 +76,7 @@ class StdAttendanceController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdAttendance #".$id,
+                    'title'=> "EmpDocuments #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -93,65 +89,17 @@ class StdAttendanceController extends Controller
             ]);
         }
     }
-     public function actionViewDatesheet()
-    { 
-        return $this->render('view-datesheet');
-    }
 
-    public function actionTestAttendance()
-    { 
-        return $this->render('test-attendance');
-    }
-
-    public function actionTakeAttendance()
-    { 
-        return $this->render('take-attendance');
-    }
-
-    public function actionViewAttendance()
-    { 
-        return $this->render('view-attendance');
-    }
-
-    public function actionDatewiseClassAttendance()
-    { 
-        return $this->render('datewise-class-attendance');
-    }
-
-    public function actionDaterangewiseClassAttendance()
-    { 
-        return $this->render('daterangewise-class-attendance');
-    }
-
-    public function actionDatewiseStudentAttendance()
-    { 
-        return $this->render('datewise-student-attendance');
-    }
-
-    public function actionDaterangewiseStudentAttendance()
-    { 
-        return $this->render('daterangewise-student-attendance');
-    }
-
-    public function actionActivityView()
-    { 
-        return $this->render('activity-view');
-    }
-
-     public function actionMarksSheet()
-    { 
-        return $this->render('marks-sheet');
-    }
     /**
-     * Creates a new StdAttendance model.
+     * Creates a new EmpDocuments model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $request = Yii::$app->request;
-        $model = new StdAttendance();  
+        $model = new EmpDocuments();  
 
         if($request->isAjax){
             /*
@@ -160,7 +108,7 @@ class StdAttendanceController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdAttendance",
+                    'title'=> "Create new EmpDocuments",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -168,18 +116,31 @@ class StdAttendanceController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->emp_document = UploadedFile::getInstance($model,'emp_document');
+                $document = $model->emp_document;
+                //var_dump($document);
+                $imageName = $model->emp_info_id."_".$model->emp_document_name; 
+                $model->emp_document->saveAs('uploads/'.$imageName.'.'.$model->emp_document->extension);
+                //save the path in the db column
+                $model->emp_document = 'uploads/'.$imageName.'.'.$model->emp_document->extension;
+                    
+                $model->created_by = Yii::$app->user->identity->id; 
+                $model->created_at = new \yii\db\Expression('NOW()');
+                $model->updated_by = '0';
+                $model->updated_at = '0'; 
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new StdAttendance",
-                    'content'=>'<span class="text-success">Create StdAttendance success</span>',
+                    'title'=> "Create new EmpDocuments",
+                    'content'=>'<span class="text-success">Create EmpDocuments success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new StdAttendance",
+                    'title'=> "Create new EmpDocuments",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -192,8 +153,21 @@ class StdAttendanceController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_attend_id]);
+            if ($model->load($request->post())) {
+                $model->emp_document = UploadedFile::getInstance($model,'emp_document');
+                $document = $model->emp_document;
+                //var_dump($document);
+                $imageName = $model->emp_info_id."_".$model->emp_document_name; 
+                $model->emp_document->saveAs('uploads/'.$imageName.'.'.$model->emp_document->extension);
+                //save the path in the db column
+                $model->emp_document = 'uploads/'.$imageName.'.'.$model->emp_document->extension;
+                    
+                $model->created_by = Yii::$app->user->identity->id; 
+                $model->created_at = new \yii\db\Expression('NOW()');
+                $model->updated_by = '0';
+                $model->updated_at = '0'; 
+                $model->save();
+                return $this->redirect(['emp-info/view', 'id' => $model->emp_info_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -204,7 +178,7 @@ class StdAttendanceController extends Controller
     }
 
     /**
-     * Updates an existing StdAttendance model.
+     * Updates an existing EmpDocuments model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -222,17 +196,22 @@ class StdAttendanceController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdAttendance #".$id,
+                    'title'=> "Update EmpDocuments #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->updated_by = Yii::$app->user->identity->id;
+                $model->updated_at = new \yii\db\Expression('NOW()');
+                $model->created_by = $model->created_by;
+                $model->created_at = $model->created_at;
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "StdAttendance #".$id,
+                    'title'=> "EmpDocuments #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -241,7 +220,7 @@ class StdAttendanceController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update StdAttendance #".$id,
+                    'title'=> "Update EmpDocuments #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -254,7 +233,7 @@ class StdAttendanceController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_attend_id]);
+                return $this->redirect(['view', 'id' => $model->emp_document_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -263,23 +242,28 @@ class StdAttendanceController extends Controller
         }
     }
 
-    public function actionAttendance()
+    // download documents.....
+    public function actionDownloadDoc($emp_doc_id)
     {
-        return $this->render('attendance');
+        $model = EmpDocuments::findOne($emp_doc_id);
+        header('Content-Type:'.pathinfo($model->emp_document, PATHINFO_EXTENSION));
+        header('Content-Disposition: uploads; filename='.$model->emp_document);
+        return readfile($model->emp_document);
     }
 
-    public function actionFetchSection()
-    {   
-        return $this->render('fetch-section');
-    }
-
-    public function actionViewClassAttendance()
-    {   
-        return $this->render('view-class-attendance');
+    // Delete Documents...
+    public function actionDeleteDoc($emp_doc_id)
+    {
+        $model = EmpDocuments::findOne($emp_doc_id);
+        $model->delete_status = 0;
+        $model->updated_by = Yii::$app->user->identity->id;
+        $model->updated_at = new \yii\db\Expression('NOW()');
+        $model->update();
+        return $this->redirect(['emp-info/view', 'id' => $model->emp_info_id]);
     }
 
     /**
-     * Delete an existing StdAttendance model.
+     * Delete an existing EmpDocuments model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -307,7 +291,7 @@ class StdAttendanceController extends Controller
     }
 
      /**
-     * Delete multiple existing StdAttendance model.
+     * Delete multiple existing EmpDocuments model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -338,15 +322,15 @@ class StdAttendanceController extends Controller
     }
 
     /**
-     * Finds the StdAttendance model based on its primary key value.
+     * Finds the EmpDocuments model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StdAttendance the loaded model
+     * @return EmpDocuments the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StdAttendance::findOne($id)) !== null) {
+        if (($model = EmpDocuments::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

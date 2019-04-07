@@ -1,10 +1,10 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
-use common\models\StdAttendance;
-use common\models\StdAttendanceSearch;
+use common\models\AccountTransactions;
+use common\models\AccountTransactionsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,9 +13,9 @@ use \yii\web\Response;
 use yii\helpers\Html;
 
 /**
- * StdAttendanceController implements the CRUD actions for StdAttendance model.
+ * AccountTransactionsController implements the CRUD actions for AccountTransactions model.
  */
-class StdAttendanceController extends Controller
+class AccountTransactionsController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,8 +31,7 @@ class StdAttendanceController extends Controller
                         'allow' => true,
                     ],
                     [
-                     
-                        'actions' => ['logout', 'index','list-of-classes','view','update','delete','fetch-section','attendance','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','activity-view','fetch-attendance-report','marks-sheet','view-datesheet'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,14 +47,13 @@ class StdAttendanceController extends Controller
         ];
     }
 
-
     /**
-     * Lists all StdAttendance models.
+     * Lists all AccountTransactions models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new StdAttendanceSearch();
+        $searchModel = new AccountTransactionsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -64,13 +62,9 @@ class StdAttendanceController extends Controller
         ]);
     }
 
-    public function beforeAction($action) {
-        $this->enableCsrfValidation = false;
-        return parent::beforeAction($action);
-    }
 
     /**
-     * Displays a single StdAttendance model.
+     * Displays a single AccountTransactions model.
      * @param integer $id
      * @return mixed
      */
@@ -80,7 +74,7 @@ class StdAttendanceController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdAttendance #".$id,
+                    'title'=> "AccountTransactions #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -93,57 +87,9 @@ class StdAttendanceController extends Controller
             ]);
         }
     }
-     public function actionViewDatesheet()
-    { 
-        return $this->render('view-datesheet');
-    }
 
-    public function actionTestAttendance()
-    { 
-        return $this->render('test-attendance');
-    }
-
-    public function actionTakeAttendance()
-    { 
-        return $this->render('take-attendance');
-    }
-
-    public function actionViewAttendance()
-    { 
-        return $this->render('view-attendance');
-    }
-
-    public function actionDatewiseClassAttendance()
-    { 
-        return $this->render('datewise-class-attendance');
-    }
-
-    public function actionDaterangewiseClassAttendance()
-    { 
-        return $this->render('daterangewise-class-attendance');
-    }
-
-    public function actionDatewiseStudentAttendance()
-    { 
-        return $this->render('datewise-student-attendance');
-    }
-
-    public function actionDaterangewiseStudentAttendance()
-    { 
-        return $this->render('daterangewise-student-attendance');
-    }
-
-    public function actionActivityView()
-    { 
-        return $this->render('activity-view');
-    }
-
-     public function actionMarksSheet()
-    { 
-        return $this->render('marks-sheet');
-    }
     /**
-     * Creates a new StdAttendance model.
+     * Creates a new AccountTransactions model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -151,7 +97,7 @@ class StdAttendanceController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new StdAttendance();  
+        $model = new AccountTransactions();  
 
         if($request->isAjax){
             /*
@@ -160,7 +106,7 @@ class StdAttendanceController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdAttendance",
+                    'title'=> "Create new AccountTransactions",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -168,18 +114,23 @@ class StdAttendanceController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                        $model->created_by = Yii::$app->user->identity->id; 
+                        $model->created_at = new \yii\db\Expression('NOW()');
+                        $model->updated_by = '0';
+                        $model->updated_at = '0'; 
+                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new StdAttendance",
-                    'content'=>'<span class="text-success">Create StdAttendance success</span>',
+                    'title'=> "Create new AccountTransactions",
+                    'content'=>'<span class="text-success">Create AccountTransactions success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new StdAttendance",
+                    'title'=> "Create new AccountTransactions",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -193,7 +144,7 @@ class StdAttendanceController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_attend_id]);
+                return $this->redirect(['view', 'id' => $model->trans_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -204,7 +155,7 @@ class StdAttendanceController extends Controller
     }
 
     /**
-     * Updates an existing StdAttendance model.
+     * Updates an existing AccountTransactions model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -222,17 +173,22 @@ class StdAttendanceController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdAttendance #".$id,
+                    'title'=> "Update AccountTransactions #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                        $model->updated_by = Yii::$app->user->identity->id;
+                        $model->updated_at = new \yii\db\Expression('NOW()');
+                        $model->created_by = $model->created_by;
+                        $model->created_at = $model->created_at;
+                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "StdAttendance #".$id,
+                    'title'=> "AccountTransactions #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -241,7 +197,7 @@ class StdAttendanceController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update StdAttendance #".$id,
+                    'title'=> "Update AccountTransactions #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -254,7 +210,7 @@ class StdAttendanceController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_attend_id]);
+                return $this->redirect(['view', 'id' => $model->trans_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -263,23 +219,8 @@ class StdAttendanceController extends Controller
         }
     }
 
-    public function actionAttendance()
-    {
-        return $this->render('attendance');
-    }
-
-    public function actionFetchSection()
-    {   
-        return $this->render('fetch-section');
-    }
-
-    public function actionViewClassAttendance()
-    {   
-        return $this->render('view-class-attendance');
-    }
-
     /**
-     * Delete an existing StdAttendance model.
+     * Delete an existing AccountTransactions model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -307,12 +248,18 @@ class StdAttendanceController extends Controller
     }
 
      /**
-     * Delete multiple existing StdAttendance model.
+     * Delete multiple existing AccountTransactions model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
+
+     public function actionFetchNature()
+    {   
+        return $this->render('fetch-nature');
+    }
+
     public function actionBulkDelete()
     {        
         $request = Yii::$app->request;
@@ -338,15 +285,15 @@ class StdAttendanceController extends Controller
     }
 
     /**
-     * Finds the StdAttendance model based on its primary key value.
+     * Finds the AccountTransactions model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StdAttendance the loaded model
+     * @return AccountTransactions the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StdAttendance::findOne($id)) !== null) {
+        if (($model = AccountTransactions::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
