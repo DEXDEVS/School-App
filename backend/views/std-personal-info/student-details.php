@@ -241,19 +241,19 @@
                               <td><?php echo $stdPersonalInfo[0]['std_name'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Father Name:</th>
+                              <th>Father's Name:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_father_name'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Gender:</th>
+                              <th>Gender:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_gender'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Date of Birth:</th>
+                              <th>Date of Birth:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_DOB'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Temporary Address:</th>
+                              <th>Temporary Address:</th>
                             </tr>
                             <tr>
                               <td><?php echo $stdPersonalInfo[0]['std_temporary_address'] ?></td>
@@ -265,27 +265,27 @@
                           <table class="table table-stripped">
                           <thead>
                             <tr>
-                              <th>Student CNIC:</th>
+                              <th>CNIC:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_b_form'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student District:</th>
+                              <th>District:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_district'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Tehseel:</th>
+                              <th>Tehseel:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_tehseel'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Religion:</th>
+                              <th>Religion:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_religion'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Nationality:</th>
+                              <th>Nationality:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_nationality'] ?></td>
                             </tr>
                             <tr>
-                              <th>Student Permanent Address:</th>
+                              <th>Permanent Address:</th>
                             </tr>
                             <tr>
                               <td><?php echo $stdPersonalInfo[0]['std_permanent_address'] ?></td>
@@ -310,7 +310,7 @@
                   </div><hr>
                   <!-- guardian info start -->
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-6" style="border-right: 1px dashed;">
                         <table class="table table-striped table-hover">
                           <thead>
                             <tr>
@@ -318,11 +318,11 @@
                               <td><?php echo $stdGuardianInfo[0]['guardian_name'] ?></td>
                             </tr>
                             <tr>
-                              <th>Guardian Relation:</th>
+                              <th>Relation:</th>
                               <td><?php echo $stdGuardianInfo[0]['guardian_relation'] ?></td>
                             </tr>
                             <tr>
-                              <th>Guardian CNIC:</th>
+                              <th>CNIC:</th>
                               <td><?php echo $stdGuardianInfo[0]['guardian_cnic'] ?></td>
                             </tr>
                             <tr>
@@ -330,7 +330,7 @@
                               <td><?php echo $stdGuardianInfo[0]['guardian_email'] ?></td>
                             </tr>
                             <tr>
-                              <th>Guardian Monthly Income:</th>
+                              <th>Monthly Income:</th>
                               <td><?php echo $stdGuardianInfo[0]['guardian_monthly_income'] ?></td>
                             </tr>
                           </thead>
@@ -340,19 +340,19 @@
                           <table class="table table-stripped">
                           <thead>
                             <tr>
-                              <th>Guardian Contact No. 1:</th>
+                              <th>Contact No. 1:</th>
                               <td><?php echo $stdGuardianInfo[0]['guardian_contact_no_1'] ?></td>
                             </tr>
                             <tr>
-                              <th>Guardian Contact No. 2:</th>
+                              <th>Contact No. 2:</th>
                               <td><?php echo $stdGuardianInfo[0]['guardian_contact_no_2'] ?></td>
                             </tr>
                             <tr>
-                              <th>Guardian Occupation:</th>
+                              <th>Occupation:</th>
                               <td><?php echo $stdGuardianInfo[0]['guardian_occupation'] ?></td>
                             </tr>
                              <tr>
-                              <th>Guardian Designation:</th>
+                              <th>Designation:</th>
                               <td><?php echo $stdGuardianInfo[0]['guardian_designation'] ?></td>
                             </tr>
                           </thead>
@@ -383,15 +383,15 @@
                               <td><?php echo $stdICEName; ?></td>
                             </tr>
                             <tr>
-                              <th>ICE Relation:</th>
+                              <th>Relation:</th>
                               <td><?php echo $stdICERelation; ?></td>
                             </tr>
                             <tr>
-                              <th>ICE Contact No:</th>
+                              <th>Contact No:</th>
                               <td><?php echo $stdICEContact; ?></td>
                             </tr>
                             <tr>
-                              <th>ICE Address:</th>
+                              <th>Address:</th>
                               <td><?php echo $stdICEAddress; ?></td>
                             </tr>
                           </thead>

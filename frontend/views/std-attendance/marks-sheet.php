@@ -173,7 +173,6 @@ if(isset($_POST['save'])){
 		// $stdAtten = "stdAtten".$q;
 		// $stdAttend[$i] = $_POST["$stdAtten"];
 	}
-
 	if(isset($_POST["$stdAtten"]))
 	{
 		$stdAttend[$i] = $_POST["$stdAtten"];
