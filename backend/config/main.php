@@ -107,6 +107,7 @@ return [
                 'manage-exams' => 'exams-schedule/manage-exams',
                 'exam-lists' => 'exams-category/exam-lists',
                 'view-datesheet' => 'exams-category/view-datesheet',
+                'update-datesheet' => 'exams-category/update-datesheet',
                 'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
                 'view-marks-sheet' => 'marks-details/view-marks-sheet',
 
