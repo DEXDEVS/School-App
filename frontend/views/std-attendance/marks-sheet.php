@@ -7,7 +7,7 @@ if(isset($_GET['class_id']))
 	$subID = $_GET['sub_id'];
 	$empID = $_GET['emp_id'];
 
-	$examData = Yii::$app->db->createCommand("SELECT c.exam_category_id,s.full_marks,s.passing_marks
+	$examData = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,c.exam_category_id,s.full_marks,s.passing_marks
 	FROM exams_criteria as c
 	INNER JOIN exams_schedule as s 
 	ON c.exam_criteria_id = s.exam_criteria_id
@@ -18,6 +18,7 @@ if(isset($_GET['class_id']))
 		Yii::$app->session->setFlash('warning', "No Exam counducted yet.!");
 	} else {
 		$examCatId = $examData[0]['exam_category_id'];
+		$examCriteriaId = $examData[0]['exam_criteria_id'];
 		$examCatName = Yii::$app->db->createCommand("SELECT category_name
 		FROM exams_category
 		WHERE exam_category_id = '$examCatId' 
@@ -137,7 +138,9 @@ if(isset($_GET['class_id']))
 				                	?>
 				             <input class="form-control" type="hidden" name="countStudents" value="<?php echo $countStudents; ?>">
 				             <input class="form-control" type="hidden" name="categoryId" value="<?php echo $examCatId; ?>">
+				             <input class="form-control" type="hidden" name="examCriteriaId" value="<?php echo $examCriteriaId; ?>">
 				             <input class="form-control" type="hidden" name="classHeadId" value="<?php echo $classID; ?>">
+				             <input class="form-control" type="hidden" name="subId" value="<?php echo $subID; ?>">
 				             <input class="form-control" type="hidden" name="subId" value="<?php echo $subID; ?>">
 
 							<button style="float: right;s" type="submit" name="save" class="btn btn-success btn-flat btn-xs">
@@ -161,6 +164,7 @@ if(isset($_GET['class_id']))
 if(isset($_POST['save'])){
 	$countStudents 	= $_POST['countStudents'];
 	$categoryId 	= $_POST['categoryId'];
+	$examCriteriaId 	= $_POST['examCriteriaId'];
 	$classHeadId 	= $_POST['classHeadId'];
 	$subjectId 			= $_POST['subId'];
 	$stdId 			= $_POST['stdId'];
@@ -180,15 +184,14 @@ if(isset($_POST['save'])){
 	try{
 		for ($j=0; $j < $countStudents; $j++) { 
 			$marksHead = Yii::$app->db->createCommand()->insert('marks_head',[
-	            			'exam_category_id' 		=> $categoryId,
-							'class_head_id' 		=> $classHeadId ,
+	            			'exam_criteria_id' 		=> $examCriteriaId,
 							'std_id' 				=> $stdId[$j],
 							'created_at'		    => new \yii\db\Expression('NOW()'),
 							'created_by'			=> Yii::$app->user->identity->id, 
 						])->execute();
 			if ($marksHead) {
 				$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
-					FROM marks_head WHERE exam_category_id = '$categoryId' AND class_head_id = $classHeadId AND std_id = '$stdId[$j]'")->queryAll();
+					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_id = '$stdId[$j]'")->queryAll();
 
 				$marksHeadid = $marksHeadId[0]['marks_head_id'];
 	 
@@ -225,6 +228,7 @@ if(isset($_POST['save'])){
 	//closing of try block
 	} catch(Exception $e){
 		$transection->rollback();
+		echo $e;
 		Yii::$app->session->setFlash('warning', "Mark Sheet not managed. Try again!");
 	}
 	//closing of catch
