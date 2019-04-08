@@ -62,7 +62,7 @@
 		$examCategory = $_POST['exam_category'];
 		$classHead = $_POST['class_head'];
 
-		$examSchedule = Yii::$app->db->createCommand("SELECT s.subject_id, s.full_marks, s.passing_marks FROM exams_schedule as s
+		$examSchedule = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,s.subject_id, s.full_marks, s.passing_marks FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
 			WHERE c.std_enroll_head_id = '$classHead'
@@ -72,7 +72,7 @@
 			Yii::$app->session->setFlash('warning',"Exams not conducted yet.");
 		} else {
 			$countSubjects = count($examSchedule);
-
+			$examCriteriaID = $examSchedule[0]['exam_criteria_id'];
 			$students = Yii::$app->db->createCommand("SELECT d.std_enroll_detail_std_id,d.std_roll_no, d.std_enroll_detail_std_name FROM std_enrollment_detail as d
 				INNER JOIN std_enrollment_head as h 
 				ON d.std_enroll_detail_head_id = h.std_enroll_head_id
@@ -108,6 +108,7 @@
 							<th>Grand Total</th>
 							<th>Percent(%)</th>
 							<th>Result</th>
+							<th>Action</th>
 							
 						</tr>
 					</thead>
@@ -125,8 +126,7 @@
 								$marks = Yii::$app->db->createCommand("SELECT d.obtained_marks FROM marks_details as d 
 									INNER JOIN marks_head as h
 									ON d.marks_head_id = h.marks_head_id
-									WHERE h.exam_category_id = '$examCategory'
-									AND h.class_head_id = '$classHead'
+									WHERE h.exam_criteria_id = '$examCriteriaID'
 									AND h.std_id = '$stdId'
 									AND d.subject_id = '$subId'")->queryAll();
 								?>
@@ -149,14 +149,19 @@
 									$percent = ($grandTotal/$total)*100;
 									echo round($percent,2);
 								 ?></td>
-								<td></td>
+								 <td>Pass</td>
+								<td>
+									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&headID=<?php echo $classHead; ?>&stdID=<?php echo $stdId; ?>" class="btn btn-info btn-xs">
+									update
+									</a>
+								</td>
 						</tr>
 					<?php } ?>
 					</tbody>
 				</table>
 			</div>
 			<button class="btn btn-success btn-xs">
-				Result announced
+				Click to Announce Result
 			</button>
 		</form>
 	</div>
