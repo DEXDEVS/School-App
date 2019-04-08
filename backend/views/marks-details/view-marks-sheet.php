@@ -155,6 +155,9 @@
 					</tbody>
 				</table>
 			</div>
+			<button class="btn btn-success btn-xs">
+				Result announced
+			</button>
 		</form>
 	</div>
 </div>
