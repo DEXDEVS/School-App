@@ -90,9 +90,9 @@
             <div class="box box-primary">
               <div class="box-body box-profile">
                 <img class="profile-user-img img-responsive img-circle" src="<?php echo $photo; ?>" alt="User profile picture">
-                <div class="photo-edit text-center">
+                <!-- <div class="photo-edit text-center">
                   <a href="./std-personal-info-std-photo?id=<?php echo $id; ?>"><i class="fa fa-pencil"></i></a>
-                </div>
+                </div> -->
                 <h3 class="profile-username text-center" style="color: #3C8DBC;"><?php echo $stdPersonalInfo[0]['std_name'] ?></h3>
                 <p class="text-muted text-center"><!-- Software Engineer --></p>
                 <ul class="list-group list-group-unbordered">
@@ -601,7 +601,7 @@ $(document).ready(function(){
     curl_close($ch);
     
     if ($result) {
-        Yii::$app->session->setFlash('success', "SMS sent successfully...");
+        Yii::$app->session->setFlash('success', "SMS sent successfully...").$result;
     }
   }
 ?>

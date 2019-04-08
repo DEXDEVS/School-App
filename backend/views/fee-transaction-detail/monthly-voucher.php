@@ -212,12 +212,21 @@ if(isset($_POST['save'])){
     }
     $transaction = \Yii::$app->db->beginTransaction();
     try {
-        $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount,  'status' => $status], ['fee_trans_id' => $voucherNo])->execute();
+        $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount,  'status' => $status,'collection_date'=> new \yii\db\Expression('NOW()')], ['fee_trans_id' => $voucherNo])->execute();
         for ($i=0; $i <$length; $i++) { 
             $collectedAmount = Yii::$app->db->createCommand("SELECT collected_fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = $voucherNo AND fee_type_id = $typeIdArray[$i]")->queryAll();
 
             $updateTransactionDetail = Yii::$app->db->createCommand()->update('fee_transaction_detail', ['collected_fee_amount'=> $feeAmount[$i]], ['fee_trans_detail_head_id' => $voucherNo, 'fee_type_id'=> $typeIdArray[$i]])->execute();
         }
+        $account = Yii::$app->db->createCommand()->insert('account_transactions', [
+                            'account_nature'=> 'Income',  
+                            'account_register_id' => 5,
+                            'date' => new \yii\db\Expression('NOW()'),
+                            'description' => $status,
+                            'total_amount' => $paidAmount,
+                            'created_at' => new \yii\db\Expression('NOW()'),
+                            'created_by' => Yii::$app->user->identity->id,
+                        ])->execute();
         
         if ($updateTransactionHead) {
             $transaction->commit();

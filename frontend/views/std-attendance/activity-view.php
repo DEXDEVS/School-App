@@ -166,7 +166,7 @@ transition: all 0.4s ease-in-out;
 		
 		<div class="box-body">
 			<div class="row">
-		    	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" >
+		    	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
 					<div class="offer offer-radius offer-danger">
 						<div class="shape">
 							<div class="shape-text">
@@ -181,7 +181,7 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 					<div class="offer offer-radius offer-success">
 						<div class="shape">
 							<div class="shape-text">
@@ -196,7 +196,7 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 					<div class="offer offer-radius offer-primary">
 						<div class="shape">
 							<div class="shape-text">
@@ -211,7 +211,7 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 					<div class="offer offer-radius offer-info">
 						<div class="shape">
 							<div class="shape-text">
@@ -229,7 +229,7 @@ transition: all 0.4s ease-in-out;
 	        </div>
 	        <!-- row 2 start -->
 	        <div class="row">
-		    	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" >
+		    	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
 					<div class="offer offer-radius offer-warning">
 						<div class="shape">
 							<div class="shape-text">
@@ -244,7 +244,7 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 					<div class="offer offer-radius offer-pink">
 						<div class="shape">
 							<div class="shape-text">
@@ -259,7 +259,7 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 					<div class="offer offer-radius offer-seagreen">
 						<div class="shape">
 							<div class="shape-text">
@@ -274,7 +274,7 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 					<div class="offer offer-radius offer-brown">
 						<div class="shape">
 							<div class="shape-text">

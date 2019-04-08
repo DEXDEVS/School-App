@@ -10,19 +10,17 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'marks_weitage_id',
-    // ],
+        [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'marks_weitage_id',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'exam_category_id',
-        'value'=> 'examCategory.category_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'subject_id',
-        'value'=> 'subject.subject_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

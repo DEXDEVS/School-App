@@ -98,7 +98,6 @@ class StdRegistrationController extends Controller
         $stdFeeDetails = new StdFeeDetails();
         $conn = \Yii::$app->db;
         global $prntPassword, $stdPassword;
-
     
         if ($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post())) {
                 $transection = $conn->beginTransaction();

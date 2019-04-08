@@ -21,8 +21,8 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  *
- * @property Subjects $subject
  * @property ExamsCategory $examCategory
+ * @property Subjects $subject
  */
 class MarksWeitage extends \yii\db\ActiveRecord
 {
@@ -40,12 +40,11 @@ class MarksWeitage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory'], 'required'],
-            [['exam_category_id', 'subject_id', 'theory', 'practical', 'created_by', 'updated_by'], 'integer'],
-            [['presentation', 'assignment', 'attendance', 'dressing'],'number'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by', 'practical'], 'safe'],
-            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
+            [['exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'required'],
+            [['exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
             [['exam_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ExamsCategory::className(), 'targetAttribute' => ['exam_category_id' => 'exam_category_id']],
+            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
         ];
     }
 
@@ -56,8 +55,8 @@ class MarksWeitage extends \yii\db\ActiveRecord
     {
         return [
             'marks_weitage_id' => 'Marks Weitage ID',
-            'exam_category_id' => 'Exam Category',
-            'subject_id' => 'Subject',
+            'exam_category_id' => 'Exam Category ID',
+            'subject_id' => 'Subject ID',
             'presentation' => 'Presentation',
             'assignment' => 'Assignment',
             'attendance' => 'Attendance',
@@ -74,16 +73,16 @@ class MarksWeitage extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubject()
+    public function getExamCategory()
     {
-        return $this->hasOne(Subjects::className(), ['subject_id' => 'subject_id']);
+        return $this->hasOne(ExamsCategory::className(), ['exam_category_id' => 'exam_category_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getExamCategory()
+    public function getSubject()
     {
-        return $this->hasOne(ExamsCategory::className(), ['exam_category_id' => 'exam_category_id']);
+        return $this->hasOne(Subjects::className(), ['subject_id' => 'subject_id']);
     }
 }

@@ -113,29 +113,20 @@
                     ],
                     
                     // ------------------------------------------------
-                    // Employee Registration start...
+                    // Employee Module start...
                     [
-                        'label' => 'Employee Registration',
+                        'label' => 'Employee Module',
                         'icon' => 'user-plus',
-                        'url' => ["/emp-info"],
+                        'url' => [""],
                         'items' => [
-                            //['label' => 'Employee Personal Info', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-info',],
-                            // ['label' => 'Employee Reference', 'icon' => 'caret-right', 'url' => 'index.php?r=emp-reference',]
+                            ['label' => 'Employee Registration', 'icon' => 'caret-right', 'url' => './emp-info',],
+                            ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => './teacher-subject-assign-head ',]
                         ],
                     ],
                     // ------------------------------------------------
-                    // Employee Registration close...
+                    // Employee Module close...
                     // ------------------------------------------------
-                    // Assign Teacher start...
-                    [
-                        'label' => 'Assign Teacher',
-                        'icon' => 'id-badge',
-                        'url' => ["/teacher-subject-assign-head "],
-                    ],
-                    // Assign Teacher close...
-                    // ------------------------------------------------
-                    // ------------------------------------------------
-                    // Fee Registration start...
+                    // Fee Module start...
                     [
                         'label' => 'Fee Module',
                         'icon' => 'credit-card',
@@ -151,7 +142,7 @@
                         ],
                     ],
                     // ------------------------------------------------
-                    // Fee Registration close...
+                    // Fee Module close...
                     // ------------------------------------------------
                     // Account Module start...
                     [
@@ -214,9 +205,8 @@
                             ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
                             ['label' => 'Marks Weitage', 'icon' => 'caret-right', 'url' => ["/marks-weitage"],],
                             // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
-                            ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
+                            // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
                             ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
-                            ['label' => 'Manage marks Sheet', 'icon' => 'caret-right', 'url' => ["/manage-marks-sheet "],],
                             ['label' => 'View marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
                             
                         ],
