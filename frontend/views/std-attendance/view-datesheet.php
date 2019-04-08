@@ -55,7 +55,16 @@
 					</tr>
 					<tr>
 						<th>Date</th>
-						<td><?php echo $Invagilation[$i]['date']; ?></td>
+						<td>
+						<?php 
+						$date = $Invagilation[$i]['date'];
+						$dateformat = date("d-m-Y", strtotime($date));
+
+						//Print out the day that our date fell on.
+						echo $dateformat;
+						?>
+							
+						</td>
 					</tr>
 					<tr>
 						<th>Day</th>
@@ -72,15 +81,27 @@
 					</tr>
 					<tr>
 						<th>Start Time</th>
-						<td><?php echo $Invagilation[$i]['exam_start_time']; ?></td>
+						<td>
+						<?php 
+						$starttime = $Invagilation[$i]['exam_start_time'];
+						$startTime = date("h:i A", strtotime($starttime));
+						echo $startTime;
+						?>
+						</td>
 					</tr>
 					<tr>
 						<th>End Time</th>
-						<td><?php echo $Invagilation[$i]['exam_end_time']; ?></td>
+						<td>
+						<?php 
+						$endtime = $Invagilation[$i]['exam_end_time'];
+						$endTime = date("h:i A", strtotime($endtime));
+						echo $endTime;
+						?>
+						</td>
 					</tr>
 					<tr>
 						<th>Room</th>
-						<td><?php echo $Invagilation[$i]['exam_room']; ?>1</td>
+						<td><?php echo $Invagilation[$i]['exam_room']; ?></td>
 					</tr>
 				</table>
 				<?php } ?>
@@ -148,7 +169,16 @@
 			    // 		echo "<br>";				
 						 ?>
 						<tr>
-							<td><?php echo $dateSheet[0]['date']; ?></td>
+							<td>
+								<?php 
+								$date = $dateSheet[0]['date'];
+								$dateformat = date("d-m-Y", strtotime($date));
+
+								//Print out the day that our date fell on.
+								echo $dateformat;
+
+								?>	
+							</td>
 							<td>
 								<?php  
 								$date = $dateSheet[0]['date'];
