@@ -110,6 +110,7 @@ return [
                 'update-datesheet' => 'exams-category/update-datesheet',
                 'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
                 'view-marks-sheet' => 'marks-details/view-marks-sheet',
+                'update-marks' => 'marks-details/update-marks',
 
             ],
         ],

@@ -62,7 +62,7 @@
 		$examCategory = $_POST['exam_category'];
 		$classHead = $_POST['class_head'];
 
-		$examSchedule = Yii::$app->db->createCommand("SELECT s.subject_id, s.full_marks, s.passing_marks FROM exams_schedule as s
+		$examSchedule = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,s.subject_id, s.full_marks, s.passing_marks FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
 			WHERE c.std_enroll_head_id = '$classHead'
@@ -72,7 +72,7 @@
 			Yii::$app->session->setFlash('warning',"Exams not conducted yet.");
 		} else {
 			$countSubjects = count($examSchedule);
-
+			$examCriteriaID = $examSchedule[0]['exam_criteria_id'];
 			$students = Yii::$app->db->createCommand("SELECT d.std_enroll_detail_std_id,d.std_roll_no, d.std_enroll_detail_std_name FROM std_enrollment_detail as d
 				INNER JOIN std_enrollment_head as h 
 				ON d.std_enroll_detail_head_id = h.std_enroll_head_id
@@ -81,6 +81,7 @@
 			$stdCount = count($students);
 
 			$subjectId = array();
+			$resultCounter=0;
 	?>	
 <div class="container-fluid">
 	<div class="box bos-default">
@@ -108,6 +109,7 @@
 							<th>Grand Total</th>
 							<th>Percent(%)</th>
 							<th>Result</th>
+							<th>Action</th>
 							
 						</tr>
 					</thead>
@@ -125,14 +127,15 @@
 								$marks = Yii::$app->db->createCommand("SELECT d.obtained_marks FROM marks_details as d 
 									INNER JOIN marks_head as h
 									ON d.marks_head_id = h.marks_head_id
-									WHERE h.exam_category_id = '$examCategory'
-									AND h.class_head_id = '$classHead'
+									WHERE h.exam_criteria_id = '$examCriteriaID'
 									AND h.std_id = '$stdId'
 									AND d.subject_id = '$subId'")->queryAll();
+								
 								?>
 								<td><?php 
 									if(empty($marks)){
-										echo "N/A";
+										echo "<span class='label label-danger'> N/A </span>";
+										$resultCounter++;
 									} else {
 										echo $marks[0]['obtained_marks'];
 										if($marks[0]['obtained_marks'] == 'A'){
@@ -149,14 +152,21 @@
 									$percent = ($grandTotal/$total)*100;
 									echo round($percent,2);
 								 ?></td>
-								<td></td>
+								 <td>Pass</td>
+								<td>
+									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&headID=<?php echo $classHead; ?>&stdID=<?php echo $stdId; ?>" class="btn btn-info btn-xs">
+									update
+									</a>
+								</td>
 						</tr>
 					<?php } ?>
 					</tbody>
 				</table>
 			</div>
-			<button class="btn btn-success btn-xs">
-				Result announced
+			<input type="hidden" name="resultCounter" value="<?php echo $resultCounter; ?>">
+			<input type="hidden" name="grandTotal" value="<?php echo $grandTotal; ?>">
+			<button type="submit" name="save" class="btn btn-success btn-xs">
+				Save Mark Sheet
 			</button>
 		</form>
 	</div>
@@ -167,3 +177,50 @@
  ?>
 </body>
 </html>
+<?php 
+	if(isset($_POST['save'])){
+		$resultCounter = $_POST["resultCounter"];
+		if($resultCounter != 0){
+			Yii::$app->session->setFlash('warning',"Result not prepeard yet..!");
+		} else {
+
+		}
+	}
+ ?>
+<?php if(isset($_POST['update'])){
+		$countMarks 	= $_POST["countMarks"];
+		$subjectArray 	= $_POST["subjectArray"];
+		$marksDetailIdArray 	= $_POST["marksDetailIdArray"];
+
+		for($j=0; $j<$countMarks; $j++){
+			$a = $j+1;
+			$marks = "marks_".$a;
+			 $obt_marks[$j] = $_POST["$marks"];
+		}
+
+	$transection = Yii::$app->db->beginTransaction();
+	try{
+		for($k=0; $k<$countMarks; $k++){
+			$marksdetailUpdate = Yii::$app->db->createCommand()->update('marks_details', 				[
+							'subject_id' 		=> $subjectArray[$k],
+							'obtained_marks' 	=> $obt_marks[$k] ,
+							'updated_at'			=> new \yii\db\Expression('NOW()'),
+							'updated_by'			=> Yii::$app->user->identity->id,
+	                        ],
+	                        ['marks_detail_id' => $marksDetailIdArray[$k]]
+	                    )->execute();
+		}
+		if($marksdetailUpdate){
+				$transection->commit();
+				Yii::$app->session->setFlash('success', "Marks Updated sccessfully...!");
+			}
+
+		//closing of try block
+	} catch(Exception $e){
+		$transection->rollback();
+		echo $e;
+		Yii::$app->session->setFlash('warning', "Marks not Updated. Try again!");
+	}
+	//closing of catch
+
+	} ?>

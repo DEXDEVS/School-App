@@ -195,7 +195,6 @@
 				<?php
 			//end of for loop
 			} ?>
-	<input type="hidden" name="exam_category" value="<?php echo $examCateogryId;?>">
 	<input type="hidden" name="headId" value="<?php echo $classId;?>">
 	<input type="hidden" name="subjCount" value="<?php echo $subjCount;?>">
 	<input type="hidden" name="criteriaId" value="<?php echo $criteriaId;?>">

@@ -56,11 +56,12 @@
                         <th style="text-align: center">Student Name</th>
                         <th style="text-align: center">Admission Fee</th>
                         <th style="text-align: center">Tuition Fee</th>
-                        <th style="text-align: center">Late Fee Fine</th>
                         <th style="text-align: center">Absent Fine</th>
-                        <th style="text-align: center">Library Dues</th>
-                        <th style="text-align: center">Transportation Fee</th>
-                        <th style="text-align: center">Examinatin Fee</th>
+                        <th style="text-align: center">Actitity Fee</th>
+                        <th style="text-align: center">Stationary Dues</th>
+                        <th style="text-align: center">Board/University Fee</th>
+                        <th style="text-align: center">Examination Fee</th>
+                        <th style="text-align: center">Arrears</th>
                         <th style="text-align: center">Total Amount</th>
                     </tr>
                     <?php 
