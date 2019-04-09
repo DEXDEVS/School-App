@@ -81,6 +81,7 @@
 			$stdCount = count($students);
 
 			$subjectId = array();
+			$resultCounter=0;
 	?>	
 <div class="container-fluid">
 	<div class="box bos-default">
@@ -129,10 +130,12 @@
 									WHERE h.exam_criteria_id = '$examCriteriaID'
 									AND h.std_id = '$stdId'
 									AND d.subject_id = '$subId'")->queryAll();
+								
 								?>
 								<td><?php 
 									if(empty($marks)){
-										echo "N/A";
+										echo "<span class='label label-danger'> N/A </span>";
+										$resultCounter++;
 									} else {
 										echo $marks[0]['obtained_marks'];
 										if($marks[0]['obtained_marks'] == 'A'){
@@ -160,8 +163,10 @@
 					</tbody>
 				</table>
 			</div>
-			<button class="btn btn-success btn-xs">
-				Click to Announce Result
+			<input type="hidden" name="resultCounter" value="<?php echo $resultCounter; ?>">
+			<input type="hidden" name="grandTotal" value="<?php echo $grandTotal; ?>">
+			<button type="submit" name="save" class="btn btn-success btn-xs">
+				Save Mark Sheet
 			</button>
 		</form>
 	</div>
@@ -172,3 +177,50 @@
  ?>
 </body>
 </html>
+<?php 
+	if(isset($_POST['save'])){
+		$resultCounter = $_POST["resultCounter"];
+		if($resultCounter != 0){
+			Yii::$app->session->setFlash('warning',"Result not prepeard yet..!");
+		} else {
+
+		}
+	}
+ ?>
+<?php if(isset($_POST['update'])){
+		$countMarks 	= $_POST["countMarks"];
+		$subjectArray 	= $_POST["subjectArray"];
+		$marksDetailIdArray 	= $_POST["marksDetailIdArray"];
+
+		for($j=0; $j<$countMarks; $j++){
+			$a = $j+1;
+			$marks = "marks_".$a;
+			 $obt_marks[$j] = $_POST["$marks"];
+		}
+
+	$transection = Yii::$app->db->beginTransaction();
+	try{
+		for($k=0; $k<$countMarks; $k++){
+			$marksdetailUpdate = Yii::$app->db->createCommand()->update('marks_details', 				[
+							'subject_id' 		=> $subjectArray[$k],
+							'obtained_marks' 	=> $obt_marks[$k] ,
+							'updated_at'			=> new \yii\db\Expression('NOW()'),
+							'updated_by'			=> Yii::$app->user->identity->id,
+	                        ],
+	                        ['marks_detail_id' => $marksDetailIdArray[$k]]
+	                    )->execute();
+		}
+		if($marksdetailUpdate){
+				$transection->commit();
+				Yii::$app->session->setFlash('success', "Marks Updated sccessfully...!");
+			}
+
+		//closing of try block
+	} catch(Exception $e){
+		$transection->rollback();
+		echo $e;
+		Yii::$app->session->setFlash('warning', "Marks not Updated. Try again!");
+	}
+	//closing of catch
+
+	} ?>
