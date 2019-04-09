@@ -62,6 +62,9 @@
 		$examCategory = $_POST['exam_category'];
 		$classHead = $_POST['class_head'];
 
+		$ExamName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCategory'")->queryAll();
+		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHead'")->queryAll();
+
 		$examSchedule = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,s.subject_id, s.full_marks, s.passing_marks FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
@@ -81,21 +84,35 @@
 			$stdCount = count($students);
 
 			$subjectId = array();
+			$studentArray = array();
+			$grandTotalArray = array();
+			$percentArray = array();
+			$gradeArray = array();
+			$resultArray = array();
 			$resultCounter=0;
 	?>	
 <div class="container-fluid">
 	<div class="box bos-default">
-		<div class="box-header">
-			<h3>Marks Register</h3>
-		</div>
+		<div class="box-header" style="padding:0px;">
+			<h2 style="text-align: center;">Marks Register</h2>
+		</div><hr>
 		<form method="POST">
 			<div class="box-body">
-				
-				<table class="table table-hover">
+				<div class="row" style="text-align: center;height:30px;">
+					<div class="col-md-6" style="border-right:1px solid;">
+						<label>Exam</label>
+						<p><?php echo $ExamName[0]['category_name']; ?></p>
+					</div>
+					<div class="col-md-6">
+						<label>Class</label>
+						<p><?php echo $className[0]['std_enroll_head_name']; ?></p>
+					</div>
+				</div><hr>
+				<table class="table table-hover table-bordered">
 					<thead>
 						<tr>
-							<th>Roll #</th>
-							<th>Student Name</th>
+							<th style="text-align: center;">Roll #</th>
+							<th style="text-align: center;">Student Name</th>
 							<?php $total=0;
 							for ($i=0; $i <$countSubjects ; $i++) {
 								$subId = $examSchedule[$i]['subject_id'];
@@ -106,19 +123,22 @@
 								<th><?php echo $subject[0]['subject_name']; ?></th>
 							<?php
 							} ?>
-							<th>Grand Total</th>
-							<th>Percent(%)</th>
-							<th>Result</th>
-							<th>Action</th>
+							<th style="text-align: center;">Grand Total</th>
+							<th style="text-align: center;">Percent(%)</th>
+							<th style="text-align: center;">Grade</th>
+							<th style="text-align: center;">Result</th>
+							<th style="text-align: center;">Action</th>
 							
 						</tr>
 					</thead>
 					<tbody>
 						<?php for ($std=0; $std < $stdCount; $std++) { 
 							$grandTotal = 0;
+							$failCounter = 0;
 							$stdId = $students[$std]['std_enroll_detail_std_id'];
+							$studentArray[$std] = $stdId;
 						?>
-						<tr>
+						<tr style="text-align: center;">
 							<td><?php echo $students[$std]['std_roll_no']; ?></td>
 							<td><?php echo $students[$std]['std_enroll_detail_std_name']; ?>
 							</td>
@@ -134,10 +154,17 @@
 								?>
 								<td><?php 
 									if(empty($marks)){
-										echo "<span class='label label-danger'> N/A </span>";
+										echo "<span class='label label-primary'> N/A </span>";
 										$resultCounter++;
 									} else {
-										echo $marks[0]['obtained_marks'];
+										$obtMarks = $marks[0]['obtained_marks'];
+										if($obtMarks < $examSchedule[$s]['passing_marks'] || $obtMarks == 'A'){
+											echo "<span class='label label-warning'>".$obtMarks ."</span>";
+											$failCounter++;
+										} else {
+											echo $obtMarks;
+										}
+									 
 										if($marks[0]['obtained_marks'] == 'A'){
 											$grandTotal += 0;
 										} else {
@@ -147,27 +174,55 @@
 									?>
 								</td>
 							<?php } ?>
-								<td><?php echo $grandTotal."/".$total; ?></td>
+								<td><?php echo $grandTotal."/".$total; 
+									$grandTotalArray[$std] = $grandTotal;
+								?></td>
 								<td><?php 
-									$percent = ($grandTotal/$total)*100;
-									echo round($percent,2);
+									$percentage = ($grandTotal/$total)*100;
+									$percent = round($percentage,2);
+									echo $percent;
+									$percentArray[$std] = $percent;
 								 ?></td>
-								 <td>Pass</td>
+								 <td>
+								 	<?php 
+								 	$grades = Yii::$app->db->createCommand("SELECT grade_name FROM grades WHERE grade_from <= '$percent' AND grade_to >= '$percent'")->queryAll();
+								 	$grade = $grades[0]['grade_name'];
+								 	echo $grade;
+								 	$gradeArray[$std] = $grade;
+								 	 ?>
+								 </td>
+								 <td>
+								 	<?php 
+								 	if($failCounter == 3)
+								 	{
+								 		echo "<span class='label label-danger'> Fail</span>";
+								 		$resultArray[$std] = "Fail";
+								 	}
+								 	else{
+								 		echo "<span class='label label-success'> Pass </span>";
+								 		$resultArray[$std] = "Pass";
+								 	}
+								 	?>
+								 </td>
 								<td>
 									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&headID=<?php echo $classHead; ?>&stdID=<?php echo $stdId; ?>" class="btn btn-info btn-xs">
-									update
+									<i class="glyphicon glyphicon-edit"></i> update
 									</a>
 								</td>
 						</tr>
 					<?php } ?>
 					</tbody>
-				</table>
+				</table><br>
+				<div class="row">
+				<div class="col-md-12">	
+					<button  style="float: right;" type="submit" name="save" class="btn btn-success btn-xs">
+						Save Marks Sheet
+					</button>
+				</div>
+			</div>
 			</div>
 			<input type="hidden" name="resultCounter" value="<?php echo $resultCounter; ?>">
 			<input type="hidden" name="grandTotal" value="<?php echo $grandTotal; ?>">
-			<button type="submit" name="save" class="btn btn-success btn-xs">
-				Save Mark Sheet
-			</button>
 		</form>
 	</div>
 </div>

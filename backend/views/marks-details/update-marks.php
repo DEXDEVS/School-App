@@ -13,12 +13,19 @@
 		$StdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$stdID'")->queryAll();?>
 
 <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<a href="./view-marks-sheet">
+				<button style="float: right;" class="btn btn-danger btn-xs">
+				<i class="glyphicon glyphicon-backward"></i> <b>Back</b>
+				</button>
+			</a>
+		</div>
+	</div>
 	<div class="row" style="text-align: center;">
 		<div class="box box-default">
 			<div class="box-header">
-				<p>Update Student Marks</p>
-			</div><hr>
-			<div class="box-body">
+				<p>Update Student Marks</p><hr>
 				<div class="col-md-4">
 					<h3>Category Name</h3>
 					<p><?php echo $CatName[0]['category_name']; ?></p>
@@ -31,64 +38,66 @@
 					<h3>Student Name</h3>
 					<p><?php echo $StdName[0]['std_name']; ?></p>
 				</div>
+			</div><hr>
+			<div class="box-body">
+				<form method="POST" action="view-marks-sheet">
+					<div class="row">
+			            <div class="col-md-4">
+			                <div class="form-group">
+			                    <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
+			                </div>    
+			            </div>    
+			        </div>
+					<div class="row">
+						<?php 
+						$subjectArray = array();
+						$marksDetailIdArray = array();
+						$criteria = Yii::$app->db->createCommand("SELECT c.exam_criteria_id 
+						FROM exams_criteria as c 
+						WHERE c.std_enroll_head_id = '$headID '
+						AND c.exam_category_id = '$examCatID'
+						")->queryAll();
+						$criteriaId = $criteria[0]['exam_criteria_id'];
+
+						$marks = Yii::$app->db->createCommand("SELECT d.marks_detail_id, d.subject_id, d.obtained_marks FROM marks_details as d 
+							INNER JOIN marks_head as h 
+							ON d.marks_head_id = h.marks_head_id
+							WHERE h.exam_criteria_id = '$criteriaId'
+							AND h.std_id = '$stdID'
+						")->queryAll();
+
+						$countMarks = count($marks);
+						 for ($i=0; $i <$countMarks ; $i++) { 
+						 	$subjectID = $marks[$i]['subject_id'];
+						 	$subjectArray[$i] = $subjectID;
+						 	$marksDetailIdArray[$i] = $marks[$i]['marks_detail_id'];
+
+						 	$subName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subjectID'")->queryAll();
+						 ?>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label><?php echo $subName[0]['subject_name']; ?></label>
+								<input type="text" name="marks_<?php echo $i+1;?>" class="form-control" value="<?php echo $marks[$i]['obtained_marks']; ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
+							</div>
+						</div>
+						<?php } ?>
+					</div>
+					<?php foreach ($subjectArray as $value) {
+			        		echo '<input type="hidden" name="subjectArray[]" value="'.$value.'" style="width: 30px">';
+			        	}
+			        	?>
+			        <?php foreach ($marksDetailIdArray as $value) {
+			        		echo '<input type="hidden" name="marksDetailIdArray[]" value="'.$value.'" style="width: 30px">';
+			        	}
+			        	?>
+			        <input type="hidden" name="countMarks" value="<?php echo $countMarks;?>" style="width: 30px">
+					<button style="float: right;s" type="submit" name="update" class="btn btn-success btn-flat btn-xs">
+					<i class="fa fa-sign-in"></i> <b>Update Marks</b>
+					</button>
+				</form>
 			</div>
 		</div>
 	</div>
-	<form method="POST" action="view-marks-sheet">
-		<div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
-                </div>    
-            </div>    
-        </div>
-		<div class="row">
-			<?php 
-			$subjectArray = array();
-			$marksDetailIdArray = array();
-			$criteria = Yii::$app->db->createCommand("SELECT c.exam_criteria_id 
-			FROM exams_criteria as c 
-			WHERE c.std_enroll_head_id = '$headID '
-			AND c.exam_category_id = '$examCatID'
-			")->queryAll();
-			$criteriaId = $criteria[0]['exam_criteria_id'];
-
-			$marks = Yii::$app->db->createCommand("SELECT d.marks_detail_id, d.subject_id, d.obtained_marks FROM marks_details as d 
-				INNER JOIN marks_head as h 
-				ON d.marks_head_id = h.marks_head_id
-				WHERE h.exam_criteria_id = '$criteriaId'
-				AND h.std_id = '$stdID'
-			")->queryAll();
-
-			$countMarks = count($marks);
-			 for ($i=0; $i <$countMarks ; $i++) { 
-			 	$subjectID = $marks[$i]['subject_id'];
-			 	$subjectArray[$i] = $subjectID;
-			 	$marksDetailIdArray[$i] = $marks[$i]['marks_detail_id'];
-
-			 	$subName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subjectID'")->queryAll();
-			 ?>
-			<div class="col-md-3">
-				<div class="form-group">
-					<label><?php echo $subName[0]['subject_name']; ?></label>
-					<input type="text" name="marks_<?php echo $i+1;?>" class="form-control" value="<?php echo $marks[$i]['obtained_marks']; ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
-				</div>
-			</div>
-			<?php } ?>
-		</div>
-		<?php foreach ($subjectArray as $value) {
-        		echo '<input type="hidden" name="subjectArray[]" value="'.$value.'" style="width: 30px">';
-        	}
-        	?>
-        <?php foreach ($marksDetailIdArray as $value) {
-        		echo '<input type="hidden" name="marksDetailIdArray[]" value="'.$value.'" style="width: 30px">';
-        	}
-        	?>
-        <input type="hidden" name="countMarks" value="<?php echo $countMarks;?>" style="width: 30px">
-		<button style="float: right;s" type="submit" name="update" class="btn btn-success btn-flat btn-xs">
-		<i class="fa fa-sign-in"></i> <b>Update Marks</b>
-		</button>
-	</form>
 </div>
 <?php } //if isset
 
