@@ -164,9 +164,9 @@ if(isset($_GET['class_id']))
 if(isset($_POST['save'])){
 	$countStudents 	= $_POST['countStudents'];
 	$categoryId 	= $_POST['categoryId'];
-	$examCriteriaId 	= $_POST['examCriteriaId'];
+	$examCriteriaId = $_POST['examCriteriaId'];
 	$classHeadId 	= $_POST['classHeadId'];
-	$subjectId 			= $_POST['subId'];
+	$subjectId 		= $_POST['subId'];
 	$stdId 			= $_POST['stdId'];
 
 	for($i=0; $i<$countStudents;$i++){
