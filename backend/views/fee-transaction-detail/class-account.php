@@ -105,6 +105,7 @@
         $exam_fee           = $_POST["exam_fee"];
         $feeType            = Array('1','2','3','4','5','6','7');
         $updateStatus       =-1;
+        var_dump($_POST);
 
        
         $headTransId = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
