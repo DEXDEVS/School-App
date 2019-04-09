@@ -214,33 +214,33 @@
                         <td> <?php echo $transactionHead[$i]['status']; ?> </td>
                     </tr>
             <?php } else {?>
-    <form method= "POST" action="">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
-                            </div>    
-                        </div>    
-                    </div>
-                    <tr>
-                        <td> <?php echo date('Y-F', strtotime($transactionHead[$i]['month']));?> </td>
-                        <td> <?php echo $transactionHead[$i]['total_amount']; ?> </td>
-                        <td><input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)"></td>
-                        <td><input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly=""></td>
-                        <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>">
-                            
-                    </tr>
-                    <?php } } ?>
-        </tbody>
-    </table>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <button type="submit" name="save" class="btn btn-success">Save</button>
-                </div> 
-            </div>
+            <form method= "POST" action="">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
+                        </div>
+                    </div>    
+                </div>
+                <tr>
+                    <td> <?php echo date('F-Y', strtotime($transactionHead[$i]['month']));?> </td>
+                    <td> <?php echo $transactionHead[$i]['total_amount']; ?> </td>
+                    <td><input type="number" name="paidAmount[]" value="0" id="paidAmount" onchange="setStatus()" style="width: 100px"></td>
+                    <td><input type="text" name="status[]" value="Unpaid" id="status" readonly="" style="width: 70px"></td>
+                    <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>">
+                        
+                </tr>
+                <?php } } ?>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="submit" name="save" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> Save</b></button>
+                    </div> 
+                </div>
             </div>  
-    </form>
+        </form>
 </div>
 <!-- modified collect voucher close --> 
 <?php 

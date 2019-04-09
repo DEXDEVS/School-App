@@ -181,7 +181,7 @@ transition: all 0.4s ease-in-out;
             $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name
                 FROM std_enrollment_head as seh
                 INNER JOIN teacher_subject_assign_detail as tsad
-                ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
+                ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id'")->queryAll();
             $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
             FROM teacher_subject_assign_detail as tsad
             WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$teacherHeadId'")->queryAll(); ?>

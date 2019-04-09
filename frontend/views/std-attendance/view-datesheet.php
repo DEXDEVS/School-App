@@ -25,7 +25,9 @@
                 INNER JOIN exams_schedule as s
                 ON c.exam_criteria_id = s.exam_criteria_id
                 WHERE c.exam_status = 'announced' AND s.emp_id = '$empId' ")->queryAll();
-            $countInagilation = count($Invagilation);
+            $countInvagilation = count($Invagilation);
+
+            var_dump($Invagilation);
  ?>
 <div class="row">
 	<div class="col-md-4">
@@ -36,7 +38,7 @@
 			</div><hr>
 			<div class="box-body">
 				<?php 
-				for ($i=0; $i <$countInagilation ; $i++) { 
+				for ($i=0; $i <$countInvagilation ; $i++) { 
 					$catIDD = $Invagilation[$i]['exam_category_id'];
 					$catName = Yii::$app->db->createCommand("SELECT category_name
              		FROM exams_category WHERE exam_category_id = '$catIDD' ")->queryAll();
@@ -55,7 +57,16 @@
 					</tr>
 					<tr>
 						<th>Date</th>
-						<td><?php echo $Invagilation[$i]['date']; ?></td>
+						<td>
+						<?php 
+						$date = $Invagilation[$i]['date'];
+						$dateformat = date("d-m-Y", strtotime($date));
+
+						//Print out the day that our date fell on.
+						echo $dateformat;
+						?>
+							
+						</td>
 					</tr>
 					<tr>
 						<th>Day</th>
@@ -72,15 +83,27 @@
 					</tr>
 					<tr>
 						<th>Start Time</th>
-						<td><?php echo $Invagilation[$i]['exam_start_time']; ?></td>
+						<td>
+						<?php 
+						$starttime = $Invagilation[$i]['exam_start_time'];
+						$startTime = date("h:i A", strtotime($starttime));
+						echo $startTime;
+						?>
+						</td>
 					</tr>
 					<tr>
 						<th>End Time</th>
-						<td><?php echo $Invagilation[$i]['exam_end_time']; ?></td>
+						<td>
+						<?php 
+						$endtime = $Invagilation[$i]['exam_end_time'];
+						$endTime = date("h:i A", strtotime($endtime));
+						echo $endTime;
+						?>
+						</td>
 					</tr>
 					<tr>
 						<th>Room</th>
-						<td><?php echo $Invagilation[$i]['exam_room']; ?>1</td>
+						<td><?php echo $Invagilation[$i]['exam_room']; ?></td>
 					</tr>
 				</table>
 				<?php } ?>
@@ -143,20 +166,26 @@
 			                INNER JOIN exams_schedule as s
 			                ON c.exam_criteria_id = s.exam_criteria_id
 			                WHERE c.exam_status = 'announced' AND c.std_enroll_head_id = '$id' AND s.subject_id = '$subID' ")->queryAll();
-						 // var_dump($subID);
-			    // 		var_dump($dateSheet);
-			    // 		echo "<br>";				
 						 ?>
 						<tr>
-							<td><?php echo $dateSheet[0]['date']; ?></td>
+							<td>
+								<?php 
+								$date = $dateSheet[0]['date'];
+								$dateformat = date("d-m-Y", strtotime($date));
+
+								//Print out the day that our date fell on.
+								echo $dateformat;
+
+								?>	
+							</td>
 							<td>
 								<?php  
 								$date = $dateSheet[0]['date'];
-								//Get the day of the week using PHP's date function.
-								$dayOfWeek = date("l", strtotime($date));
+								 //Get the day of the week using PHP's date function.
+								 $dayOfWeek = date("l", strtotime($date));
 
-								//Print out the day that our date fell on.
-								echo $dayOfWeek;
+								 //Print out the day that our date fell on.
+								 echo $dayOfWeek;
 
 								?>
 							</td>

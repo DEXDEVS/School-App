@@ -17,12 +17,12 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'exam_category_id',
-        'value'=> 'examCategory.category_name',
+        'value'=>'examCategory.category_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'subject_id',
-        'value'=> 'subject.subject_name',
+        'value'=>'subject.subject_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

@@ -31,7 +31,7 @@ class ExamsCategoryController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','exam-lists','view-datesheet'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','exam-lists','view-datesheet','update-datesheet'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -50,6 +50,16 @@ class ExamsCategoryController extends Controller
     public function actionView($id)
     {
        return $this->render('exam-lists'); 
+    }
+
+    public function actionUpdateDatesheet()
+    {
+       return $this->render('update-datesheet'); 
+    }
+
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
     }
 
     public function actionViewDatesheet()

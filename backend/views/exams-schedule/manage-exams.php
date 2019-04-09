@@ -244,13 +244,13 @@
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Full Marks</label>
-											<input type="text" name="fullmarks[]" class="form-control" value="<?php echo $totalMarks;?>">
+											<input type="text" name="fullmarks[]" class="form-control" value="<?php echo $totalMarks;?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Passing Marks</label>
-											<input type="text" name="passingmarks[]" class="form-control" value="<?php echo $passmarks; ?>">
+											<input type="text" name="passingmarks[]" class="form-control" value="<?php echo $passmarks; ?>" readonly="">
 											</div>
 										</div>
 									</div>
@@ -318,20 +318,24 @@
 		$passingmarks 	= $_POST["passingmarks"];
 		$subjCount 		= $_POST["subjCount"];
 
+		//var_dump($exam_category);
+
 	$transection = Yii::$app->db->beginTransaction();
 	try{
-
-		$examCriteria = Yii::$app->db->createCommand()->insert('exams_criteria',[
-            			'exam_category_id' 		=> $exam_category,
-						'std_enroll_head_id' 	=> $headId ,
-						'exam_start_date' 		=> $exam_start_date,
-						'exam_end_date'			=> $exam_end_date ,
-						'exam_start_time'		=> $exam_start_time,
-						'exam_end_time'			=> $exam_end_time ,
-						'exam_room' 			=> $room ,
-						'created_by'			=> Yii::$app->user->identity->id, 
-					])->execute();
-		if ($examCriteria) {
+		$inactive = "Inactive";
+		// $examCriteria = Yii::$app->db->createCommand()->insert('exams_criteria',[
+  //           			'exam_category_id' 		=> $exam_category,
+		// 				'std_enroll_head_id' 	=> $headId ,
+		// 				'exam_start_date' 		=> $exam_start_date,
+		// 				'exam_end_date'			=> $exam_end_date ,
+		// 				'exam_start_time'		=> $exam_start_time,
+		// 				'exam_end_time'			=> $exam_end_time ,
+		// 				'exam_room' 			=> $room ,
+		// 				'exam_status'			=> $inactive,
+		// 				'created_at'			=> new \yii\db\Expression('NOW()'),
+		// 				'created_by'			=> Yii::$app->user->identity->id, 
+		// 			])->execute();
+		// if ($examCriteria) {
 			$examCriteriaId = Yii::$app->db->createCommand("SELECT exam_criteria_id
 			FROM  exams_criteria
 			WHERE exam_category_id 		= '$exam_category' AND
@@ -353,6 +357,7 @@
 						'date'				=> $date[$i] ,
 						'full_marks'		=> $fullmarks[$i],
 						'passing_marks'		=> $passingmarks[$i],
+						'created_at'		=> new \yii\db\Expression('NOW()'),
 						'created_by'		=> Yii::$app->user->identity->id, 
 					])->execute();
 				
@@ -361,7 +366,7 @@
 				$transection->commit();
 				Yii::$app->session->setFlash('success', "Exams Schedule managed successfully...!");
 			}
-		} // closing of exam criteria
+		//} // closing of exam criteria
 	//closing of try block
 	} catch(Exception $e){
 		$transection->rollback();
