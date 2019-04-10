@@ -77,7 +77,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label><?php echo $subName[0]['subject_name']; ?></label>
-								<input type="text" name="marks_<?php echo $i+1;?>" class="form-control" value="<?php echo $marks[$i]['obtained_marks']; ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
+								<input type="text" name="marks_<?php echo $i+1;?>" class="form-control" value="<?php echo $marks[$i]['obtained_marks']; ?>">
 							</div>
 						</div>
 						<?php } ?>

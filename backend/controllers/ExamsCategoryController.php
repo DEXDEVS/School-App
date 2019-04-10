@@ -31,7 +31,7 @@ class ExamsCategoryController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','exam-lists','view-datesheet','update-datesheet'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','exam-lists','view-datesheet','update-datesheet','view-result-cards'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,7 +46,11 @@ class ExamsCategoryController extends Controller
             ],
         ];
     }
-
+    public function actionViewResultCards()
+    {   
+        return $this->render('view-result-cards');
+    }
+    
     public function actionView($id)
     {
        return $this->render('exam-lists'); 

@@ -193,7 +193,7 @@
 								 </td>
 								 <td>
 								 	<?php 
-								 	if($failCounter == 3)
+								 	if($failCounter >= 3)
 								 	{
 								 		echo "<span class='label label-danger'> Fail</span>";
 								 		$resultArray[$std] = "Fail";
@@ -213,6 +213,31 @@
 					<?php } ?>
 					</tbody>
 				</table><br>
+				<?php foreach ($grandTotalArray as $value) {
+			        		echo '<input type="hidden" name="grandTotalArray[]" value="'.$value.'" style="width: 30px">';
+			        	}
+			        	?>
+			        	<?php foreach ($percentArray as $value) {
+			        		echo '<input type="hidden" name="percentArray[]" value="'.$value.'" style="width: 30px">';
+			        	}
+			        	?>
+			        	<?php foreach ($gradeArray as $value) {
+			        		echo '<input type="hidden" name="gradeArray[]" value="'.$value.'" style="width: 30px">';
+			        	}
+			        	?>
+			        	<?php foreach ($resultArray as $value) {
+			        		echo '<input type="hidden" name="resultArray[]" value="'.$value.'" style="width: 30px">';
+			        	}
+			        	?>
+			        	<?php foreach ($studentArray as $value) {
+			        		echo '<input type="hidden" name="studentArray[]" value="'.$value.'" style="width: 30px">';
+			        	}
+			        	?>
+				<input type="hidden" name="resultCounter" value="<?php echo $resultCounter; ?>">
+				<input type="hidden" name="examCriteriaID" value="<?php echo $examCriteriaID; ?>">
+				<input type="hidden" name="classHead" value="<?php echo $classHead; ?>">
+				<input type="hidden" name="examCategory" value="<?php echo $examCategory; ?>">
+				<input type="hidden" name="stdCount" value="<?php echo $stdCount; ?>">
 				<div class="row">
 				<div class="col-md-12">	
 					<button  style="float: right;" type="submit" name="save" class="btn btn-success btn-xs">
@@ -221,8 +246,6 @@
 				</div>
 			</div>
 			</div>
-			<input type="hidden" name="resultCounter" value="<?php echo $resultCounter; ?>">
-			<input type="hidden" name="grandTotal" value="<?php echo $grandTotal; ?>">
 		</form>
 	</div>
 </div>
@@ -234,15 +257,61 @@
 </html>
 <?php 
 	if(isset($_POST['save'])){
-		$resultCounter = $_POST["resultCounter"];
-		if($resultCounter != 0){
-			Yii::$app->session->setFlash('warning',"Result not prepeard yet..!");
-		} else {
+		$resultCounter 	= $_POST["resultCounter"];
+		$examCriteriaID = $_POST["examCriteriaID"];
+		$classHead 		= $_POST["classHead"];
+		$examCategory = $_POST["examCategory"];
+		$studentArray = $_POST["studentArray"];
+		$resultArray = $_POST["resultArray"];
+		$gradeArray = $_POST["gradeArray"];
+		$percentArray = $_POST["percentArray"];
+		$grandTotalArray = $_POST["grandTotalArray"];
+		$stdCount = $_POST["stdCount"];
 
-		}
+		if($resultCounter != 0){
+			Yii::$app->session->setFlash('warning',"Mark sheet incomplete..!");
+		} else {
+			$transection = Yii::$app->db->beginTransaction();
+			try
+			{
+				for($i=0; $i<$stdCount; $i++){
+				$marksHeadUpdate = Yii::$app->db->createCommand()->update('marks_head', 				[
+							'grand_total' 	=> $grandTotalArray[$i],
+							'percentage' 	=> $percentArray[$i] ,
+							'grade' 		=> $gradeArray[$i] ,
+							'exam_status' 	=> $resultArray[$i] ,
+							'updated_at'	=> new \yii\db\Expression('NOW()'),
+							'updated_by'	=> Yii::$app->user->identity->id,
+	                        ],
+	                        ['exam_criteria_id' => $examCriteriaID, 'std_id' => $studentArray[$i]]
+	                    )->execute();
+				} //end of for loop
+				if($marksHeadUpdate){
+					$examStatusUpdate = Yii::$app->db->createCommand()->update('exams_criteria', 				[
+							'exam_status' 	=> "Result Prepared",
+							'updated_at'	=> new \yii\db\Expression('NOW()'),
+							'updated_by'	=> Yii::$app->user->identity->id,
+	                        ],
+	                        ['exam_criteria_id' => $examCriteriaID]
+	                    )->execute();
+				}
+				if($examStatusUpdate){
+				$transection->commit();
+				Yii::$app->session->setFlash('success', "Result Prepeard successfully...!");
+			}	
+		} // end of try
+			catch(Exception $e)
+			{
+				$transection->rollback();
+				echo $e;
+				Yii::$app->session->setFlash('warning', "Result not Prepeared. Try again!");
+			} // end of catch
+		} // end of else
 	}
  ?>
-<?php if(isset($_POST['update'])){
+  
+<?php //for updation of single student marks
+if(isset($_POST['update'])){
 		$countMarks 	= $_POST["countMarks"];
 		$subjectArray 	= $_POST["subjectArray"];
 		$marksDetailIdArray 	= $_POST["marksDetailIdArray"];

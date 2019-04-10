@@ -31,7 +31,7 @@ class MarksDetailsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','view-marks-sheet','update-marks'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','view-marks-sheet','update-marks',],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -75,6 +75,11 @@ class MarksDetailsController extends Controller
      public function actionUpdateMarks()
     {   
         return $this->render('update-marks');
+    }
+
+    public function actionViewResultCards()
+    {   
+        return $this->render('view-result-cards');
     }
 
     /**
