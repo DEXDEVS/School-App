@@ -7,17 +7,28 @@ if(isset($_GET['class_id']))
 	$subID = $_GET['sub_id'];
 	$empID = $_GET['emp_id'];
 
-	$examData = Yii::$app->db->createCommand("SELECT c.exam_category_id,s.full_marks,s.passing_marks
+	$examDataCond = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,c.exam_category_id,s.full_marks,s.passing_marks
 	FROM exams_criteria as c
 	INNER JOIN exams_schedule as s 
 	ON c.exam_criteria_id = s.exam_criteria_id
 	WHERE c.std_enroll_head_id = '$classID' AND 
 	s.subject_id = '$subID' AND c.exam_status = 'conducted'
 				")->queryAll();
-	if (empty($examData)){
+	if (empty($examDataCond)){
 		Yii::$app->session->setFlash('warning', "No Exam counducted yet.!");
 	} else {
-		$examCatId = $examData[0]['exam_category_id'];
+		$examDataResult = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,c.exam_category_id,s.full_marks,s.passing_marks
+		FROM exams_criteria as c
+		INNER JOIN exams_schedule as s 
+		ON c.exam_criteria_id = s.exam_criteria_id
+		WHERE c.std_enroll_head_id = '$classID' AND 
+		s.subject_id = '$subID' AND s.status = 'result prepared'
+					")->queryAll();
+		if(!empty($examDataResult)){
+			Yii::$app->session->setFlash('warning', "You have already submitted mark sheet..!");
+		} else {
+		$examCatId = $examDataCond[0]['exam_category_id'];
+		$examCriteriaId = $examDataCond[0]['exam_criteria_id'];
 		$examCatName = Yii::$app->db->createCommand("SELECT category_name
 		FROM exams_category
 		WHERE exam_category_id = '$examCatId' 
@@ -119,8 +130,8 @@ if(isset($_GET['class_id']))
 											<?php echo $students[$j]['std_enroll_detail_std_name']; ?>
 										</td>
 										<td>
-											<input type="checkbox" name="marks<?php echo $j+1; ?>" value="A">Abs <br>
-											<input type="number" name="marks<?php echo $j+1;?>">
+											<input type="checkbox" name="marks<?php echo $j+1;?>" onclick="document.getElementById('marks<?php echo $j+1;?>').disabled=this.checked;" value="A">Abs <br>
+											<input type="text" name="marks<?php echo $j+1;?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"  id="marks<?php echo $j+1;?>">
 										</td>
 										<?php 
 										$stdID = $students[$j]['std_enroll_detail_std_id'];
@@ -137,10 +148,12 @@ if(isset($_GET['class_id']))
 				                	?>
 				             <input class="form-control" type="hidden" name="countStudents" value="<?php echo $countStudents; ?>">
 				             <input class="form-control" type="hidden" name="categoryId" value="<?php echo $examCatId; ?>">
+				             <input class="form-control" type="hidden" name="examCriteriaId" value="<?php echo $examCriteriaId; ?>">
 				             <input class="form-control" type="hidden" name="classHeadId" value="<?php echo $classID; ?>">
 				             <input class="form-control" type="hidden" name="subId" value="<?php echo $subID; ?>">
+				             <input class="form-control" type="hidden" name="subId" value="<?php echo $subID; ?>">
 
-							<button style="float: right;s" type="submit" name="save" class="btn btn-success btn-flat btn-xs">
+							<button style="float: right;s" type="submit" name="save" class="btn btn-success btn-flat btn-xs" onclick="return confirm('are you sure')">
 									<i class="fa fa-sign-in"></i> <b>Submit Marks</b>
 								</button>
 							</form>
@@ -153,7 +166,9 @@ if(isset($_GET['class_id']))
 	</div>
 </body>
 </html>
-<?php //end of else
+<?php //end of (result) else
+		}
+//end of (conducted) else
 	}
 //end of if isset
 } 
@@ -161,8 +176,9 @@ if(isset($_GET['class_id']))
 if(isset($_POST['save'])){
 	$countStudents 	= $_POST['countStudents'];
 	$categoryId 	= $_POST['categoryId'];
+	$examCriteriaId = $_POST['examCriteriaId'];
 	$classHeadId 	= $_POST['classHeadId'];
-	$subjectId 			= $_POST['subId'];
+	$subjectId 		= $_POST['subId'];
 	$stdId 			= $_POST['stdId'];
 
 	for($i=0; $i<$countStudents;$i++){
@@ -179,19 +195,31 @@ if(isset($_POST['save'])){
 	$transection = Yii::$app->db->beginTransaction();
 	try{
 		for ($j=0; $j < $countStudents; $j++) { 
+			$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
+					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_id = '$stdId[$j]'")->queryAll();
+
+			if(empty($marksHeadId)){
 			$marksHead = Yii::$app->db->createCommand()->insert('marks_head',[
-	            			'exam_category_id' 		=> $categoryId,
-							'class_head_id' 		=> $classHeadId ,
+	            			'exam_criteria_id' 		=> $examCriteriaId,
 							'std_id' 				=> $stdId[$j],
 							'created_at'		    => new \yii\db\Expression('NOW()'),
 							'created_by'			=> Yii::$app->user->identity->id, 
 						])->execute();
-			if ($marksHead) {
-				$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
-					FROM marks_head WHERE exam_category_id = '$categoryId' AND class_head_id = $classHeadId AND std_id = '$stdId[$j]'")->queryAll();
+				if($marksHead){
+					$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
+					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_id = '$stdId[$j]'")->queryAll();
+					$marksHeadid = $marksHeadId[0]['marks_head_id'];
+					$marksDetails = Yii::$app->db->createCommand()->insert('marks_details',[
+	            			'marks_head_id' 	=> $marksHeadid,
+							'subject_id' 		=> $subjectId,
+							'obtained_marks'	=> $obtMarks[$j],
+							'created_at'		=> new \yii\db\Expression('NOW()'),
+							'created_by'		=> Yii::$app->user->identity->id, 
+						])->execute();
+				}
+			} else {
 
 				$marksHeadid = $marksHeadId[0]['marks_head_id'];
-	 
 				$marksDetails = Yii::$app->db->createCommand()->insert('marks_details',[
 	            			'marks_head_id' 	=> $marksHeadid,
 							'subject_id' 		=> $subjectId,

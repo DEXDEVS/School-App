@@ -62,7 +62,7 @@
                         <th style="text-align: center">Activity Fee</th>
                         <th style="text-align: center">Examination Fee</th>
                         <th style="text-align: center">Board/University Fee</th>
-                        <th style="text-align: center">Book/Stationery Expense</th>
+                        <th style="text-align: center">Book/Stationery Dues</th>
                         <th style="text-align: center">Arrears</th>
                         <th style="text-align: center">Total Amount</th>
                     </tr>

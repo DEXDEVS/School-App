@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace app\models;
 
 use Yii;
 
@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "marks_weitage".
  *
  * @property int $marks_weitage_id
- * @property int $exam_category_id
+ * @property int $std_enroll_head_id
  * @property int $subject_id
  * @property int $presentation
  * @property int $assignment
@@ -21,7 +21,7 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  *
- * @property ExamsCategory $examCategory
+ * @property StdEnrollmentHead $stdEnrollHead
  * @property Subjects $subject
  */
 class MarksWeitage extends \yii\db\ActiveRecord
@@ -40,10 +40,10 @@ class MarksWeitage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'required'],
-            [['exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'integer'],
+            [['std_enroll_head_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'required'],
+            [['std_enroll_head_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['exam_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ExamsCategory::className(), 'targetAttribute' => ['exam_category_id' => 'exam_category_id']],
+            [['std_enroll_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdEnrollmentHead::className(), 'targetAttribute' => ['std_enroll_head_id' => 'std_enroll_head_id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
         ];
     }
@@ -55,7 +55,7 @@ class MarksWeitage extends \yii\db\ActiveRecord
     {
         return [
             'marks_weitage_id' => 'Marks Weitage ID',
-            'exam_category_id' => 'Exam Category ID',
+            'std_enroll_head_id' => 'Std Enroll Head ID',
             'subject_id' => 'Subject ID',
             'presentation' => 'Presentation',
             'assignment' => 'Assignment',
@@ -73,9 +73,9 @@ class MarksWeitage extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getExamCategory()
+    public function getStdEnrollHead()
     {
-        return $this->hasOne(ExamsCategory::className(), ['exam_category_id' => 'exam_category_id']);
+        return $this->hasOne(StdEnrollmentHead::className(), ['std_enroll_head_id' => 'std_enroll_head_id']);
     }
 
     /**
