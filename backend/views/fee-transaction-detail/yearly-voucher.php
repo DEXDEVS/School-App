@@ -18,12 +18,14 @@
 	<h1 class="well well-sm bg-navy" align="center">Yearly Voucher Collection</h1>
     <form method="POST">
     	<div class="row">
-            <div class="col-md-4">
+            <div class="col-md-8">
+                <p class="text-green"><i><b>Enter <span class="text-red">Registration Number</span> or Select <span class="text-red">Class</span> and <span class="text-red">Student</span> to view Fee Details</i></b></p>
                 <div class="form-group">
                     <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
                 </div>    
             </div>    
         </div>
+
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -57,7 +59,7 @@
             </div>    
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> Show Voucher Details</b></button>
+                    <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> View Fee Details</b></button>
                 </div>    
             </div>   
         </div>
