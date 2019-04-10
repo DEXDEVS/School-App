@@ -13,6 +13,8 @@
         $sessionid      = $_POST["sessionid"];
         $sectionid      = $_POST["sectionid"];
         $month          = $_POST["monthYear"];
+        // previousMonth
+        $previousMonth = date('Y-m', strtotime('-1 months', strtotime($month)));
         //$installment_no = $_POST["installment_no"];
         $date           = $_POST["date"];
         // Select CLass...
@@ -56,11 +58,12 @@
                         <th style="text-align: center">Student Name</th>
                         <th style="text-align: center">Admission Fee</th>
                         <th style="text-align: center">Tuition Fee</th>
-                        <th style="text-align: center">Late Fee Fine</th>
                         <th style="text-align: center">Absent Fine</th>
-                        <th style="text-align: center">Library Dues</th>
-                        <th style="text-align: center">Transportation Fee</th>
-                        <th style="text-align: center">Examinatin Fee</th>
+                        <th style="text-align: center">Activity Fee</th>
+                        <th style="text-align: center">Examination Fee</th>
+                        <th style="text-align: center">Board/University Fee</th>
+                        <th style="text-align: center">Book/Stationery Expense</th>
+                        <th style="text-align: center">Arrears</th>
                         <th style="text-align: center">Total Amount</th>
                     </tr>
                     <?php 
@@ -74,16 +77,28 @@
                             $stdRollNo = Yii::$app->db->createCommand("SELECT std_roll_no FROM  std_enrollment_detail WHERE std_enroll_detail_std_id = '$stdId'")->queryAll(); 
                             // getting student fee...
                             $feeDetails = Yii::$app->db->createCommand("SELECT net_addmission_fee, tuition_fee, fee_id FROM std_fee_details WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
+                            $feeTransaction = Yii::$app->db->createCommand("SELECT std_id FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
+                            $arrears = Yii::$app->db->createCommand("SELECT total_amount, paid_amount, remaining FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]' AND month = '$previousMonth'")->queryAll();
+                            if(!empty($arrears)){
+                                $totalArrears = $arrears[0]['total_amount'];
+                                $paidAmount = $arrears[0]['paid_amount'];    
+                                if($totalArrears == $paidAmount){
+                                    $remainingArrears = 0;
+                                }else if ($totalArrears != $paidAmount) {
+                                    $remainingArrears = $totalArrears - $paidAmount;
+                                }
+                            }else{
+                                $remainingArrears = 0;
+                            }
+
                             $feeId = Yii::$app->db->createCommand("SELECT std_id FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
-                            
                             if(empty($feeId)){
                                 $admissionFee = $feeDetails[0]['net_addmission_fee'];
                             } else {
                                 $admissionFee = 0;
                             }
-                            
                             $tuitionFee = $feeDetails[0]['tuition_fee'];
-                            $netTotal = $admissionFee + $tuitionFee;
+                            $netTotal = $admissionFee + $tuitionFee + $remainingArrears;
                     ?>
                     <tr>
                         <td>
@@ -96,30 +111,31 @@
                             <p style="margin-top: 8px"><?php echo $stdName[0]['std_name'];?></p>
                          </td>
                         <td align="center">
-                            <input class="form-control" type="number" name="admission_fee[]" value="<?php echo $admissionFee; ?>" readonly="" id="admissionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
+                            <input class="form-control text-center" type="number" name="admission_fee[]" value="<?php echo $admissionFee; ?>" readonly="" id="admissionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
                         </td>
                         <td align="center">
-                            <input class="form-control" type="number" name="tuition_fee[]" value="<?php echo $tuitionFee; ?>" readonly="" id="tuitionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
+                            <input class="form-control text-center" type="number" name="tuition_fee[]" value="<?php echo $tuitionFee; ?>" readonly="" id="tuitionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
                         </td>
                         <td>
-                            <input class="form-control" type="number" id="lateFeeFine_<?php echo $id; ?>" name="late_fee_fine[]"  onChange="lateFeeFine(<?php echo $id; ?>)"  style="width: 70px; border: none;">
+                            <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
                         </td>
                         <td>
-                            <input class="form-control" type="number" id="absentFine_<?php echo $id; ?>" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
-                        </td>
-
-
-                        <td>
-                            <input class="form-control" type="number" id="libraryDues_<?php echo $id; ?>" name="library_dues[]"  onChange="libraryDues(<?php echo $id; ?>)" style="width: 70px; border: none;">
+                            <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" name="activity_fee[]"  onChange="activityFee(<?php echo $id; ?>)"  style="width: 70px; border: none;">
                         </td>
                         <td>
-                            <input class="form-control" type="number" id="transportFee_<?php echo $id; ?>" name="transport_fee[]"  onChange="transportationFee(<?php echo $id; ?>)" style="width: 100px; border: none;">
+                            <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" name="stationary_expense[]"  onChange="stationaryExpense(<?php echo $id; ?>)" style="width: 100px; border: none;">
                         </td>
                         <td>
-                            <input class="form-control" type="number" id="examFee_<?php echo $id; ?>" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 100px; border: none;">
+                            <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" name="board_uni_fee[]"  onChange="boardUniFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
                         </td>
                         <td>
-                            <input class="form-control" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name="total_amount[]" value="<?php echo $netTotal ; ?>"  style="width: 80px; border: none;">
+                            <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                        </td>
+                        <td>
+                            <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" name="arrears[]" value="<?php echo $remainingArrears; ?>" readonly="" style="width: 70px; border: none;">
+                        </td>
+                        <td>
+                            <input class="form-control text-center" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name="total_amount[]" value="<?php echo $netTotal ; ?>"  style="width: 80px; border: none;">
                         </td>
                     </tr>
                 <?php } ?>
@@ -156,11 +172,11 @@
 
 <script>
     var totalAmount;
-    function lateFeeFine(i) {
-            var lateFeeFine = parseInt($('#lateFeeFine_'+i).val());
+    function arrears(i) {
+            var arrears = parseInt($('#arrears_'+i).val());
             totalAmount = parseInt($('#totalAmount_'+i).val());
             var sum = 0;
-            sum = totalAmount + lateFeeFine;
+            sum = totalAmount + arrears;
             $('#totalAmount_'+i).val(sum);
             $('#netTotal_'+i).val(sum);
     }
@@ -172,19 +188,27 @@
             $('#totalAmount_'+i).val(sum);
             $('#netTotal_'+i).val(sum);
     }
-    function libraryDues(i) {
-            var libraryDues = parseInt($('#libraryDues_'+i).val());
+    function stationaryExpense(i) {
+            var stationaryExpense = parseInt($('#stationaryExpense_'+i).val());
             totalAmount = parseInt($('#totalAmount_'+i).val());
             var sum = 0;
-            sum = totalAmount + libraryDues;
+            sum = totalAmount + stationaryExpense;
             $('#totalAmount_'+i).val(sum);
             $('#netTotal_'+i).val(sum);
     }
-    function transportationFee(i) {
-            var transportFee = parseInt($('#transportFee_'+i).val());
+    function activityFee(i) {
+            var activityFee = parseInt($('#activityFee_'+i).val());
             totalAmount = parseInt($('#totalAmount_'+i).val());
             var sum = 0;
-            sum = totalAmount + transportFee;
+            sum = totalAmount + activityFee;
+            $('#totalAmount_'+i).val(sum);
+            $('#netTotal_'+i).val(sum);
+    }
+    function boardUniFee(i) {
+            var boardUniFee = parseInt($('#boardUniFee_'+i).val());
+            totalAmount = parseInt($('#totalAmount_'+i).val());
+            var sum = 0;
+            sum = totalAmount + boardUniFee;
             $('#totalAmount_'+i).val(sum);
             $('#netTotal_'+i).val(sum);
     }
@@ -195,11 +219,5 @@
             sum = totalAmount + transportFee;
             $('#totalAmount_'+i).val(sum);
             $('#netTotal_'+i).val(sum);
-    }
-    function totalDiscount(i) {
-            var discountAmount = parseInt($('#discountAmount_'+i).val());
-            totalAmount = parseInt($('#totalAmount_'+i).val());
-            var discount = totalAmount - discountAmount;
-            $('#netTotal_'+i).val(discount);
     }
 </script>
