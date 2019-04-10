@@ -119,6 +119,7 @@
                 <th>Total Amount</th>
                 <th>Amount Paid</th>
                 <th>Status</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody>
@@ -142,8 +143,8 @@
                     <tr>
                         <td> <?php echo date('Y-F', strtotime($transactionHead[$i]['month']));?> </td>
                         <td> <?php echo $transactionHead[$i]['total_amount']; ?> </td>
-                        <td><input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)"></td>
-                        <td><input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly=""></td>
+                        <td><input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)" style="width: 100px"></td>
+                        <td><input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly="" style="width: 60px"></td>
                         <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>">
                             
                     </tr>
