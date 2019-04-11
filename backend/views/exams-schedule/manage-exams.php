@@ -176,7 +176,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 											<label>Date</label>
-											<input type="date" name="date[]" class="form-control">
+											<input type="date" name="date[]" class="form-control" required="">
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -208,7 +208,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 											<label>Invagilator</label>
-											<select name="Invagilator[]" class="form-control">
+											<select name="Invagilator[]" class="form-control" required="">
 												<?php 
 
 												$teacher = Yii::$app->db->createCommand("
