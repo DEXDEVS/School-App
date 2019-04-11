@@ -12,6 +12,9 @@ use yii\helpers\Html;
     $userPhoto = $user[0]['user_photo'];
 ?>
 <style type="text/css">
+    /*body{
+        font-family: serif;
+    }*/
     .main-header{
         background-color: #591747;
         color: white;
@@ -35,9 +38,10 @@ use yii\helpers\Html;
         </a>
 
         <div class="navbar-custom-menu">
-
             <ul class="nav navbar-nav">
-
+                <li>
+                    <p style="margin-top: 15px;  font-family: serif;"><i><b>For Technical Support Feel Free to Contact Us 24/7 on (0300-6999824, 0306-3772105, 0306-3772106)</b></i></p>
+                </li>
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu invisible">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">

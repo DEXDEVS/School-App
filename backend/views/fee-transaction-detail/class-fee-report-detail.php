@@ -42,8 +42,8 @@
     ?>
     <div class="row">
 		<div class="col-md-12">
-			<img src="images/Brookfield_logo.jpg" width="90px" class="img-circle" style="float:left;margin-top: 10px;">
-			<h2 align="center">BROOKFIELD GROUP OF COLLEGES<small> (Rahim Yar Khan)</small></h2>
+			<img src="images/abc_logo.jpg" width="90px" class="img-circle" style="float:left;margin-top: 10px;">
+			<h2 align="center">ABC Learning High School<small> (Rahim Yar Khan)</small></h2>
 		</div>
 		<div class="col-md-12">
 			<table width="100%" style="margin-top: -45px;">

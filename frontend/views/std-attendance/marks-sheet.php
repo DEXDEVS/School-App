@@ -106,14 +106,14 @@ if(isset($_GET['class_id']))
 					</div><hr>
 					<div class="row">
 						<div class="col-md-12">
-							<form method="POST">
+							<form method="POST" action="./activity-view?sub_id=<?php echo $subID; ?>&class_id=<?php echo $classID; ?>&emp_id=<?php echo $empID; ?>">
 							<table class="table table-hover">
 								<thead>
 									<tr style="background-color: #337AB7;color: white;">
 										<th class="text-center">Sr#</th>
 										<th class="text-center">Roll no.</th>
 										<th class="text-center">Student</th>
-										<th class="text-center">Marks</th>
+										<th class="text-center">Marks <?php echo $examDataCond[0]['full_marks']."/".$examDataCond[0]['passing_marks'] ?></th>
 									</tr>
 								</thead>								<tbody>
 									<?php 
@@ -153,7 +153,7 @@ if(isset($_GET['class_id']))
 				             <input class="form-control" type="hidden" name="subId" value="<?php echo $subID; ?>">
 				             <input class="form-control" type="hidden" name="subId" value="<?php echo $subID; ?>">
 
-							<button style="float: right;s" type="submit" name="save" class="btn btn-success btn-flat btn-xs" onclick="return confirm('are you sure')">
+							<button style="float: right;s" type="submit" name="saveMarks" class="btn btn-success btn-flat btn-xs" onclick="return confirm('are you sure')">
 									<i class="fa fa-sign-in"></i> <b>Submit Marks</b>
 								</button>
 							</form>
@@ -173,91 +173,4 @@ if(isset($_GET['class_id']))
 //end of if isset
 } 
 
-if(isset($_POST['save'])){
-	$countStudents 	= $_POST['countStudents'];
-	$categoryId 	= $_POST['categoryId'];
-	$examCriteriaId = $_POST['examCriteriaId'];
-	$classHeadId 	= $_POST['classHeadId'];
-	$subjectId 		= $_POST['subId'];
-	$stdId 			= $_POST['stdId'];
-
-	for($i=0; $i<$countStudents;$i++){
-		$q=$i+1;
-		$marks = "marks".$q;
-
-		if(empty($_POST["$marks"])){
-			$obtMarks[$i] = 'A';
-		} else {
-			$obtMarks[$i] = $_POST["$marks"];
-		}
-	}
-	
-	$transection = Yii::$app->db->beginTransaction();
-	try{
-		for ($j=0; $j < $countStudents; $j++) { 
-			$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
-					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_id = '$stdId[$j]'")->queryAll();
-
-			if(empty($marksHeadId)){
-			$marksHead = Yii::$app->db->createCommand()->insert('marks_head',[
-	            			'exam_criteria_id' 		=> $examCriteriaId,
-							'std_id' 				=> $stdId[$j],
-							'created_at'		    => new \yii\db\Expression('NOW()'),
-							'created_by'			=> Yii::$app->user->identity->id, 
-						])->execute();
-				if($marksHead){
-					$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
-					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_id = '$stdId[$j]'")->queryAll();
-					$marksHeadid = $marksHeadId[0]['marks_head_id'];
-					$marksDetails = Yii::$app->db->createCommand()->insert('marks_details',[
-	            			'marks_head_id' 	=> $marksHeadid,
-							'subject_id' 		=> $subjectId,
-							'obtained_marks'	=> $obtMarks[$j],
-							'created_at'		=> new \yii\db\Expression('NOW()'),
-							'created_by'		=> Yii::$app->user->identity->id, 
-						])->execute();
-				}
-			} else {
-
-				$marksHeadid = $marksHeadId[0]['marks_head_id'];
-				$marksDetails = Yii::$app->db->createCommand()->insert('marks_details',[
-	            			'marks_head_id' 	=> $marksHeadid,
-							'subject_id' 		=> $subjectId,
-							'obtained_marks'	=> $obtMarks[$j],
-							'created_at'		=> new \yii\db\Expression('NOW()'),
-							'created_by'		=> Yii::$app->user->identity->id, 
-						])->execute();
-			}
-			if($marksDetails){
-				$examScheduleId = Yii::$app->db->createCommand("SELECT s.exam_schedule_id FROM exams_schedule as s
-				INNER JOIN exams_criteria as c 
-				ON s.exam_criteria_id = c.exam_criteria_id
-				WHERE c.std_enroll_head_id = '$classHeadId'
-				AND c.exam_category_id = '$categoryId'
-				AND s.subject_id = '$subjectId'
-				AND c.exam_status = 'conducted'
-				")->queryAll();
-				$scheduleId = $examScheduleId[0]['exam_schedule_id'];
-				$examSchedule = Yii::$app->db->createCommand()->update('exams_schedule',[
-                            'status' => 'result prepared'],
-                            ['exam_schedule_id' => $scheduleId] 
-                            )->execute();
-			}
-		//closing of if
-			
-		} // closing of for loop countStudent
-		if($marksDetails){
-				$transection->commit();
-				Yii::$app->session->setFlash('success', "Mark Sheet managed sccessfully...!");
-			}
-	//closing of try block
-	} catch(Exception $e){
-		$transection->rollback();
-		echo $e;
-		Yii::$app->session->setFlash('warning', "Mark Sheet not managed. Try again!");
-	}
-	//closing of catch
-
-}
-//closing of if isset
 ?>
