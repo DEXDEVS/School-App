@@ -15,7 +15,7 @@
 <body>
 
 <div class="container-fluid" style="margin-top: -30px;">
-	<h1 class="well well-sm bg-navy" align="center">Monthly Voucher Collection</h1>
+	<h1 class="well well-sm bg-navy" align="center">Monthly Fee Collection</h1>
     <form method="POST">
     	<div class="row">
             <div class="col-md-4">
@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> Show Voucher Details</b></button>
+                    <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> View Fee Details</b></button>
                 </div>    
             </div>   
         </div>
@@ -84,7 +84,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3 class="well well-sm">
-                <?php echo $student[0]['std_name']." - ".$class[0]['class_name']."<span style='float: right;'>".date('F, Y', strtotime($month))."</span>"; ?>
+                <?php echo "Class - ".$class[0]['class_name']." : ".$student[0]['std_name']."<span style='float: right;'>".date('F, Y', strtotime($month))."</span>"; ?>
             </h3>
         </div>
     </div>
@@ -162,7 +162,7 @@
             <tbody>
                 <tr>
                     <td>
-                       <button formaction="monthly-voucher" type="submit" name="save" id="btn" class="btn btn-success btn-flat  btn-block" style="padding: 5px 27px;><span class="fa fa-check-square" aria-hidden="true"></span><b> Collect Voucher</b></button>
+                       <button formaction="monthly-voucher" type="submit" name="save" id="btn" class="btn btn-success btn-flat  btn-block" style="padding: 5px 27px;"><span class="fa fa-check-square" aria-hidden="true"></span><b> Collect Voucher</b></button>
                     </td>
                 </tr>
             </tbody>
@@ -219,27 +219,30 @@ if(isset($_POST['save'])){
             $updateTransactionDetail = Yii::$app->db->createCommand()->update('fee_transaction_detail', ['collected_fee_amount'=> $feeAmount[$i]], ['fee_trans_detail_head_id' => $voucherNo, 'fee_type_id'=> $typeIdArray[$i]])->execute();
         }
         $account = Yii::$app->db->createCommand()->insert('account_transactions', [
-                            'account_nature'=> 'Income',  
-                            'account_register_id' => 5,
-                            'date' => new \yii\db\Expression('NOW()'),
-                            'description' => $status,
-                            'total_amount' => $paidAmount,
-                            'created_at' => new \yii\db\Expression('NOW()'),
-                            'created_by' => Yii::$app->user->identity->id,
-                        ])->execute();
+            'account_nature'=> 'Income',  
+            'account_register_id' => 5,
+            'date' => new \yii\db\Expression('NOW()'),
+            'description' => $status,
+            'total_amount' => $paidAmount,
+            'created_at' => new \yii\db\Expression('NOW()'),
+            'created_by' => Yii::$app->user->identity->id,
+        ])->execute();
         
         if ($updateTransactionHead) {
             $transaction->commit();
             // success alert message...
             Yii::$app->session->setFlash('success', "Voucher paid Successfully...!"); 
-            } 
-    } catch (Exception $e) {
-            $transaction->rollBack();
-            Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
-        }
+        } 
+    } 
+    // ending try....
+    catch (Exception $e) {
+        $transaction->rollBack();
+        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+    }
+    // ending catch...
 }
+// ending isset
 ?>  
-
 </div>
 </body>
 </html>
@@ -254,6 +257,4 @@ if(isset($_POST['save'])){
         //partialyPaid = "Partially Paid";
         $('#status').val(paid);
     }
-    
-
 </script>
