@@ -25,7 +25,7 @@
 	<div class="row" style="text-align: center;">
 		<div class="box box-default">
 			<div class="box-header">
-				<p>Update Student Marks</p><hr>
+				<p>Update Student:<?php echo $StdName[0]['std_name'];?></p><hr>
 				<div class="col-md-4">
 					<h3>Category Name</h3>
 					<p><?php echo $CatName[0]['category_name']; ?></p>
