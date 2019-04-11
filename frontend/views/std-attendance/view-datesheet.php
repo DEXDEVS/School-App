@@ -25,9 +25,11 @@
                 INNER JOIN exams_schedule as s
                 ON c.exam_criteria_id = s.exam_criteria_id
                 WHERE c.exam_status = 'announced' AND s.emp_id = '$empId' ")->queryAll();
-            $countInvagilation = count($Invagilation);
-
-            var_dump($Invagilation);
+            
+            if(empty($Invagilation)){
+            	Yii::$app->session->setFlash('warning',"No Exams announced yet..!");
+            } else {
+            	$countInvagilation = count($Invagilation);
  ?>
 <div class="row">
 	<div class="col-md-4">
@@ -206,5 +208,6 @@
 
 
 </div>
+<?php } ?>
 </body>
 </html>

@@ -114,9 +114,18 @@
 							<div class="form-group">
 								<label>Select Status</label>
 								<select name="exam_status" class="form-control">
-									 <option value="Inactive">Inactive</option>
+									 <option value="<?php echo $examCriteriaData[0]['exam_status'];?>">
+									 	<?php echo $examCriteriaData[0]['exam_status'];?>
+									 </option>
+								<?php if($examCriteriaData[0]['exam_status'] != "Inactive"){?>
+										<option value="Inactive">Inactive</option>
+								<?php }
+								if($examCriteriaData[0]['exam_status'] != "announced"){?>
 									 <option value="announced">Announce</option>
+								<?php } 
+								if($examCriteriaData[0]['exam_status'] != "conducted"){?>?>
 									 <option value="conducted">Conducted</option>
+									<?php 	} ?>
 								</select>
 							</div>
 						</div>

@@ -5,6 +5,8 @@
 		<title>Manage Exams</title>
 	</head>
 	<body>
+		<?php $branch_id = Yii::$app->user->identity->branch_id; ?>
+
 	<div class="container-fluid">
 		<div class="box box-primary">
 			<div class="box-header">
@@ -17,7 +19,7 @@
 						<div class="col-md-4">	
 							<div class="form-group">
 								<label>Select Exam Category</label>
-								<select name="exam_category" class="form-control">
+								<select name="exam_category" class="form-control" required="">
 									<option>Select Exam Category</option>
 									<?php 
 
@@ -34,7 +36,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Select Class</label>
-								<select name="class_head" class="form-control">
+								<select name="class_head" class="form-control" required="">
 									<option>Select Class</option>
 									<?php 
 
@@ -51,7 +53,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Exam Start Date</label>
-								<input type="date" name="exam_start_date" class="form-control">
+								<input type="date" name="exam_start_date" class="form-control" required="">
 							</div>
 						</div>
 					</div>
@@ -59,19 +61,19 @@
 						<div class="col-md-4">	
 							<div class="form-group">
 								<label>Exam End Date</label>
-								<input type="date" name="exam_end_date" class="form-control">
+								<input type="date" name="exam_end_date" class="form-control" required="">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Exam Start Time</label>
-								<input type="time" name="exam_start_time" class="form-control">
+								<input type="time" name="exam_start_time" class="form-control" required="">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Exam End Time</label>
-								<input type="time" name="exam_end_time" class="form-control">
+								<input type="time" name="exam_end_time" class="form-control" required="">
 							</div>
 						</div>
 					</div>
@@ -79,7 +81,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Room</label>
-								<input type="text" name="room" class="form-control">
+								<input type="text" name="room" class="form-control" required="">
 							</div>
 						</div>
 					</div>

@@ -65,7 +65,9 @@
 							WHERE h.exam_criteria_id = '$criteriaId'
 							AND h.std_id = '$stdID'
 						")->queryAll();
-
+					if(empty($marks)){
+						Yii::$app->session->setFlash('warning',"Nothing to update..!");
+					} else {
 						$countMarks = count($marks);
 						 for ($i=0; $i <$countMarks ; $i++) { 
 						 	$subjectID = $marks[$i]['subject_id'];
@@ -94,6 +96,8 @@
 					<button style="float: right;s" type="submit" name="update" class="btn btn-success btn-flat btn-xs">
 					<i class="fa fa-sign-in"></i> <b>Update Marks</b>
 					</button>
+					<?php //end of else
+					} ?>
 				</form>
 			</div>
 		</div>
