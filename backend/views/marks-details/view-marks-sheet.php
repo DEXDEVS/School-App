@@ -72,7 +72,7 @@
 			AND c.exam_category_id = '$examCategory'
 			")->queryAll();
 		if(empty($examSchedule)){
-			Yii::$app->session->setFlash('warning',"Exams not conducted yet.");
+			Yii::$app->session->setFlash('warning',"Exams not conducted for this categroy.");
 		} else {
 			$countSubjects = count($examSchedule);
 			$examCriteriaID = $examSchedule[0]['exam_criteria_id'];
@@ -186,9 +186,13 @@
 								 <td>
 								 	<?php 
 								 	$grades = Yii::$app->db->createCommand("SELECT grade_name FROM grades WHERE grade_from <= '$percent' AND grade_to >= '$percent'")->queryAll();
-								 	$grade = $grades[0]['grade_name'];
-								 	echo $grade;
-								 	$gradeArray[$std] = $grade;
+								 	if(empty($grades)){
+								 		echo "-";
+								 	} else {
+									 	$grade = $grades[0]['grade_name'];
+									 	echo $grade;
+									 	$gradeArray[$std] = $grade;
+								 	}
 								 	 ?>
 								 </td>
 								 <td>
@@ -271,6 +275,7 @@
 		if($resultCounter != 0){
 			Yii::$app->session->setFlash('warning',"Mark sheet incomplete..!");
 		} else {
+
 			$transection = Yii::$app->db->beginTransaction();
 			try
 			{
