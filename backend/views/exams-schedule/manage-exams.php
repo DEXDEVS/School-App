@@ -8,7 +8,12 @@
 		<?php $branch_id = Yii::$app->user->identity->branch_id; ?>
 
 	<div class="container-fluid">
-		<div class="box box-primary">
+		<div class="row">
+			<div class="col-md-12">
+					<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+			</div>
+		</div><br>
+		<div class="box box-primary col-md-12">
 			<div class="box-header">
 				<h3>Exams Criteria</h3>
 			</div>
@@ -106,6 +111,18 @@
 			$exam_start_time 	= $_POST["exam_start_time"];
 			$exam_end_time 		= $_POST["exam_end_time"];
 			$room 				= $_POST["room"];
+
+			$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
+			FROM  exams_criteria
+			WHERE exam_category_id 		= '$exam_category' AND
+				  std_enroll_head_id 	= '$headId' AND
+				  exam_start_date 		= '$exam_start_date' AND
+				  exam_end_date 		= '$exam_end_date'
+			")->queryAll();
+
+		if (!empty($examCriteriaData)) {
+			Yii::$app->session->setFlash('warning', "Exams Schedule already managed against selected Date range ...!");
+		}else{
 
 		$marks = Yii::$app->db->createCommand("SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category'")->queryAll();
 
@@ -295,7 +312,9 @@
 	</div>
 		<?php	
 		}
-		//closing of else
+		//closing of else for marks weightage
+		}
+		//closing of else for exam schedule date
 	}
 	// closing of isset
 	 ?>

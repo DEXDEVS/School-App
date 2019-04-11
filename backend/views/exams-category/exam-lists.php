@@ -40,6 +40,44 @@
 <html>
 <head>
 	<title></title>
+	<style type="text/css">
+	.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: #E0E0E0;
+  
+  text-align: center;
+  border-radius: 20px;
+  padding: 35px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+  
+  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+ul{
+	margin:0px;
+    padding:0px;
+}
+li{
+list-style-type:none;
+}
+</style>
 </head>
 <body>
 <div class="container-fluid">
@@ -83,6 +121,7 @@
 					 	echo "<h4 class='text-center'>No Schedule for classes are avaialble...!!!</h4>";
 					}
 					else { ?>
+						<form method="POST" action="">
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -137,21 +176,65 @@
 									<a href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-primary btn-xs">
 										View Result Card
 									</a>
-									<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-success btn-xs">
-										Announce Result
-									</a>
+									
+										<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
+										<input type="hidden" name="cat_id" value="<?php echo $examCateogryId; ?>">
+										<input type="hidden" name="class_id" value="<?php echo $classID; ?>">
+										<button type="submit" name="result_announced" class="btn btn-success btn-xs">
+											Announce Result
+										</button>
+									
 								</td>
 							</tr>
 							<?php }  } ?>
 						</tbody>
 					</table>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 <?php 
+
+	// result announce isset
+
+	if(isset($_POST['result_announced']))
+	{
+		$cat_id = $_POST['cat_id'];
+		$class_id = $_POST['class_id'];
+
+		$resultAnnounced = Yii::$app->db->createCommand("
+		SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$cat_id' AND std_enroll_head_id = '$class_id' AND exam_status = 'Result Prepared'
+			")->queryAll();
+		if (empty($resultAnnounced)) {
+			Yii::$app->session->setFlash('warning', "You can not announce result before result prepared...!");
+		} else {
+			$transection = Yii::$app->db->beginTransaction();
+			try{
+				$criteriaId = $resultAnnounced[0]['exam_criteria_id'];
+				$statusUpdate = Yii::$app->db->createCommand()->update('exams_criteria', 				[
+							'exam_status'			=> 'Result Announced',
+							'updated_at'			=> new \yii\db\Expression('NOW()'),
+							'updated_by'			=> Yii::$app->user->identity->id,
+	                        ],
+	                        ['exam_criteria_id' => $criteriaId, 'exam_category_id' => $cat_id, 'std_enroll_head_id' => $class_id, 'exam_status' => "Result Prepared"]
+	                    )->execute();
+				if($statusUpdate){
+					$transection->commit();
+					Yii::$app->session->setFlash('success', "Result announced successfully...!");
+				}//closing of try block
+			} catch(Exception $e){
+				$transection->rollback();
+				echo $e;
+				Yii::$app->session->setFlash('warning', "Result not announced. Try again!");
+			} // closing of transaction handling....
+		} //closing of else
+	} //if isset
+ ?>
+<?php 
+
+	// date sheet update isset
 	if(isset($_POST['update']))
 	{
 		// getting exam criteria fields
