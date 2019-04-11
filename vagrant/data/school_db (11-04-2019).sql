@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2019 at 10:43 AM
--- Server version: 10.1.29-MariaDB
--- PHP Version: 7.2.0
+-- Generation Time: Apr 11, 2019 at 11:14 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -670,7 +670,7 @@ INSERT INTO `exams_category` (`exam_category_id`, `category_name`, `description`
 (2, 'Weekly Tests', 'Weekly Class Tests', '2019-03-11 09:34:40', '0000-00-00 00:00:00', 0, 0),
 (3, 'First Term', 'First Term Exams', '2019-03-11 09:35:27', '0000-00-00 00:00:00', 0, 0),
 (4, 'Mid Term', 'Mid Term Exams', '2019-03-11 09:35:49', '0000-00-00 00:00:00', 0, 0),
-(5, 'Final Term', 'Final Term Exams', '2019-03-11 09:36:04', '0000-00-00 00:00:00', 0, 0),
+(5, 'Final Term Examination', 'Final Term Exams', '2019-04-07 17:49:25', '0000-00-00 00:00:00', 0, 0),
 (6, 'December Test', 'December Test / Exams', '2019-03-11 09:36:44', '0000-00-00 00:00:00', 0, 0),
 (7, 'Quiz', 'Subject Quiz', '2019-03-11 09:37:15', '0000-00-00 00:00:00', 0, 0),
 (8, 'Assignment', 'Class Assignment', '2019-03-11 09:37:35', '0000-00-00 00:00:00', 0, 0),
@@ -692,11 +692,20 @@ CREATE TABLE `exams_criteria` (
   `exam_start_time` time NOT NULL,
   `exam_end_time` time NOT NULL,
   `exam_room` varchar(15) NOT NULL,
+  `exam_status` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `exams_criteria`
+--
+
+INSERT INTO `exams_criteria` (`exam_criteria_id`, `exam_category_id`, `std_enroll_head_id`, `exam_start_date`, `exam_end_date`, `exam_start_time`, `exam_end_time`, `exam_room`, `exam_status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 5, 6, '2019-04-08', '2019-04-16', '09:00:00', '12:00:00', 'Room-2', 'conducted', '2019-04-08 07:48:36', '2019-04-08 07:48:36', 1, 1),
+(9, 5, 5, '2019-04-08', '2019-04-18', '09:00:00', '12:00:00', 'Room-2', 'Inactive', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -712,11 +721,32 @@ CREATE TABLE `exams_schedule` (
   `date` date NOT NULL,
   `full_marks` int(5) NOT NULL,
   `passing_marks` int(5) NOT NULL,
+  `status` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `exams_schedule`
+--
+
+INSERT INTO `exams_schedule` (`exam_schedule_id`, `exam_criteria_id`, `subject_id`, `emp_id`, `date`, `full_marks`, `passing_marks`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(7, 1, 1, 1, '2019-04-08', 100, 33, 'result prepared', '2019-04-09 06:29:12', '2019-04-08 07:48:36', 1, 1),
+(8, 1, 2, 3, '2019-04-09', 100, 33, 'result prepared', '2019-04-09 06:29:35', '2019-04-08 07:48:36', 1, 1),
+(9, 1, 4, 4, '2019-04-10', 100, 33, '', '2019-04-09 08:22:11', '2019-04-08 07:48:36', 1, 1),
+(10, 1, 9, 4, '2019-04-11', 50, 17, '', '2019-04-08 07:48:36', '2019-04-08 07:48:36', 1, 1),
+(11, 1, 7, 5, '2019-04-13', 50, 17, '', '2019-04-08 07:48:36', '2019-04-08 07:48:36', 1, 1),
+(12, 1, 10, 8, '2019-04-16', 100, 33, '', '2019-04-08 07:48:36', '2019-04-08 07:48:36', 1, 1),
+(21, 9, 8, 1, '2019-04-08', 100, 33, '', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1),
+(22, 9, 13, 3, '2019-04-09', 100, 33, '', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1),
+(23, 9, 12, 5, '2019-04-10', 100, 33, '', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1),
+(24, 9, 2, 6, '2019-04-11', 100, 33, '', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1),
+(25, 9, 3, 6, '2019-04-12', 100, 33, '', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1),
+(26, 9, 4, 8, '2019-04-12', 100, 33, '', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1),
+(27, 9, 5, 5, '2019-04-15', 100, 33, '', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1),
+(28, 9, 1, 11, '2019-04-17', 100, 33, '', '2019-04-08 17:39:13', '2019-04-08 17:39:13', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1027,12 +1057,70 @@ INSERT INTO `institute_name` (`Institute_name_id`, `Institute_name`, `Institutte
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `marks_details`
+--
+
+CREATE TABLE `marks_details` (
+  `marks_detail_id` int(11) NOT NULL,
+  `marks_head_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `obtained_marks` varchar(20) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `marks_details`
+--
+
+INSERT INTO `marks_details` (`marks_detail_id`, `marks_head_id`, `subject_id`, `obtained_marks`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '80', 68, 1, '2019-04-09 09:00:35', '2019-04-09 09:00:35'),
+(2, 2, 1, '100', 68, 1, '2019-04-09 08:23:29', '2019-04-09 08:23:29'),
+(3, 3, 1, '80', 68, 0, '2019-04-09 06:29:12', '0000-00-00 00:00:00'),
+(4, 1, 2, '80', 68, 1, '2019-04-09 09:00:35', '2019-04-09 09:00:35'),
+(5, 2, 2, '90', 68, 1, '2019-04-09 08:23:29', '2019-04-09 08:23:29'),
+(6, 3, 2, '70', 68, 0, '2019-04-09 06:29:35', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `marks_head`
+--
+
+CREATE TABLE `marks_head` (
+  `marks_head_id` int(11) NOT NULL,
+  `exam_criteria_id` int(11) NOT NULL,
+  `std_id` int(11) NOT NULL,
+  `grand_total` double NOT NULL,
+  `percentage` varchar(10) NOT NULL,
+  `grade` varchar(3) NOT NULL,
+  `exam_status` varchar(6) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `marks_head`
+--
+
+INSERT INTO `marks_head` (`marks_head_id`, `exam_criteria_id`, `std_id`, `grand_total`, `percentage`, `grade`, `exam_status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 5, 0, '', '', '', 68, 0, '2019-04-09 06:29:12', '0000-00-00 00:00:00'),
+(2, 1, 8, 0, '', '', '', 68, 0, '2019-04-09 06:29:12', '0000-00-00 00:00:00'),
+(3, 1, 18, 0, '', '', '', 68, 0, '2019-04-09 06:29:12', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `marks_weitage`
 --
 
 CREATE TABLE `marks_weitage` (
   `marks_weitage_id` int(11) NOT NULL,
-  `std_enroll_head_id` int(11) NOT NULL,
+  `exam_category_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
   `presentation` int(5) NOT NULL,
   `assignment` int(5) NOT NULL,
@@ -1045,6 +1133,23 @@ CREATE TABLE `marks_weitage` (
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `marks_weitage`
+--
+
+INSERT INTO `marks_weitage` (`marks_weitage_id`, `exam_category_id`, `subject_id`, `presentation`, `assignment`, `attendance`, `dressing`, `theory`, `practical`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 5, 1, 5, 5, 5, 5, 80, 0, '2019-04-07 17:58:09', '0000-00-00 00:00:00', 1, 0),
+(2, 5, 2, 5, 5, 5, 5, 80, 0, '2019-04-07 17:58:26', '0000-00-00 00:00:00', 1, 0),
+(3, 5, 4, 5, 5, 5, 5, 80, 0, '2019-04-07 17:58:40', '0000-00-00 00:00:00', 1, 0),
+(4, 5, 7, 5, 5, 5, 5, 30, 0, '2019-04-07 17:59:09', '0000-00-00 00:00:00', 1, 0),
+(5, 5, 9, 5, 5, 5, 5, 30, 0, '2019-04-07 18:19:07', '0000-00-00 00:00:00', 1, 0),
+(6, 5, 10, 5, 5, 5, 5, 50, 30, '2019-04-07 18:19:26', '0000-00-00 00:00:00', 1, 0),
+(7, 5, 8, 5, 5, 5, 5, 50, 30, '2019-04-08 08:05:41', '0000-00-00 00:00:00', 1, 0),
+(8, 5, 13, 5, 5, 5, 5, 60, 20, '2019-04-08 08:06:24', '0000-00-00 00:00:00', 1, 0),
+(9, 5, 12, 5, 5, 5, 5, 60, 20, '2019-04-08 08:06:40', '0000-00-00 00:00:00', 1, 0),
+(10, 5, 3, 5, 5, 5, 5, 80, 0, '2019-04-08 08:07:01', '0000-00-00 00:00:00', 1, 0),
+(11, 5, 5, 5, 5, 5, 5, 80, 0, '2019-04-08 08:07:13', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -2205,11 +2310,27 @@ ALTER TABLE `institute_name`
   ADD PRIMARY KEY (`Institute_name_id`);
 
 --
+-- Indexes for table `marks_details`
+--
+ALTER TABLE `marks_details`
+  ADD PRIMARY KEY (`marks_detail_id`),
+  ADD KEY `marks_head_id` (`marks_head_id`),
+  ADD KEY `subject_id` (`subject_id`);
+
+--
+-- Indexes for table `marks_head`
+--
+ALTER TABLE `marks_head`
+  ADD PRIMARY KEY (`marks_head_id`),
+  ADD KEY `std_id` (`std_id`),
+  ADD KEY `exam_criteria_id` (`exam_criteria_id`);
+
+--
 -- Indexes for table `marks_weitage`
 --
 ALTER TABLE `marks_weitage`
   ADD PRIMARY KEY (`marks_weitage_id`),
-  ADD KEY `std_enroll_head_id` (`std_enroll_head_id`,`subject_id`),
+  ADD KEY `std_enroll_head_id` (`exam_category_id`,`subject_id`),
   ADD KEY `subject_id` (`subject_id`);
 
 --
@@ -2515,13 +2636,13 @@ ALTER TABLE `exams_category`
 -- AUTO_INCREMENT for table `exams_criteria`
 --
 ALTER TABLE `exams_criteria`
-  MODIFY `exam_criteria_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `exam_criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `exams_schedule`
 --
 ALTER TABLE `exams_schedule`
-  MODIFY `exam_schedule_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `exam_schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `fee_transaction_detail`
@@ -2566,10 +2687,22 @@ ALTER TABLE `institute_name`
   MODIFY `Institute_name_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `marks_details`
+--
+ALTER TABLE `marks_details`
+  MODIFY `marks_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `marks_head`
+--
+ALTER TABLE `marks_head`
+  MODIFY `marks_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `marks_weitage`
 --
 ALTER TABLE `marks_weitage`
-  MODIFY `marks_weitage_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `marks_weitage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `month`
@@ -2784,21 +2917,6 @@ ALTER TABLE `emp_reference`
   ADD CONSTRAINT `emp_reference_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `emp_info` (`emp_id`);
 
 --
--- Constraints for table `exams_criteria`
---
-ALTER TABLE `exams_criteria`
-  ADD CONSTRAINT `exams_criteria_ibfk_1` FOREIGN KEY (`exam_category_id`) REFERENCES `exams_category` (`exam_category_id`),
-  ADD CONSTRAINT `exams_criteria_ibfk_2` FOREIGN KEY (`std_enroll_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`);
-
---
--- Constraints for table `exams_schedule`
---
-ALTER TABLE `exams_schedule`
-  ADD CONSTRAINT `exams_schedule_ibfk_1` FOREIGN KEY (`exam_criteria_id`) REFERENCES `exams_criteria` (`exam_criteria_id`),
-  ADD CONSTRAINT `exams_schedule_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`),
-  ADD CONSTRAINT `exams_schedule_ibfk_3` FOREIGN KEY (`emp_id`) REFERENCES `emp_info` (`emp_id`);
-
---
 -- Constraints for table `fee_transaction_detail`
 --
 ALTER TABLE `fee_transaction_detail`
@@ -2816,11 +2934,11 @@ ALTER TABLE `fee_transaction_head`
   ADD CONSTRAINT `fee_transaction_head_ibfk_9` FOREIGN KEY (`section_id`) REFERENCES `std_sections` (`section_id`);
 
 --
--- Constraints for table `marks_weitage`
+-- Constraints for table `marks_details`
 --
-ALTER TABLE `marks_weitage`
-  ADD CONSTRAINT `marks_weitage_ibfk_1` FOREIGN KEY (`std_enroll_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`),
-  ADD CONSTRAINT `marks_weitage_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
+ALTER TABLE `marks_details`
+  ADD CONSTRAINT `marks_details_ibfk_1` FOREIGN KEY (`marks_head_id`) REFERENCES `marks_head` (`marks_head_id`),
+  ADD CONSTRAINT `marks_details_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
 
 --
 -- Constraints for table `std_academic_info`
@@ -2831,112 +2949,10 @@ ALTER TABLE `std_academic_info`
   ADD CONSTRAINT `std_academic_info_ibfk_4` FOREIGN KEY (`class_name_id`) REFERENCES `std_class_name` (`class_name_id`);
 
 --
--- Constraints for table `std_attendance`
---
-ALTER TABLE `std_attendance`
-  ADD CONSTRAINT `std_attendance_ibfk_3` FOREIGN KEY (`student_id`) REFERENCES `std_personal_info` (`std_id`),
-  ADD CONSTRAINT `std_attendance_ibfk_5` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`),
-  ADD CONSTRAINT `std_attendance_ibfk_6` FOREIGN KEY (`section_id`) REFERENCES `std_sections` (`section_id`),
-  ADD CONSTRAINT `std_attendance_ibfk_7` FOREIGN KEY (`teacher_id`) REFERENCES `emp_info` (`emp_id`),
-  ADD CONSTRAINT `std_attendance_ibfk_8` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
-
---
 -- Constraints for table `std_class_name`
 --
 ALTER TABLE `std_class_name`
   ADD CONSTRAINT `std_class_name_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`);
-
---
--- Constraints for table `std_enrollment_detail`
---
-ALTER TABLE `std_enrollment_detail`
-  ADD CONSTRAINT `std_enrollment_detail_ibfk_2` FOREIGN KEY (`std_enroll_detail_std_id`) REFERENCES `std_personal_info` (`std_id`),
-  ADD CONSTRAINT `std_enrollment_detail_ibfk_3` FOREIGN KEY (`std_enroll_detail_head_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`);
-
---
--- Constraints for table `std_enrollment_head`
---
-ALTER TABLE `std_enrollment_head`
-  ADD CONSTRAINT `std_enrollment_head_ibfk_1` FOREIGN KEY (`class_name_id`) REFERENCES `std_class_name` (`class_name_id`),
-  ADD CONSTRAINT `std_enrollment_head_ibfk_2` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`),
-  ADD CONSTRAINT `std_enrollment_head_ibfk_3` FOREIGN KEY (`section_id`) REFERENCES `std_sections` (`section_id`),
-  ADD CONSTRAINT `std_enrollment_head_ibfk_4` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`);
-
---
--- Constraints for table `std_fee_details`
---
-ALTER TABLE `std_fee_details`
-  ADD CONSTRAINT `std_fee_details_ibfk_1` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`);
-
---
--- Constraints for table `std_fee_installments`
---
-ALTER TABLE `std_fee_installments`
-  ADD CONSTRAINT `std_fee_installments_ibfk_1` FOREIGN KEY (`std_fee_id`) REFERENCES `std_fee_details` (`fee_id`),
-  ADD CONSTRAINT `std_fee_installments_ibfk_2` FOREIGN KEY (`installment_no`) REFERENCES `installment` (`installment_id`);
-
---
--- Constraints for table `std_fee_pkg`
---
-ALTER TABLE `std_fee_pkg`
-  ADD CONSTRAINT `std_fee_pkg_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `std_class_name` (`class_name_id`),
-  ADD CONSTRAINT `std_fee_pkg_ibfk_3` FOREIGN KEY (`session_id`) REFERENCES `std_sessions` (`session_id`);
-
---
--- Constraints for table `std_guardian_info`
---
-ALTER TABLE `std_guardian_info`
-  ADD CONSTRAINT `std_guardian_info_ibfk_1` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`);
-
---
--- Constraints for table `std_ice_info`
---
-ALTER TABLE `std_ice_info`
-  ADD CONSTRAINT `std_ice_info_ibfk_1` FOREIGN KEY (`std_id`) REFERENCES `std_personal_info` (`std_id`);
-
---
--- Constraints for table `std_inquiry`
---
-ALTER TABLE `std_inquiry`
-  ADD CONSTRAINT `std_inquiry_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`);
-
---
--- Constraints for table `std_personal_info`
---
-ALTER TABLE `std_personal_info`
-  ADD CONSTRAINT `std_personal_info_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`);
-
---
--- Constraints for table `std_sections`
---
-ALTER TABLE `std_sections`
-  ADD CONSTRAINT `std_sections_ibfk_1` FOREIGN KEY (`section_subjects`) REFERENCES `std_subjects` (`std_subject_id`);
-
---
--- Constraints for table `std_sessions`
---
-ALTER TABLE `std_sessions`
-  ADD CONSTRAINT `std_sessions_ibfk_1` FOREIGN KEY (`session_branch_id`) REFERENCES `branches` (`branch_id`);
-
---
--- Constraints for table `std_subjects`
---
-ALTER TABLE `std_subjects`
-  ADD CONSTRAINT `std_subjects_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `std_class_name` (`class_name_id`);
-
---
--- Constraints for table `teacher_subject_assign_detail`
---
-ALTER TABLE `teacher_subject_assign_detail`
-  ADD CONSTRAINT `teacher_subject_assign_detail_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `std_enrollment_head` (`std_enroll_head_id`),
-  ADD CONSTRAINT `teacher_subject_assign_detail_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`),
-  ADD CONSTRAINT `teacher_subject_assign_detail_ibfk_3` FOREIGN KEY (`teacher_subject_assign_detail_head_id`) REFERENCES `teacher_subject_assign_head` (`teacher_subject_assign_head_id`);
-
---
--- Constraints for table `teacher_subject_assign_head`
---
-ALTER TABLE `teacher_subject_assign_head`
-  ADD CONSTRAINT `teacher_subject_assign_head_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `emp_info` (`emp_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
