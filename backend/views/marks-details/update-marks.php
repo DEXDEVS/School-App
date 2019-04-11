@@ -25,7 +25,7 @@
 	<div class="row" style="text-align: center;">
 		<div class="box box-default">
 			<div class="box-header">
-				<p>Update Student Marks</p><hr>
+				<p>Update Student:<?php echo $StdName[0]['std_name'];?></p><hr>
 				<div class="col-md-4">
 					<h3>Category Name</h3>
 					<p><?php echo $CatName[0]['category_name']; ?></p>
@@ -79,7 +79,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label><?php echo $subName[0]['subject_name']; ?></label>
-								<input type="text" name="marks_<?php echo $i+1;?>" class="form-control" value="<?php echo $marks[$i]['obtained_marks']; ?>">
+								<input type="text" name="marks_<?php echo $i+1;?>" class="form-control" value="<?php echo $marks[$i]['obtained_marks']; ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13 || event.charCode == 65 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57">
 							</div>
 						</div>
 						<?php } ?>
