@@ -111,6 +111,7 @@ return [
                 'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
                 'view-marks-sheet' => 'marks-details/view-marks-sheet',
                 'update-marks' => 'marks-details/update-marks',
+                'view-result-cards' => 'exams-category/view-result-cards',
 
             ],
         ],

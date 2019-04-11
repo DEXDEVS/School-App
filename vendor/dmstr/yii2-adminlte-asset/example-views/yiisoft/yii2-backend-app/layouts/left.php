@@ -13,11 +13,11 @@
     .main-sidebar a{
         color: #ECF0F5;
     }
-    a:hover{
+    /*a:hover{
         font-weight: bold;
         background-color: #ECF0F5;
         color: #591747;
-    }
+    }*/
 </style>
 <aside class="main-sidebar">
 
@@ -207,7 +207,8 @@
                             // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
                             // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
                             ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
-                            ['label' => 'View marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
+                            ['label' => 'View marks Sheet', 'icon' => '', 'url' => ["/view-marks-sheet "],],
+                            ['label' => 'Result cards', 'icon' => '', 'url' => ["/view-result-cards "],],
                             
                         ],
                     ],

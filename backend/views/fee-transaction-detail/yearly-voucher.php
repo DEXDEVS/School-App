@@ -18,12 +18,14 @@
 	<h1 class="well well-sm bg-navy" align="center">Yearly Voucher Collection</h1>
     <form method="POST">
     	<div class="row">
-            <div class="col-md-4">
+            <div class="col-md-8">
+                <p class="text-green"><i><b>Enter <span class="text-red">Registration Number</span> or Select <span class="text-red">Class</span> and <span class="text-red">Student</span> to view Fee Details</i></b></p>
                 <div class="form-group">
                     <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
                 </div>    
             </div>    
         </div>
+
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -57,7 +59,7 @@
             </div>    
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> Show Voucher Details</b></button>
+                    <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> View Fee Details</b></button>
                 </div>    
             </div>   
         </div>
@@ -117,6 +119,7 @@
                 <th>Total Amount</th>
                 <th>Amount Paid</th>
                 <th>Status</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody>
@@ -140,8 +143,8 @@
                     <tr>
                         <td> <?php echo date('Y-F', strtotime($transactionHead[$i]['month']));?> </td>
                         <td> <?php echo $transactionHead[$i]['total_amount']; ?> </td>
-                        <td><input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)"></td>
-                        <td><input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly=""></td>
+                        <td><input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)" style="width: 100px"></td>
+                        <td><input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly="" style="width: 60px"></td>
                         <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>">
                             
                     </tr>

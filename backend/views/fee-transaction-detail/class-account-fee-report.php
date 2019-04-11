@@ -35,7 +35,6 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>Select Class</label>
                     <select class="form-control" name="classid" id="classId" required="">
                     	<option>Select Class</option>
                             <?php 
@@ -51,7 +50,6 @@
             </div>  
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>Select Session</label>
                     <select class="form-control" name="sessionid" id="sessionId" required="">
                             <option value="">Select Session</option>
                             <?php 
@@ -66,7 +64,6 @@
             </div>  
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>Select Section</label>
                     <select class="form-control" name="sectionid" id="section" required="">
                             <option value="">Select Section</option>
                     </select>      
@@ -76,7 +73,7 @@
         <div class="row"> 
             <div class="col-md-3">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-success btn-flat btn-block" id="sub" value='Yes'><i class="fa fa-check-square-o" aria-hidden="true"></i><b> Get Class</b></button>
+                    <button type="submit" name="submit" class="btn btn-success btn-flat" id="sub" value='Yes'><i class="fa fa-check-square-o" aria-hidden="true"></i><b> Get Class</b></button>
                 </div>    
             </div>
         </div>
