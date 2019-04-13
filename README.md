@@ -4,7 +4,7 @@
     </a>
 </p>
 
-<h1 align="center">Institute on Cloud - School Business Model</h1>
+<h1 align="center">IC - School Business Model</h1>
 
 <p> Description goes here </p>
 
