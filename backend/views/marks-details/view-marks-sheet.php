@@ -179,9 +179,10 @@
 									?>
 								</td>
 							<?php } ?>
-								<td><?php echo $grandTotal."/".$total; 
-									$grandTotalArray[$std] = $grandTotal;
-								?></td>
+								<td><?php 
+									echo $grandTotal."/".$total; 
+									$grandTotalArray[$std] = $grandTotal; ?>
+								</td>
 								<td><?php 
 									$percentage = ($grandTotal/$total)*100;
 									$percent = round($percentage,2);
@@ -202,7 +203,7 @@
 								 </td>
 								 <td>
 								 	<?php 
-								 	if($failCounter >= 3)
+								 	if($failCounter >= 1)
 								 	{
 								 		echo "<span class='label label-danger'> Fail</span>";
 								 		$resultArray[$std] = "Fail";
@@ -270,7 +271,7 @@
 		$resultCounter 	= $_POST["resultCounter"];
 		
 
-		if($resultCounter != 0){
+		if($resultCounter > 0){
 			Yii::$app->session->setFlash('warning',"Mark sheet incomplete..!");
 		} else {
 			$examCriteriaID = $_POST["examCriteriaID"];
