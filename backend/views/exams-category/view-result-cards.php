@@ -7,7 +7,7 @@
 
 		$examStatus = Yii::$app->db->createCommand("SELECT exam_status FROM exams_criteria WHERE exam_category_id = '$examCatID' AND std_enroll_head_id = '$classID' AND exam_status = 'Result Prepared'")->queryAll();
 		if (empty($examStatus)) {
-			Yii::$app->session->setFlash('warning',"Result is not announced yet..!");
+			Yii::$app->session->setFlash('warning',"Result card not prepared yet..!");
 		} 
 		else {
 
