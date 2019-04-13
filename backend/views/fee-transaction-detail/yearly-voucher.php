@@ -15,7 +15,7 @@
 <body>
 
 <div class="container-fluid" style="margin-top: -30px;">
-	<h1 class="well well-sm bg-navy" align="center">Yearly Voucher Collection</h1>
+	<h1 class="well well-sm bg-navy" align="center">Yearly Fee Collection</h1>
     <form method="POST">
     	<div class="row">
             <div class="col-md-8">
@@ -115,21 +115,43 @@
     <table class="table table-hover">
         <thead>
             <tr>
+                <th>Voucher #</th>
                 <th>Month</th>
                 <th>Total Amount</th>
-                <th>Amount Paid</th>
+                <th>Paid Amount</th>
+                <th>Remaining Amount</th>
                 <th>Status</th>
                 <th>Date</th>
             </tr>
         </thead>
         <tbody>
-            <?php for ($i=0; $i < $count ; $i++) { 
-                if($transactionHead[$i]['status'] == 'Paid'){ ?>
+            <?php 
+                for ($i=0; $i < $count ; $i++) { 
+                $collectionDate = $transactionHead[$i]['collection_date'];
+                    if($transactionHead[$i]['status'] == 'Paid'){ ?>
                     <tr>
-                        <td> <?php echo date('Y-F', strtotime($transactionHead[$i]['month'])); ?> </td>
-                        <td> <?php echo $transactionHead[$i]['total_amount']; ?> </td>
-                        <td> <?php echo $transactionHead[$i]['paid_amount']; ?> </td>
-                        <td> <?php echo $transactionHead[$i]['status']; ?> </td>
+                        <td> 
+                            <?php echo $transactionHead[$i]['fee_trans_id']; ?> 
+                        </td>
+                        <td> 
+                            <?php echo date('F-Y', strtotime($transactionHead[$i]['month'])); ?> 
+                        </td>
+                        <td>
+                            <?php echo $transactionHead[$i]['total_amount']; ?>
+                        </td>
+                        <td>
+                            <?php echo $transactionHead[$i]['paid_amount']; ?>
+                        </td>
+
+                        <td>
+                            <?php echo $transactionHead[$i]['total_amount'] - $transactionHead[$i]['paid_amount']; ?>
+                        </td>
+                        <td>
+                            <?php echo $transactionHead[$i]['status']; ?>
+                        </td>
+                        <td>
+                            <?php echo date('d-M-Y h:i A', strtotime($collectionDate)); ?>
+                        </td>
                     </tr>
             <?php } else {?>
     <form method= "POST" action="">
@@ -141,12 +163,20 @@
                         </div>    
                     </div>
                     <tr>
-                        <td> <?php echo date('Y-F', strtotime($transactionHead[$i]['month']));?> </td>
-                        <td> <?php echo $transactionHead[$i]['total_amount']; ?> </td>
-                        <td><input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)" style="width: 100px"></td>
-                        <td><input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly="" style="width: 60px"></td>
-                        <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>">
-                            
+                        <td> 
+                            <?php echo $transactionHead[$i]['fee_trans_id']; ?> 
+                        </td>
+                        <td> <?php echo date('F-Y', strtotime($transactionHead[$i]['month']));?> </td>
+                        <td> 
+                            <?php echo $transactionHead[$i]['total_amount']; ?> 
+                        </td>
+                        <td>
+                            <input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)" style="width: 100px">
+                        </td>
+                        <td>
+                            <input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly="" style="width: 60px">
+                        </td>
+                        <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>"> 
                     </tr>
                     <?php } } ?>
         </tbody>
@@ -201,20 +231,41 @@
     <table class="table table-hover">
         <thead>
             <tr>
+                <th>Voucher #</th>
                 <th>Month</th>
                 <th>Total Amount</th>
                 <th>Amount Paid</th>
+                <th>Remaining Amount</th>
                 <th>Status</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody>
             <?php for ($i=0; $i < $count ; $i++) { 
+                $collectionDate = $transactionHead[$i]['collection_date'];
                 if($transactionHead[$i]['status'] == 'Paid'){ ?>
                     <tr>
-                        <td> <?php echo date('Y-F', strtotime($transactionHead[$i]['month'])); ?> </td>
-                        <td> <?php echo $transactionHead[$i]['total_amount']; ?> </td>
-                        <td> <?php echo $transactionHead[$i]['paid_amount']; ?> </td>
-                        <td> <?php echo $transactionHead[$i]['status']; ?> </td>
+                        <td> 
+                            <?php echo $transactionHead[$i]['fee_trans_id']; ?> 
+                        </td>
+                        <td> 
+                            <?php echo date('Y-F', strtotime($transactionHead[$i]['month'])); ?> 
+                        </td>
+                        <td> 
+                            <?php echo $transactionHead[$i]['total_amount']; ?> 
+                        </td>
+                        <td> 
+                            <?php echo $transactionHead[$i]['paid_amount']; ?> 
+                        </td>
+                        <td> 
+                            <?php echo $transactionHead[$i]['total_amount'] - $transactionHead[$i]['paid_amount']; ?> 
+                        </td>
+                        <td> 
+                            <?php echo $transactionHead[$i]['status']; ?> 
+                        </td>
+                        <td>
+                            <?php echo date('d-M-Y h:i A', strtotime($collectionDate)); ?>
+                        </td>
                     </tr>
             <?php } else {?>
             <form method= "POST" action="">
@@ -226,11 +277,24 @@
                     </div>    
                 </div>
                 <tr>
-                    <td> <?php echo date('F-Y', strtotime($transactionHead[$i]['month']));?> </td>
-                    <td> <?php echo $transactionHead[$i]['total_amount']; ?> </td>
-                    <td><input type="number" name="paidAmount[]" value="0" id="paidAmount" onchange="setStatus()" style="width: 100px"></td>
-                    <td><input type="text" name="status[]" value="Unpaid" id="status" readonly="" style="width: 70px"></td>
-                    <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>">
+                    <td> 
+                        <?php echo $transactionHead[$i]['fee_trans_id']; ?> 
+                    </td>
+                    <td> 
+                        <?php echo date('F-Y', strtotime($transactionHead[$i]['month']));?> 
+                    </td>
+                    <td> 
+                        <?php echo $transactionHead[$i]['total_amount']; ?> 
+                    </td>
+                    <td>
+                        <input type="number" name="paidAmount[]" value="0" id="paidAmountt" onchange="setStatuss()" style="width: 100px">
+                    </td>
+                    <td> 
+                        <?php echo $transactionHead[$i]['remaining'];?> 
+                    </td>
+                    <td>
+                        <input type="text" name="status[]" value="Unpaid" id="statuss" readonly="" style="width: 70px"></td>
+                        <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>">
                         
                 </tr>
                 <?php } } ?>
@@ -299,6 +363,13 @@ if(isset($_POST['save'])){
         if( paidAmount > 0 ) {
             paid = "Paid";
             $('#status_'+i).val(paid);
+        }
+    }
+    function setStatuss(i){
+        var paidAmount = parseInt($('#paidAmountt'+i).val());
+        if( paidAmount > 0 ) {
+            paid = "Paid";
+            $('#statuss'+i).val(paid);
         }
     }
 </script>
