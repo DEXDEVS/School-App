@@ -77,79 +77,15 @@
 	</div><br>
 	<div class="row">
 		<div class="col-md-3">
-			<div class="box box-default">
+			<div class="box box-primary">
 				<div class="box-header" style="padding: 0px;text-align: center;">
-					<h3>Exam Profile</h3>
-					<p>Class Wise</p>
-				</div><hr>
+					<h3 style="text-align: center;font-family: georgia;font-size:30px;">
+						<?php echo $examCategoryName[0]['category_name']."<br>"; ?>(<?php echo date('Y'); ?>)
+					</h3>
+					<p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p>
+				</div>
 				<div class="box-body">					
-						<h4 style="float:left;">Inactive Schedules
-					<div id="tooltip" style="float: right;"> <span class="badge" style="background-color:red;margin-top: 0px "> 1</span>
-						<span id="tooltiptext"> 
-							 <ol>
-							 	<li>BSCS 8th</li>
-							 </ol>
-						</span>
-					</div>
-				</h4>
-					<h4 style="float:left;">Announced Schedules
-					<div id="tooltip" style="float: right;"> <span class="badge" style="background-color:red;margin-top: 0px "> 1</span>
-						<span id="tooltiptext"> 
-							 <ol>
-							 	<li >BSCS 8th</li>
-							 </ol>
-						</span>
-					</div>
-				</h4>
-					<h4 style="float:left;">Conducted Schedules
-					<div id="tooltip" style="float: right;"> <span class="badge" style="background-color:red;margin-top: 0px "> 1</span>
-						<span id="tooltiptext"> 
-							 <ol>
-							 	<li>BSCS 8th</li>
-							 </ol>
-						</span>
-					</div>
-				</h4>
-					<h4 style="float:left;">Result Prepared
-					<div id="tooltip" style="float: right;"><span class="badge" style="background-color:red;margin-top: 0px "> 1</span>
-						<span id="tooltiptext"> 
-							 <ol>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li><br>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-								<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 </ol>
-						</span>
-					</div>
-				</h4>
-				<h4 style="float:left;">Result Announced
-					<div id="tooltip" style="float: right;"><span class="badge" style="background-color:red;margin-top: 0px "> 1</span>
-						<span id="tooltiptext"> 
-							 <ol>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li><br>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-								<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 	<li>BSCS 8th-(2019-2020)-sec 1</li>
-							 </ol>
-						</span>
-					</div>
-				</h4>
+						
 
 				</div>
 			</div>
