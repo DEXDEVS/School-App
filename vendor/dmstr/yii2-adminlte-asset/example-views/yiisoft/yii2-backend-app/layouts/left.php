@@ -135,9 +135,9 @@
                             //['label' => 'Manage Fee Vouchers', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-transaction-detail',],
                             ['label' => 'Manage Class Fee Accounts', 'icon' => 'caret-right', 'url' => "./class-account"],
                             ['label' => 'Generate Student Vouchers', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-fee-voucher"],
+                            ['label' => 'Collect Student Vouchers', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-collect-voucher"],
                             ['label' => 'Monthly Collection', 'icon' => 'caret-right', 'url' => "./monthly-voucher"],
                             ['label' => 'Yearly Collection', 'icon' => 'caret-right', 'url' => "./yearly-voucher"],
-                            //['label' => 'Collect Student Vouchers', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-collect-voucher"],
                             ['label' => 'Class Fee Report', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-class-account-fee-report"]
                         ],
                     ],
