@@ -3,19 +3,27 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Manage Exams</title>
+		<style type="text/css">
+			#sub-hvr:hover{
+				background-color:#ebd6e7;
+				color:white;
+			}
+		</style>
 	</head>
 	<body>
+		<?php global $errorCat; ?>
+
 		<?php $branch_id = Yii::$app->user->identity->branch_id; ?>
 
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-					<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+					<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-step-backward"></i> Back</a>
 			</div>
 		</div><br>
 		<div class="box box-primary col-md-12">
 			<div class="box-header">
-				<h3>Exams Criteria</h3>
+				<h3>Exam Criteria</h3><hr>
 			</div>
 			<div class="box-body">
 				<form method="POST" action="manage-exams">
@@ -24,8 +32,8 @@
 						<div class="col-md-4">	
 							<div class="form-group">
 								<label>Select Exam Category</label>
-								<select name="exam_category" class="form-control" required="">
-									<option>Select Exam Category</option>
+								<select name="exam_category" class="form-control" required>
+									<option value="">Select Category</option>
 									<?php 
 
 									 $ExamCategories = Yii::$app->db->createCommand("SELECT * FROM exams_category")->queryAll();					 	
@@ -41,8 +49,8 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Select Class</label>
-								<select name="class_head" class="form-control" required="">
-									<option>Select Class</option>
+								<select name="class_head" class="form-control" required>
+									<option value="">Select Class</option>
 									<?php 
 
 									 $Classes = Yii::$app->db->createCommand("SELECT std_enroll_head_id,std_enroll_head_name FROM std_enrollment_head")->queryAll();					 	
@@ -91,8 +99,8 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4">
-							<button type="submit" name="submit" class="btn btn-success btn-xs">
+						<div class="col-md-12">
+							<button style="float: right;" type="submit" name="submit" class="btn btn-success btn-xs">
 								<i class="fa fa-sign-in"></i> Get Subjects</button>
 						</div>
 					</div>
@@ -112,17 +120,17 @@
 			$exam_end_time 		= $_POST["exam_end_time"];
 			$room 				= $_POST["room"];
 
-			$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
-			FROM  exams_criteria
-			WHERE exam_category_id 		= '$exam_category' AND
-				  std_enroll_head_id 	= '$headId' AND
-				  exam_start_date 		= '$exam_start_date' AND
-				  exam_end_date 		= '$exam_end_date'
-			")->queryAll();
+		// 	$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
+		// 	FROM  exams_criteria
+		// 	WHERE exam_category_id 		= '$exam_category' AND
+		// 		  std_enroll_head_id 	= '$headId' AND
+		// 		  exam_start_date 		= '$exam_start_date' AND
+		// 		  exam_end_date 		= '$exam_end_date'
+		// 	")->queryAll();
 
-		if (!empty($examCriteriaData)) {
-			Yii::$app->session->setFlash('warning', "Exams Schedule already managed against selected Date range ...!");
-		}else{
+		// if (!empty($examCriteriaData)) {
+		// 	Yii::$app->session->setFlash('warning', "Exams Schedule already managed against selected Date range ...!");
+		// }else{
 
 		$marks = Yii::$app->db->createCommand("SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category'")->queryAll();
 
@@ -141,10 +149,10 @@
 			$subject = $combinations[0]['std_subject_name'];
 			$subjectarray = explode(',', $subject);
 			$subjCount = count($subjectarray); ?>
-
+<div class="container-fluid">
 <div class="box box-default container-fluid">
 	<div class="box-header">
-		<h2>Exam Schedule</h2>
+		<h3>Exam Schedule</h3><hr>
 	</div>		
 <div class="box-body" style="background-color:#fafafa;">
 	<form method="post">
@@ -181,17 +189,19 @@
 				<tr>
 					<td>
 						
-							<div class="row" style="border-bottom:3px solid #ebd6e7; ">
-								<div class="col-md-2" style="border:1px solid;height:133px;box-shadow: 1px 10px 10px 1px;background-color: #ebd6e7;color:#AA5397;border-radius: 8px;">
-									<h3 style="line-height:2.5;text-align: center;">
+							<div class="row">
+								<div id="sub-hvr" class="col-md-12" style="border:1px solid;color:#AA5397;border-radius: 8px;">
+									<h4 style="text-align: center;">
 									<i class="fa fa-book"></i>
 									<?php echo $subject;?>
-									</h3>
+									</h4>
 								</div>
-								<div class="col-md-10">
+							</div><br>
+							<div class="row" style="border-bottom:1px solid #ebd6e7; ">
+								<div class="col-md-12">
 									<div class="row">
 										<div class="col-md-4">
-											<div class="form-group">
+											<div class="form-group" >
 											<label>Date</label>
 											<input type="date" name="date[]" class="form-control" required="">
 											</div>
@@ -225,7 +235,8 @@
 										<div class="col-md-4">
 											<div class="form-group">
 											<label>Invagilator</label>
-											<select name="Invagilator[]" class="form-control" required="">
+											<select name="Invagilator[]" class="form-control" required>
+
 												<?php 
 
 												$teacher = Yii::$app->db->createCommand("
@@ -234,7 +245,7 @@
 												")->queryAll();
 												$countteacher = count($teacher);
 												 ?>
-												<option>Select invagilator</option>
+												<option value="">Select invagilator</option>
 												<?php 
 												for ($j=0; $j <$countteacher ; $j++) { ?>
 												<option value="<?php
@@ -297,7 +308,7 @@
 	</table>
 	 <div class="row">
 	 	<div class="col-md-12">
-	 		<button type="submit" name="save" class="btn btn-success" style="float: right;">Submit</button>
+	 		<button type="submit" name="save" class="btn btn-success btn-xs" style="float: right;"><i class="glyphicon glyphicon-save"></i> Save Date Sheet</button>
 	 	</div>
 	 </div>
 	<input type="hidden" name="exam_category" value="<?php echo $exam_category;?>">
@@ -313,12 +324,13 @@
 		<?php	
 		}
 		//closing of else for marks weightage
-		}
+		//}
 		//closing of else for exam schedule date
 	}
 	// closing of isset
 	 ?>
 	 
+	</div>
 </div>
 	 <?php 
 	if(isset($_POST['save']))
@@ -369,6 +381,7 @@
 			")->queryAll();
 
 			$criteriaId = $examCriteriaId[0]['exam_criteria_id'];
+			var_dump($criteriaId);
 			
 		for ($i=0; $i <$subjCount ; $i++) { 
 			$examSchedule = Yii::$app->db->createCommand()->insert('exams_schedule',[

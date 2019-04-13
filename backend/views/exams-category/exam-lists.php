@@ -41,43 +41,32 @@
 <head>
 	<title></title>
 	<style type="text/css">
-	.tooltip {
+	#tooltip {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black;
 }
 
-.tooltip .tooltiptext {
+#tooltip #tooltiptext {
   visibility: hidden;
-  width: auto;
-  background-color: #E0E0E0;
-  
+  width:400px;
+  background-color: black;
+  color: #fff;
   text-align: center;
-  border-radius: 20px;
-  padding: 35px;
+  border-radius: 6px;
+  padding: 15px;
+  
+  /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -60px;
-  
-  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
-  opacity: 0;
-  transition: opacity 1s;
+  top: -5px;
+  left: 105%;
 }
 
-.tooltip:hover .tooltiptext {
+#tooltip:hover #tooltiptext {
   visibility: visible;
-  opacity: 1;
 }
-ul{
-	margin:0px;
-    padding:0px;
-}
-li{
-list-style-type:none;
-}
-</style>
+	</style>
 </head>
 <body>
 <div class="container-fluid">
@@ -88,22 +77,16 @@ list-style-type:none;
 	</div><br>
 	<div class="row">
 		<div class="col-md-3">
-			<div class="box box-default">
+			<div class="box box-primary">
 				<div class="box-header" style="padding: 0px;text-align: center;">
-					<h3>Exam Profile</h3>
-					<p>Class Wise</p>
-				</div><hr>
-				<div class="box-body">
-					<h4>Inactive Schedules <p class="badge" style="background-color:red; "><?php echo $countinactiveSchedules; ?>
-					</p></h4>
-					<h4>Announced Schedules <p class="badge" style="background-color:green; "><?php echo $countannouncedSchedules; ?>
-					</p></h4>
-					<h4>Conducted Schedules <p class="badge" style="background-color:#367FA9; "><?php echo $countconductedSchedules; ?>
-					</p></h4>
-					<h4>Result Prepared <p class="badge" style="background-color:purple; "><?php echo $countResultPrepareSchedules; ?>
-					</p></h4>
-					<h4>Result Announced <p class="badge" style="background-color:seagreen; "><?php echo $countResultAnnouncedSchedules; ?>
-					</p></h4>
+					<h3 style="text-align: center;font-family: georgia;font-size:30px;">
+						<?php echo $examCategoryName[0]['category_name']."<br>"; ?>(<?php echo date('Y'); ?>)
+					</h3>
+					<p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p>
+				</div>
+				<div class="box-body">					
+						
+
 				</div>
 			</div>
 		</div>
@@ -127,7 +110,7 @@ list-style-type:none;
 							<tr>
 								<th>Sr.#</th>
 								<th>Classes</th>
-								<th>Action</th>
+								<th>Operations</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -169,21 +152,37 @@ list-style-type:none;
 									?>
 								</td>
 								<td>
-									<a href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-warning btn-xs">View</a>
-									<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-info btn-xs">
-										Update
-									</a>
-									<a href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-primary btn-xs">
-										View Result Card
-									</a>
-									
+									<div class="dropdown">
+									    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
+									    <span class="caret"></span></button>
+									    <ul class="dropdown-menu dropdown-menu-right">
+									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
+									      	<a href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+									      </li>
+									      <li class="divider"></li>
+									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
+									      	<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>""><i class="fa fa-edit"></i> 
+											Update Date Sheet
+											</a>
+									      </li>
+									      <li class="divider"></li>
+									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
+											<a href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>">
+												<i class="fa fa-eye"></i> View Result Card
+											</a>
+									      </li>
+									      <li class="divider"></li>
+									   
+									      	<button style="border-bottom-right-radius:25px;" type="submit" name="result_announced" class="btn btn-success btn-block">
+											Announce Result
+											</button>
+									      
+									    </ul>
+									  </div>
+									</div>
 										<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
 										<input type="hidden" name="cat_id" value="<?php echo $examCateogryId; ?>">
 										<input type="hidden" name="class_id" value="<?php echo $classID; ?>">
-										<button type="submit" name="result_announced" class="btn btn-success btn-xs">
-											Announce Result
-										</button>
-									
 								</td>
 							</tr>
 							<?php }  } ?>
