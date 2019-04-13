@@ -40,6 +40,33 @@
 <html>
 <head>
 	<title></title>
+	<style type="text/css">
+	#tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+#tooltip #tooltiptext {
+  visibility: hidden;
+  width:400px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 15px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+#tooltip:hover #tooltiptext {
+  visibility: visible;
+}
+	</style>
 </head>
 <body>
 <div class="container-fluid">
@@ -50,22 +77,16 @@
 	</div><br>
 	<div class="row">
 		<div class="col-md-3">
-			<div class="box box-default">
+			<div class="box box-primary">
 				<div class="box-header" style="padding: 0px;text-align: center;">
-					<h3>Exam Profile</h3>
-					<p>Class Wise</p>
-				</div><hr>
-				<div class="box-body">
-					<h4>Inactive Schedules <p class="badge" style="background-color:red; "><?php echo $countinactiveSchedules; ?>
-					</p></h4>
-					<h4>Announced Schedules <p class="badge" style="background-color:green; "><?php echo $countannouncedSchedules; ?>
-					</p></h4>
-					<h4>Conducted Schedules <p class="badge" style="background-color:#367FA9; "><?php echo $countconductedSchedules; ?>
-					</p></h4>
-					<h4>Result Prepared <p class="badge" style="background-color:purple; "><?php echo $countResultPrepareSchedules; ?>
-					</p></h4>
-					<h4>Result Announced <p class="badge" style="background-color:seagreen; "><?php echo $countResultAnnouncedSchedules; ?>
-					</p></h4>
+					<h3 style="text-align: center;font-family: georgia;font-size:30px;">
+						<?php echo $examCategoryName[0]['category_name']."<br>"; ?>(<?php echo date('Y'); ?>)
+					</h3>
+					<p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p>
+				</div>
+				<div class="box-body">					
+						
+
 				</div>
 			</div>
 		</div>
@@ -83,12 +104,13 @@
 					 	echo "<h4 class='text-center'>No Schedule for classes are avaialble...!!!</h4>";
 					}
 					else { ?>
+						<form method="POST" action="">
 					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>Sr.#</th>
 								<th>Classes</th>
-								<th>Action</th>
+								<th>Operations</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -130,28 +152,88 @@
 									?>
 								</td>
 								<td>
-									<a href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-warning btn-xs">View</a>
-									<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-info btn-xs">
-										Update
-									</a>
-									<a href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-primary btn-xs">
-										View Result Card
-									</a>
-									<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>" class="btn btn-success btn-xs">
-										Announce Result
-									</a>
+									<div class="dropdown">
+									    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
+									    <span class="caret"></span></button>
+									    <ul class="dropdown-menu dropdown-menu-right">
+									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
+									      	<a href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+									      </li>
+									      <li class="divider"></li>
+									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
+									      	<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>""><i class="fa fa-edit"></i> 
+											Update Date Sheet
+											</a>
+									      </li>
+									      <li class="divider"></li>
+									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
+											<a href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>">
+												<i class="fa fa-eye"></i> View Result Card
+											</a>
+									      </li>
+									      <li class="divider"></li>
+									   
+									      	<button style="border-bottom-right-radius:25px;" type="submit" name="result_announced" class="btn btn-success btn-block">
+											Announce Result
+											</button>
+									      
+									    </ul>
+									  </div>
+									</div>
+										<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
+										<input type="hidden" name="cat_id" value="<?php echo $examCateogryId; ?>">
+										<input type="hidden" name="class_id" value="<?php echo $classID; ?>">
 								</td>
 							</tr>
 							<?php }  } ?>
 						</tbody>
 					</table>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 <?php 
+
+	// result announce isset
+
+	if(isset($_POST['result_announced']))
+	{
+		$cat_id = $_POST['cat_id'];
+		$class_id = $_POST['class_id'];
+
+		$resultAnnounced = Yii::$app->db->createCommand("
+		SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$cat_id' AND std_enroll_head_id = '$class_id' AND exam_status = 'Result Prepared'
+			")->queryAll();
+		if (empty($resultAnnounced)) {
+			Yii::$app->session->setFlash('warning', "You can not announce result before result prepared...!");
+		} else {
+			$transection = Yii::$app->db->beginTransaction();
+			try{
+				$criteriaId = $resultAnnounced[0]['exam_criteria_id'];
+				$statusUpdate = Yii::$app->db->createCommand()->update('exams_criteria', 				[
+							'exam_status'			=> 'Result Announced',
+							'updated_at'			=> new \yii\db\Expression('NOW()'),
+							'updated_by'			=> Yii::$app->user->identity->id,
+	                        ],
+	                        ['exam_criteria_id' => $criteriaId, 'exam_category_id' => $cat_id, 'std_enroll_head_id' => $class_id, 'exam_status' => "Result Prepared"]
+	                    )->execute();
+				if($statusUpdate){
+					$transection->commit();
+					Yii::$app->session->setFlash('success', "Result announced successfully...!");
+				}//closing of try block
+			} catch(Exception $e){
+				$transection->rollback();
+				echo $e;
+				Yii::$app->session->setFlash('warning', "Result not announced. Try again!");
+			} // closing of transaction handling....
+		} //closing of else
+	} //if isset
+ ?>
+<?php 
+
+	// date sheet update isset
 	if(isset($_POST['update']))
 	{
 		// getting exam criteria fields

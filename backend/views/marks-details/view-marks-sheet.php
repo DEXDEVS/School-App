@@ -5,9 +5,14 @@
 </head>
 <body>
 <div class="container-fluid">
+	<div class="row">
+			<div class="col-md-12">
+					<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-step-backward"></i> Back</a>
+			</div>
+		</div><br>
 		<div class="box box-primary">
 			<div class="box-header">
-				<h3>Marks Sheet Criteria</h3>
+				<h3>Marks Sheet Criteria</h3><hr
 			</div>
 			<div class="box-body">
 				<form method="POST">
@@ -47,9 +52,9 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<button type="submit" name="submit" class="btn btn-success btn-xs">
-								<i class="fa fa-search"></i> Search</button>
+						<div class="col-md-4" style="margin-top:24px;">
+							<button type="submit" name="submit" class="btn btn-success">
+								<i class="glyphicon glyphicon-search"></i> Search</button>
 						</div>
 					</div>
 				</form>
@@ -61,6 +66,11 @@
 	{
 		$examCategory = $_POST['exam_category'];
 		$classHead = $_POST['class_head'];
+
+		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND std_enroll_head_id = '$classHead' AND exam_status = 'conducted'")->queryAll();
+		if(empty($ExamData)){
+			Yii::$app->session->setFlash('warning',"Exams not conducted Yet..!");
+		} else {
 
 		$ExamName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCategory'")->queryAll();
 		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHead'")->queryAll();
@@ -254,6 +264,7 @@
 	</div>
 </div>
 <?php	
+} // else of exam data
 } //closing of else
 } // closing of isset
  ?>
@@ -262,20 +273,20 @@
 <?php 
 	if(isset($_POST['save'])){
 		$resultCounter 	= $_POST["resultCounter"];
-		$examCriteriaID = $_POST["examCriteriaID"];
-		$classHead 		= $_POST["classHead"];
-		$examCategory = $_POST["examCategory"];
-		$studentArray = $_POST["studentArray"];
-		$resultArray = $_POST["resultArray"];
-		$gradeArray = $_POST["gradeArray"];
-		$percentArray = $_POST["percentArray"];
-		$grandTotalArray = $_POST["grandTotalArray"];
-		$stdCount = $_POST["stdCount"];
+		
 
 		if($resultCounter != 0){
 			Yii::$app->session->setFlash('warning',"Mark sheet incomplete..!");
 		} else {
-
+			$examCriteriaID = $_POST["examCriteriaID"];
+			$classHead 		= $_POST["classHead"];
+			$examCategory = $_POST["examCategory"];
+			$studentArray = $_POST["studentArray"];
+			$resultArray = $_POST["resultArray"];
+			$gradeArray = $_POST["gradeArray"];
+			$percentArray = $_POST["percentArray"];
+			$grandTotalArray = $_POST["grandTotalArray"];
+			$stdCount = $_POST["stdCount"];
 			$transection = Yii::$app->db->beginTransaction();
 			try
 			{

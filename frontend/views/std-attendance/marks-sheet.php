@@ -131,7 +131,7 @@ if(isset($_GET['class_id']))
 										</td>
 										<td>
 											<input type="checkbox" name="marks<?php echo $j+1;?>" onclick="document.getElementById('marks<?php echo $j+1;?>').disabled=this.checked;" value="A">Abs <br>
-											<input type="text" name="marks<?php echo $j+1;?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"  id="marks<?php echo $j+1;?>">
+											<input type="text" name="marks<?php echo $j+1;?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13 || event.charCode == 65 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57"  id="marks<?php echo $j+1;?>">
 										</td>
 										<?php 
 										$stdID = $students[$j]['std_enroll_detail_std_id'];
