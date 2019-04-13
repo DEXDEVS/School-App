@@ -5,9 +5,14 @@
 </head>
 <body>
 <div class="container-fluid">
+	<div class="row">
+			<div class="col-md-12">
+					<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-step-backward"></i> Back</a>
+			</div>
+		</div><br>
 		<div class="box box-primary">
 			<div class="box-header">
-				<h3>Marks Sheet Criteria</h3>
+				<h3>Marks Sheet Criteria</h3><hr
 			</div>
 			<div class="box-body">
 				<form method="POST">
@@ -47,9 +52,9 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<button type="submit" name="submit" class="btn btn-success btn-xs">
-								<i class="fa fa-search"></i> Search</button>
+						<div class="col-md-4" style="margin-top:24px;">
+							<button type="submit" name="submit" class="btn btn-success">
+								<i class="glyphicon glyphicon-search"></i> Search</button>
 						</div>
 					</div>
 				</form>
