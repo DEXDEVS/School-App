@@ -255,7 +255,7 @@
                         //admission_fee ..... 
                         if($feeType[$m] == 1){
                             if($updateArray[$m] == $feeType[$m] && $admission_fee[$j] >= 0){
-                                $feeDette_ails = Yii::$app->db->createCommand()->update('fee_transaction_detail',[
+                                $feeDetails = Yii::$app->db->createCommand()->update('fee_transaction_detail',[
                                 'fee_trans_detail_head_id' => $id,
                                 'fee_type_id'=> 1,
                                 'fee_amount'=> $admission_fee[$j]],
