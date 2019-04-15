@@ -40,6 +40,8 @@
 <html>
 <head>
 	<title></title>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">
 	#tooltip {
   position: relative;
@@ -69,131 +71,347 @@
 	</style>
 </head>
 <body>
+	<!-- container fluid div start -->
 <div class="container-fluid">
+
+	<!-- back button div start -->
 	<div class="row">
 		<div class="col-md-12">
 			<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
 		</div>
 	</div><br>
-	<div class="row">
-		<div class="col-md-3">
-			<div class="box box-primary">
-				<div class="box-header" style="padding: 0px;text-align: center;">
-					<h3 style="text-align: center;font-family: georgia;font-size:30px;">
-						<?php echo $examCategoryName[0]['category_name']."<br>"; ?>(<?php echo date('Y'); ?>)
-					</h3>
-					<p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p>
-				</div>
-				<div class="box-body">					
-						
+	<!-- back button div close -->
 
+	<!-- heading div start -->
+	<div class="row">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header" style="padding: 0px;text-align: center;">
+						<h3 style="text-align: center;font-family: georgia;font-size:30px;">
+							<?php echo $examCategoryName[0]['category_name']."<br>"; ?>(<?php echo date('Y'); ?>)
+						</h3>
+						<p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p>
+					</div>
+					<div class="box-body">					
+							
+
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-9">
-			<div class="box box-primary">
-				<div class="box-header" style="padding:0px;">
-					<h2 style="text-align: center;font-family: georgia;font-size:30px;">
-						<?php echo $examCategoryName[0]['category_name']; ?>(<?php echo date('Y'); ?>)
-					</h2>
-					<p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p>
-				</div><hr>	
+	</div>
+	<!-- heading div close -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-default">
 				<div class="box-body">
-					<?php 
-					if (empty($countClassIds)) {
-					 	echo "<h4 class='text-center'>No Schedule for classes are avaialble...!!!</h4>";
-					}
-					else { ?>
-						<form method="POST" action="">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Sr.#</th>
-								<th>Classes</th>
-								<th>Operations</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-							for ($i=0; $i <$countClassIds ; $i++) { 		 
-								$classID = $classIds[$i]['std_enroll_head_id'];
-								// getting classes name `std_enroll_head_name` from `std_enrollment_head` against `std_enroll_head_id`
-								$className = Yii::$app->db->createCommand("
-											SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classID'
-												")->queryAll();
-								$examCriteria = Yii::$app->db->createCommand("
-								SELECT * 
-								FROM 	exams_criteria 
-								WHERE 	std_enroll_head_id = '$classID' AND
-									  	exam_category_id = '$examCateogryId'
-												")->queryAll();
+					<div class="nav-tabs-custom">
+			            <ul class="nav nav-tabs">
+			              <li class="active">
+			              	<a href="#inactive" data-toggle="tab">Inactive
+			              		<span class="badge" style="background-color:red;">
+			              			<?php echo $countinactiveSchedules; ?>
+			              		</span>
+			              	</a>
+			              </li>
+			              <li>
+			              	<a href="#announced" data-toggle="tab">Announced
+			              		<span class="badge" style="background-color:green;">
+			              			<?php echo $countannouncedSchedules; ?>
+			              		</span>
+			              	</a>
+			              </li>
+			              <li>
+			              	<a href="#conducted" data-toggle="tab">Conducted
+								<span class="badge" style="background-color:blue;">
+			              			<?php echo $countconductedSchedules; ?>
+			              		</span>
+			              	</a>
+			              </li>
+			              <li>
+			              	<a href="#prepare" data-toggle="tab">Prepared Results
+									<span class="badge" style="background-color:purple;">
+			              			<?php echo $countResultPrepareSchedules; ?>
+			              		</span>
+			              	</a>
+			              </li>
+			              <li>
+			              	<a href="#result" data-toggle="tab">Announced Results
+								<span class="badge" style="background-color:seagreen;">
+			              			<?php echo $countResultAnnouncedSchedules; ?>
+			              		</span>
+			              	</a>
+			              </li>
+			            </ul>
+			            <div class="tab-content">
+			            	<!-- inactive pan start here -->
+				            <div class="active tab-pane" id="inactive">
+				                <div class="row">
+				                	<div class="col-md-6">
+				                		<p><i class="fa fa-info-circle"></i> Inactive Schedule Information</p>
+				                	</div>
+				                </div>
+				                <div class="row">
+				                	<div class="col-md-12">
+				                		<?php 
+				                      	if ($countinactiveSchedules == 0) {
+				                          	  	?>
 
-							 ?>
-							<tr  style="padding:0px;">
-								<td>1</td>
-								<td>
-									<?php echo $className[0]['std_enroll_head_name'];?>
-									<?php 
-										if ($examCriteria[0]['exam_status'] == 'Inactive') {
-											echo "<span class='badge' style='background-color:red;'>".$examCriteria[0]['exam_status']."</span>";
-										}
-										if ($examCriteria[0]['exam_status'] == 'conducted') {
-											echo "<span class='badge' style='background-color:#367FA9;'>".$examCriteria[0]['exam_status']."</span>";
-										}
-										if ($examCriteria[0]['exam_status'] == 'announced') {
-											echo "<span class='badge' style='background-color:green;'>".$examCriteria[0]['exam_status']."</span>";
-										}
-										if ($examCriteria[0]['exam_status'] == 'Result Prepared') {
-											echo "<span class='badge' style='background-color:purple;'>".$examCriteria[0]['exam_status']."</span>";
-										}
-										if ($examCriteria[0]['exam_status'] == 'Result Announced') {
-											echo "<span class='badge' style='background-color:seagreen;'>".$examCriteria[0]['exam_status']."</span>";
-										}
-									?>
-								</td>
-								<td>
-									<div class="dropdown">
-									    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
-									    <span class="caret"></span></button>
-									    <ul class="dropdown-menu dropdown-menu-right">
-									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
-									      	<a href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
-									      </li>
-									      <li class="divider"></li>
-									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
-									      	<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>""><i class="fa fa-edit"></i> 
-											Update Date Sheet
-											</a>
-									      </li>
-									      <li class="divider"></li>
-									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
-											<a href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>">
-												<i class="fa fa-eye"></i> View Result Card
-											</a>
-									      </li>
-									      <li class="divider"></li>
-									   
-									      	<button style="border-bottom-right-radius:25px;" type="submit" name="result_announced" class="btn btn-success btn-block">
-											Announce Result
-											</button>
-									      
-									    </ul>
-									  </div>
-									</div>
-										<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
-										<input type="hidden" name="cat_id" value="<?php echo $examCateogryId; ?>">
-										<input type="hidden" name="class_id" value="<?php echo $classID; ?>">
-								</td>
-							</tr>
-							<?php }  } ?>
-						</tbody>
-					</table>
-					</form>
+												<p style="text-align: center;font-weight:bold;">No Schedule available yet...!!!!</p>
+				                          	  	<?php
+				                          	  }else{
+				                      	 ?>
+				                        <table class="table table-striped table-hover table-responsive">
+					                        <thead>
+					                            <tr>
+					                              <th>Sr.#</th>
+					                              <th>Class</th>
+					                              <th>Action</th>
+					                          	</tr>
+					                        </thead>
+				                            <tbody>
+				                          	<?php
+				                          	for ($i=0; $i <$countinactiveSchedules ; $i++) { 
+				                          		$classHeadId = $inactiveSchedules[$i]['std_enroll_head_id'];
+				                          		$className = Yii::$app->db->createCommand("
+												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
+													")->queryAll();
+				                          	?>
+				                          	<tr>
+				                          		<td><?php echo $i+1; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+															Update Date Sheet
+															</a>
+				                          		</td>
+				                          	</tr>
+				                          	<?php } } ?>
+				                            </tbody>
+				                        </table>
+				                	</div>
+				                </div>
+				            </div>
+				              <!-- inactive pan close here -->
+
+				              <!-- announced pan start here -->
+				            <div class="tab-pane" id="announced">
+				              	<div class="row">
+				                	<div class="col-md-6">
+				                		<p><i class="fa fa-info-circle"></i> Announced Schedule Information</p>
+				                	</div>
+				                </div>
+				                <div class="row">
+				                	<div class="col-md-12">
+				                		<?php 
+				                      	if ($countannouncedSchedules == 0) {
+				                          	  	?>
+
+												<p style="text-align: center;font-weight:bold;">No Schedule available yet...!!!!</p>
+				                          	  	<?php
+				                          	  }else{
+				                      	 ?>
+				                        <table class="table table-striped table-hover table-responsive">
+					                        <thead>
+					                            <tr>
+					                              <th>Sr.#</th>
+					                              <th>Class</th>
+					                              <th>Action</th>
+					                          	</tr>
+					                        </thead>
+				                            <tbody>
+				                          	<?php
+				                          	for ($i=0; $i <$countannouncedSchedules ; $i++) { 
+				                          		$classHeadId = $announcedSchedules[$i]['std_enroll_head_id'];
+				                          		$className = Yii::$app->db->createCommand("
+												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
+													")->queryAll();
+				                          	?>
+				                          	<tr>
+				                          		<td><?php echo $i+1; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+															Update Date Sheet
+															</a>
+				                          		</td>
+				                          	</tr>
+				                          	<?php } } ?>
+				                            </tbody>
+				                        </table>
+				                	</div>
+				                </div>
+				            </div>
+				            <!-- announced pan close here -->
+
+				            <!-- conducted pan start here -->
+				            <div class="tab-pane" id="conducted">
+				              	<div class="row">
+				                	<div class="col-md-6">
+				                		<p><i class="fa fa-info-circle"></i> Conducted Schedule Information</p>
+				                	</div>
+				                </div>
+				                <div class="row">
+				                	<div class="col-md-12">
+				                		<?php 
+				                      	if ($countconductedSchedules == 0) {
+				                          	  	?>
+
+												<p style="text-align: center;font-weight:bold;">No Schedule available yet...!!!!</p>
+				                          	  	<?php
+				                          	  }else{
+				                      	 ?>
+				                        <table class="table table-striped table-hover table-responsive">
+					                        <thead>
+					                            <tr>
+					                              <th>Sr.#</th>
+					                              <th>Class</th>
+					                              <th>Action</th>
+					                          	</tr>
+					                        </thead>
+				                            <tbody>
+				                          	<?php
+				                          	for ($i=0; $i <$countconductedSchedules ; $i++) { 
+				                          		$classHeadId = $conductedSchedules[$i]['std_enroll_head_id'];
+				                          		$className = Yii::$app->db->createCommand("
+												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
+													")->queryAll();
+				                          	?>
+				                          	<tr>
+				                          		<td><?php echo $i+1; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+															Update Date Sheet
+															</a>
+				                          		</td>
+				                          	</tr>
+				                          	<?php } } ?>
+				                            </tbody>
+				                        </table>
+				                	</div>
+				                </div>
+				            </div>
+				              <!-- conducted pan close here -->
+
+				            <!-- prepare result pan start here -->
+				            <div class="tab-pane" id="prepare">
+				              	<div class="row">
+				                	<div class="col-md-6">
+				                		<p><i class="fa fa-info-circle"></i> Prepared Result Information</p>
+				                	</div>
+				                </div>
+				                <div class="row">
+				                	<div class="col-md-12">
+				                		<?php 
+				                      	if ($countResultPrepareSchedules == 0) {
+				                          	  	?>
+
+												<p style="text-align: center;font-weight:bold;">No Schedule available yet...!!!!</p>
+				                          	  	<?php
+				                          	  }else{
+				                      	 ?>
+				                        <table class="table table-striped table-hover table-responsive">
+					                        <thead>
+					                            <tr>
+					                              <th>Sr.#</th>
+					                              <th>Class</th>
+					                              <th>Action</th>
+					                          	</tr>
+					                        </thead>
+				                            <tbody>
+				                          	<?php
+				                          	for ($i=0; $i <$countResultPrepareSchedules ; $i++) { 
+				                          		$classHeadId = $conductedSchedules[$i]['std_enroll_head_id'];
+				                          		$className = Yii::$app->db->createCommand("
+												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
+													")->queryAll();
+				                          	?>
+				                          	<tr>
+				                          		<td><?php echo $i+1; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+															Update Date Sheet
+															</a>
+				                          		</td>
+				                          	</tr>
+				                          	<?php } } ?>
+				                            </tbody>
+				                        </table>
+				                	</div>
+				                </div>
+				            </div>
+				              <!-- prepare result pan close here -->
+
+				            <!-- result announce pan start here -->
+				            <div class="tab-pane" id="result">
+				              	<div class="row">
+				                	<div class="col-md-6">
+				                		<p><i class="fa fa-info-circle"></i> Announced Result Information</p>
+				                	</div>
+				                </div>
+				                <div class="row">
+				                	<div class="col-md-12">
+				                		<?php 
+				                      	if ($countResultAnnouncedSchedules == 0) {
+				                          	  	?>
+
+												<p style="text-align: center;font-weight:bold;">No Schedule available yet...!!!!</p>
+				                          	  	<?php
+				                          	  }else{
+				                      	 ?>
+				                        <table class="table table-striped table-hover table-responsive">
+					                        <thead>
+					                            <tr>
+					                              <th>Sr.#</th>
+					                              <th>Class</th>
+					                              <th>Action</th>
+					                          	</tr>
+					                        </thead>
+				                            <tbody>
+				                          	<?php
+				                          	for ($i=0; $i <$countResultAnnouncedSchedules ; $i++) { 
+				                          		$classHeadId = $ResultAnnouncedSchedules[$i]['std_enroll_head_id'];
+				                          		$className = Yii::$app->db->createCommand("
+												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
+													")->queryAll();
+				                          	?>
+				                          	<tr>
+				                          		<td><?php echo $i+1; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+															Update Date Sheet
+															</a>
+				                          		</td>
+				                          	</tr>
+				                          	<?php } } ?>
+				                            </tbody>
+				                        </table>
+				                	</div>
+				                </div>
+				            </div>
+				              <!-- result announce pan close here -->
+			            </div>
+			            <!-- /.tab-content -->
+          			</div>
+          			<!-- /.nav-tabs-custom -->
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- container fluid div close -->	
 <?php 
 
 	// result announce isset

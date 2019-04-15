@@ -38,7 +38,7 @@
 	<html>
 	<head>
 		<meta charset="utf-8">
-		<title>Manage Exams</title>
+		<title>Datesheet Update</title>
 	</head>
 	<body>
 	<div class="container-fluid">
@@ -48,8 +48,8 @@
 			</div>
 			</div><br>
 		<div class="box box-primary">
-			<div class="box-header">
-				<h3>Exams Criteria</h3>
+			<div class="box-header" style="text-align: center;">
+				<h3 style="box-shadow:1px 1px 1px 1px;">Exams Criteria</h3>
 			</div>
 			<div class="box-body">
 				<form method="POST" action="view?id=<?php echo $examCateogryId ?>">
@@ -136,8 +136,8 @@
 						</div>
 					</div>
 					<table class="table table-stripped"> 
-						<div class="box-header">
-							<h3>Exams Schedule</h3>
+						<div class="box-header" style="text-align: center;">
+							<h3 style="box-shadow:1px 1px 1px 1px;">Exams Schedule</h3>
 						</div>
 		<?php
 			for ($i=0; $i <$subjCount ; $i++) {
@@ -152,57 +152,59 @@
 
 				<tr>
 					<td>
-						<div class="row" style="border-bottom:3px solid #ebd6e7; ">
-							<div class="col-md-2" style="border:1px solid;color:#AA5397;border-radius: 8px;">
-								<p style="line-height:2.5;text-align: center;">
-								<i class="fa fa-book"></i>
-								<?php echo $subject;?>
-								</p>
+							<div class="row">
+								<div class="col-md-12" style="border:1px solid;">
+									<p>
+									<i class="fa fa-book"></i>
+									<?php echo $subject;?>
+									</p>
+								</div>
 							</div>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-4">
-										<div class="form-group">
-										<label>Date</label>
-										<input type="date" name="date[]" class="form-control" value="<?php echo $examScheduleData[$i]['date']; ?>">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+											<label>Date</label>
+											<input type="date" name="date[]" class="form-control" value="<?php echo $examScheduleData[$i]['date']; ?>">
+											</div>
 										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-										<label>Invagilator</label>
-										<select name="Invagilator[]" class="form-control">
-											<?php 
-											$empId = $examScheduleData[$i]['emp_id'];
-											$emp_name = Yii::$app->db->createCommand("
-											SELECT emp_id,emp_name
-											FROM emp_info WHERE group_by ='Faculty' AND emp_id = '$empId'
-											")->queryAll();
-											$teacher = Yii::$app->db->createCommand("
-											SELECT emp_id,emp_name
-											FROM emp_info WHERE group_by ='Faculty'
-											AND emp_id != '$empId'
-											")->queryAll();
-											$countteacher = count($teacher);
-											 ?>
-											<option value="<?php echo $emp_name[0]['emp_id'];?>">
-												<?php echo $emp_name[0]['emp_name'];?>
-											</option>
-											<?php 
-											for ($j=0; $j <$countteacher ; $j++) { ?>
-											<option value="<?php
-													echo $teacher[$j]['emp_id'];
-											?>">
-											<?php
-													echo $teacher[$j]['emp_name'];
-											?>
-											</option>
-											<?php } ?>
-										</select>
+										<div class="col-md-4">
+											<div class="form-group">
+											<label>Invagilator</label>
+											<select name="Invagilator[]" class="form-control">
+												<?php 
+												$empId = $examScheduleData[$i]['emp_id'];
+												$emp_name = Yii::$app->db->createCommand("
+												SELECT emp_id,emp_name
+												FROM emp_info WHERE group_by ='Faculty' AND emp_id = '$empId'
+												")->queryAll();
+												$teacher = Yii::$app->db->createCommand("
+												SELECT emp_id,emp_name
+												FROM emp_info WHERE group_by ='Faculty'
+												AND emp_id != '$empId'
+												")->queryAll();
+												$countteacher = count($teacher);
+												 ?>
+												<option value="<?php echo $emp_name[0]['emp_id'];?>">
+													<?php echo $emp_name[0]['emp_name'];?>
+												</option>
+												<?php 
+												for ($j=0; $j <$countteacher ; $j++) { ?>
+												<option value="<?php
+														echo $teacher[$j]['emp_id'];
+												?>">
+												<?php
+														echo $teacher[$j]['emp_name'];
+												?>
+												</option>
+												<?php } ?>
+											</select>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
 					</td>
 				</tr>
 				</table>
