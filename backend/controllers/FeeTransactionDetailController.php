@@ -301,12 +301,18 @@ class FeeTransactionDetailController extends Controller
 
     public function actionClassAccount()
     {
-        return $this->render('class-account');
+        $model = new FeeTransactionDetail(); 
+        return $this->render('class-account', [
+            'model' => $model,
+        ]);
     }
 
     public function actionClassAccountInfo()
     {
-        return $this->render('class-account-info');
+        $model = new FeeTransactionDetail(); 
+        return $this->render('class-account-info', [
+            'model' => $model,
+        ]);
     }
 
     public function actionVoucher()

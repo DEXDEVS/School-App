@@ -9,14 +9,16 @@
 </style>
 <?php 
     if(isset($_POST['submit'])) { 
-        $classid        = $_POST["classid"];
-        $sessionid      = $_POST["sessionid"];
-        $sectionid      = $_POST["sectionid"];
-        $month          = $_POST["monthYear"];
+        $classid   = $_POST["classid"];
+        $sessionid = $_POST["sessionid"];
+        $sectionid = $_POST["sectionid"];
+        $months    = $_POST["month"];
+        $month     = $months[0];
+        //$month1     = $months[1];     
         // previousMonth
         $previousMonth = date('Y-m', strtotime('-1 months', strtotime($month)));
         //$installment_no = $_POST["installment_no"];
-        $date           = $_POST["date"];
+        //$date           = $_POST["date"];
         // Select CLass...
         $class = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classid'")->queryAll();
         $className = $class[0]['class_name'];
@@ -29,18 +31,12 @@
         $student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
 
         $classAccount = Yii::$app->db->createCommand("SELECT fee_trans_id, total_amount FROM fee_transaction_head WHERE class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
-        $count = count($classAccount);
-
-        for ($i=0; $i < $count; $i++) { 
-            $headId = $classAccount[$i]['fee_trans_id'];
-            $classAccountDetail = Yii::$app->db->createCommand("SELECT fee_type_id, fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = '$headId'")->queryAll();
-        }
     ?>
 
     <form method="POST" action="class-account">
         <div class="row">
             <div class="col-md-12 text-center" style="margin-top: -20px;">
-                <?php echo "<h3> Class: ".$className." - Month: ".date('F, Y', strtotime($month))."</h3>"; ?>
+                <?php echo "<h3> Class: ".$className." - Month: ".date('F', strtotime($month)) . ' / '.date('F, Y', strtotime($month))."</h3>"; ?>
                 <ol class="breadcrumb" style="float: right; margin-top: -40px;">
                     <li><a href="./home" style="color: #3C8DBC;"><i class="fa fa-dashboard"></i> Home</a></li>
                     <li><a href="./class-account" style="color: #3C8DBC;">Back</a></li>
@@ -104,44 +100,47 @@
                             }
                             $tuitionFee = $feeDetails[0]['tuition_fee'];
                             $netTotal = $admissionFee + $tuitionFee + $remainingArrears;
-                            $headId = $classAccount[$id]['fee_trans_id'];
-                            $classAccountDetail = Yii::$app->db->createCommand("SELECT fee_type_id, fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = '$headId'")->queryAll(); 
-                            $updateCount = count($classAccountDetail);
                             $feeType     = Array('1','2','3','4','5','6','7','8');
-                            // adjust feeType Array with index....
-                            for ($x=0; $x < $updateCount ; $x++) {     
-                                $updatedFeeTypeId = $classAccountDetail[$x]['fee_type_id'];
-                                $updatedArray[$x] = $updatedFeeTypeId;
-                            }
-                            for ($y=$updateCount; $y < 8 ; $y++) { 
-                                $updatedArray[$y] = 0;
-                            }
-                            for ($x=0; $x < $updateCount ; $x++) {     
-                                $updatedTransId = $classAccountDetail[$x]['fee_amount'];
-                                $transArray[$x] = $updatedTransId;
-                            }
-                            for ($y=$updateCount; $y < 8 ; $y++) { 
-                                $transArray[$y] = 0;
-                            }
-                            $updateArray    = Array(0,0,0,0,0,0,0,0);
-                            $feeAmount    = Array(0,0,0,0,0,0,0,0);
-                            for ($z=0; $z<8; $z++) {  
-                                //use length here
-                                if ($updatedArray[$z] == $feeType[$z] ) {
-                                    $updateArray[$z] = $feeType[$z];
-                                    $feeAmount[$z] = $transArray[$z];
-                                    continue;
+                            if (!empty($classAccount)) {
+                                $headId = $classAccount[$id]['fee_trans_id'];
+                                $classAccountDetail = Yii::$app->db->createCommand("SELECT fee_type_id, fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = '$headId'")->queryAll(); 
+                                $updateCount = count($classAccountDetail);
+                                // adjust feeType Array with index....
+                                for ($x=0; $x < $updateCount ; $x++) {     
+                                    $updatedFeeTypeId = $classAccountDetail[$x]['fee_type_id'];
+                                    $updatedArray[$x] = $updatedFeeTypeId;
                                 }
-                                else {
-                                    for ($a=0; $a<8; $a++) {
-                                        if($updatedArray[$z] == $feeType[$a]) {
-                                            $updateArray[$a] = $feeType[$a];
-                                            $feeAmount[$a] = $transArray[$z];
-                                            break;
-                                        }
-                                    } 
+                                for ($y=$updateCount; $y < 8 ; $y++) { 
+                                    $updatedArray[$y] = 0;
+                                }
+                                for ($x=0; $x < $updateCount ; $x++) {     
+                                    $updatedTransId = $classAccountDetail[$x]['fee_amount'];
+                                    $transArray[$x] = $updatedTransId;
+                                }
+                                for ($y=$updateCount; $y < 8 ; $y++) { 
+                                    $transArray[$y] = 0;
+                                }
+                                $updateArray    = Array(0,0,0,0,0,0,0,0);
+                                $feeAmount    = Array(0,0,0,0,0,0,0,0);
+                                for ($z=0; $z<8; $z++) {  
+                                    //use length here
+                                    if ($updatedArray[$z] == $feeType[$z] ) {
+                                        $updateArray[$z] = $feeType[$z];
+                                        $feeAmount[$z] = $transArray[$z];
+                                        continue;
+                                    }
+                                    else {
+                                        for ($a=0; $a<8; $a++) {
+                                            if($updatedArray[$z] == $feeType[$a]) {
+                                                $updateArray[$a] = $feeType[$a];
+                                                $feeAmount[$a] = $transArray[$z];
+                                                break;
+                                            }
+                                        } 
+                                    }
                                 }
                             }
+                            // ending of classAccount if.....
                     ?>
                     <tr>
                         <td>
@@ -270,13 +269,14 @@
                         foreach ($studentName as $value) {
                             echo '<input type="hidden" name="studentName[]" value="'.$value.'">';
                         }
+                        foreach ($months as $value) {
+                            echo '<input type="hidden" name="month[]" value="'.$value.'">';
+                        }
                     ?>
                     <input type="hidden" name="length" value="<?php echo $length; ?>">
                     <input type="hidden" name="classid" value="<?php echo $classid; ?>">
                     <input type="hidden" name="sessionid" value="<?php echo $sessionid; ?>">
                     <input type="hidden" name="sectionid" value="<?php echo $sectionid; ?>">
-                    <input type="hidden" name="month" value="<?php echo $month; ?>">
-                    <input type="hidden" name="date" value="<?php echo $date; ?>">
                     <button type="submit" name="save" class="btn btn-success btn-flat"><i class="fa fa fa-sign-in" aria-hidden="true"></i><b> Submit</b></button>
                 </div>    
             </div>
