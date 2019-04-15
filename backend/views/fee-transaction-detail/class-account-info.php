@@ -30,6 +30,18 @@
 
         // Select Students...
         $student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
+
+        $classAccount = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head WHERE class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
+        var_dump($classAccount);
+        echo "<br><br>";
+        $count = count($classAccount);
+        
+        for ($i=0; $i < $count; $i++) { 
+            $headId = $classAccount[$i]['fee_trans_id'];
+            $classAccountDetail = Yii::$app->db->createCommand("SELECT fee_type_id, fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = '$headId'")->queryAll();
+            var_dump($classAccountDetail);
+        }
+
     ?>
 
     <form method="POST" action="class-account">
@@ -110,33 +122,34 @@
                         <td>
                             <p style="margin-top: 8px"><?php echo $stdName[0]['std_name'];?></p>
                          </td>
-                        <td align="center">
-                            <input class="form-control text-center" type="number" name="admission_fee[]" value="<?php echo $admissionFee; ?>" readonly="" id="admissionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
-                        </td>
-                        <td align="center">
-                            <input class="form-control text-center" type="number" name="tuition_fee[]" value="<?php echo $tuitionFee; ?>" readonly="" id="tuitionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" name="activity_fee[]"  onChange="activityFee(<?php echo $id; ?>)"  style="width: 70px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" name="stationary_expense[]"  onChange="stationaryExpense(<?php echo $id; ?>)" style="width: 100px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" name="board_uni_fee[]"  onChange="boardUniFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" name="arrears[]" value="<?php echo $remainingArrears; ?>" readonly="" style="width: 70px; border: none;">
-                        </td>
-                        <td>
-                            <input class="form-control text-center" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name="total_amount[]" value="<?php echo $netTotal ; ?>"  style="width: 80px; border: none;">
-                        </td>
+                        
+                                    <td align="center">
+                                            <input class="form-control text-center" type="number" name="admission_fee[]" value="<?php echo $admissionFee; ?>" readonly="" id="admissionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control text-center" type="number" name="tuition_fee[]" value="<?php echo $tuitionFee; ?>" readonly="" id="tuitionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
+                                    </td>
+                                    <td>
+                                        <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
+                                    </td>
+                                    <td>
+                                        <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" name="activity_fee[]"  onChange="activityFee(<?php echo $id; ?>)"  style="width: 70px; border: none;">
+                                    </td>
+                                    <td>
+                                        <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" name="stationary_expense[]"  onChange="stationaryExpense(<?php echo $id; ?>)" style="width: 100px; border: none;">
+                                    </td>
+                                    <td>
+                                        <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" name="board_uni_fee[]"  onChange="boardUniFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                    </td>
+                                    <td>
+                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                    </td>
+                                    <td>
+                                        <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" name="arrears[]" value="<?php echo $remainingArrears; ?>" readonly="" style="width: 70px; border: none;">
+                                    </td>
+                                    <td>
+                                        <input class="form-control text-center" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name="total_amount[]" value="<?php echo $netTotal ; ?>"  style="width: 80px; border: none;">
+                                    </td>
                     </tr>
                 <?php } ?>
                 </table>
