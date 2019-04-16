@@ -38,7 +38,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <?php $this->head() ?>
         <style type="text/css">
             body{
-                font-family: verdana;
+                font-family: georgia;
             }
         </style>
     </head>

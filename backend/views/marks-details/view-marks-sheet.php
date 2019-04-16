@@ -67,7 +67,7 @@
 		$examCategory = $_POST['exam_category'];
 		$classHead = $_POST['class_head'];
 
-		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND std_enroll_head_id = '$classHead' AND exam_status = 'conducted'")->queryAll();
+		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND std_enroll_head_id = '$classHead' AND exam_status = 'conducted' OR exam_status = 'Result Prepared' OR exam_status = 'Result Announced'")->queryAll();
 		if(empty($ExamData)){
 			Yii::$app->session->setFlash('warning',"Exams not conducted Yet..!");
 		} else {
@@ -75,12 +75,17 @@
 		$ExamName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCategory'")->queryAll();
 		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHead'")->queryAll();
 
-		$examSchedule = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,s.subject_id, s.full_marks, s.passing_marks FROM exams_schedule as s
+		$examSchedule = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,s.subject_id, s.full_marks, s.passing_marks,c.exam_status,s.status FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
 			WHERE c.std_enroll_head_id = '$classHead'
 			AND c.exam_category_id = '$examCategory'
+			OR s.status = 'not'
+			OR s.status = 'result prepared'
 			")->queryAll();
+		print_r($examSchedule);
+		
+		//var_dump($examSchedule);
 		if(empty($examSchedule)){
 			Yii::$app->session->setFlash('warning',"Exams not conducted for this categroy.");
 		} else {
@@ -105,6 +110,7 @@
 	<div class="box bos-default">
 		<div class="box-header" style="padding:0px;">
 			<h2 style="text-align: center;">Marks Register</h2>
+			<p style="text-align: center;"><b>Status:</b> <?php echo $examSchedule[0]['exam_status']; ?></p>
 		</div><hr>
 		<form method="POST">
 			<div class="box-body">
@@ -127,19 +133,28 @@
 
 							for ($i=0; $i <$countSubjects ; $i++) {
 								$subId = $examSchedule[$i]['subject_id'];
-							 
-
-							$teacherId = Yii::$app->db->createCommand("SELECT h.teacher_id, h.teacher_subject_assign_head_name
+								$status = $examSchedule[$i]['status'];
+							$teacherName = Yii::$app->db->createCommand("SELECT h.teacher_id, h.teacher_subject_assign_head_name
 									FROM  teacher_subject_assign_head as h
 									INNER JOIN teacher_subject_assign_detail as d 
 									ON h.teacher_subject_assign_head_id = d.teacher_subject_assign_detail_head_id
-									WHERE class_id = '$classHead' AND  subject_id = '$subId'")->queryAll();?>
+									WHERE class_id = '$classHead' AND  subject_id = '$subId'")->queryAll();
+								var_dump($teacherName);
+
+									?>
 						<td>
-							<a target="_blank" href="./emp-info-view?id=<?php echo $teacherId[0]['teacher_id'];?>">
-								<?php echo $teacherId[0]['teacher_subject_assign_head_name'];?>
+							<a style="color:black;" target="_blank" href="./emp-info-view?id=<?php echo $teacherName[0]['teacher_id'];?>">
+								<?php 
+									if ($status == 'not') {
+
+										echo "<span class='label label-danger'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
+									}else{
+										echo "<span class='label label-success'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
+									}
+								 ?>
 							</a>
 						</td>	
-						<?php }	?>
+						<?php } ?>
 						</tr>
 
 						<tr>

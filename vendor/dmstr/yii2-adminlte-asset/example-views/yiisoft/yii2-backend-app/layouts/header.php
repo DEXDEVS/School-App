@@ -16,7 +16,7 @@ use yii\helpers\Html;
         font-family: serif;
     }*/
     .main-header{
-        background-color: #591747;
+        background-color: #000000;
         color: white;
     }
     .main-header a{
@@ -26,12 +26,18 @@ use yii\helpers\Html;
         background-color: #AA5397;
         color: white;
     }
+    .dropdown user user-menu .hidden-xs:hover{
+        background-color:gold;
+        color:white;
+        font-weight:bold;
+    }
 </style>
-<header class="main-header text-dark">
+<body>
+<header class="main-header fixed text-dark">
 
-    <?= Html::a('<span class="logo-mini"><b>IC</b></span><span class="logo-lg">' . "<b>Institute on Cloud</b>" . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini"><b style="color:gold;">IC</b></span><span class="logo-lg">' . "<b style='color:gold;'>Institute on Cloud</b>" . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
-    <nav class="navbar navbar-static-top" role="navigation">
+    <nav class="navbar navbar-static-top">
 
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -40,7 +46,7 @@ use yii\helpers\Html;
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li>
-                    <p style="margin: 18px 50px;  font-family: serif;"><i><b>For Technical Support Feel Free to Contact Us 24/7 on (0306-3772105 / 0306-3772106)</b></i></p>
+                    <p style="color:gold; margin: 18px 50px;  font-family: serif;"><i><b>For Technical Support Feel Free to Contact Us 24/7 on (0306-3772105 / 0306-3772106)</b></i></p>
                 </li>
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu invisible">
@@ -222,7 +228,7 @@ use yii\helpers\Html;
                             <?= Yii::$app->user->identity->username ?>
                         </span>
                     </a>
-                    <ul class="dropdown-menu" style="background-color: #AA5397;">
+                    <ul class="dropdown-menu" style="background-color:#00004d;">
                         <!-- User image -->
                         <li class="user-header" style="height: 200px">
                             <img src="<?php echo '../frontend/web/'.$userPhoto; ?>" class="img-circle"
@@ -274,3 +280,4 @@ use yii\helpers\Html;
         </div>
     </nav>
 </header>
+</body>
