@@ -189,13 +189,20 @@
 									$grandTotalArray[$std] = $grandTotal; ?>
 								</td>
 								<td><?php 
+								if($resultCounter >0 ){
+									echo "-";
+								} else {
 									$percentage = ($grandTotal/$total)*100;
 									$percent = round($percentage,2);
 									echo $percent;
 									$percentArray[$std] = $percent;
+								}
 								 ?></td>
 								 <td>
-								 	<?php 
+								 	<?php  
+								if($resultCounter >0 ){
+									echo "-";
+								} else {
 								 	$grades = Yii::$app->db->createCommand("SELECT grade_name FROM grades WHERE grade_from <= '$percent' AND grade_to >= '$percent'")->queryAll();
 								 	if(empty($grades)){
 								 		echo "-";
@@ -204,10 +211,15 @@
 									 	echo $grade;
 									 	$gradeArray[$std] = $grade;
 								 	}
+								}
 								 	 ?>
 								 </td>
 								 <td>
 								 	<?php 
+
+								if($resultCounter >0 ){
+									echo "-";
+								} else {
 								 	if($failCounter >= 1)
 								 	{
 								 		echo "<span class='label label-danger'> Fail</span>";
@@ -217,6 +229,7 @@
 								 		echo "<span class='label label-success'> Pass </span>";
 								 		$resultArray[$std] = "Pass";
 								 	}
+								 }
 								 	?>
 								 </td>
 								<td>

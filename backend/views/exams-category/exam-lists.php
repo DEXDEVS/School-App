@@ -161,7 +161,7 @@
 									      </li>
 									      <li class="divider"></li>
 									      <li style="background-color:#E4CDAC;border-bottom-right-radius:25px;">
-									      	<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>""><i class="fa fa-edit"></i> 
+									      	<a href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classID;?>"><i class="fa fa-edit"></i> 
 											Update Date Sheet
 											</a>
 									      </li>
