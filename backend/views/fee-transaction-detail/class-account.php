@@ -3,6 +3,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use dosamigos\datetimepicker\DateTimePicker;
 use kartik\select2\Select2;
+use common\models\FeeTransactionHead;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -138,6 +140,12 @@ use kartik\select2\Select2;
         try {
             if(empty($headTransId)){
                 for($i=0; $i<$length; $i++){
+                    $voucher = FeeTransactionHead::find()->orderBy(['voucher_no'=> SORT_DESC])->one();
+                    if($voucher == NULL){
+                        $voucherNo = '1001';
+                    } else {
+                        $voucherNo = $voucher['voucher_no']+1;
+                    }
                     for($z=0; $z<$countMonth; $z++){
                         if($z == 0){
                             $totalAmount = $total_amount[$i];
@@ -147,6 +155,7 @@ use kartik\select2\Select2;
                         }
                         $feeHead = Yii::$app->db->createCommand()->insert('fee_transaction_head',[
                             'class_name_id' => $classid,
+                            'voucher_no' => $voucherNo,
                             'branch_id' => Yii::$app->user->identity->branch_id,
                             'session_id'=> $sessionid,
                             'section_id'=> $sectionid,

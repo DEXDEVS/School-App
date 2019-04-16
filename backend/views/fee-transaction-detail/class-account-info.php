@@ -79,7 +79,8 @@
                             // getting student fee...
                             $feeDetails = Yii::$app->db->createCommand("SELECT net_addmission_fee, tuition_fee, fee_id FROM std_fee_details WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
                             $feeTransaction = Yii::$app->db->createCommand("SELECT std_id FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
-                            $arrears = Yii::$app->db->createCommand("SELECT total_amount, paid_amount, remaining FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]' AND month = '$previousMonth'")->queryAll();
+                            $arrears = Yii::$app->db->createCommand("SELECT total_amount, paid_amount, remaining FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]' AND month <= '$previousMonth'")->queryAll();
+                            
                             if(!empty($arrears)){
                                 $totalArrears = $arrears[0]['total_amount'];
                                 $paidAmount = $arrears[0]['paid_amount'];    
@@ -183,7 +184,7 @@
                                     </td>
                             <?php } else { ?>
                                     <td>
-                                        <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" value="0" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
@@ -194,7 +195,7 @@
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" name="activity_fee[]"  onChange="activityFee(<?php echo $id; ?>)"  style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" value="0" name="activity_fee[]"  onChange="activityFee(<?php echo $id; ?>)"  style="width: 70px; border: none;">
                                     </td> 
                             <?php } // ending of else... 
                                 } // ending of if...
@@ -205,7 +206,7 @@
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>"  name="stationary_expense[]"  onChange="stationaryExpense(<?php echo $id; ?>)" style="width: 100px; border: none;">
+                                        <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" value="0" name="stationary_expense[]"  onChange="stationaryExpense(<?php echo $id; ?>)" style="width: 100px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
@@ -216,7 +217,7 @@
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" name="board_uni_fee[]"  onChange="boardUniFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                        <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" value="0" name="board_uni_fee[]"  onChange="boardUniFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
@@ -227,14 +228,14 @@
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" value="0" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 8){
                                 if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="arrears[]" value="<?php echo $remainingArrears; ?>" readonly="" style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="arrears[]" readonly="" style="width: 70px; border: none;">
                                     </td> 
                             <?php } else { ?>
                                    <td>
