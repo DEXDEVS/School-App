@@ -5,7 +5,7 @@
 		$examCatID 		= $_GET['examcatID'];
 		$classID 	= $_GET['classID'];
 
-		$examStatus = Yii::$app->db->createCommand("SELECT exam_status FROM exams_criteria WHERE exam_category_id = '$examCatID' AND std_enroll_head_id = '$classID' AND exam_status = 'Result Prepared'")->queryAll();
+		$examStatus = Yii::$app->db->createCommand("SELECT exam_status FROM exams_criteria WHERE exam_category_id = '$examCatID' AND std_enroll_head_id = '$classID' AND exam_status = 'Result Prepared' OR exam_status = 'Result Announced' ")->queryAll();
 		if (empty($examStatus)) {
 			Yii::$app->session->setFlash('warning',"Result card not prepared yet..!");
 		} 
@@ -22,6 +22,7 @@
 			WHERE c.std_enroll_head_id = '$classID'
 			AND c.exam_category_id = '$examCatID'
 			AND c.exam_status = 'Result Prepared'
+			 OR exam_status = 'Result Announced' 
 			")->queryAll();
 		$criteriaID = $examData[0]['exam_criteria_id'];
 		$countSubject = count($examData);
