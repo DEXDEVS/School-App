@@ -120,6 +120,28 @@
 				</div><hr>
 				<table class="table table-hover table-bordered">
 					<thead>
+						
+						<tr>
+							<th colspan="2">Teacher Name</th>
+							<?php 
+
+							for ($i=0; $i <$countSubjects ; $i++) {
+								$subId = $examSchedule[$i]['subject_id'];
+							 
+
+							$teacherId = Yii::$app->db->createCommand("SELECT h.teacher_id, h.teacher_subject_assign_head_name
+									FROM  teacher_subject_assign_head as h
+									INNER JOIN teacher_subject_assign_detail as d 
+									ON h.teacher_subject_assign_head_id = d.teacher_subject_assign_detail_head_id
+									WHERE class_id = '$classHead' AND  subject_id = '$subId'")->queryAll();?>
+						<td>
+							<a target="_blank" href="./emp-info-view?id=<?php echo $teacherId[0]['teacher_id'];?>">
+								<?php echo $teacherId[0]['teacher_subject_assign_head_name'];?>
+							</a>
+						</td>	
+						<?php }	?>
+						</tr>
+
 						<tr>
 							<th style="text-align: center;">Roll #</th>
 							<th style="text-align: center;">Student Name</th>
@@ -130,7 +152,11 @@
 								$subjectId[$i] = $subId;
 								$subject = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subId'")->queryAll();
 							?>
-								<th><?php echo $subject[0]['subject_name']; ?></th>
+						
+								<th>
+									<?php echo $subject[0]['subject_name']; ?>
+										
+								</th>
 							<?php
 							} ?>
 							<th style="text-align: center;">Grand Total</th>

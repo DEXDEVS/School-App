@@ -68,6 +68,7 @@ return [
                 'employe-dashboard'=>'site/employe-dashboard',
                 'marks-sheet'=>'std-attendance/marks-sheet',
                 'view-datesheet'=>'std-attendance/view-datesheet',
+                'view-marks-list'=>'marks-details/view-marks-list',
             ],
         ],
         

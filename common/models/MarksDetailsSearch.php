@@ -18,8 +18,8 @@ class MarksDetailsSearch extends MarksDetails
     public function rules()
     {
         return [
-            [['marks_detail_id', 'marks_head_id', 'subject_id', 'obtained_marks', 'created_by', 'updated_by'], 'integer'],
-            [['exam_attendance', 'created_at', 'updated_at'], 'safe'],
+            [['marks_detail_id', 'marks_head_id', 'subject_id', 'created_by', 'updated_by'], 'integer'],
+            [['obtained_marks', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -59,14 +59,13 @@ class MarksDetailsSearch extends MarksDetails
             'marks_detail_id' => $this->marks_detail_id,
             'marks_head_id' => $this->marks_head_id,
             'subject_id' => $this->subject_id,
-            'obtained_marks' => $this->obtained_marks,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'exam_attendance', $this->exam_attendance]);
+        $query->andFilterWhere(['like', 'obtained_marks', $this->obtained_marks]);
 
         return $dataProvider;
     }
