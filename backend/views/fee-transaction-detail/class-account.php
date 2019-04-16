@@ -137,12 +137,13 @@ use kartik\select2\Select2;
         $transaction = \Yii::$app->db->beginTransaction();
         try {
             if(empty($headTransId)){
-                for($z=0; $z<$countMonth; $z++){
-                    for($i=0; $i<$length; $i++){
-                        if($z == 0 && $admission_fee[$i] > 0 || $absent_fine[$i] > 0 || $activity_fee[$i] > 0 ||  $arrears[$i] > 0){
+                for($i=0; $i<$length; $i++){
+                    for($z=0; $z<$countMonth; $z++){
+                        if($z == 0){
                             $totalAmount = $total_amount[$i];
                         } else {
-                            $totalAmount = ($total_amount[$i] - $arrears[$i]) ;
+                            $amount = ($admission_fee[$i] + $absent_fine[$i] + $activity_fee[$i] + $stationary_expense[$i] + $board_uni_fee[$i] + $exam_fee[$i] + $arrears[$i]);
+                            $totalAmount = ($total_amount[$i] - $amount);
                         }
                         $feeHead = Yii::$app->db->createCommand()->insert('fee_transaction_head',[
                             'class_name_id' => $classid,
@@ -157,8 +158,8 @@ use kartik\select2\Select2;
                             'status'=>'unpaid',
                             'created_by' => Yii::$app->user->identity->id,
                         ])->execute();
-                        var_dump($feeHead);
-                        $headID = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id= '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
+
+                        $headID = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id= '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$months[$z]'")->queryAll();
 
                         $headId = $headID[$i]['fee_trans_id'];
                         for($j=0;$j<8;$j++){
@@ -166,8 +167,9 @@ use kartik\select2\Select2;
                                 $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
                                 'fee_trans_detail_head_id' => $headId,
                                 'fee_type_id'=> $feeType[$j],
-                                'fee_amount'=> $admission_fee[$i], 
+                                'fee_amount'=> $admission_fee[$i]
                                 ])->execute();
+                                var_dump($feeDetails);
                             }
                             if($feeType[$j] == 2 && $tuition_fee[$i] > 0){
                                 $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
@@ -218,12 +220,12 @@ use kartik\select2\Select2;
                                 'fee_amount'=> $arrears[$i], 
                                 ])->execute();
                             }
-                            //end of J for loop
                         }
+                        //end of j for loop
                     }
-                    //end of i for loop  
+                    //end of z for loop  
                 }
-                //end of z for loop
+                //end of i for loop
                 // success alert message...
                 Yii::$app->session->setFlash('success', "You have successfully maintain this class account...!"); 
                     //return $this->render('./fee-transaction-detail-class-account');
@@ -458,8 +460,9 @@ use kartik\select2\Select2;
              
             //return $this->redirect(['./class-account']);
         } catch (Exception $e) {
-            $transaction->rollBack();
+            //$transaction->rollBack();
             Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
+            echo $e."<br>"; 
         }
     //end of isset
     }
