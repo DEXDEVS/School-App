@@ -1,8 +1,16 @@
+<?php 
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use dosamigos\datetimepicker\DateTimePicker;
+use kartik\select2\Select2;
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>Fee Vocher</title>
+    <link rel="stylesheet" href="select2/dist/css/select2.min.css">
+
 </head>
 <body>
 <div class="container-fluid" style="margin-top: -30px;">
@@ -59,19 +67,34 @@
             </div>    
         </div>
         <div class="row">              
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Select Month</label>
-                    <input type="month" class="form-control" name="monthYear" required="">   
-                </div>    
+            <div class="col-md-4"> 
+                <label>Select Month</label>
+                <?php 
+                    $year = date('Y');  
+
+                    $data = [
+                        $year.'-01'=>'January '.$year, $year.'-02'=>'February '.$year, 
+                        $year.'-03'=>'March '.$year, $year.'-04'=>'April '.$year, 
+                        $year.'-05'=>'May '.$year, $year.'-06'=>'June '.$year, 
+                        $year.'-07'=>'July '.$year, $year.'-08'=>'August '.$year, 
+                        $year.'-09'=>'September '.$year, $year.'-10'=>'October '.$year, 
+                        $year.'-11'=>'November '.$year, $year.'-12'=>'December '.$year,
+                    ];
+                    echo Select2::widget([
+                        'name' => 'month',
+                        //'value' => 2, // value to initialize
+                        'data' => $data,
+                        'options' => ['placeholder' => 'Select Month'],
+                        'showToggleAll' => false,
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            'multiple' => true,
+                            'maximumSelectionLength'=> 2,
+                        ],
+                    ]);
+                ?>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Date</label>
-                    <input type="date" class="form-control" name="date" required="">     
-                </div>    
-            </div> 
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group" style="margin-top: 24px;">
                     <button type="submit" name="submit" class="btn btn-success btn-flat btn-block"><i class="fa fa-check-square-o" aria-hidden="true"></i><b> Get Class</b></button>
                 </div>    
@@ -88,9 +111,7 @@
         $classid            = $_POST["classid"];
         $sessionid          = $_POST["sessionid"];
         $sectionid          = $_POST["sectionid"];
-        $date               = $_POST["date"];
-        $month              = $_POST["month"];
-        //$installmentNo      = $_POST["installment_no"];
+        $months            = $_POST["month"];
         $length             = $_POST["length"];
         $studentId          = $_POST["studentId"];
         $studentName        = $_POST["studentName"];
@@ -106,6 +127,10 @@
         $arrears            = $_POST["arrears"];
         $feeType            = Array('1','2','3','4','5','6','7','8');
         $updateStatus       = -1;
+        $countMonth = count($months);
+        $month = $months[0];
+        var_dump($_POST);
+
        
         $headTransId = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
 
@@ -113,83 +138,94 @@
         try {
             if(empty($headTransId)){
                 for($i=0; $i<$length; $i++){
-                    $feeHead = Yii::$app->db->createCommand()->insert('fee_transaction_head',[
-                        'class_name_id' => $classid,
-                        'branch_id' => Yii::$app->user->identity->branch_id,
-                        'session_id'=> $sessionid,
-                        'section_id'=> $sectionid,
-                        'std_id' => $studentId[$i],
-                        'std_name' => $studentName[$i],
-                        'month'=> $month,
-                        'transaction_date' => $date,
-                        'total_amount'=>  $total_amount[$i], 
-                        'status'=>'unpaid',
-                        'created_by' => Yii::$app->user->identity->id,
-                    ])->execute();
-                    $headID = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id= '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
+                    for($z=0; $z<$countMonth; $z++){
+                        if($z == 0){
+                            $totalAmount = $total_amount[$i];
+                        } else {
+                            $amount = ($admission_fee[$i] + $absent_fine[$i] + $activity_fee[$i] + $stationary_expense[$i] + $board_uni_fee[$i] + $exam_fee[$i] + $arrears[$i]);
+                            $totalAmount = ($total_amount[$i] - $amount);
+                        }
+                        $feeHead = Yii::$app->db->createCommand()->insert('fee_transaction_head',[
+                            'class_name_id' => $classid,
+                            'branch_id' => Yii::$app->user->identity->branch_id,
+                            'session_id'=> $sessionid,
+                            'section_id'=> $sectionid,
+                            'std_id' => $studentId[$i],
+                            'std_name' => $studentName[$i],
+                            'month'=> $months[$z],
+                            'transaction_date' =>  new \yii\db\Expression('NOW()'),
+                            'total_amount'=>  $totalAmount, 
+                            'status'=>'unpaid',
+                            'created_by' => Yii::$app->user->identity->id,
+                        ])->execute();
 
-                    $headId = $headID[$i]['fee_trans_id'];
-                    for($j=0;$j<8;$j++){
-                        if($feeType[$j] == 1 && $admission_fee[$i] > 0){
-                            $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
-                            'fee_trans_detail_head_id' => $headId,
-                            'fee_type_id'=> $feeType[$j],
-                            'fee_amount'=> $admission_fee[$i], 
-                            ])->execute();
+                        $headID = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id= '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$months[$z]'")->queryAll();
+
+                        $headId = $headID[$i]['fee_trans_id'];
+                        for($j=0;$j<8;$j++){
+                            if($feeType[$j] == 1 && $admission_fee[$i] > 0 && $z == 0){
+                                $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
+                                'fee_trans_detail_head_id' => $headId,
+                                'fee_type_id'=> $feeType[$j],
+                                'fee_amount'=> $admission_fee[$i]
+                                ])->execute();
+                                var_dump($feeDetails);
+                            }
+                            if($feeType[$j] == 2 && $tuition_fee[$i] > 0){
+                                $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
+                                'fee_trans_detail_head_id' => $headId,
+                                'fee_type_id'=> $feeType[$j],
+                                'fee_amount'=> $tuition_fee[$i], 
+                                ])->execute();
+                            }
+                            if($feeType[$j] == 3 && $absent_fine[$i] > 0 && $z == 0){
+                                $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
+                                'fee_trans_detail_head_id' => $headId,
+                                'fee_type_id'=> $feeType[$j],
+                                'fee_amount'=> $absent_fine[$i],
+                                ])->execute();
+                            }
+                            if($feeType[$j] == 4 && $activity_fee[$i] > 0 && $z == 0){
+                                $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
+                                'fee_trans_detail_head_id' => $headId,
+                                'fee_type_id'=> $feeType[$j],
+                                'fee_amount'=> $activity_fee[$i], 
+                                ])->execute();
+                            }
+                            if($feeType[$j] == 5 && $stationary_expense[$i] > 0 && $z == 0){
+                                $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
+                                'fee_trans_detail_head_id' => $headId,
+                                'fee_type_id'=> $feeType[$j],
+                                'fee_amount'=> $stationary_expense[$i],
+                                ])->execute();
+                            }
+                            if($feeType[$j] == 6 && $board_uni_fee[$i] > 0 && $z == 0){
+                                $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
+                                'fee_trans_detail_head_id' => $headId, 
+                                'fee_type_id'=> $feeType[$j],
+                                'fee_amount'=> $board_uni_fee[$i], 
+                                ])->execute();
+                            }
+                            if($feeType[$j] == 7 && $exam_fee[$i] > 0 && $z == 0){
+                                $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
+                                'fee_trans_detail_head_id' => $headId, 
+                                'fee_type_id'=> $feeType[$j],
+                                'fee_amount'=> $exam_fee[$i], 
+                                ])->execute();
+                            }
+                            if($feeType[$j] == 8 && $arrears[$i] > 0 && $z == 0){
+                                $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
+                                'fee_trans_detail_head_id' => $headId, 
+                                'fee_type_id'=> $feeType[$j],
+                                'fee_amount'=> $arrears[$i], 
+                                ])->execute();
+                            }
                         }
-                        if($feeType[$j] == 2 && $tuition_fee[$i] > 0){
-                            $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
-                            'fee_trans_detail_head_id' => $headId,
-                            'fee_type_id'=> $feeType[$j],
-                            'fee_amount'=> $tuition_fee[$i], 
-                            ])->execute();
-                        }
-                        if($feeType[$j] == 3 && $absent_fine[$i] > 0){
-                            $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
-                            'fee_trans_detail_head_id' => $headId,
-                            'fee_type_id'=> $feeType[$j],
-                            'fee_amount'=> $absent_fine[$i],
-                            ])->execute();
-                        }
-                        if($feeType[$j] == 4 && $activity_fee[$i] > 0){
-                            $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
-                            'fee_trans_detail_head_id' => $headId,
-                            'fee_type_id'=> $feeType[$j],
-                            'fee_amount'=> $activity_fee[$i], 
-                            ])->execute();
-                        }
-                        if($feeType[$j] == 5 && $stationary_expense[$i] > 0){
-                            $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
-                            'fee_trans_detail_head_id' => $headId,
-                            'fee_type_id'=> $feeType[$j],
-                            'fee_amount'=> $stationary_expense[$i],
-                            ])->execute();
-                        }
-                        if($feeType[$j] == 6 && $board_uni_fee[$i] > 0){
-                            $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
-                            'fee_trans_detail_head_id' => $headId, 
-                            'fee_type_id'=> $feeType[$j],
-                            'fee_amount'=> $board_uni_fee[$i], 
-                            ])->execute();
-                        }
-                        if($feeType[$j] == 7 && $exam_fee[$i] > 0){
-                            $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
-                            'fee_trans_detail_head_id' => $headId, 
-                            'fee_type_id'=> $feeType[$j],
-                            'fee_amount'=> $exam_fee[$i], 
-                            ])->execute();
-                        }
-                        if($feeType[$j] == 8 && $arrears[$i] > 0){
-                            $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
-                            'fee_trans_detail_head_id' => $headId, 
-                            'fee_type_id'=> $feeType[$j],
-                            'fee_amount'=> $arrears[$i], 
-                            ])->execute();
-                        }
-                        //end of J for loop
+                        //end of j for loop
                     }
+                    //end of z for loop  
                 }
-                //end of for loop
+                //end of i for loop
                 // success alert message...
                 Yii::$app->session->setFlash('success', "You have successfully maintain this class account...!"); 
                     //return $this->render('./fee-transaction-detail-class-account');
@@ -255,7 +291,7 @@
                         //admission_fee ..... 
                         if($feeType[$m] == 1){
                             if($updateArray[$m] == $feeType[$m] && $admission_fee[$j] >= 0){
-                                $feeDette_ails = Yii::$app->db->createCommand()->update('fee_transaction_detail',[
+                                $feeDetails = Yii::$app->db->createCommand()->update('fee_transaction_detail',[
                                 'fee_trans_detail_head_id' => $id,
                                 'fee_type_id'=> 1,
                                 'fee_amount'=> $admission_fee[$j]],
@@ -424,8 +460,9 @@
              
             //return $this->redirect(['./class-account']);
         } catch (Exception $e) {
-            $transaction->rollBack();
+            //$transaction->rollBack();
             Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
+            echo $e."<br>"; 
         }
     //end of isset
     }

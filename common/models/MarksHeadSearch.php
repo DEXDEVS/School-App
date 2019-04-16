@@ -18,7 +18,7 @@ class MarksHeadSearch extends MarksHead
     public function rules()
     {
         return [
-            [['marks_head_id', 'exam_category_id', 'class_head_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
+            [['marks_head_id', 'exam_criteria_id', 'std_id', 'created_by', 'updated_by'], 'integer'],
             [['grand_total'], 'number'],
             [['percentage', 'grade', 'exam_status', 'created_at', 'updated_at'], 'safe'],
         ];
@@ -58,8 +58,7 @@ class MarksHeadSearch extends MarksHead
 
         $query->andFilterWhere([
             'marks_head_id' => $this->marks_head_id,
-            'exam_category_id' => $this->exam_category_id,
-            'class_head_id' => $this->class_head_id,
+            'exam_criteria_id' => $this->exam_criteria_id,
             'std_id' => $this->std_id,
             'grand_total' => $this->grand_total,
             'created_by' => $this->created_by,

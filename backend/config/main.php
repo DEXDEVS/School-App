@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => 'IC - Institute on Cloud',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -54,7 +55,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'admin' => 'admin',
+                'admin' => 'admin/',
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',

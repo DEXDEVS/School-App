@@ -30,6 +30,7 @@ class FeeTransactionDetail extends \yii\db\ActiveRecord
         return 'fee_transaction_detail';
     }
 
+    public $month;
     /**
      * @inheritdoc
      */

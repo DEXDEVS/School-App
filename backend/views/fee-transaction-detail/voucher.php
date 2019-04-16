@@ -243,8 +243,8 @@
 							
 							<div class="row">
 								<div class="col-md-12 text-center">
-									<p style="border: 1px"><?php echo "Printed on: "."<b><i>".$todayDate."</i></b>"; ?></p>
-									<p style="border: 1px outset;">Devleoped By: <b><i>DEXTEROUS DEVELOPERS</i></b><br> (www.dexdevs.com)</p>
+									<p style="border: 1px"><i><?php echo "Printed on: "."<b>".$todayDate."</i></b>"; ?></p>
+									<p style="border: 1px outset;">Devleoped By: <b><i>DEXTEROUS DEVELOPERS</b> (0315-6898993)</i><br>www.dexdevs.com</p>
 								</div>
 							</div>
 							<br>

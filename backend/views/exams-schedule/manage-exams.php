@@ -97,6 +97,16 @@
 								<input type="text" name="room" class="form-control" required="">
 							</div>
 						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Exam Type</label>
+								<select name="exam_type" class="form-control" required>
+									<option value="">Select Exam Type </option>
+									<option value="Regular">Regular</option>
+									<option value="Supply">Supply</option>
+								</select>
+							</div>
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -119,18 +129,22 @@
 			$exam_start_time 	= $_POST["exam_start_time"];
 			$exam_end_time 		= $_POST["exam_end_time"];
 			$room 				= $_POST["room"];
+			$exam_type 			= $_POST["exam_type"];
 
-		// 	$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
-		// 	FROM  exams_criteria
-		// 	WHERE exam_category_id 		= '$exam_category' AND
-		// 		  std_enroll_head_id 	= '$headId' AND
-		// 		  exam_start_date 		= '$exam_start_date' AND
-		// 		  exam_end_date 		= '$exam_end_date'
-		// 	")->queryAll();
+			if($exam_type == "Regular"){
 
-		// if (!empty($examCriteriaData)) {
-		// 	Yii::$app->session->setFlash('warning', "Exams Schedule already managed against selected Date range ...!");
-		// }else{
+			$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
+			FROM  exams_criteria
+			WHERE exam_category_id 		= '$exam_category' AND
+				  std_enroll_head_id 	= '$headId' AND
+				  exam_start_date 		= '$exam_start_date' AND
+				  exam_end_date 		= '$exam_end_date' AND
+				  exam_type				= 'Regular'
+			")->queryAll();
+
+		if (!empty($examCriteriaData)) {
+			Yii::$app->session->setFlash('warning', "Exams Schedule already managed against selected Date range ...!");
+		}else{
 
 		$marks = Yii::$app->db->createCommand("SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category'")->queryAll();
 
@@ -324,10 +338,217 @@
 		<?php	
 		}
 		//closing of else for marks weightage
-		//}
+		}
 		//closing of else for exam schedule date
-	}
-	// closing of isset
+	} //closing of if(reguler)
+	if($exam_type == "Supply"){
+		$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
+			FROM  exams_criteria
+			WHERE exam_category_id 		= '$exam_category' AND
+				  std_enroll_head_id 	= '$headId' AND
+				  exam_start_date 		= '$exam_start_date' AND
+				  exam_end_date 		= '$exam_end_date' AND
+				  exam_type				= 'Supply'
+			")->queryAll();
+
+		if (!empty($examCriteriaData)) {
+			Yii::$app->session->setFlash('warning', "Exams Schedule for supplimentry is already managed against selected Date range ...!");
+		}else{
+
+		$marks = Yii::$app->db->createCommand("SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category'")->queryAll();
+
+		if(empty($marks)){
+			Yii::$app->session->setFlash('warning',"Marks waitage for this category is not set.");
+		} else {
+
+			$criteriaId = Yii::$app->db->createCommand("SELECT c.exam_criteria_id, s.passing_marks, s.subject_id 
+				FROM exams_criteria as c
+				INNER JOIN exams_schedule as s
+				ON c.exam_criteria_id = s.exam_criteria_id
+				WHERE c.exam_category_id = $exam_category
+				AND c.std_enroll_head_id = $headId
+				AND c.exam_status = 'Result Announced'
+				AND c.exam_type = 'Regular'")->queryAll();
+
+			if(empty($criteriaId)){
+				Yii::$app->session->setFlash('warning',"Cannot manage supplimentry scedule before announcement of result for reguler exam");
+			}else{
+				$cat_id = $criteriaId[0]['exam_criteria_id'];
+				$count = count($criteriaId);
+				for($i=0; $i<$count; $i++){
+					$subId = $criteriaId[$i]['subject_id'];
+					$passingMarks = $criteriaId[$i]['passing_marks'];
+					$subject = Yii::$app->db->createCommand("SELECT DISTINCT(d.subject_id)
+						FROM marks_details as d
+						INNER JOIN marks_head as h
+						ON d.marks_head_id = h.marks_head_id
+						WHERE h.exam_criteria_id = '$cat_id'
+						AND h.exam_status = 'Fail'
+						AND d.subject_id = '$subId'
+						AND d.obtained_marks < '$passingMarks'
+						OR d.obtained_marks = 'A'
+						")->queryAll();
+				}
+				$subjectArray = array();
+				foreach ($subject as $key => $value) {
+					$subjectArray[$key] = $value
+				}
+				var_dump($subjectArray);
+				$countSubject = count($subject);
+
+			?>
+<div class="container-fluid">
+<div class="box box-default container-fluid">
+	<div class="box-header">
+		<h3>Exam Schedule</h3><hr>
+	</div>		
+<div class="box-body" style="background-color:#fafafa;">
+	<form method="post">
+	<table class="table table-stripped"> 
+		<?php for ($j=0; $j < $countSubject; $j++) { 
+				$subjectId = $subject[$j]['subject_id'];
+				$subjectName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subjectId' ")->queryAll();
+				
+		 ?>
+				<tr>
+					<td>
+						
+							<div class="row">
+								<div id="sub-hvr" class="col-md-12" style="border:1px solid;color:#AA5397;border-radius: 8px;">
+									<h4 style="text-align: center;">
+									<i class="fa fa-book"></i>
+									<?php echo $subjectName[0]['subject_name']; ?>
+									</h4>
+								</div>
+							</div><br>
+							<div class="row" style="border-bottom:1px solid #ebd6e7; ">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group" >
+											<label>Date</label>
+											<input type="date" name="date[]" class="form-control" required="">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>Presentation</label>
+											<input type="text" name="presentation[]" class="form-control" value="<?php echo $marks[0]['presentation'];?>" readonly="" id="pr_<?php //echo $i; ?>">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>Assignment</label>
+											<input type="text" name="assignment[]" class="form-control" value="<?php echo $marks[0]['assignment'];?>" readonly="" id="assign_<?php //echo $i; ?>">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>Attendance</label>
+											<input type="text" name="attendance[]" class="form-control" value="<?php echo $marks[0]['attendance'];?>" readonly="" id="att_<?php //echo $i; ?>">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>Dressing</label>
+											<input type="text" name="dressing[]" class="form-control" value="<?php echo $marks[0]['dressing'];?>" readonly="" id="dr_<?php //echo $i; ?>">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+											<label>Invagilator</label>
+											<select name="Invagilator[]" class="form-control" required>
+
+												<?php 
+
+												$teacher = Yii::$app->db->createCommand("
+												SELECT emp_id,emp_name
+												FROM emp_info WHERE group_by ='Faculty'
+												")->queryAll();
+												$countteacher = count($teacher);
+												 ?>
+												<option value="">Select invagilator</option>
+												<?php 
+												for ($j=0; $j <$countteacher ; $j++) { ?>
+												<option value="<?php
+														echo $teacher[$j]['emp_id'];
+												?>">
+												<?php
+														echo $teacher[$j]['emp_name'];
+												?>
+												</option>
+												<?php } ?>
+											</select>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>Theory</label>
+											<input type="text" name="theory" class="form-control" value="<?php echo $marks[0]['theory'];?>" readonly=""  id="th_<?php //echo $i; ?>">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>Practical</label>
+											<input type="text" name="practical[]" class="form-control" value="<?php echo $marks[0]['practical'];?>" readonly="" id="prac_<?php //echo $i; ?>">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>Full Marks</label>
+											<input type="text" name="fullmarks[]" class="form-control" value="<?php //echo $totalMarks;?>" readonly="">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>Passing Marks</label>
+											<input type="text" name="passingmarks[]" class="form-control" value="<?php //echo $passmarks; ?>" readonly="">
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						
+					</td>
+				</tr>
+			
+
+	<?php 
+	} //end of for loop counrSubject
+	// foreach ($subarray as $key => $value) {
+	// 	echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
+	// }
+
+	 ?>
+	
+	</table>
+	 <div class="row">
+	 	<div class="col-md-12">
+	 		<button type="submit" name="save" class="btn btn-success btn-xs" style="float: right;"><i class="glyphicon glyphicon-save"></i> Save Date Sheet</button>
+	 	</div>
+	 </div>
+	<input type="hidden" name="exam_category" value="<?php //echo $exam_category;?>">
+	<input type="hidden" name="headId" value="<?php //echo $headId;?>">
+	<input type="hidden" name="exam_start_date" value="<?php// echo $exam_start_date;?>">
+	<input type="hidden" name="exam_end_date" value="<?php ////echo $exam_end_date;?>">
+	<input type="hidden" name="exam_start_time" value="<?php //echo $exam_start_time;?>">
+	<input type="hidden" name="exam_end_time" value="<?php //echo $exam_end_time;?>">
+	<input type="hidden" name="room" value="<?php //echo $room;?>">
+	<input type="hidden" name="subjCount" value="<?php //echo $subjCount;?>">
+	 </form>
+	</div>
+		<?php
+		}	
+		//closing of else criteriaId
+		}
+		//closing of else for marks weightage
+		}
+		//closing of else for exam schedule date
+	}//closing of if(Supply)
+	} // closing of isset
 	 ?>
 	 
 	</div>
@@ -381,7 +602,7 @@
 			")->queryAll();
 
 			$criteriaId = $examCriteriaId[0]['exam_criteria_id'];
-			var_dump($criteriaId);
+			
 			
 		for ($i=0; $i <$subjCount ; $i++) { 
 			$examSchedule = Yii::$app->db->createCommand()->insert('exams_schedule',[

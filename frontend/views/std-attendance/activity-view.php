@@ -253,9 +253,9 @@ transition: all 0.4s ease-in-out;
 						</div>
 						<div class="offer-content">
 							<h3 class="lead">
-								Presentations
+								Marks List
 							</h3>
-							<a href="">Manage presentation</a>
+							<a href="./view-marks-list?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&emp_id=<?php echo $emp_id ?>">View Marks</a>
 						</div>
 					</div>
 				</div>
