@@ -210,17 +210,25 @@
 									?>
 								</td>
 							<?php } ?>
-								<td><?php echo $grandTotal."/".$total; 
-									$grandTotalArray[$std] = $grandTotal;
-								?></td>
 								<td><?php 
+									echo $grandTotal."/".$total; 
+									$grandTotalArray[$std] = $grandTotal; ?>
+								</td>
+								<td><?php 
+								if($resultCounter >0 ){
+									echo "-";
+								} else {
 									$percentage = ($grandTotal/$total)*100;
 									$percent = round($percentage,2);
 									echo $percent;
 									$percentArray[$std] = $percent;
+								}
 								 ?></td>
 								 <td>
-								 	<?php 
+								 	<?php  
+								if($resultCounter >0 ){
+									echo "-";
+								} else {
 								 	$grades = Yii::$app->db->createCommand("SELECT grade_name FROM grades WHERE grade_from <= '$percent' AND grade_to >= '$percent'")->queryAll();
 								 	if(empty($grades)){
 								 		echo "-";
@@ -229,11 +237,16 @@
 									 	echo $grade;
 									 	$gradeArray[$std] = $grade;
 								 	}
+								}
 								 	 ?>
 								 </td>
 								 <td>
 								 	<?php 
-								 	if($failCounter >= 3)
+
+								if($resultCounter >0 ){
+									echo "-";
+								} else {
+								 	if($failCounter >= 1)
 								 	{
 								 		echo "<span class='label label-danger'> Fail</span>";
 								 		$resultArray[$std] = "Fail";
@@ -242,6 +255,7 @@
 								 		echo "<span class='label label-success'> Pass </span>";
 								 		$resultArray[$std] = "Pass";
 								 	}
+								 }
 								 	?>
 								 </td>
 								<td>
@@ -301,7 +315,7 @@
 		$resultCounter 	= $_POST["resultCounter"];
 		
 
-		if($resultCounter != 0){
+		if($resultCounter > 0){
 			Yii::$app->session->setFlash('warning',"Mark sheet incomplete..!");
 		} else {
 			$examCriteriaID = $_POST["examCriteriaID"];
