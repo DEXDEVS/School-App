@@ -59,6 +59,7 @@ return [
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
+                'premium-version' => 'site/premium-version',
 
                 'branches-view' => 'branches/view',
                 'departments-view' => 'departments/view',
@@ -113,6 +114,7 @@ return [
                 'view-marks-sheet' => 'marks-details/view-marks-sheet',
                 'update-marks' => 'marks-details/update-marks',
                 'view-result-cards' => 'exams-category/view-result-cards',
+
 
             ],
         ],
