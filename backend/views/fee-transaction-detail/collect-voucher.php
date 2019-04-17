@@ -50,7 +50,7 @@
 
         //$stdId = Yii::$app->db->createCommand("SELECT std_id FROM std_personal_info WHERE std_reg_no= '$regNo'")->queryAll();
         //$std_id = $stdId[0]['std_id'];
-    	$transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head WHERE fee_trans_id = '$voucherNo'")->queryAll();
+    	$transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head WHERE voucher_no = '$voucherNo'")->queryAll();
     	if(empty($transactionHead)){
             Yii::$app->session->setFlash('error', "Voucher number not exist! Please select valid voucher no...!");
         } else {
@@ -148,12 +148,6 @@
                         <?php } ?>
                     </div>
                 </tr>
-                <!-- <tr>
-                    <th>Total Discount</th>
-                    <td>
-                        <input type="text" class="form-control" readonly="" value="<?php echo $transactionHead[0]['total_discount'] ?>" style="width: 70px"/>
-                    </td>
-                </tr> -->
                 <tr>
                     <td>Paid Amount</td>
                     <td>

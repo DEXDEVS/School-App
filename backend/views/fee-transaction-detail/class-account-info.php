@@ -79,20 +79,26 @@
                             // getting student fee...
                             $feeDetails = Yii::$app->db->createCommand("SELECT net_addmission_fee, tuition_fee, fee_id FROM std_fee_details WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
                             $feeTransaction = Yii::$app->db->createCommand("SELECT std_id FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
-                            $arrears = Yii::$app->db->createCommand("SELECT total_amount, paid_amount, remaining FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]' AND month <= '$previousMonth'")->queryAll();
-                            
+                            $arrears = Yii::$app->db->createCommand("SELECT total_amount, paid_amount, remaining FROM fee_transaction_head WHERE status = 'Unpaid' AND std_id = '$stdId' OR status = 'Partially Paid' AND std_id = '$stdId'")->queryAll();
+                            var_dump($arrears);
+                            echo "<br>";
+                            $totalArrears = $paidAmount = 0;
                             if(!empty($arrears)){
-                                $totalArrears = $arrears[0]['total_amount'];
-                                $paidAmount = $arrears[0]['paid_amount'];    
+                                $arrearsCount = count($arrears);
+                                for ($i=0; $i < $arrearsCount ; $i++) { 
+                                    $totalArrears += $arrears[$i]['total_amount'];
+                                    $paidAmount += $arrears[$i]['paid_amount'];  
+                                }
                                 if($totalArrears == $paidAmount){
                                     $remainingArrears = 0;
                                 }else if ($totalArrears != $paidAmount) {
                                     $remainingArrears = $totalArrears - $paidAmount;
+                                } else {
+                                    $remainingArrears = 0;
                                 }
                             }else{
                                 $remainingArrears = 0;
                             }
-
                             $feeId = Yii::$app->db->createCommand("SELECT std_id FROM fee_transaction_head WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
                             if(empty($feeId)){
                                 $admissionFee = $feeDetails[0]['net_addmission_fee'];
