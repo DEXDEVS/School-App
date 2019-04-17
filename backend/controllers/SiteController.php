@@ -28,7 +28,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['logout', 'index', 'system-settings', 
                             'system-configuration', 'students', 'employees', 
-                            'communication', 'fee'],
+                            'communication', 'fee','premium-version'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -115,6 +115,10 @@ class SiteController extends Controller
     public function actionSendSms()
     {
         return $this->render('send-sms');
+    }
+    public function actionPremiumVersion()
+    {
+        return $this->render('premium-version');
     }
     //  actionSystemSettings.... 
     public function actionSystemSettings()

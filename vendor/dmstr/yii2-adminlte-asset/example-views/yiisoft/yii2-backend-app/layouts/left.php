@@ -88,7 +88,7 @@
                             ['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
                             ['label' => 'Enrollment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
-                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./"],],
+                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             //['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./std-promote"],],
                             
                             //['label' => 'Class', 'icon' => 'caret-right', 'url' => ["/std-class"],],
@@ -193,17 +193,21 @@
                         'icon' => 'credit-card',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
-                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
-                            ['label' => 'Capital', 'icon' => 'caret-right', 'url' => "./"],
-                            ['label' => 'Assets', 'icon' => 'caret-right', 'url' => "./"],
-                            ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => "./"],
-                            ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => "./"],
-                            ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => "./"],
-                            ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => "./"],
-                            ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => "./"],
-                            ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => "./"],
-                            ['label' => 'Transaction Logs', 'icon' => 'caret-right', 'url' => "./"]
+                            ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                             // ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
+                            // ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
+                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+
+                            ['label' => 'Transaction Logs', 'icon' => 'caret-right', 'url' => ["./premium-version"],]
+
                         ],
                     ],
                     // ------------------------------------------------
