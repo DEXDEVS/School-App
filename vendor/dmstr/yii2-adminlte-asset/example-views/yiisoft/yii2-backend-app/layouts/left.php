@@ -81,14 +81,13 @@
                     // Student Module start...
                     [
                         'label' => 'Students',
-                        'icon' => 'users',
+                        'icon' => 'graduation-cap',
                         'url' => '#',
                         'items' => [
                             ['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
                             ['label' => 'Enrollment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
                             ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-<<<<<<< HEAD
                             ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Attendance System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             [
@@ -102,8 +101,6 @@
                                     ['label' => 'Entry Test', 'icon' => 'chevron-right', 'url' => './premium-version',],
                                 ],
                             ],
-=======
->>>>>>> a9f4d961363e50c0fa8ee3c979b18b9bc370801a
                             //['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./std-promote"],],
                             
                             //['label' => 'Class', 'icon' => 'caret-right', 'url' => ["/std-class"],],
@@ -159,7 +156,7 @@
                     // Employee Module start...
                     [
                         'label' => 'Employees',
-                        'icon' => 'user-plus',
+                        'icon' => 'users',
                         'url' => [""],
                         'items' => [
                             ['label' => 'Employee Registration', 'icon' => 'caret-right', 'url' => './emp-info',],
@@ -211,52 +208,52 @@
                     // Email close...
                     // ------------------------------------------------
                     // E-Learning start...
-                    ['label' => 'E-Learning', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'E-Learning', 'icon' => 'etsy', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // E-Learning  close...
                     // ------------------------------------------------
                     // Time Table Generator start...
-                    ['label' => 'Time Table Generator', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'Time Table Generator', 'icon' => 'calendar', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Time Table Generator  close...
                     // ------------------------------------------------
                     // Data Visualization start...
-                    ['label' => 'Data Visualization', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'Data Visualization', 'icon' => 'bar-chart', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Data Visualization  close...
                     // ------------------------------------------------
                     // Library Management start...
-                    ['label' => 'Library Management', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'Library Management', 'icon' => 'book', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Library Management  close...
                     // ------------------------------------------------
                     // Hostel Management start...
-                    ['label' => 'Hostel Management', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'Hostel Management', 'icon' => 'home', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Hostel Management close...
                     // ------------------------------------------------
                     // Canteen Management start...
-                    ['label' => 'Canteen Management', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'Canteen Management', 'icon' => 'cutlery', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Canteen Management close...
                     // ------------------------------------------------
                     // Stock/Inventory start...
-                    ['label' => 'Stock/Inventory', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'Stock/Inventory', 'icon' => 'line-chart', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Stock/Inventory close...
                     // ------------------------------------------------
                     // Transportation Management start...
-                    ['label' => 'Transportation Management', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'Transportation Management', 'icon' => 'bus', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Transportation Management close...
                     // ------------------------------------------------
                     // System Audits start...
-                    ['label' => 'System Audits', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'System Audits', 'icon' => 'search-plus', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // System Audits close...
                     // ------------------------------------------------
                     // Alumni start...
-                    ['label' => 'Alumni', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    ['label' => 'Alumni', 'icon' => 'recycle', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Alumni close...                    
                      // Account Module start...
@@ -289,7 +286,7 @@
                     // System Settings start...
                     [
                         'label' => 'System Settings',
-                        'icon' => 'cog',
+                        'icon' => 'cogs',
                         'url' => '#',
                         'items' => [
                             ['label' => 'Institute', 'icon' => 'caret-right', 'url' => ["/institute"],],
