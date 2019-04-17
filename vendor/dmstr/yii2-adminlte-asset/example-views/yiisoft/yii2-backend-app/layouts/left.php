@@ -13,7 +13,7 @@
     .main-sidebar a{
         color: #ECF0F5;
     }
-    a:hover{
+    .sidebar a:hover{
         font-weight: bold;
         background-color: #000000;
         color: #ffffff;
@@ -59,7 +59,6 @@
                     ['label' => 'Login', 'url' => ["../login"], 'visible' => Yii::$app->user->isGuest],
 
                     // ------------------------------------------------
-                    
                     // ------------------------------------------------
                     // System Configuration start...
                     // [
@@ -88,7 +87,20 @@
                             ['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
                             ['label' => 'Enrollment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
-                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./"],],
+                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Attendance System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            [
+                                'label' => 'Online Admission',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Announcment', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    ['label' => 'Merit Module', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    ['label' => 'Scholarship', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    ['label' => 'Entry Test', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                ],
+                            ],
                             //['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./std-promote"],],
                             
                             //['label' => 'Class', 'icon' => 'caret-right', 'url' => ["/std-class"],],
@@ -120,21 +132,27 @@
                     // Exams module start here
                     [
                         'label' => 'Examination',
-                        'icon' => 'cog',
+                        'icon' => 'book',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Grades', 'icon' => '', 'url' => ["/grades"],],
-                            ['label' => 'Exams Category', 'icon' => '', 'url' => ["/exams-category"],],
-                            ['label' => 'Marks Weightage', 'icon' => '', 'url' => ["/marks-weitage"],],
+                            ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
+                            ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
+                            ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weitage"],],
                             // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
                             // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
-                            ['label' => 'Manage Exams', 'icon' => '', 'url' => ["/exams-schedule/manage-exams"],],
-                            ['label' => 'View Marks Sheet', 'icon' => '', 'url' => ["/view-marks-sheet "],],
-                            // ['label' => 'Result cards', 'icon' => '', 'url' => ["/view-result-cards "],],
+                            ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
+                            ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
+                            ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Quiz System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Examination Controller', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Result cards', 'icon' => 'caret-right', 'url' => ["/view-result-cards "],],
                             
                         ],
                     ],
-                    // Exams module close here
+                    // ------------------------------------------------
+                    // Exams module close ...
+                    // ------------------------------------------------
                     // Employee Module start...
                     [
                         'label' => 'Employees',
@@ -142,7 +160,12 @@
                         'url' => [""],
                         'items' => [
                             ['label' => 'Employee Registration', 'icon' => 'caret-right', 'url' => './emp-info',],
-                            ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => './teacher-subject-assign-head ',]
+                            ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => './teacher-subject-assign-head',],
+                            ['label' => 'Attendance System', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'Payroll System', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'Announce Jobs', 'icon' => 'caret-right', 'url' => './premium-version',],
                         ],
                     ],
                     // ------------------------------------------------
@@ -162,7 +185,6 @@
                     ],
                     // ------------------------------------------------
                     // Msg of Day close...
-
                     // ------------------------------------------------
                     // SMS start...
                     [
@@ -181,12 +203,59 @@
                     // SMS close...
                     // ------------------------------------------------
                     // Email start...
-                    [
-                        'label' => 'Email',
-                        'icon' => 'envelope-o',
-                        'url' => ["/emails"],
-                    ],
+                    ['label' => 'Email', 'icon' => 'envelope-o', 'url' => ["/emails"],],
+                    // ------------------------------------------------
                     // Email close...
+                    // ------------------------------------------------
+                    // E-Learning start...
+                    ['label' => 'E-Learning', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // E-Learning  close...
+                    // ------------------------------------------------
+                    // Time Table Generator start...
+                    ['label' => 'Time Table Generator', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // Time Table Generator  close...
+                    // ------------------------------------------------
+                    // Data Visualization start...
+                    ['label' => 'Data Visualization', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // Data Visualization  close...
+                    // ------------------------------------------------
+                    // Library Management start...
+                    ['label' => 'Library Management', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // Library Management  close...
+                    // ------------------------------------------------
+                    // Hostel Management start...
+                    ['label' => 'Hostel Management', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // Hostel Management close...
+                    // ------------------------------------------------
+                    // Canteen Management start...
+                    ['label' => 'Canteen Management', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // Canteen Management close...
+                    // ------------------------------------------------
+                    // Stock/Inventory start...
+                    ['label' => 'Stock/Inventory', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // Stock/Inventory close...
+                    // ------------------------------------------------
+                    // Transportation Management start...
+                    ['label' => 'Transportation Management', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // Transportation Management close...
+                    // ------------------------------------------------
+                    // System Audits start...
+                    ['label' => 'System Audits', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // System Audits close...
+                    // ------------------------------------------------
+                    // Alumni start...
+                    ['label' => 'Alumni', 'icon' => 'envelope-o', 'url' => ["./premium-version"],],
+                    // ------------------------------------------------
+                    // Alumni close...                    
                      // Account Module start...
                     [
                         'label' => 'Account Module',
@@ -222,12 +291,33 @@
                             ['label' => 'Sessions', 'icon' => 'caret-right', 'url' => ["/std-sessions"],],
                             ['label' => 'Sections', 'icon' => 'caret-right', 'url' => ["/std-sections"],],
                             ['label' => 'Classes', 'icon' => 'caret-right', 'url' => ["/std-class-name"],],
-                            ['label' => 'Subjects', 'icon' => 'caret-right', 'url' => ["/subjects"],],
-                            ['label' => 'Subjects Combination', 'icon' => 'caret-right', 'url' => ["/std-subjects"],],
-                            ['label' => 'Employee Designation', 'icon' => 'caret-right', 'url' => ["/emp-designation"],],
-                            ['label' => 'Employee Type', 'icon' => 'caret-right', 'url' => ["/emp-type"],],
-                            ['label' => 'Fee Type', 'icon' => 'caret-right', 'url' => ["/fee-type"],],
-                            ['label' => 'Fee Packages', 'icon' => 'caret-right', 'url' => ["/std-fee-pkg"],],
+                            [
+                                'label' => 'Subjects',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Subjects List', 'icon' => 'chevron-right', 'url' => './subjects',],
+                                    ['label' => 'Subject Combination', 'icon' => 'chevron-right', 'url' => './std-subjects',],
+                                ],
+                            ],
+                            [
+                                'label' => 'Employees',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Employee Type', 'icon' => 'chevron-right', 'url' => './emp-type',],
+                                    ['label' => 'Employee Designation', 'icon' => 'chevron-right', 'url' => './emp-designation',],
+                                ],
+                            ],
+                            [
+                                'label' => 'Fee',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Fee Types', 'icon' => 'chevron-right', 'url' => './fee-type',],
+                                    ['label' => 'Fee Packages', 'icon' => 'chevron-right', 'url' => './std-fee-pkg',],
+                                ],
+                            ],
                         ],
                     ],
                     // System Settings close...
