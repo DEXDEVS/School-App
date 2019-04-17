@@ -4,8 +4,9 @@
 
 		$examCatID 		= $_GET['examcatID'];
 		$classID 	= $_GET['classID'];
+		$examType 	= $_GET['examType'];
 
-		$examStatus = Yii::$app->db->createCommand("SELECT exam_status FROM exams_criteria WHERE exam_category_id = '$examCatID' AND std_enroll_head_id = '$classID' AND exam_status = 'Result Prepared' OR exam_status = 'Result Announced' ")->queryAll();
+		$examStatus = Yii::$app->db->createCommand("SELECT exam_status FROM exams_criteria WHERE exam_category_id = '$examCatID' AND std_enroll_head_id = '$classID' AND exam_status = 'Result Prepared' OR exam_status = 'Result Announced' AND exam_type = '$examType' ")->queryAll();
 		if (empty($examStatus)) {
 			Yii::$app->session->setFlash('warning',"Result card not prepared yet..!");
 		} 
@@ -15,14 +16,15 @@
 
 		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classID'")->queryAll();
 
-		$examData = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,s.subject_id,s.passing_marks
+		$examData = Yii::$app->db->createCommand("SELECT c.exam_type,c.exam_criteria_id,s.subject_id,s.passing_marks
 			FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
 			WHERE c.std_enroll_head_id = '$classID'
 			AND c.exam_category_id = '$examCatID'
 			AND c.exam_status = 'Result Prepared'
-			 OR exam_status = 'Result Announced' 
+			 OR c.exam_status = 'Result Announced' 
+			AND c.exam_type = '$examType'
 			")->queryAll();
 		$criteriaID = $examData[0]['exam_criteria_id'];
 		$countSubject = count($examData);
@@ -53,7 +55,7 @@
 		<div class="col-md-12">
 			<div class="box box-default">
 				<div class="box-header" style="text-align: center;">
-					<h2>Result Card</h2>
+					<h2>Result Card (<?php echo $examData[0]['exam_type']; ?>)</h2>
 				</div><hr>
 				<div class="box-body">
 					<div class="row" style="text-align: center;height:30px;">

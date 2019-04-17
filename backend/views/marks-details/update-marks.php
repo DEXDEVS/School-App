@@ -5,6 +5,7 @@
 		$examCatID 	= $_GET['examCatID'];
 		$headID 	= $_GET['headID'];
 		$stdID 		= $_GET['stdID'];
+		$examType 	= $_GET['examType'];
 
 		$CatName= Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCatID'")->queryAll();
 
@@ -56,7 +57,9 @@
 						FROM exams_criteria as c 
 						WHERE c.std_enroll_head_id = '$headID '
 						AND c.exam_category_id = '$examCatID'
+						AND c.exam_type = '$examType'
 						")->queryAll();
+						
 						$criteriaId = $criteria[0]['exam_criteria_id'];
 
 						$marks = Yii::$app->db->createCommand("SELECT d.marks_detail_id, d.subject_id, d.obtained_marks FROM marks_details as d 

@@ -7,28 +7,33 @@ if(isset($_GET['class_id']))
 	$subID = $_GET['sub_id'];
 	$empID = $_GET['emp_id'];
 
-	$examDataCond = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,c.exam_category_id,s.full_marks,s.passing_marks
+	$examDataCond = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,c.exam_category_id,s.full_marks,s.passing_marks,c.exam_type
 	FROM exams_criteria as c
 	INNER JOIN exams_schedule as s 
 	ON c.exam_criteria_id = s.exam_criteria_id
-	WHERE c.std_enroll_head_id = '$classID' AND 
-	s.subject_id = '$subID' AND c.exam_status = 'conducted'
+	WHERE c.std_enroll_head_id = '$classID'  
+	AND c.exam_status = 'conducted' 
+	AND c.exam_type = 'Regular'
+	OR c.exam_type = 'Supply'
+	AND s.subject_id = '$subID'
 				")->queryAll();
 	if (empty($examDataCond)){
-		Yii::$app->session->setFlash('warning', "No Exam counducted yet.!");
+		Yii::$app->session->setFlash('warning', "No Exam Found.!");
 	} else {
-		$examDataResult = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,c.exam_category_id,s.full_marks,s.passing_marks
+		$examCriteriaId = $examDataCond[0]['exam_criteria_id'];
+		$examDataResult = Yii::$app->db->createCommand("SELECT c.exam_category_id,s.full_marks,s.passing_marks
 		FROM exams_criteria as c
 		INNER JOIN exams_schedule as s 
 		ON c.exam_criteria_id = s.exam_criteria_id
-		WHERE c.std_enroll_head_id = '$classID' AND 
-		s.subject_id = '$subID' AND s.status = 'result prepared'
+		WHERE c.std_enroll_head_id = '$classID'
+		AND c.exam_criteria_id = '$examCriteriaId'
+		AND s.subject_id = '$subID' 
+		AND s.status = 'result prepared'
 					")->queryAll();
 		if(!empty($examDataResult)){
 			Yii::$app->session->setFlash('warning', "You have already submitted mark sheet..!");
 		} else {
 		$examCatId = $examDataCond[0]['exam_category_id'];
-		$examCriteriaId = $examDataCond[0]['exam_criteria_id'];
 		$examCatName = Yii::$app->db->createCommand("SELECT category_name
 		FROM exams_category
 		WHERE exam_category_id = '$examCatId' 
@@ -69,7 +74,8 @@ if(isset($_GET['class_id']))
 							<?php echo $examCatName[0]['category_name']; ?> (<?php echo date('Y'); ?>)
 							</h2>
 							<br>
-							<p style="text-align: center;font-weight: bold;font-size: 20px;">Marks Sheet</p><br>
+							<p style="text-align: center;font-weight: bold;font-size: 20px;">Marks Sheet:
+								<b></b>(<?php echo $examDataCond[0]['exam_type']; ?>)</p><br>
 						</div>
 					</div>
 					<div class="row">

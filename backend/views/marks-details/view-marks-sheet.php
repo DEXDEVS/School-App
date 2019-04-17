@@ -52,6 +52,18 @@
 								</select>
 							</div>
 						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Exam Type</label>
+								<select name="exam_type" class="form-control" required>
+									<option value="">Select Exam Type</option>
+									<option value="Regular">Regular</option>
+									<option value="Supply">Supply</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-4" style="margin-top:24px;">
 							<button type="submit" name="submit" class="btn btn-success">
 								<i class="glyphicon glyphicon-search"></i> Search</button>
@@ -66,31 +78,31 @@
 	{
 		$examCategory = $_POST['exam_category'];
 		$classHead = $_POST['class_head'];
+		$exam_type = $_POST['exam_type'];
 
-		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND std_enroll_head_id = '$classHead' AND exam_status = 'conducted' OR exam_status = 'Result Prepared' OR exam_status = 'Result Announced'")->queryAll();
+		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND std_enroll_head_id = '$classHead' AND exam_status = 'conducted' OR exam_status = 'Result Prepared' AND exam_type = '$exam_type'")->queryAll();
 		if(empty($ExamData)){
 			Yii::$app->session->setFlash('warning',"Exams not conducted Yet..!");
 		} else {
 
 		$ExamName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCategory'")->queryAll();
 		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHead'")->queryAll();
-
-		$examSchedule = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,s.subject_id, s.full_marks, s.passing_marks,c.exam_status,s.status FROM exams_schedule as s
+		$criteriaId = $ExamData[0]['exam_criteria_id'];
+		$examSchedule = Yii::$app->db->createCommand("SELECT s.subject_id, s.full_marks, s.passing_marks,c.exam_status,s.status FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
 			WHERE c.std_enroll_head_id = '$classHead'
 			AND c.exam_category_id = '$examCategory'
-			OR s.status = 'not'
-			OR s.status = 'result prepared'
+			AND c.exam_criteria_id = '$criteriaId'
+			 AND c.exam_status = 'conducted'
+			 AND c.exam_type = '$exam_type' 
+			 OR c.exam_status = 'Result Prepared'
 			")->queryAll();
-		print_r($examSchedule);
 		
-		//var_dump($examSchedule);
 		if(empty($examSchedule)){
 			Yii::$app->session->setFlash('warning',"Exams not conducted for this categroy.");
 		} else {
 			$countSubjects = count($examSchedule);
-			$examCriteriaID = $examSchedule[0]['exam_criteria_id'];
 			$students = Yii::$app->db->createCommand("SELECT d.std_enroll_detail_std_id,d.std_roll_no, d.std_enroll_detail_std_name FROM std_enrollment_detail as d
 				INNER JOIN std_enrollment_head as h 
 				ON d.std_enroll_detail_head_id = h.std_enroll_head_id
@@ -126,9 +138,15 @@
 				</div><hr>
 				<table class="table table-hover table-bordered">
 					<thead>
-						
 						<tr>
-							<th colspan="2">Teacher Name</th>
+							<th></th>
+							<th></th>
+							<th colspan="2" style="text-align: center;">Teacher Name</th>
+							<th rowspan="2" colspan="5" style="text-align: center; padding-bottom: 35px;background-color:#ECF0F5;"><span style="margin-top:5px;">Final Report</span></th>
+						</tr>
+						<tr>
+							<td rowspan="2" style="text-align: center;line-height:6;font-weight: bold;">Roll #</td>
+							<td rowspan="2" style="text-align: center;line-height:6;font-weight: bold;">Student Name</td>
 							<?php 
 
 							for ($i=0; $i <$countSubjects ; $i++) {
@@ -139,17 +157,17 @@
 									INNER JOIN teacher_subject_assign_detail as d 
 									ON h.teacher_subject_assign_head_id = d.teacher_subject_assign_detail_head_id
 									WHERE class_id = '$classHead' AND  subject_id = '$subId'")->queryAll();
-								var_dump($teacherName);
 
 									?>
-						<td>
+
+						<td align="center">
 							<a style="color:black;" target="_blank" href="./emp-info-view?id=<?php echo $teacherName[0]['teacher_id'];?>">
 								<?php 
 									if ($status == 'not') {
 
-										echo "<span class='label label-danger'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
+										echo "<span style='background-color:#D73925;color:white;'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
 									}else{
-										echo "<span class='label label-success'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
+										echo "<span style='background-color:seagreen;color:white;'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
 									}
 								 ?>
 							</a>
@@ -158,8 +176,7 @@
 						</tr>
 
 						<tr>
-							<th style="text-align: center;">Roll #</th>
-							<th style="text-align: center;">Student Name</th>
+							
 							<?php $total=0;
 							for ($i=0; $i <$countSubjects ; $i++) {
 								$subId = $examSchedule[$i]['subject_id'];
@@ -198,7 +215,7 @@
 								$marks = Yii::$app->db->createCommand("SELECT d.obtained_marks FROM marks_details as d 
 									INNER JOIN marks_head as h
 									ON d.marks_head_id = h.marks_head_id
-									WHERE h.exam_criteria_id = '$examCriteriaID'
+									WHERE h.exam_criteria_id = '$criteriaId'
 									AND h.std_id = '$stdId'
 									AND d.subject_id = '$subId'")->queryAll();
 								
@@ -274,7 +291,7 @@
 								 	?>
 								 </td>
 								<td>
-									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&headID=<?php echo $classHead; ?>&stdID=<?php echo $stdId; ?>" class="btn btn-info btn-xs">
+									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&headID=<?php echo $classHead; ?>&stdID=<?php echo $stdId; ?>&examType=<?php echo $exam_type; ?>" class="btn btn-info btn-xs">
 									<i class="glyphicon glyphicon-edit"></i> update
 									</a>
 								</td>
@@ -303,7 +320,7 @@
 			        	}
 			        	?>
 				<input type="hidden" name="resultCounter" value="<?php echo $resultCounter; ?>">
-				<input type="hidden" name="examCriteriaID" value="<?php echo $examCriteriaID; ?>">
+				<input type="hidden" name="examCriteriaID" value="<?php echo $criteriaId; ?>">
 				<input type="hidden" name="classHead" value="<?php echo $classHead; ?>">
 				<input type="hidden" name="examCategory" value="<?php echo $examCategory; ?>">
 				<input type="hidden" name="stdCount" value="<?php echo $stdCount; ?>">
@@ -396,7 +413,7 @@ if(isset($_POST['update'])){
 	$transection = Yii::$app->db->beginTransaction();
 	try{
 		for($k=0; $k<$countMarks; $k++){
-			$marksdetailUpdate = Yii::$app->db->createCommand()->update('marks_details', 				[
+			$marksdetailUpdate = Yii::$app->db->createCommand()->update('marks_details', [
 							'subject_id' 		=> $subjectArray[$k],
 							'obtained_marks' 	=> $obt_marks[$k] ,
 							'updated_at'			=> new \yii\db\Expression('NOW()'),

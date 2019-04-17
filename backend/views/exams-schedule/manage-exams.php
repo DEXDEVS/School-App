@@ -223,25 +223,25 @@
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Presentation</label>
-											<input type="text" name="presentation[]" class="form-control" value="<?php echo $marks[0]['presentation'];?>" readonly="" id="pr_<?php echo $i; ?>">
+											<input type="text" name="presentation[]" class="form-control" value="<?php echo $marks[0]['presentation'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Assignment</label>
-											<input type="text" name="assignment[]" class="form-control" value="<?php echo $marks[0]['assignment'];?>" readonly="" id="assign_<?php echo $i; ?>">
+											<input type="text" name="assignment[]" class="form-control" value="<?php echo $marks[0]['assignment'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Attendance</label>
-											<input type="text" name="attendance[]" class="form-control" value="<?php echo $marks[0]['attendance'];?>" readonly="" id="att_<?php echo $i; ?>">
+											<input type="text" name="attendance[]" class="form-control" value="<?php echo $marks[0]['attendance'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Dressing</label>
-											<input type="text" name="dressing[]" class="form-control" value="<?php echo $marks[0]['dressing'];?>" readonly="" id="dr_<?php echo $i; ?>">
+											<input type="text" name="dressing[]" class="form-control" value="<?php echo $marks[0]['dressing'];?>" readonly="">
 											</div>
 										</div>
 									</div>
@@ -276,13 +276,13 @@
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Theory</label>
-											<input type="text" name="theory" class="form-control" value="<?php echo $marks[0]['theory'];?>" readonly=""  id="th_<?php echo $i; ?>">
+											<input type="text" name="theory" class="form-control" value="<?php echo $marks[0]['theory'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Practical</label>
-											<input type="text" name="practical[]" class="form-control" value="<?php echo $marks[0]['practical'];?>" readonly="" id="prac_<?php echo $i; ?>">
+											<input type="text" name="practical[]" class="form-control" value="<?php echo $marks[0]['practical'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -333,6 +333,7 @@
 	<input type="hidden" name="exam_end_time" value="<?php echo $exam_end_time;?>">
 	<input type="hidden" name="room" value="<?php echo $room;?>">
 	<input type="hidden" name="subjCount" value="<?php echo $subjCount;?>">
+	<input type="hidden" name="exam_type" value="<?php echo $exam_type;?>">
 	 </form>
 	</div>
 		<?php	
@@ -373,7 +374,15 @@
 			if(empty($criteriaId)){
 				Yii::$app->session->setFlash('warning',"Cannot manage supplimentry scedule before announcement of result for reguler exam");
 			}else{
-				$cat_id = $criteriaId[0]['exam_criteria_id'];
+				$criteria_id = $criteriaId[0]['exam_criteria_id'];
+				$stdExamStatus = Yii::$app->db->createCommand("SELECT h.std_id
+						FROM marks_head as h
+						WHERE h.exam_criteria_id = '$criteria_id'
+						AND h.exam_status = 'Fail'
+						")->queryAll();
+				if(empty($stdExamStatus)){
+					Yii::$app->session->setFlash('warning',"No student Failed in this Exam..!");
+				} else {
 				$count = count($criteriaId);
 				for($i=0; $i<$count; $i++){
 					$subId = $criteriaId[$i]['subject_id'];
@@ -382,7 +391,7 @@
 						FROM marks_details as d
 						INNER JOIN marks_head as h
 						ON d.marks_head_id = h.marks_head_id
-						WHERE h.exam_criteria_id = '$cat_id'
+						WHERE h.exam_criteria_id = '$criteria_id'
 						AND h.exam_status = 'Fail'
 						AND d.subject_id = '$subId'
 						AND d.obtained_marks < '$passingMarks'
@@ -391,9 +400,9 @@
 				}
 				$subjectArray = array();
 				foreach ($subject as $key => $value) {
-					$subjectArray[$key] = $value
+					$subjectArray[$key] = $value['subject_id'];
+					
 				}
-				var_dump($subjectArray);
 				$countSubject = count($subject);
 
 			?>
@@ -405,14 +414,31 @@
 <div class="box-body" style="background-color:#fafafa;">
 	<form method="post">
 	<table class="table table-stripped"> 
-		<?php for ($j=0; $j < $countSubject; $j++) { 
-				$subjectId = $subject[$j]['subject_id'];
+		<?php for ($s=0; $s < $countSubject; $s++) { 
+				$subjectId =$subjectArray[$s];
 				$subjectName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subjectId' ")->queryAll();
+
+				$marks = Yii::$app->db->createCommand("
+				SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category' AND subject_id = '$subjectId'
+					")->queryAll();
+
+					$totalMarks = $marks[0]['presentation']+$marks[0]['assignment']+$marks[0]['attendance']+$marks[0]['dressing']+$marks[0]['theory']+$marks[0]['practical'];
+
+					if ($totalMarks == 100) {
+						$passmarks = 33;
+					}
+					elseif ($totalMarks == 75) {
+						$passmarks = 25;
+					}
+					elseif ($totalMarks == 50) {
+						$passmarks = 17;
+					} else {
+						$passmarks = 0;
+					}
 				
 		 ?>
 				<tr>
 					<td>
-						
 							<div class="row">
 								<div id="sub-hvr" class="col-md-12" style="border:1px solid;color:#AA5397;border-radius: 8px;">
 									<h4 style="text-align: center;">
@@ -433,25 +459,25 @@
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Presentation</label>
-											<input type="text" name="presentation[]" class="form-control" value="<?php echo $marks[0]['presentation'];?>" readonly="" id="pr_<?php //echo $i; ?>">
+											<input type="text" name="presentation[]" class="form-control" value="<?php echo $marks[0]['presentation'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Assignment</label>
-											<input type="text" name="assignment[]" class="form-control" value="<?php echo $marks[0]['assignment'];?>" readonly="" id="assign_<?php //echo $i; ?>">
+											<input type="text" name="assignment[]" class="form-control" value="<?php echo $marks[0]['assignment'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Attendance</label>
-											<input type="text" name="attendance[]" class="form-control" value="<?php echo $marks[0]['attendance'];?>" readonly="" id="att_<?php //echo $i; ?>">
+											<input type="text" name="attendance[]" class="form-control" value="<?php echo $marks[0]['attendance'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Dressing</label>
-											<input type="text" name="dressing[]" class="form-control" value="<?php echo $marks[0]['dressing'];?>" readonly="" id="dr_<?php //echo $i; ?>">
+											<input type="text" name="dressing[]" class="form-control" value="<?php echo $marks[0]['dressing'];?>" readonly="">
 											</div>
 										</div>
 									</div>
@@ -486,25 +512,25 @@
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Theory</label>
-											<input type="text" name="theory" class="form-control" value="<?php echo $marks[0]['theory'];?>" readonly=""  id="th_<?php //echo $i; ?>">
+											<input type="text" name="theory" class="form-control" value="<?php echo $marks[0]['theory'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Practical</label>
-											<input type="text" name="practical[]" class="form-control" value="<?php echo $marks[0]['practical'];?>" readonly="" id="prac_<?php //echo $i; ?>">
+											<input type="text" name="practical[]" class="form-control" value="<?php echo $marks[0]['practical'];?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Full Marks</label>
-											<input type="text" name="fullmarks[]" class="form-control" value="<?php //echo $totalMarks;?>" readonly="">
+											<input type="text" name="fullmarks[]" class="form-control" value="<?php echo $totalMarks;?>" readonly="">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
 											<label>Passing Marks</label>
-											<input type="text" name="passingmarks[]" class="form-control" value="<?php //echo $passmarks; ?>" readonly="">
+											<input type="text" name="passingmarks[]" class="form-control" value="<?php echo $passmarks; ?>" readonly="">
 											</div>
 										</div>
 									</div>
@@ -514,13 +540,11 @@
 						
 					</td>
 				</tr>
-			
-
 	<?php 
 	} //end of for loop counrSubject
-	// foreach ($subarray as $key => $value) {
-	// 	echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
-	// }
+	foreach ($subjectArray as $key => $value) {
+		echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
+	}
 
 	 ?>
 	
@@ -530,17 +554,20 @@
 	 		<button type="submit" name="save" class="btn btn-success btn-xs" style="float: right;"><i class="glyphicon glyphicon-save"></i> Save Date Sheet</button>
 	 	</div>
 	 </div>
-	<input type="hidden" name="exam_category" value="<?php //echo $exam_category;?>">
-	<input type="hidden" name="headId" value="<?php //echo $headId;?>">
-	<input type="hidden" name="exam_start_date" value="<?php// echo $exam_start_date;?>">
-	<input type="hidden" name="exam_end_date" value="<?php ////echo $exam_end_date;?>">
-	<input type="hidden" name="exam_start_time" value="<?php //echo $exam_start_time;?>">
-	<input type="hidden" name="exam_end_time" value="<?php //echo $exam_end_time;?>">
-	<input type="hidden" name="room" value="<?php //echo $room;?>">
-	<input type="hidden" name="subjCount" value="<?php //echo $subjCount;?>">
+	<input type="hidden" name="exam_category" value="<?php echo $exam_category;?>">
+	<input type="hidden" name="headId" value="<?php echo $headId;?>">
+	<input type="hidden" name="exam_start_date" value="<?php echo $exam_start_date;?>">
+	<input type="hidden" name="exam_end_date" value="<?php echo $exam_end_date;?>">
+	<input type="hidden" name="exam_start_time" value="<?php echo $exam_start_time;?>">
+	<input type="hidden" name="exam_end_time" value="<?php echo $exam_end_time;?>">
+	<input type="hidden" name="room" value="<?php echo $room;?>">
+	<input type="hidden" name="subjCount" value="<?php echo $countSubject;?>">
+	<input type="hidden" name="exam_type" value="<?php echo $exam_type;?>">
 	 </form>
 	</div>
 		<?php
+	}
+	//closing of else studentExamStatus
 		}	
 		//closing of else criteriaId
 		}
@@ -564,6 +591,7 @@
 		$exam_start_time 	= $_POST["exam_start_time"];
 		$exam_end_time 		= $_POST["exam_end_time"];
 		$room 				= $_POST["room"];
+		$exam_type			= $_POST["exam_type"];
 		// getting exam schedule fields
 		$subarray 		= $_POST["subarray"];
 		$date 			= $_POST["date"];
@@ -586,6 +614,7 @@
 						'exam_end_time'			=> $exam_end_time ,
 						'exam_room' 			=> $room ,
 						'exam_status'			=> $inactive,
+						'exam_type'				=> $exam_type,
 						'created_at'			=> new \yii\db\Expression('NOW()'),
 						'created_by'			=> Yii::$app->user->identity->id, 
 					])->execute();
@@ -612,6 +641,7 @@
 						'date'				=> $date[$i] ,
 						'full_marks'		=> $fullmarks[$i],
 						'passing_marks'		=> $passingmarks[$i],
+						'status'			=> "not",
 						'created_at'		=> new \yii\db\Expression('NOW()'),
 						'created_by'		=> Yii::$app->user->identity->id, 
 					])->execute();

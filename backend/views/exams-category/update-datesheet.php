@@ -4,35 +4,23 @@
 	$examCateogryId = $_GET['examcatID'];
 	// getting `class_id`
 	$classId = $_GET['classID'];
+	//getting `examType`
+	$examType = $_GET['examType'];
 	// geeting all info from `exams_criteria` table and `exams_schedule` table
-	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND
-		std_enroll_head_id = '$classId'
+	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND std_enroll_head_id = '$classId' AND exam_type = '$examType' AND exam_status = 'Inactive' OR exam_status = 'announced'
 					")->queryAll();
 	$criteriaId = $examCriteriaData[0]['exam_criteria_id'];
 
 	$examScheduleData = Yii::$app->db->createCommand("SELECT * FROM exams_schedule WHERE exam_criteria_id = '$criteriaId'
 					")->queryAll();
+	$count = count($examScheduleData);
 	// getting classes name `std_enroll_head_name` from `std_enrollment_head` against `std_enroll_head_id`
 	$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classId'
 					")->queryAll();
-	$count = count($examCriteriaData);
+	
 	// getting exam `category_name` from `exams_cateogry`
 	$examCategoryName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCateogryId'
 					")->queryAll();
-
-	$subjects = Yii::$app->db->createCommand("SELECT s.section_subjects,h.section_id
-			FROM std_sections as s
-			INNER JOIN std_enrollment_head as h
-			ON s.section_id = h.section_id
-			WHERE h.std_enroll_head_id = '$classId'")->queryAll();
-			$combinationId = $subjects[0]['section_subjects'];
-			$combinations = Yii::$app->db->createCommand("
-				SELECT std_subject_name FROM std_subjects WHERE std_subject_id = '$combinationId'
-					")->queryAll();
-			$subject = $combinations[0]['std_subject_name'];
-			 $subjectarray = explode(',', $subject);
-			$subjCount = count($subjectarray);
-
  ?>
  	<!DOCTYPE html>
 	<html>
@@ -134,19 +122,25 @@
 								</select>
 							</div>
 						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Exam Type</label>
+								<input class="form-control" type="text" name="examType" value="<?php echo $examCriteriaData[0]['exam_type']; ?>" readonly="">
+							</div>
+						</div>
 					</div>
 					<table class="table table-stripped"> 
 						<div class="box-header" style="text-align: center;">
 							<h3 style="box-shadow:1px 1px 1px 1px;">Exams Schedule</h3>
 						</div>
 		<?php
-			for ($i=0; $i <$subjCount ; $i++) {
-				$subject = $subjectarray[$i];
+			 for ($i=0; $i <$count ; $i++) {
+			 	$subjectId = $examScheduleData[$i]['subject_id'];
 
-				$subjectId = Yii::$app->db->createCommand("
-				SELECT subject_id FROM subjects WHERE subject_name = '$subject'
+				$subjectName = Yii::$app->db->createCommand("
+				SELECT subject_name FROM subjects WHERE subject_id = '$subjectId'
 					")->queryAll();
-				$subarray[$i] = $subjectId[0]['subject_id'];
+			 	$subarray[$i] = $subjectId;
 
 				?>
 
@@ -156,7 +150,7 @@
 								<div class="col-md-12" style="border:1px solid;">
 									<p>
 									<i class="fa fa-book"></i>
-									<?php echo $subject;?>
+									<?php echo $subjectName[0]['subject_name'];?>
 									</p>
 								</div>
 							</div>
@@ -211,23 +205,21 @@
 				<?php
 			//end of for loop
 			} ?>
-	<input type="hidden" name="headId" value="<?php echo $classId;?>">
-	<input type="hidden" name="subjCount" value="<?php echo $subjCount;?>">
-	<input type="hidden" name="criteriaId" value="<?php echo $criteriaId;?>">
-	<?php 
+				<input type="hidden" name="headId" value="<?php echo $classId;?>">
+				<input type="hidden" name="subjCount" value="<?php echo $count;?>">
+				<input type="hidden" name="criteriaId" value="<?php echo $criteriaId;?>">
+				<?php 
 
-	foreach ($subarray as $key => $value) {
-		echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
-	}
+				foreach ($subarray as $key => $value) {
+					echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
+				}
 
-	 ?>
-	<div class="row">
-	 	<div class="col-md-12">
-	 		<button type="submit" name="update" class="btn btn-info" style="float: right;">Update</button>
-	 	</div>
-	 </div>
-	
-
+				 ?>
+				<div class="row">
+				 	<div class="col-md-12">
+				 		<button type="submit" name="update" class="btn btn-info" style="float: right;">Update</button>
+				 	</div>
+				 </div>
 				</form>
 			</div>
 		</div>

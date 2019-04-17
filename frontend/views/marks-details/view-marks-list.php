@@ -22,10 +22,15 @@
 
         $countStdData = count($studentData);
 
-        $getCriteriaId = Yii::$app->db->createCommand("SELECT c.exam_criteria_id, s.passing_marks FROM exams_criteria as c
+        $getCriteriaId = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.exam_type,c.exam_criteria_id, s.passing_marks FROM exams_criteria as c
         	INNER JOIN exams_schedule as s 
         	ON c.exam_criteria_id = s.exam_criteria_id
         	WHERE c.std_enroll_head_id = '$class_id' AND c.exam_status = 'conducted' OR c.exam_status = 'Result Prepared' AND s.subject_id = '$sub_id'")->queryAll();
+        $catIDD = $getCriteriaId[0]['exam_category_id'];
+        $examCatName = Yii::$app->db->createCommand("SELECT category_name
+		FROM exams_category
+		WHERE exam_category_id = '$catIDD' 
+					")->queryAll();
 
         if (empty($getCriteriaId)) {
         	echo "No Result prepared yet...!!!";
@@ -46,7 +51,8 @@
 		<div class="col-md-12">
 			<div class="box box-default">
 				<div class="box-header">
-					<h3 style="text-align: center;">View Marks Sheet</h3><hr>
+					<h2 style="text-align: center;font-family: georgia;"><?php echo $examCatName[0]['category_name']; ?></h2>
+					<h4 style="text-align: center;">View Marks Sheet <b>(<?php echo $getCriteriaId[0]['exam_type']; ?>)</b></h4><hr>
 					<div class="row">
 						<div class="col-md-4" style="text-align: center;border-right:1px solid;">
 							<label>Class Name</label>

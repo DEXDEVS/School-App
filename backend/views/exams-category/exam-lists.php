@@ -4,23 +4,23 @@
 	$examCateogryId = $_GET['id'];
 
 	$inactiveSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'inactive'
+				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'inactive'
 					")->queryAll();
 	$countinactiveSchedules = count($inactiveSchedules);
 	$announcedSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'announced'
+				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'announced'
 					")->queryAll();
 	$countannouncedSchedules = count($announcedSchedules);
 	$conductedSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'conducted'
+				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'conducted'
 					")->queryAll();
 	$countconductedSchedules = count($conductedSchedules);
 	$ResultPrepareSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared'
+				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared'
 					")->queryAll();
 	$countResultPrepareSchedules = count($ResultPrepareSchedules);
 	$ResultAnnouncedSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced'
+				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced'
 					")->queryAll();
 	$countResultAnnouncedSchedules = count($ResultAnnouncedSchedules);
 	// getting exam `category_name` from `exams_cateogry`
@@ -174,17 +174,25 @@
 				                          	for ($i=0; $i <$countinactiveSchedules ; $i++) { 
 				                          		//getting class names
 				                          		$classHeadId = $inactiveSchedules[$i]['std_enroll_head_id'];
+				                          		$examType = $inactiveSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
 													")->queryAll();
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']." ";
+				                          			if($examType == "Supply"){
+				                          				echo "<span class='label label-primary'>".$examType."</span>";
+				                          			} else {
+				                          				echo "<span class='label label-success'>".$examType."</span>";
+				                          			}
+				                          		?>
+				                          		</td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 
-													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
 															Update Date Sheet
 															</a>
 				                          		</td>
@@ -226,17 +234,24 @@
 				                          	<?php
 				                          	for ($i=0; $i <$countannouncedSchedules ; $i++) { 
 				                          		$classHeadId = $announcedSchedules[$i]['std_enroll_head_id'];
+				                          		$examType = $announcedSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
 													")->queryAll();
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']." ";
+				                          		if($examType == "Supply"){
+			                          				echo "<span class='label label-primary'>".$examType."</span>";
+			                          			} else {
+			                          				echo "<span class='label label-success'>".$examType."</span>";
+			                          			}
+				                          		 ?></td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 
-													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>""><i class="fa fa-edit"></i> 
 															Update Date Sheet
 															</a>
 				                          		</td>
@@ -278,15 +293,22 @@
 				                          	<?php
 				                          	for ($i=0; $i <$countconductedSchedules ; $i++) { 
 				                          		$classHeadId = $conductedSchedules[$i]['std_enroll_head_id'];
+				                          		$examType = $conductedSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
 													")->queryAll();
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']." "; 
+				                          		if($examType == "Supply"){
+			                          				echo "<span class='label label-primary'>".$examType."</span>";
+			                          			} else {
+			                          				echo "<span class='label label-success'>".$examType."</span>";
+			                          			}
+				                          		?></td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 
 													<!-- <a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php //echo $examCateogryId;?>&classID=<?php //echo $classHeadId;?>""><i class="fa fa-edit"></i> 
 															Update Date Sheet
@@ -331,17 +353,23 @@
 				                          	<?php
 				                          	for ($i=0; $i <$countResultPrepareSchedules ; $i++) { 
 				                          		$classHeadId = $ResultPrepareSchedules[$i]['std_enroll_head_id'];
+				                          		$examType = $ResultPrepareSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
 													")->queryAll();
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']." "; 
+				                          		if($examType == "Supply"){
+			                          				echo "<span class='label label-primary'>".$examType."</span>";
+			                          			} else {
+			                          				echo "<span class='label label-success'>".$examType."</span>";
+			                          			}?></td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 
-				                          			<a class="btn btn-info btn-xs" href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Result Card</a>
+				                          			<a class="btn btn-info btn-xs" href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Result Card</a>
 
 				                          			<button class="btn btn-success btn-xs" name="result_announced"><i class="fa fa-eye"></i> Announce Result</button>
 
@@ -351,6 +379,7 @@
 													 <input type="hidden" name="_csrf" value="<?php Yii::$app->request->getCsrfToken() ?>">
 							                        <input type="hidden" name="cat_id" value="<?php echo $examCateogryId; ?>">
 							                        <input type="hidden" name="class_id" value="<?php echo $classHeadId; ?>">
+							                        <input type="hidden" name="examType" value="<?php echo $examType; ?>">
 				                          		</td>
 				                          	</tr>
 				                          	<?php } } ?>
@@ -391,20 +420,26 @@
 				                          	<?php
 				                          	for ($i=0; $i <$countResultAnnouncedSchedules ; $i++) { 
 				                          		$classHeadId = $ResultAnnouncedSchedules[$i]['std_enroll_head_id'];
+				                          		$examType = $ResultAnnouncedSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
 													")->queryAll();
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+				                          		<td><?php echo $className[0]['std_enroll_head_name']." "; 
+				                          		if($examType == "Supply"){
+			                          				echo "<span class='label label-primary'>".$examType."</span>";
+			                          			} else {
+			                          				echo "<span class='label label-success'>".$examType."</span>";
+			                          			}?></td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 
 													<!-- <a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php //echo $examCateogryId;?>&classID=<?php //echo $classHeadId;?>""><i class="fa fa-edit"></i> 
 															Update Date Sheet
 															</a> -->
-													<a class="btn btn-info btn-xs" href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>"><i class="fa fa-eye"></i> View Result Card</a>
+													<a class="btn btn-info btn-xs" href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Result Card</a>
 				                          		</td>
 				                          	</tr>
 				                          	<?php } } ?>
@@ -428,7 +463,7 @@
 			<div class="box box-primary">
 				<div class="box-header" style="padding: 0px;text-align: center;">
 					<h3 style="text-align: center;font-family: georgia;font-size:30px;">
-						Invagilators Attendance
+						Invigilators Attendance
 					</h3>
 					<!-- <p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p> -->
 				</div><hr>	
@@ -614,9 +649,10 @@
 	{
 		$cat_id = $_POST['cat_id'];
 		$class_id = $_POST['class_id'];
+		$examType = $_POST['examType'];
 
 		$resultAnnounced = Yii::$app->db->createCommand("
-		SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$cat_id' AND std_enroll_head_id = '$class_id' AND exam_status = 'Result Prepared'
+		SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$cat_id' AND std_enroll_head_id = '$class_id' AND exam_status = 'Result Prepared' AND exam_type = '$examType'
 			")->queryAll();
 		if (empty($resultAnnounced)) {
 			Yii::$app->session->setFlash('warning', "You can not announce result before result prepared...!");
@@ -629,7 +665,7 @@
 							'updated_at'			=> new \yii\db\Expression('NOW()'),
 							'updated_by'			=> Yii::$app->user->identity->id,
 	                        ],
-	                        ['exam_criteria_id' => $criteriaId, 'exam_category_id' => $cat_id, 'std_enroll_head_id' => $class_id, 'exam_status' => "Result Prepared"]
+	                        ['exam_criteria_id' => $criteriaId, 'exam_category_id' => $cat_id, 'std_enroll_head_id' => $class_id, 'exam_status' => "Result Prepared",'exam_type' => $examType]
 	                    )->execute();
 				if($statusUpdate){
 					$transection->commit();
@@ -656,6 +692,7 @@
 		$exam_end_time 		= $_POST["exam_end_time"];
 		$room 				= $_POST["room"];
 		$exam_status 		= $_POST["exam_status"];
+		$exam_type 			= $_POST["examType"];
 		// getting exam schedule fields
 		$subarray 		= $_POST["subarray"];
 		$date 			= $_POST["date"];
@@ -675,6 +712,7 @@
 						'exam_end_time'			=> $exam_end_time ,
 						'exam_room' 			=> $room ,
 						'exam_status'			=> $exam_status,
+						'exam_type'				=> $exam_type,
 						'updated_at'			=> new \yii\db\Expression('NOW()'),
 						'updated_by'			=> Yii::$app->user->identity->id,
                         ],
