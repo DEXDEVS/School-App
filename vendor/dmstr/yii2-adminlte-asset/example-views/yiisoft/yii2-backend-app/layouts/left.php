@@ -8,7 +8,7 @@
 <style type="text/css">
     .main-sidebar{
         color: #ECF0F5;
-        background-color: #00004d;
+        background-color: #001F3F;
     }
     .main-sidebar a{
         color: #ECF0F5;
@@ -125,11 +125,11 @@
                         'items' => [
                             ['label' => 'Grades', 'icon' => '', 'url' => ["/grades"],],
                             ['label' => 'Exams Category', 'icon' => '', 'url' => ["/exams-category"],],
-                            ['label' => 'Marks Weitage', 'icon' => '', 'url' => ["/marks-weitage"],],
+                            ['label' => 'Marks Weightage', 'icon' => '', 'url' => ["/marks-weitage"],],
                             // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
                             // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
                             ['label' => 'Manage Exams', 'icon' => '', 'url' => ["/exams-schedule/manage-exams"],],
-                            ['label' => 'View marks Sheet', 'icon' => '', 'url' => ["/view-marks-sheet "],],
+                            ['label' => 'View Marks Sheet', 'icon' => '', 'url' => ["/view-marks-sheet "],],
                             // ['label' => 'Result cards', 'icon' => '', 'url' => ["/view-result-cards "],],
                             
                         ],
