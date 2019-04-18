@@ -192,9 +192,11 @@
                         'icon' => 'comments-o',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'SMS Templates', 'icon' => 'caret-right', 'url' => "./sms",],
-                            // ['label' => 'Absent Students SMS', 'icon' => 'caret-right', 'url' => "./absent-sms",],
-                            ['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./custom-sms",],
+                            ['label' => 'SMS Templates', 'icon' => 'caret-right', 'url' => "./premium-version",],
+                            ['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./premium-version",],
+                            //['label' => 'SMS Templates', 'icon' => 'caret-right', 'url' => "./sms",],
+                            //['label' => 'Absent Students SMS', 'icon' => 'caret-right', 'url' => "./absent-sms",],
+                            //['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./custom-sms",],
                             
                             // ['label' => 'Fee Transaction Details', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-transaction-detail',]
                         ],
@@ -218,7 +220,31 @@
                     // Time Table Generator  close...
                     // ------------------------------------------------
                     // Data Visualization start...
-                    ['label' => 'Data Visualization', 'icon' => 'bar-chart', 'url' => ["./premium-version"],],
+                    [
+                        'label' => 'Data Visualization',
+                        'icon' => 'bar-chart',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Main Branch',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Income/Expence', 'icon' => 'chevron-right', 'url' => './income-expense-main',],
+                                    ['label' => 'Fee Statistics', 'icon' => 'chevron-right', 'url' => './fee-statistics-main',],
+                                ],
+                            ],
+                            [
+                                'label' => 'Sub Branch',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Income/Expence', 'icon' => 'chevron-right', 'url' => './income-expense-sub',],
+                                    ['label' => 'Fee Statistics', 'icon' => 'chevron-right', 'url' => './fee-statistics-sub',],
+                                ],
+                            ],
+                        ],
+                    ],
                     // ------------------------------------------------
                     // Data Visualization  close...
                     // ------------------------------------------------
