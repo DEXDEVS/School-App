@@ -219,10 +219,10 @@ use yii\helpers\Html;
                                     echo $userName[0]['std_name'];
                                 }
                                 else if(Yii::$app->user->identity->user_type == 'Parent') {
-                                    $userName = Yii::$app->db->createCommand("SELECT guardian_name FROM std_guardian_info WHERE guardian_cnic = '$cnic'")->queryAll();
-                                    echo $userName[0]['guardian_name'];
+                                    // $userName = Yii::$app->db->createCommand("SELECT guardian_name FROM std_guardian_info WHERE guardian_cnic = '$cnic'")->queryAll();
+                                    // echo $userName[0]['guardian_name'];
                                 }
-                                else if(Yii::$app->user->identity->user_type == 'Employee') {
+                                else if(Yii::$app->user->identity->user_type == 'Teacher') {
                                     $userName = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info WHERE emp_cnic = '$cnic'")->queryAll();
                                     echo $userName[0]['emp_name'];
                                 }

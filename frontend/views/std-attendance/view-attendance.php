@@ -156,7 +156,7 @@ body{
                                     <!-- <button class="btn btn-primary btn-sm" role="button">Follow</button> -->
                                 </div>
                                 <div class="panel-figure">
-                                    <img style="border:none;" class="img-responsive img-circle" src="backend/web/uploads/class.jpg" />
+                                    <!-- <img style="border:none;" class="img-responsive img-circle" src="backend/web/uploads/class.jpg" /> -->
                                 </div>
                                 <div class="panel-body text-center">
                                     <h4 class="panel-header text-center">Class Attendance</h4>
@@ -189,7 +189,7 @@ body{
                                     <!-- <button class="btn btn-primary btn-sm" role="button">Follow</button> -->
                                 </div>
                                 <div class="panel-figure">
-                                    <img class="img-responsive img-circle" src="backend/web/uploads/std.png" />
+                                    <!-- <img class="img-responsive img-circle" src="backend/web/uploads/std.png" /> -->
                                 </div>
                                 <div class="panel-body text-center">
                                     <h4 class="panel-header">Student Attendance</h4>

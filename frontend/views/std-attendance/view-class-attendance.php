@@ -1,84 +1,92 @@
+<?php 
+        if (isset($_POST["save"])) {
+                $classid = $_POST["classnameid"];
+                $sessionid = $_POST["sessionid"];
+                $sectionid = $_POST["sectionid"];
+                $emp_id = $_POST["emp_id"];
+                $branch_id = $_POST["branch_id"];
+                $sub_id = $_POST["sub_id"];
+                $date = $_POST["date"];
+                $countstd = $_POST["countstd"];
+                $stdAttendId = $_POST["stdAttendance"];
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Class Attendance</title>
-</head>
-<body>
+                for($i=0; $i<$countstd;$i++){
+                    $q=$i+1;
+                    $std = "std".$q;
+                    $status[$i] = $_POST["$std"];
 
-    <form  action = "class-attendance" method="POST" style="margin-top: -35px">
-        <h1 class="well well-sm text" align="center">Attendance</h1>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
-                </div>    
-            </div>    
-        </div>
-        <div class="row">
-            <?php
-                $branch_id = Yii::$app->user->identity->branch_id;
-                $empCnic = Yii::$app->user->identity->username;
-                $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_cnic = '$empCnic' AND emp.emp_branch_id = '$branch_id'")->queryAll();
-                $teacher_id = $empId[0]['emp_id'];
-                $classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d INNER JOIN teacher_subject_assign_head as h ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$teacher_id'")->queryAll();
-            ?>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Select Class</label>
-                    <select class="form-control" name="classid" id="classId">
-                        <option value="">Select Class </option>
-                        <?php
-                        foreach ($classId as $key => $value) {
-                            $id = $classId[$key]['class_id'];
-                            $classNameId = Yii::$app->db->createCommand("SELECT class_name_id  FROM std_enrollment_head WHERE std_enroll_head_id = '$id'")->queryAll(); 
-                            $name = $classNameId[0]['class_name_id'];
-                            $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$name'")->queryAll();
-                            ?>
+                }
+                
+                $transection = Yii::$app->db->beginTransaction();
+                try{
+                    for($i=0; $i<$countstd; $i++){
+                    $attendance = Yii::$app->db->createCommand()->insert('std_attendance',[
+                        'branch_id' => $branch_id,
+                        'teacher_id' => $emp_id,
+                        'class_name_id' => $classid,
+                        'session_id'=> $sessionid,
+                        'section_id'=> $sectionid,
+                        'subject_id'=> $sub_id,
+                        'date' => $date,
+                        'student_id' => $stdAttendId[$i],
+                        'status' => $status[$i],
+                    ])->execute();
+                    }
+                 // if($attendance == 1){
+                 //        $query = Yii::$app->db->createCommand("SELECT att.student_id, att.status 
+                 //     FROM std_attendance as att
+                 //     WHERE att.teacher_id = '$emp_id' 
+                 //     AND att.class_name_id = '$classid'
+                 //     AND att.session_id = '$sessionid'
+                 //     AND att.section_id = '$sectionid'
+                 //     AND att.subject_id = '$sub_id' 
+                 //     AND CAST(date AS DATE) = '$date'
+                 //     AND att.status != 'P'")->queryAll();
 
-                            <option value="<?php echo $classNameId[0]["class_name_id"]; ?>">
-                                    <?php echo $className[0]['class_name']; ?>  
-                            </option>
-                            
-                        <?php } ?>
-                            
-                    </select>      
-                </div>    
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Select Session</label>
-                    <select class="form-control" name="sessionid" id="sessionId">
-                            <option value="">Select Session</option>
-                    </select>      
-                </div>    
-            </div>  
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Select Section</label>
-                    <select class="form-control" name="sectionid" id="sectionId" >
-                            <option value="">Select Section</option>
-                    </select>      
-                </div>    
-            </div>             
-            <div class="col-md-2 col-md-offset-10">
-                <div class="form-group">
-                    <input type="hidden" name="branchid" value="<?php echo $branch_id;?>">
-                    <label></label>
-                    <button type="submit" name="submit" class="btn btn-success form-control" style="margin-top: -25px;">
-                    <i class="fa fa-sign-in" aria-hidden="true"></i>    
-                    <b>View Attendance</b></button>
-                </div>    
-            </div>    
-        </div>
-    </form>
-
- <?php
-    if(isset($_POST["submit"])){ 
-        $classid= $_POST["classid"];
-        $sessionid = $_POST["sessionid"];
-        $sectionid = $_POST["sectionid"];
+                 //        $c = count($query);
+                 //        for ($i=0; $i < $c ; $i++) { 
+                 //         $stdID = $query[$i]['student_id'];
+                 //         $stdStatus = $query[$i]['status'];
+                 //         $stdInfo = Yii::$app->db->createCommand("SELECT std.std_reg_no,std.std_name, std.std_father_name, sg.guardian_contact_no_1
+                 //             FROM std_personal_info as std 
+                 //             INNER JOIN std_guardian_info as sg
+                 //             ON std.std_id = sg.std_id
+                 //             WHERE std.std_id = '$stdID'")->queryAll();
+                 //         $regNo[$i] = $stdInfo[0]['std_reg_no'];
+                 //         $contact[$i] = $stdInfo[0]['guardian_contact_no_1'];
+                 //         if ($stdStatus == 'L') {
+                 //             $num = str_replace('-', '', $contact[$i]);
+                 //                 $to = str_replace('+', '', $num);
+                 //                 $leaveSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Leave SMS'")->queryAll();
+                 //                 $leaveMsg = $leaveSMS[0]['sms_template'];
+                 //                 $msg = substr($leaveMsg,0,16);
+                 //                 $msg2 = substr($leaveMsg,17);
+                 //                 $message = $msg." ".$regNo[$i]." ".$msg2;
+                                
+                 //         $sms = CustomSmsController::sendSMS($to, $message);
+                 //         } else {
+                 //         $num = str_replace('-', '', $contact[$i]);
+                 //             $to = str_replace('+', '', $num);
+                 //             $absentSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Absent SMS'")->queryAll();
+                 //             $absentMsg = $absentSMS[0]['sms_template'];
+                 //                 $msg = substr($absentMsg,0,16);
+                 //                 $msg2 = substr($absentMsg,17);
+                 //                 $message = $msg." ".$regNo[$i]." ".$msg2;
+                                
+                 //             $sms = CustomSmsController::sendSMS($to, $message);
+                 //             }
+                 //        }
+                 //    }
+                    $transection->commit();
+                    Yii::$app->session->setFlash('success', "Attendance marked successfully...!");
+                    //return $this->redirect(['view-class-attendance']);
+                } catch(Exception $e){
+                    $transection->rollback();
+                    Yii::$app->session->setFlash('warning', "Attendance not marked. Try again!");
+                }
+                
+        // closing of if isset
+        } 
 
         $branch_id = Yii::$app->user->identity->branch_id;
         $empCnic = Yii::$app->user->identity->username;
@@ -279,9 +287,7 @@
           <!-- /.box -->
         </div>
     </div>
-    <?php 
-    // closing of if isset
-    } ?>
+  
 </div>
 <!-- container-fluid close -->
 </body>

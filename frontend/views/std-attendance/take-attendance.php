@@ -174,7 +174,7 @@ $conn = \Yii::$app->db;
 				<div class="box-body">
 					<div class="row">
 						<div class="col-md-12">
-							<form method="POST">
+							<form method="POST" action="class-attendance">
 								<table class="table">
 									<thead >
 										<tr style="background-color:#d6484838;">
@@ -247,94 +247,6 @@ $conn = \Yii::$app->db;
 	}
 		
 
-		if (isset($_POST["save"])) {
-				$classnameid = $_POST["classnameid"];
-				$sessionid = $_POST["sessionid"];
-				$sectionid = $_POST["sectionid"];
-				$emp_id = $_POST["emp_id"];
-				$branch_id = $_POST["branch_id"];
-				$sub_id = $_POST["sub_id"];
-				$date = $_POST["date"];
-				$countstd = $_POST["countstd"];
-				$stdAttendId = $_POST["stdAttendance"];
-
-				for($i=0; $i<$countstd;$i++){
-					$q=$i+1;
-					$std = "std".$q;
-					$status[$i] = $_POST["$std"];
-
-				}
-				
-				$transection = $conn->beginTransaction();
-				try{
-					for($i=0; $i<$countstd; $i++){
-					$attendance = $conn->createCommand()->insert('std_attendance',[
-            			'branch_id' => $branch_id,
-						'teacher_id' => $emp_id,
-						'class_name_id' => $classnameid,
-						'session_id'=> $sessionid,
-						'section_id'=> $sectionid,
-						'subject_id'=> $sub_id,
-						'date' => $date,
-						'student_id' => $stdAttendId[$i],
-						'status' => $status[$i],
-					])->execute();
-					}
-				 // if($attendance == 1){
-			  //           $query = Yii::$app->db->createCommand("SELECT att.student_id, att.status 
-					// 	FROM std_attendance as att
-					// 	WHERE att.teacher_id = '$emp_id' 
-					// 	AND att.class_name_id = '$classnameid'
-					// 	AND att.session_id = '$sessionid'
-					// 	AND att.section_id = '$sectionid'
-					// 	AND att.subject_id = '$sub_id' 
-					// 	AND CAST(date AS DATE) = '$date'
-					// 	AND att.status != 'P'")->queryAll();
-
-			  //           $c = count($query);
-			  //           for ($i=0; $i < $c ; $i++) { 
-			  //           	$stdID = $query[$i]['student_id'];
-			  //           	$stdStatus = $query[$i]['status'];
-			  //           	$stdInfo = Yii::$app->db->createCommand("SELECT std.std_reg_no,std.std_name, std.std_father_name, sg.guardian_contact_no_1
-			  //           		FROM std_personal_info as std 
-			  //           		INNER JOIN std_guardian_info as sg
-			  //           		ON std.std_id = sg.std_id
-			  //           		WHERE std.std_id = '$stdID'")->queryAll();
-			  //           	$regNo[$i] = $stdInfo[0]['std_reg_no'];
-			  //           	$contact[$i] = $stdInfo[0]['guardian_contact_no_1'];
-			  //           	if ($stdStatus == 'L') {
-			  //           		$num = str_replace('-', '', $contact[$i]);
-				 //             	$to = str_replace('+', '', $num);
-				 //             	$leaveSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Leave SMS'")->queryAll();
-				 //             	$leaveMsg = $leaveSMS[0]['sms_template'];
-				 //             	$msg = substr($leaveMsg,0,16);
-				 //             	$msg2 = substr($leaveMsg,17);
-				 //             	$message = $msg." ".$regNo[$i]." ".$msg2;
-				             	
-					// 		$sms = CustomSmsController::sendSMS($to, $message);
-			  //           	} else {
-			  //           	$num = str_replace('-', '', $contact[$i]);
-			  //            	$to = str_replace('+', '', $num);
-			  //            	$absentSMS = Yii::$app->db->createCommand("SELECT sms_template FROM sms WHERE sms_name = 'Absent SMS'")->queryAll();
-			  //            	$absentMsg = $absentSMS[0]['sms_template'];
-				 //             	$msg = substr($absentMsg,0,16);
-				 //             	$msg2 = substr($absentMsg,17);
-				 //             	$message = $msg." ".$regNo[$i]." ".$msg2;
-				             	
-			  //            	$sms = CustomSmsController::sendSMS($to, $message);
-			  //            	}
-			  //           }
-			  //       }
-					$transection->commit();
-					Yii::$app->session->setFlash('success', "Attendance marked successfully...!");
-					//return $this->redirect(['view-class-attendance']);
-				} catch(Exception $e){
-					$transection->rollback();
-					Yii::$app->session->setFlash('warning', "Attendance not marked. Try again!");
-				}
-				
-		// closing of if isset
-		}
 	 ?>
 </body>
 </html>

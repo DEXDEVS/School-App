@@ -2,7 +2,7 @@
     $userID = Yii::$app->user->id;
     $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
-    var_dump($user);
+    // var_dump($user);
     $userPhoto = $user[0]['user_photo'];
     if(empty($userPhoto)){
         $userPhoto = 'backend/web/images/default.png';
@@ -26,8 +26,8 @@
                         echo $userName[0]['std_name'];
                     }
                     else if(Yii::$app->user->identity->user_type == 'Parent') {
-                        $userName = Yii::$app->db->createCommand("SELECT guardian_name FROM std_guardian_info WHERE guardian_cnic = '$cnic'")->queryAll();
-                        echo $userName[0]['guardian_name'];
+                        // $userName = Yii::$app->db->createCommand("SELECT guardian_name FROM std_guardian_info WHERE guardian_cnic = '$cnic'")->queryAll();
+                        // echo $userName[0]['guardian_name'];
                     }
                     else if(Yii::$app->user->identity->user_type == 'Employee') {
                         $userName = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info WHERE emp_cnic = '$cnic'")->queryAll();

@@ -255,7 +255,7 @@ transition: all 0.4s ease-in-out;
 							<h3 class="lead">
 								Marks List
 							</h3>
-							<a href="./view-marks-list?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&emp_id=<?php echo $emp_id ?>">View Marks</a>
+							<a href="">View Marks</a>
 						</div>
 					</div>
 				</div>
