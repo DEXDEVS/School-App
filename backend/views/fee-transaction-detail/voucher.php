@@ -23,7 +23,7 @@
         $dueDate    = date('d-m-Y', strtotime($dueDate));
         $todayDate  = date('d-m-Y'); 
         
-        $months = Yii::$app->db->createCommand("SELECT month FROM fee_transaction_head WHERE month = '$month' AND class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid'")->queryAll();
+        $months = Yii::$app->db->createCommand("SELECT fmd.month FROM fee_month_detail as fmd INNER JOIN fee_transaction_head as fth ON fmd.voucher_no = fth.voucher_no WHERE fmd.month = '$month' AND fth.class_name_id = '$classid' AND fth.session_id = '$sessionid' AND fth.section_id = '$sectionid'")->queryAll();
        
 	if(!empty($months)){
 
@@ -40,7 +40,10 @@
         foreach ($student as $id =>$value) {
 			$stdInfo = Yii::$app->db->createCommand("SELECT std_name, std_father_name  FROM std_personal_info WHERE std_id = '$value[std_enroll_detail_std_id]'")->queryAll();
 			$stdId = $value['std_enroll_detail_std_id'];
-			$feeDetail = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_detail as ftd INNER JOIN fee_transaction_head as fth ON fth.fee_trans_id = ftd.fee_trans_detail_head_id WHERE fth.std_id = '$stdId' AND fth.month = '$month'")->queryAll();
+			$feeDetail = Yii::$app->db->createCommand("SELECT * FROM ((fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fmd.voucher_no = fth.voucher_no) INNER JOIN fee_transaction_detail as ftd ON fmd.month_detail_id = ftd.fee_trans_detail_head_id) WHERE fth.std_id = '$stdId' AND fmd.month = '$month'")->queryAll();
+			$voucherNo = $feeDetail[0]['voucher_no'];
+			$voucherMonth = Yii::$app->db->createCommand("SELECT month FROM fee_month_detail WHERE voucher_no = $voucherNo")->queryAll();
+			$monthCount = count($voucherMonth);
 			// if(!empty($feeDetail)){
 	
 			// 	$installmentId = $feeDetail[0]['installment_no'];
@@ -85,7 +88,7 @@
 								<div class="col-md-12">
 									<p>
 										<b style="float: left;">Voucher # : </b>
-										<?php echo $feeDetail[0]['fee_trans_detail_head_id']; ?>
+										<?php echo $feeDetail[0]['voucher_no']; ?>
 										<span style="float: right;"><b>Session: </b><?php echo $sessionName[0]['session_name'];?></span>
 									</p>
 								</div>
@@ -103,7 +106,12 @@
 							<div class="row">
 								<div class="col-md-12">
 									<p>
-										<b>Voucher Month: </b><?php echo date('F, Y', strtotime($months[0]["month"])); ?>
+										<?php 
+											if($monthCount > 1){ ?>
+												<b>Voucher Month: </b><?php echo date('F', strtotime($voucherMonth[0]["month"])).'/'.date('F, Y', strtotime($voucherMonth[1]["month"])); 
+											} else { ?>
+												<b>Voucher Month: </b><?php echo date('F, Y', strtotime($voucherMonth[0]["month"])); 
+											} ?>
 									</p>
 								</div>
 							</div>
@@ -151,7 +159,7 @@
 											<th class="text-center"><i><?php echo ($index +1);?></i></th>
 											<td colspan="2"><i>
 												<?php if ($feeType[$index]['fee_type_name'] == 'Tuition Fee') {
-													echo $feeType[$index]['fee_type_name']. ' (' .date('F, Y', strtotime($months[0]["month"])).')';
+													echo $feeType[$index]['fee_type_name'];
 												}
 												else{
 												echo $feeType[$index]['fee_type_name'];
@@ -161,7 +169,15 @@
 												<?php
 													foreach ($feeDetail as $key => $value) { 
 														if($feeDetail[$key]['fee_type_id'] == $feeType[$index]['fee_type_id'] ){
-															echo $feeDetail[$key]['fee_amount'];
+															if($feeDetail[$key]['fee_type_id'] == 2){
+																if($monthCount > 1){ 
+																	echo ($feeDetail[$key]['fee_amount'] + $feeDetail[$key]['fee_amount']);
+																} else { 
+																	echo $feeDetail[$key]['fee_amount'];
+																} 
+															} else {
+																echo $feeDetail[$key]['fee_amount'];
+															}	
 														}		
 													} 
 												?></i></b>

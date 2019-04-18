@@ -131,7 +131,6 @@ use common\models\FeeTransactionHead;
         $updateStatus       = -1;
         $countMonth = count($months);
         $month = $months[0];
-        var_dump($_POST);
 
        
         $headTransId = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
@@ -182,14 +181,12 @@ use common\models\FeeTransactionHead;
                         $feeMonth = Yii::$app->db->createCommand()->insert('fee_month_detail',[
                         'voucher_no' => $voucherNo,
                         'month' => $months[$z],
-                        'total_amount'=>  $totalAmount, 
+                        'monthly_amount'=>  $totalAmount, 
                         ])->execute();
 
                     $headID = Yii::$app->db->createCommand("SELECT month_detail_id FROM fee_month_detail WHERE voucher_no = '$voucherNo' AND month = '$months[$z]'")->queryAll();
-                    var_dump($headID);
 
                     $headId = $headID[0]['month_detail_id'];
-                    var_dump($tuition_fee[$i]);
                     for($j=0;$j<8;$j++){
                         if($feeType[$j] == 1 && $admission_fee[$i] > 0 && $z == 0){
                             $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
@@ -197,7 +194,6 @@ use common\models\FeeTransactionHead;
                             'fee_type_id'=> $feeType[$j],
                             'fee_amount'=> $admission_fee[$i]
                             ])->execute();
-                            var_dump($feeDetails);
                         }
                         if($feeType[$j] == 2 && $tuition_fee[$i] > 0){
                             $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
