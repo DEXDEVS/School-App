@@ -18,7 +18,7 @@ CrudAsset::register($this);
 ?>
 <style type="text/css">
     .panel-heading{
-        background-color: #AA5397;
+        background-color:#001F3F;
         color: white;
     }
     h1{ 

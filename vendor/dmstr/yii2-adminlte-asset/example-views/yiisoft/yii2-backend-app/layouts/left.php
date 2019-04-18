@@ -180,7 +180,7 @@
                             ['label' => 'Message of the Day', 'icon' => 'caret-right', 'url' => "./msg-of-day"],
                             ['label' => 'Events Management', 'icon' => 'caret-right', 'url' => "./events"],
                             ['label' => 'Notice Management', 'icon' => 'caret-right', 'url' => "./notice"],
-                            ['label' => 'Complaint Box', 'icon' => 'caret-right', 'url' => "./"]
+                            ['label' => 'Complaint Box', 'icon' => 'caret-right','url' =>"./premium-version"]
                         ],
                     ],
                     // ------------------------------------------------
@@ -194,7 +194,7 @@
                         'items' => [
                             ['label' => 'SMS Templates', 'icon' => 'caret-right', 'url' => "./sms",],
                             // ['label' => 'Absent Students SMS', 'icon' => 'caret-right', 'url' => "./absent-sms",],
-                            ['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./custom-sms",],
+                            ['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./premium-version"],
                             
                             // ['label' => 'Fee Transaction Details', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-transaction-detail',]
                         ],
