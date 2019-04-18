@@ -20,6 +20,7 @@ if(isset($_GET['class_id']))
 	if (empty($examDataCond)){
 		Yii::$app->session->setFlash('warning', "No Exam Found.!");
 	} else {
+
 		$examCriteriaId = $examDataCond[0]['exam_criteria_id'];
 		$examDataResult = Yii::$app->db->createCommand("SELECT c.exam_category_id,s.full_marks,s.passing_marks
 		FROM exams_criteria as c
