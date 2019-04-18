@@ -2,7 +2,7 @@
     $userID = Yii::$app->user->id;
     $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
-    var_dump($user);
+    // var_dump($user);
     $userPhoto = $user[0]['user_photo'];
     if(empty($userPhoto)){
         $userPhoto = 'backend/web/images/default.png';
