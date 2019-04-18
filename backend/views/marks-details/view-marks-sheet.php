@@ -139,14 +139,11 @@
 				<table class="table table-hover table-bordered">
 					<thead>
 						<tr>
-							<th></th>
-							<th></th>
-							<th colspan="2" style="text-align: center;">Teacher Name</th>
-							<th rowspan="2" colspan="5" style="text-align: center; padding-bottom: 35px;background-color:#ECF0F5;"><span style="margin-top:5px;">Final Report</span></th>
+							<!-- <th colspan="2" style="text-align: center;">Teacher Name</th> -->
 						</tr>
 						<tr>
-							<td rowspan="2" style="text-align: center;line-height:6;font-weight: bold;">Roll #</td>
-							<td rowspan="2" style="text-align: center;line-height:6;font-weight: bold;">Student Name</td>
+							<td style="text-align: center;font-weight: bold;">Roll #</td>
+							<td style="text-align: center;font-weight: bold;">Student Name</td>
 							<?php 
 
 							for ($i=0; $i <$countSubjects ; $i++) {
