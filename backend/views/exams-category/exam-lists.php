@@ -310,9 +310,9 @@
 				                          		<td>
 				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 
-													<!-- <a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php //echo $examCateogryId;?>&classID=<?php //echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
 															Update Date Sheet
-															</a> -->
+															</a>
 				                          		</td>
 				                          	</tr>
 				                          	<?php } } ?>
