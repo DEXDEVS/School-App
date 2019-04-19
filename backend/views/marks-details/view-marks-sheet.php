@@ -142,8 +142,8 @@
 							<!-- <th colspan="2" style="text-align: center;">Teacher Name</th> -->
 						</tr>
 						<tr>
-							<td style="text-align: center;font-weight: bold;">Roll #</td>
-							<td style="text-align: center;font-weight: bold;">Student Name</td>
+							<th colspan="2">Teacher Name </th>
+							
 							<?php 
 
 							for ($i=0; $i <$countSubjects ; $i++) {
@@ -156,7 +156,7 @@
 									WHERE class_id = '$classHead' AND  subject_id = '$subId'")->queryAll();
 
 									?>
-
+						
 						<td align="center">
 							<a style="color:black;" target="_blank" href="./emp-info-view?id=<?php echo $teacherName[0]['teacher_id'];?>">
 								<?php 
@@ -170,9 +170,12 @@
 							</a>
 						</td>	
 						<?php } ?>
+						<th style="text-align: center;background-color: #ECF0F5" colspan="5">Final Report </th>
 						</tr>
 
 						<tr>
+							<th >Roll #</th>
+							<th>Name:</th>
 							
 							<?php $total=0;
 							for ($i=0; $i <$countSubjects ; $i++) {
@@ -182,7 +185,7 @@
 								$subject = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subId'")->queryAll();
 							?>
 						
-								<th>
+								<th style="text-align: center;">
 									<?php echo $subject[0]['subject_name']; ?>
 										
 								</th>

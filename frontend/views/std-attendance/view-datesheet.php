@@ -18,8 +18,12 @@
             $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
             $teacherHeadId = $teacherId[0]['teacher_subject_assign_head_id'];
 
-            $classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d INNER JOIN teacher_subject_assign_head as h ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
+            $classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id
+            	FROM teacher_subject_assign_detail as d
+            	INNER JOIN teacher_subject_assign_head as h
+            	ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
             $countClassIds = count($classId);
+            echo $countClassIds;
             $Invagilation = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.exam_room,c.std_enroll_head_id,c.exam_start_time,c.exam_end_time,s.date
                 FROM exams_criteria as c
                 INNER JOIN exams_schedule as s
@@ -35,7 +39,7 @@
 	<div class="col-md-4">
 		<div class="box box-success">
 			<div class="box-header">
-				<h3 style="text-align: center;font-family: georgia;font-size:30px;">Invagilation<br><small>Schedule</small>
+				<h3 style="text-align: center;font-family: georgia;font-size:30px;">Invigilation<br><small>Schedule</small>
 				</h3>
 			</div><hr>
 			<div class="box-body">
@@ -124,6 +128,7 @@
 
 				for ($i=0; $i <$countClassIds ; $i++) {
             $id = $classId[$i]['class_id'];
+            echo $id;
             $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name
                 FROM std_enrollment_head as seh
                 INNER JOIN teacher_subject_assign_detail as tsad
@@ -131,6 +136,7 @@
             $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
             FROM teacher_subject_assign_detail as tsad
             WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$teacherHeadId'")->queryAll();
+            print_r($subjectsIDs);
              $dateSheetCheck = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.exam_room,s.date
                 FROM exams_criteria as c
                 INNER JOIN exams_schedule as s
