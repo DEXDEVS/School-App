@@ -132,7 +132,6 @@ use common\models\FeeTransactionHead;
         $countMonth = count($months);
         $month = $months[0];
 
-       
         $headTransId = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transaction_head where class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
 
         $transaction = \Yii::$app->db->beginTransaction();
@@ -253,8 +252,7 @@ use common\models\FeeTransactionHead;
                 //end of i for loop
                 // success alert message...
                 Yii::$app->session->setFlash('success', "You have successfully maintain this class account...!"); 
-                    //return $this->render('./fee-transaction-detail-class-account');
-                 // end of if
+            // end of if
             } else {
                 $transId = $headTransId[0]['fee_trans_id'];
                 for($i=0; $i<$length; $i++){

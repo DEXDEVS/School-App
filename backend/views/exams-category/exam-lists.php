@@ -501,8 +501,9 @@
 							        WHERE c.exam_category_id = '$examCatId'
 							        AND c.exam_status = 'announced'
 							        AND s.date = '$date'")->queryAll();
+						var_dump($invigilator);
 						if (empty($invigilator)) {
-							echo "No Schedule";
+							echo "No schedule announced yet..!";
 						}else{
 							$invigilatorAtt = Yii::$app->db->createCommand("SELECT s.emp_attendance
 							        FROM exams_criteria as c
