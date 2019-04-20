@@ -6,13 +6,33 @@ use yii\widgets\DetailView;
 /* @var $model common\models\StdInquiry */
 ?>
 <div class="std-inquiry-view">
- 
+ <?php 
+
+    $created_by = $model->created_by;
+    $updated_by = $model->updated_by;
+
+    $createdBy = Yii::$app->db->createCommand("SELECT username FROM user WHERE id = '$created_by'")->queryAll();
+    if (!empty($createdBy)) {
+        $createdBy = $createdBy[0]['username'];
+        // $createdBy = $createdBy;
+    }
+    $updatedBy = Yii::$app->db->createCommand("SELECT username FROM user WHERE id = '$updated_by'")->queryAll();
+    if (!empty($updatedBy)) {
+        $updatedBy = $updatedBy[0]['username'];
+        //$updatedBy = "<span class='label label-default'>$updatedBy</span>";
+    }
+    else{
+        $updatedBy = "<span class='label label-warning'>Not Updated</span>";
+    }
+    
+ ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'std_inquiry_id',
+            // 'std_inquiry_id',
             'std_inquiry_no',
-            'branch_id',
+            // 'branch_id',
+            'branch.branch_name',
             'inquiry_session',
             'std_name',
             'std_father_name',
@@ -35,8 +55,16 @@ use yii\widgets\DetailView;
             'inquiry_status',
             'created_at',
             'updated_at',
-            'created_by',
-            'updated_by',
+            [
+             'attribute' => 'created_by',
+             'format'=>'raw',
+             'value'=> $createdBy,
+            ],  
+            [
+             'attribute' => 'updated_by',
+             'format'=>'raw',
+             'value'=>  $updatedBy,
+            ],
         ],
     ]) ?>
 

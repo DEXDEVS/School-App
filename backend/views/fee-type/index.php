@@ -18,7 +18,7 @@ CrudAsset::register($this);
 ?>
 <style type="text/css">
     .panel-heading{
-        background-color: #AA5397;
+        background-color: #001F3F;
         color: white;
     }
 </style>
@@ -33,9 +33,9 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Fee Types','class'=>'btn btn-default']).
+                    ['role'=>'modal-remote','title'=> 'Create new Fee Types','class'=>'btn btn-success']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
+                    ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
                     '{toggleData}'.
                     '{export}'
                 ],

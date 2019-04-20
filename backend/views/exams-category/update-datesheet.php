@@ -32,7 +32,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<a href="./view?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+				<a href="./exams-category-view?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
 			</div>
 			</div><br>
 		<div class="box box-primary">

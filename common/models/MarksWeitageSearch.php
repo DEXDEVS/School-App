@@ -18,8 +18,8 @@ class MarksWeitageSearch extends MarksWeitage
     public function rules()
     {
         return [
-            [['marks_weitage_id', 'exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['marks_weitage_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'integer'],
+            [['exam_category_id', 'subject_id', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -54,11 +54,10 @@ class MarksWeitageSearch extends MarksWeitage
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('examCategory');
+        $query->joinWith('subject');
         $query->andFilterWhere([
             'marks_weitage_id' => $this->marks_weitage_id,
-            'exam_category_id' => $this->exam_category_id,
-            'subject_id' => $this->subject_id,
             'presentation' => $this->presentation,
             'assignment' => $this->assignment,
             'attendance' => $this->attendance,
@@ -70,6 +69,8 @@ class MarksWeitageSearch extends MarksWeitage
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+        $query->andFilterWhere(['like', 'exams_category.category_name', $this->exam_category_id])
+            ->andFilterWhere(['like', 'subjects.subject_name', $this->subject_id]);
 
         return $dataProvider;
     }

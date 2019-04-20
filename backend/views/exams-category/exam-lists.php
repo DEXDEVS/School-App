@@ -78,7 +78,7 @@
 	<!-- back button div start -->
 	<div class="row">
 		<div class="col-md-12">
-			<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+			<a href="./exams-category" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
 		</div>
 	</div><br>
 	<!-- back button div close -->

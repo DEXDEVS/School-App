@@ -36,9 +36,7 @@ use common\models\StdSessions
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'concession_id')->textInput(['type' => 'number', 'id' => 'concession'])?>
-        </div>
+        
         <div class="col-md-4">
             <?= $form->field($model, 'tuition_fee')->textInput(['type' => 'number','id' => 'tuitionFee']) ?>
         </div>
