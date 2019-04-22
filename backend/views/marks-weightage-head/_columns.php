@@ -12,42 +12,20 @@ return [
     ],
     //     [
     //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'marks_weitage_id',
+    //     'attribute'=>'marks_weightage_id',
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'exam_category_id',
-        'value'=>'examCategory.category_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'subject_id',
-        'value'=>'subject.subject_name',
+        'attribute'=>'class_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'presentation',
+        'attribute'=>'subjects_id',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'assignment',
-    ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'attendance',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'dressing',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'theory',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'practical',
-    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
@@ -57,8 +35,8 @@ return [
         // 'attribute'=>'updated_at',
     // ],
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'created_by',
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'created_by',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
