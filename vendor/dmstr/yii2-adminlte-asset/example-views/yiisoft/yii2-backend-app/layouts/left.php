@@ -288,8 +288,8 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                             // ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
-                            // ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
+                             ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
+                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
                             ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],

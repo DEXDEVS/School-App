@@ -89,8 +89,10 @@
             
                 $yearStart = date('Y-m', strtotime($sessionDetail[0]['session_start_date']));
                 $yearEnd = date('Y-m', strtotime($sessionDetail[0]['session_end_date']));
+                echo $yearStart . $yearEnd;
 
-                $transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head WHERE std_id = '$std_id' AND month >= '$yearStart' AND month <=  '$yearEnd'")->queryAll();
+                $transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fmd.voucher_no = fth.voucher_no WHERE fth.std_id = '$std_id' AND fmd.month >= '$yearStart' AND fmd.month <=  '$yearEnd'")->queryAll();
+
                 if(empty($transactionHead)){
                      Yii::$app->session->setFlash('warning', "Plese manage the account first, for further proceedings.");
                 } else { 
@@ -128,10 +130,10 @@
             <?php 
                 for ($i=0; $i < $count ; $i++) { 
                 $collectionDate = $transactionHead[$i]['collection_date'];
-                    if($transactionHead[$i]['status'] == 'Paid'){ ?>
+                    if($transactionHead[$i]['status'] == 'Paid' OR $transactionHead[$i]['status'] == 'Partially Paid' OR $transactionHead[$i]['status'] == 'Added to next month' ){ ?>
                     <tr>
                         <td> 
-                            <?php echo $transactionHead[$i]['fee_trans_id']; ?> 
+                            <?php echo $transactionHead[$i]['voucher_no']; ?> 
                         </td>
                         <td> 
                             <?php echo date('F-Y', strtotime($transactionHead[$i]['month'])); ?> 
@@ -164,17 +166,20 @@
                     </div>
                     <tr>
                         <td> 
-                            <?php echo $transactionHead[$i]['fee_trans_id']; ?> 
+                            <?php echo $transactionHead[$i]['voucher_no']; ?> 
                         </td>
                         <td> <?php echo date('F-Y', strtotime($transactionHead[$i]['month']));?> </td>
                         <td> 
-                            <?php echo $transactionHead[$i]['total_amount']; ?> 
+                            <input type="number" name="totalAmount[]" value="<?php echo $transactionHead[$i]['total_amount']; ?>" id="totalAmount_<?php echo $i; ?>" readonly="" class="form-control" style="width: 100px">
                         </td>
                         <td>
-                            <input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)" style="width: 100px">
+                            <input type="number" name="paidAmount[]" value="0" id="paidAmount_<?php echo $i; ?>" onchange="setStatus(<?php echo $i; ?>)" class="form-control" style="width: 100px">
                         </td>
                         <td>
-                            <input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly="" style="width: 60px">
+                            <input type="number" name="remaining[]" value="0" id="remaining_<?php echo $i; ?>" readonly="" class="form-control" style="width: 100px">
+                        </td>
+                        <td>
+                            <input type="text" name="status[]" value="Unpaid" id="status_<?php echo $i; ?>" readonly="" class="form-control" style="width: 110px">
                         </td>
                         <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>"> 
                     </tr>
@@ -206,7 +211,7 @@
             $yearStart = date('Y-m', strtotime($sessionDetail[0]['session_start_date']));
             $yearEnd = date('Y-m', strtotime($sessionDetail[0]['session_end_date']));
 
-            $transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head WHERE std_id = '$stdId' AND month >= '$yearStart' AND month <=  '$yearEnd'")->queryAll();
+            $transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fmd.voucher_no = fth.voucher_no WHERE fth.std_id = '$stdId' AND fmd.month >= '$yearStart' AND fmd.month <=  '$yearEnd'")->queryAll();
             if(empty($transactionHead)){
                  Yii::$app->session->setFlash('warning', "Please manage the account first, for further proceedings.");
             } else { 
@@ -243,10 +248,10 @@
         <tbody>
             <?php for ($i=0; $i < $count ; $i++) { 
                 $collectionDate = $transactionHead[$i]['collection_date'];
-                if($transactionHead[$i]['status'] == 'Paid'){ ?>
+                if($transactionHead[$i]['status'] == 'Paid' OR $transactionHead[$i]['status'] == 'Partially Paid' OR $transactionHead[$i]['status'] == 'Added to next month'){ ?>
                     <tr>
                         <td> 
-                            <?php echo $transactionHead[$i]['fee_trans_id']; ?> 
+                            <?php echo $transactionHead[$i]['voucher_no']; ?> 
                         </td>
                         <td> 
                             <?php echo date('Y-F', strtotime($transactionHead[$i]['month'])); ?> 
@@ -278,22 +283,23 @@
                 </div>
                 <tr>
                     <td> 
-                        <?php echo $transactionHead[$i]['fee_trans_id']; ?> 
+                        <?php echo $transactionHead[$i]['voucher_no']; ?> 
                     </td>
                     <td> 
                         <?php echo date('F-Y', strtotime($transactionHead[$i]['month']));?> 
                     </td>
                     <td> 
-                        <?php echo $transactionHead[$i]['total_amount']; ?> 
+                       <input type="number" name="totalAmount[]" value="<?php echo $transactionHead[$i]['total_amount']; ?>" id="totalAmount<?php echo $i; ?>" readonly="" class="form-control" style="width: 100px">
                     </td>
                     <td>
-                        <input type="number" name="paidAmount[]" value="0" id="paidAmountt" onchange="setStatuss()" style="width: 100px">
-                    </td>
-                    <td> 
-                        <?php echo $transactionHead[$i]['remaining'];?> 
+                        <input type="number" name="paidAmount[]" value="0" id="paidAmount<?php echo $i; ?>" class="form-control" onchange="setStatuss(<?php echo $i; ?>)" style="width: 100px">
                     </td>
                     <td>
-                        <input type="text" name="status[]" value="Unpaid" id="statuss" readonly="" style="width: 70px"></td>
+                        <input type="number" name="remaining[]" value="0" id="remaining<?php echo $i; ?>" readonly="" class="form-control" style="width: 100px">
+                    </td>
+                    <td>
+                        <input type="text" name="status[]" value="Unpaid" id="status<?php echo $i; ?>" readonly="" class="form-control" style="width: 110px">
+                    </td>
                         <input type="hidden" name="voucherNo[]" value="<?php echo $transactionHead[$i]['fee_trans_id']; ?>">
                         
                 </tr>
@@ -319,16 +325,17 @@
 
 <?php 
 if(isset($_POST['save'])){
-    $paidAmount        = $_POST["paidAmount"];
-    $status           = $_POST["status"];
-    $voucherNo           = $_POST["voucherNo"];
-    $counts =count($paidAmount);
+    $paidAmount = $_POST["paidAmount"];
+    $remaining  = $_POST["remaining"];
+    $status     = $_POST["status"];
+    $voucherNo  = $_POST["voucherNo"];
+    $counts     =count($paidAmount);
     $totalAmount = 0;
 
     $transaction = \Yii::$app->db->beginTransaction();
     try {
         for($i=0;$i<$counts;$i++){
-            $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount[$i],  'status' => $status[$i], 'collection_date'=> new \yii\db\Expression('NOW()')], ['fee_trans_id' => $voucherNo[$i]])->execute();
+            $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount[$i], 'remaining' => $remaining[$i],  'status' => $status[$i], 'collection_date'=> new \yii\db\Expression('NOW()')], ['fee_trans_id' => $voucherNo[$i]])->execute();
             $totalAmount += $paidAmount[$i]; 
         }
         $account = Yii::$app->db->createCommand()->insert('account_transactions', [
@@ -359,17 +366,32 @@ if(isset($_POST['save'])){
 
 <script type="text/javascript">
    function setStatus(i){
+        var totalAmount = parseInt($('#totalAmount_'+i).val());
         var paidAmount = parseInt($('#paidAmount_'+i).val());
-        if( paidAmount > 0 ) {
+        var remaining = totalAmount - paidAmount;
+        $('#remaining_'+i).val(remaining);
+        if( remaining == 0 ) {
             paid = "Paid";
+            $('#status_'+i).val(paid);
+        } else {
+            paid = "Partially Paid";
             $('#status_'+i).val(paid);
         }
     }
     function setStatuss(i){
-        var paidAmount = parseInt($('#paidAmountt'+i).val());
-        if( paidAmount > 0 ) {
+        var totalAmount = parseInt($('#totalAmount'+i).val());
+        alert(totalAmount);
+        var paidAmount = parseInt($('#paidAmount'+i).val());
+        alert(paidAmount);
+        var remaining = totalAmount - paidAmount;
+        alert(totalAmount + paidAmount + remaining );
+        $('#remaining'+i).val(remaining);
+        if( remaining == 0 ) {
             paid = "Paid";
-            $('#statuss'+i).val(paid);
+            $('#status'+i).val(paid);
+        } else {
+            paid = "Partially Paid";
+            $('#status'+i).val(paid);
         }
     }
 </script>
