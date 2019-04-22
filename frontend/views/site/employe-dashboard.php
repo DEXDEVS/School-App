@@ -10,8 +10,8 @@ use yii\helpers\Url;
       $branch_id = Yii::$app->user->identity->branch_id;
       $userType = Yii::$app->user->identity->user_type;
       
-      if ($userType == 'Teacher') {  ?>
-        <div class="site-index">
+if ($userType == 'Teacher') {  ?>
+  <div class="site-index">
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -23,14 +23,13 @@ use yii\helpers\Url;
               <?php 
               $query = (new \yii\db\Query())->from('std_personal_info');
               $id = $query->count('std_id'); ?>
-              <h3><?php echo $id; ?> </h3>
-
-              <p>Student Registrations</p>
+              <h3>View</h3>
+              <p>Portfolio</p>
             </div>
             <div class="icon">
-              <i class="fa fa-users"></i>
+              <i class="fa fa-user"></i>
             </div>
-            <a href="./std-personal-info" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="./employee-portfolio" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -41,11 +40,11 @@ use yii\helpers\Url;
               <?php 
               $query = (new \yii\db\Query())->from('emp_info');
               $id = $query->count('emp_id'); ?>
-              <h3><?php echo $id; ?> </h3>
-              <p>Employee Registrations</p>
+              <h3>View</h3>
+              <p>Class Attendance</p>
             </div>
             <div class="icon">
-              <i class="fa fa-user-plus"></i>
+              <i class="fa fa-check-square-o"></i>
             </div>
             <a href="./emp-info" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -58,11 +57,11 @@ use yii\helpers\Url;
              <?php 
               $query = (new \yii\db\Query())->from('user');
               $id = $query->count('id'); ?>
-              <h3><?php echo $id; ?> </h3>
-              <p>User Registrations</p>
+              <h3>View</h3>
+              <p>Time Table</p>
             </div>
             <div class="icon">
-              <i class="fa fa-user"></i>
+              <i class="fa fa-calendar"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -72,8 +71,8 @@ use yii\helpers\Url;
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
-              <p>View Date Sheet</p>
+              <h3>View</h3>
+              <p>Date Sheet</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-eye-open" style="font-size: 70px;"></i>
@@ -127,7 +126,7 @@ use yii\helpers\Url;
           <!-- Custom Tabs (Pulled to the right) -->
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
-              <li>
+              <!-- <li>
                 <a href="#parents" data-toggle="tab">
                   <i class="fa fa-user-o" style="color: #30BBBB;"></i>
                    Parents
@@ -138,7 +137,7 @@ use yii\helpers\Url;
                   <i class="fa fa-users" style="color: #00A65A;"></i>
                   Students
                 </a>
-              </li>
+              </li> -->
                <li class="active">
                 <a href="#employees" data-toggle="tab">
                   <i class="fa fa-user" style="color: #F39C12;"></i>
@@ -153,57 +152,18 @@ use yii\helpers\Url;
             ?>
             <!-- tab-content start -->
             <div class="tab-content">
-              <!-- student tab start -->
-              <div class="tab-pane active" id="student">
-                <?php if(!empty($studentNotice)) { ?>
-                  <div class="alert bg-success text-success">
-                    <div class="row">
-                      <div class="col-md-2">
-                        <span class="label label-success" style="padding: 3px;">
-                          <i class="fa fa-calendar"></i>
-                          <?php echo date('D d-M-Y'); ?>
-                        </span>
-                      </div>
-                      <div class="col-md-10">
-                        <h4 style="margin: 0px 20px">
-                          <button class="btn btn-xs btn-link" value="index.php?r=events/view-event-popup" id="modalStudents" data-toggle="tooltip" title="Click me for event details!">
-                            <span>
-                              <h4 style="color: #00A65A;">
-                                <?php echo $studentNotice[0]['notice_title']; ?>
-                              </h4>
-                            </span>   
-                          </button>
-                        </h4>
-                      </div>
-                    </div>
-                    <div class="row">  
-                      <div class="col-md-12">
-                        <span><?php echo $studentNotice[0]['notice_description']; ?></span>
-                      </div>
-                    </div>
-                  </div>
-                <?php } 
-                  else {
-                ?>  
-                <div class="alert bg-success text-success">
-                  <div class="row">  
-                    <div class="col-md-12">
-                      <i class="fa fa-warning"></i> 
-                      No notice for today! 
-                    </div>
-                  </div>
-                 </div>
-                <?php } ?>
-              </div>
-              <!-- students tab close -->
+              
               <!-- ***************** -->
               <!-- employees tab start -->
               <?php 
               $date = date('Y-m-d');
-              $employeeNotice = Yii::$app->db->createCommand("SELECT * FROM notice WHERE notice_user_type = 'Employees' AND is_status ='Active' AND CAST(created_at AS DATE) =  '$date'")->queryAll();
+              $employeeNotice = Yii::$app->db->createCommand("SELECT * FROM notice WHERE notice_user_type = 'Employees' AND is_status ='Active' AND CAST(notice_start AS DATE) <= '$date' AND CAST(notice_end AS DATE) >= '$date'")->queryAll();
               ?>
-              <div class="tab-pane" id="employees">
-                <?php if(!empty($employeeNotice)) { ?>
+              <div class="tab-pane active" id="employees">
+                <?php if(!empty($employeeNotice)) { 
+                        $empNoticeCount = count($employeeNotice);
+                          for ($i=0; $i < $empNoticeCount; $i++) {
+                  ?>
                 <div class="alert bg-warning text-warning">
                   <div class="row">
                     <div class="col-md-2">
@@ -217,7 +177,7 @@ use yii\helpers\Url;
                         <button class="btn btn-xs btn-link" value="index.php?r=events/view-event-popup" id="modalEmployees" data-toggle="tooltip" title="Click me for event details!">
                           <span>
                             <h4 style="color: #F39C12;">
-                              <?php echo $employeeNotice[0]['notice_title']; ?>
+                              <?php echo $employeeNotice[$i]['notice_title']; ?>
                             </h4>
                           </span>   
                         </button>
@@ -226,14 +186,23 @@ use yii\helpers\Url;
                   </div>
                   <div class="row">  
                     <div class="col-md-12">
-                      <span><?php echo $employeeNotice[0]['notice_description']; ?></span>
+                      <span><?php echo $employeeNotice[$i]['notice_description']; ?></span>
                     </div>
                   </div>
                 </div>
                 <?php 
+              }
+              //end of for loop
                   }
                   // end of if....
                   else {
+                    $empNotice = Yii::$app->db->createCommand("SELECT * FROM notice WHERE notice_user_type = 'Employees' AND is_status ='Active' AND CAST(notice_end AS DATE) < '$date'")->queryAll();
+
+                        foreach ($empNotice as $key => $value) {
+                          $empNoticeId = $value['notice_id'];
+                          var_dump($empNoticeId);
+                          $empNotice = Yii::$app->db->createCommand("UPDATE notice SET is_status = 'Inactive' WHERE notice_id = '$empNoticeId'")->execute();
+                        } 
                 ?>
                 <div class="alert bg-warning text-warning">
                   <div class="row">  
@@ -250,59 +219,7 @@ use yii\helpers\Url;
               </div>
               <!-- employees tab close -->
               <!-- ***************** -->
-              <!-- parents tab start -->
-              <!-- /.tab-pane -->
-              <?php 
-                $date = date('Y-m-d');
-                $parentNotice = Yii::$app->db->createCommand("SELECT * FROM notice WHERE notice_user_type = 'Parents' AND is_status ='Active' AND CAST(created_at AS DATE) =  '$date'")->queryAll();
-              ?> 
-              <div class="tab-pane" id="parents">
-              <?php if(!empty($employeeNotice)) { ?>  
-                <div class="alert bg-info text-info">
-                  <div class="row">
-                    <div class="col-md-2">
-                      <span class="label label-info" style="padding: 3px;">
-                        <i class="fa fa-calendar"></i>
-                        <?php echo date('D d-M-Y'); ?>
-                      </span>
-                    </div>
-                    <div class="col-md-10">
-                        <h4 style="margin: 0px 20px">
-                        <button class="btn btn-xs btn-link" value="index.php?r=events/view-event-popup" id="modalParents" data-toggle="tooltip" title="Click me for event details!">
-                          <span>
-                            <h4 style="color: #00C0EF;">
-                              <?php echo $parentNotice[0]['notice_title']; ?>
-                            </h4>
-                          </span>   
-                        </button>
-                        </h4>
-                    </div>
-                  </div>
-                  <div class="row">  
-                    <div class="col-md-12">
-                      <span><?php echo $parentNotice[0]['notice_description']; ?></span>
-                    </div>
-                  </div>
-                </div>
-                <?php 
-                    }
-                  // ending of if...
-                  else {
-                ?>
-                <div class="alert bg-info text-info">
-                  <div class="row">  
-                    <div class="col-md-12">
-                      <i class="fa fa-warning"></i> 
-                      No notice for today! 
-                    </div>
-                  </div>
-                </div>
-                <?php 
-                  }
-                  // ending of else... 
-                ?>
-              </div> 
-              <!-- parents tab close -->
+             
             </div>
             <!-- tab-content close -->
           </div>

@@ -8,16 +8,7 @@
 		ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id 
 		WHERE seh.std_enroll_head_id = '$classId'")->queryAll();
 
-	// $stdId = array();
- // 	$stdName = array();
- // 	$count = count($studentName);
- // 	for ($i=0; $i <$count; $i++) { 
- // 		$stdId[$i] = $studentName[$i]['std_enroll_detail_std_id'];
- // 		$stdName[$i] = $studentName[$i]['std_enroll_detail_std_name'];
- // 	}
-
- // 	$obj = (object) array($stdId,$stdName);
- 	echo json_encode($studentName);
+	 	echo json_encode($studentName);
  	}
  	else if(isset($_POST['studentId'])){
 	//get student fee

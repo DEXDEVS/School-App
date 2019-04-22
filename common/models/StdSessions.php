@@ -55,7 +55,7 @@ class StdSessions extends \yii\db\ActiveRecord
     {
         return [
             'session_id' => 'Session ID',
-            'session_branch_id' => 'Session Branch Name',
+            'session_branch_id' => 'Branch Name',
             'session_name' => 'Session Name',
             'session_start_date' => 'Session Start Date',
             'session_end_date' => 'Session End Date',

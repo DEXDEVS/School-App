@@ -20,12 +20,10 @@ use yii\widgets\DetailView;
     $createdBy = Yii::$app->db->createCommand("SELECT username FROM user WHERE id = '$created_by'")->queryAll();
     if (!empty($createdBy)) {
         $createdBy = $createdBy[0]['username'];
-        $createdBy = "<span class='label label-success'>$createdBy</span>";
     }
     $updatedBy = Yii::$app->db->createCommand("SELECT username FROM user WHERE id = '$updated_by'")->queryAll();
     if (!empty($updatedBy)) {
         $updatedBy = $updatedBy[0]['username'];
-        $updatedBy = "<span class='label label-danger'>$updatedBy</span>";
     }
     else{
         $updatedBy = "<span class='label label-warning'>Not Updated</span>";

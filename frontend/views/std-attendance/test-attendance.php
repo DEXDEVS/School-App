@@ -165,6 +165,13 @@ transition: all 0.4s ease-in-out;
 </head>
 <body>
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+       <ol class="breadcrumb" style="color: #3C8DBC;">
+          <li><a href="./home" style="color: #3C8DBC;"><i class="fa fa-dashboard"></i> Home</a></li>
+      </ol>
+    </div>
+  </div>
     <?php
             $branch_id = Yii::$app->user->identity->branch_id;
             $empCnic = Yii::$app->user->identity->username;

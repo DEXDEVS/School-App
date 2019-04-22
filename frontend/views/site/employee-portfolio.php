@@ -3,9 +3,9 @@
   use yii\helpers\Html;
   use common\models\StdPersonalInfo;
   // Get `emp_id` from `emp_info` table
-  $id = $_GET['id'];
+  $id = Yii::$app->user->identity->username;
   // Employee Personal Info..... 
-  $empInfo = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_id = '$id'")->queryAll();
+  $empInfo = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_cnic = '$id'")->queryAll();
   // Get `emp_designation_id` from `emp_info` table
   $empDesignationId = $empInfo[0]['emp_designation_id'];
   // Get `emp_dept_id` from `emp_info` table
@@ -35,16 +35,20 @@
   // Employee Documents Info..... 
   $empDocs = Yii::$app->db->createCommand("SELECT emp_document_id, emp_document, emp_document_name FROM emp_documents WHERE emp_info_id = '$id' AND delete_status = 1")->queryAll();
   $countDocs = count($empDocs);
+  $emp_photo = $empInfo[0]['emp_photo'];
 ?>
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="./home"><i class="fa fa-dashboard"></i> Home</a></li>
+      </ol>
+    </div>
+  </div>
 	<section class="content-header">
     <h1 style="color: #3C8DBC;">
-        <i class="fa fa-user"></i> Employee Profile
+        <i class="fa fa-user"></i> Profile
       </h1>
-    <ol class="breadcrumb">
-        <li><a href="./home"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="./emp-info">Back</a></li>
-    </ol>
   </section>
   <!-- main content start  -->
 	<section class="content">
@@ -53,7 +57,7 @@
         <!-- Profile Image Start -->
         <div class="box box-primary">
           <div class="box-body box-profile">
-            <img class="profile-user-img img-responsive img-circle" src="<?php echo $empInfo[0]['emp_photo']; ?>" alt="User profile picture" width="10%">
+            <img class="profile-user-img img-responsive img-circle" src="<?php echo './backend/web/'.$emp_photo; ?>" alt="User profile picture" width="10%">
             <h3 class="profile-username text-center" style="color: #3C8DBC;">
               <?php echo $empInfo[0]['emp_name']; ?>
             </h3>
@@ -124,60 +128,23 @@
               <a href="#personal" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-user-circle"></i> Employee Info</a>
             </li>
             <li>
-              <a href="#refrence" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-user"></i> Employee Refrence</a>
+              <a href="#attendance" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-user"></i> Attendance</a>
             </li>
             <li>
-              <a href="#doc" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-book"></i> Employee Doc</a>
+              <a href="#examination" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-user"></i> Examination</a>
+            </li>
+            <li>
+              <a href="#payroll" data-toggle="tab" style="color: #3C8DBC;"><i class="fa fa-book"></i> Payroll</a>
             </li>
           </ul>
           <!-- Employee personal info Tab start -->
           <div class="tab-content" >
             <div class="active tab-pane" id="personal">
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6">
                   <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Personal Information</p>
                 </div>
-                <div class="col-md-7">
-                  <div style="float: right;">
-                    <?=Html::a(' Edit',['update','id'=>$id],['class'=>'btn btn-primary btn-sm fa fa-edit','role'=>'modal-remote']) ?>
-                     <a href="./emails-create?id=<?php echo $id;?>" class="btn btn-warning btn-sm fa fa-envelope-o" style='color: white;'> Send Email </a>
-                    <button type="button" class="btn btn-info btn-sm fa fa-comments" data-toggle="modal" data-target="#modal-default">Send SMS</button>
-                    <div class="modal fade" id="modal-default">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">SMS</h4>
-                              </div>
-                              <form method="get" action="">
-                                <div class="modal-body">  
-                                  <label>Reciever Name</label>
-                                  <input type="hidden" name="to" value="<?php echo $empInfo[0]['emp_contact_no']; ?>" class="form-control">
-                                  <input type="text" name="emp_name" value="<?php echo $empInfo[0]['emp_name']; ?>" class="form-control" readonly=""><br>
-                                  <label>SMS Content</label>
-                                    <textarea name="message" rows="5" class="form-control" id="message"></textarea>
-                                    <p>
-                                    <span><b>NOTE:</b> 160 characters = 1 SMS</span>
-                                      <span id="remaining" class="pull-right">160 characters remaining </span>
-                                    <span id="messages" style="text-align: center;">/ Count SMS(0)</span>
-                                    <input type="hidden" value="" id="count"><br>
-                                    <input type="text" value="" id="sms" style="border: none; color: green; font-weight: bold;">
-                                    <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                  </p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                  <button type="submit" name="sms" class="btn btn-primary btn-sm">Send SMS</button>
-                                </div>
-                              </form>
-                            </div>
-                            <!-- /.modal-content -->
-                          </div>
-                          <!-- /.modal-dialog -->
-                        </div>
-                  </div>
-                </div>
+                
               </div><hr>
               <!-- Employee info start -->
                 <div class="row">
@@ -251,17 +218,11 @@
                   </div>
                 </div>
               <!-- Employee info close -->
-            </div>
-            <!-- Employee personal info Tab close -->
-            <!-- ******************************** -->
-            <!-- Employee Refrence tab start here -->
+              <!-- Employee Refrence tab start here -->
             <div class="tab-pane" id="refrence">
              <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-12">
                   <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Refrence Information</p>
-                </div>
-                <div class="col-md-2 col-md-offset-5">
-                  <a href="./emp-reference-update?id=<?php echo $empRefID;?>" class="btn btn-primary btn-sm fa fa-edit" style='color: white;'> Edit </a>
                 </div>
               </div><hr>
               <!-- Employee refrence info start -->
@@ -295,7 +256,6 @@
               <!-- Employee refrence info close -->
             </div>
             <!-- Employee refrence tab close here -->
-            <!-- ******************************** -->
             <!-- Employee Document tab start here -->
             
             <div class="tab-pane" id="doc">
@@ -346,6 +306,134 @@
               <!-- Employee Document info close -->
             </div>
             <!-- Employee Document tab close here -->
+            </div>
+            <!-- Employee personal info Tab close -->
+            <!-- ******************************** -->
+            <!-- teacher attendance tab start here -->
+          <div class="tab-pane" id="attendance">
+            <div class="row">
+              <div class="col-md-12">
+                  <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Attendance Information</p>
+              </div>
+            </div><hr>
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-hover">
+                  <thead>
+                    <h3 class="text-center" style="background-color:#ECF0F5;">Year (2019)</h3>
+                    <tr>
+                      <th>Sr.#</th>
+                      <th>Month</th>
+                      <th>Working Days</th>
+                      <th>Present</th>
+                      <th>Leave</th>
+                      <th>Absent</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Jan</td>
+                      <td>30</td>
+                      <td>25</td>
+                      <td>3</td>
+                      <td>2</td>
+                      <td>
+                        <button class="btn btn-xs btn-warning">View</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>FEB</td>
+                      <td>30</td>
+                      <td>25</td>
+                      <td>3</td>
+                      <td>2</td>
+                      <td>
+                        <button class="btn btn-xs btn-warning">View</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>March</td>
+                      <td>30</td>
+                      <td>25</td>
+                      <td>3</td>
+                      <td>2</td>
+                      <td>
+                        <button class="btn btn-xs btn-warning">View</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- teacher attendance tab close here -->
+          <!-- teacher Exam tab start here -->
+          <div class="tab-pane" id="examination">
+            <div class="row">
+              <div class="col-md-12">
+                  <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Examination Information</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-hover">
+                  <thead>
+                    <h3 class="text-center" style="background-color:#ECF0F5;">Year (2019)</h3>
+                    <p class="text-center">Final Term Exam</p>
+                    <tr>
+                      <th>Sr.#</th>
+                      <th>Class</th>
+                      <th>Subject</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>KG-(2019-2020)-Green</td>
+                      <td>English</td>
+                      <td>6-04-19</td>
+                      <td>P</td>
+                    </tr>
+                     <tr>
+                      <td>2</td>
+                      <td>8th-(2019-2020)-Blue</td>
+                      <td>Math</td>
+                      <td>10-04-19</td>
+                      <td>P</td>
+                    </tr>
+                     <tr>
+                      <td>3</td>
+                      <td>9th-(2019-2020)-Pink</td>
+                      <td>Urdu</td>
+                      <td>12-04-19</td>
+                      <td>A</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- teacher Exam tab close here -->
+          <!-- teacher payroll tab start here -->
+          <div class="tab-pane" id="payroll">
+            <div class="row">
+              <div class="col-md-12">
+                  <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Payroll Information</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h2>Put content here for teacher Payroll</h2>
+              </div>
+            </div>
+          </div>
+          <!-- teacher payroll tab close here -->
         </div>
         <!-- /.nav-tabs-custom -->
       </div>

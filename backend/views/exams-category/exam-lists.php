@@ -78,7 +78,7 @@
 	<!-- back button div start -->
 	<div class="row">
 		<div class="col-md-12">
-			<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+			<a href="./exams-category" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
 		</div>
 	</div><br>
 	<!-- back button div close -->
@@ -310,9 +310,9 @@
 				                          		<td>
 				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 
-													<!-- <a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php //echo $examCateogryId;?>&classID=<?php //echo $classHeadId;?>""><i class="fa fa-edit"></i> 
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classHeadId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
 															Update Date Sheet
-															</a> -->
+															</a>
 				                          		</td>
 				                          	</tr>
 				                          	<?php } } ?>
@@ -501,8 +501,9 @@
 							        WHERE c.exam_category_id = '$examCatId'
 							        AND c.exam_status = 'announced'
 							        AND s.date = '$date'")->queryAll();
+						var_dump($invigilator);
 						if (empty($invigilator)) {
-							echo "No Schedule";
+							echo "No schedule announced yet..!";
 						}else{
 							$invigilatorAtt = Yii::$app->db->createCommand("SELECT s.emp_attendance
 							        FROM exams_criteria as c

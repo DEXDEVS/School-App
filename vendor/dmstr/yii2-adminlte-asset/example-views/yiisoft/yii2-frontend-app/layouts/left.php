@@ -61,25 +61,49 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menus', 'options' => ['class' => 'header center']],
-                    ['label' => 'Home', 'icon' => 'dashboard', 'url' => 'index.php'],
-                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
+                    ['label' => 'Home', 'icon' => 'home', 'url' => './home'],
+                    ['label' => 'portfolio', 'icon' => 'user', 'url' => './employee-portfolio'],
+                    // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     // ------------------------------------------------
                     // Student Attendance start...
-                    [
-                        'label' => 'Attendance',
-                        'icon' => 'user-plus',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Student Attendance', 'icon' => 'caret-right', 'url' => ["./attendance"],],
-                            ['label' => 'View Class Attendance', 'icon' => 'caret-right', 'url' => ["./class-attendance"],]
-                        ],
+                    // [
+                    //     'label' => 'Attendance',
+                    //     'icon' => 'user-plus',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'Student Attendance', 'icon' => 'caret-right', 'url' => ["./attendance"],],
+                    //         ['label' => 'View Class Attendance', 'icon' => 'caret-right', 'url' => ["./class-attendance"],]
+                    //     ],
+                    // ],
+                     [
+                        'label' => 'Class Time Table',
+                        'icon' => 'calendar',
+                        'url' => './home',
                     ],
-
                     [
-                        'label' => 'Classes',
+                        'label' => 'Class',
+                        'icon' => 'copy',
+                        'items' =>[
+                             ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./test-attendance"],],
+                            ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],   
+                        ]
+                    ],
+                    [
+                        'label' => 'Studnets',
                         'icon' => 'users',
-                        'url' => './test-attendance',
+                        'items' => [
+                            ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
+                            ['label' => 'View Class Attendance', 'icon' => 'caret-right', 'url' => ["./home"],],
+                        ]
+                    ],
+                    [
+                        'label' => 'Communication',
+                        'icon' => 'envelope-o',
+                        'items' => [
+                            ['label' => 'SMS', 'icon' => 'caret-right', 'url' => ["./home"],],
+                             ['label' => 'Email', 'icon' => 'caret-right', 'url' => ["./home"],],
+                        ]
                     ],
                     
                     // ------------------------------------------------

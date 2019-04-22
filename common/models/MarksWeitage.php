@@ -55,8 +55,8 @@ class MarksWeitage extends \yii\db\ActiveRecord
     {
         return [
             'marks_weitage_id' => 'Marks Weitage ID',
-            'exam_category_id' => 'Exam Category ID',
-            'subject_id' => 'Subject ID',
+            'exam_category_id' => 'Exam Category',
+            'subject_id' => 'Subject',
             'presentation' => 'Presentation',
             'assignment' => 'Assignment',
             'attendance' => 'Attendance',

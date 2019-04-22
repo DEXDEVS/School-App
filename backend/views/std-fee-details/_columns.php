@@ -31,11 +31,11 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'net_addmission_fee',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'concession_id',
-        'value'=>'concession.concession_name',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'concession_id',
+    //     'value'=>'concession.concession_name',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
