@@ -338,3 +338,6 @@ $headTransId = Yii::$app->db->createCommand("SELECT fee_trans_id FROM fee_transa
             Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
             echo $e."<br>"; 
         }
+
+        ///////////////////////////////////////////////////////////////////////////
+         
