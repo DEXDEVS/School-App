@@ -137,7 +137,8 @@
                         'items' => [
                             ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
                             ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
-                            ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weitage"],],
+                            ['label' => 'Marks Weightage Type', 'icon' => 'caret-right', 'url' => ["/marks-weightage-type"],],
+                            ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weightage-head"],],
                             // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
                             // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
                             ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],

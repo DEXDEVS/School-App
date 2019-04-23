@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\MarksWeitage;
-use common\models\MarksWeitageSearch;
+use common\models\MarksWeightageType;
+use common\models\MarksWeightageTypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,9 +12,9 @@ use \yii\web\Response;
 use yii\helpers\Html;
 
 /**
- * MarksWeitageController implements the CRUD actions for MarksWeitage model.
+ * MarksWeightageTypeController implements the CRUD actions for MarksWeightageType model.
  */
-class MarksWeitageController extends Controller
+class MarksWeightageTypeController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +33,12 @@ class MarksWeitageController extends Controller
     }
 
     /**
-     * Lists all MarksWeitage models.
+     * Lists all MarksWeightageType models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new MarksWeitageSearch();
+        $searchModel = new MarksWeightageTypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +49,7 @@ class MarksWeitageController extends Controller
 
 
     /**
-     * Displays a single MarksWeitage model.
+     * Displays a single MarksWeightageType model.
      * @param integer $id
      * @return mixed
      */
@@ -59,7 +59,7 @@ class MarksWeitageController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "MarksWeitage #".$id,
+                    'title'=> "MarksWeightageType #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -74,7 +74,7 @@ class MarksWeitageController extends Controller
     }
 
     /**
-     * Creates a new MarksWeitage model.
+     * Creates a new MarksWeightageType model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -82,7 +82,7 @@ class MarksWeitageController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new MarksWeitage();  
+        $model = new MarksWeightageType();  
 
         if($request->isAjax){
             /*
@@ -91,7 +91,7 @@ class MarksWeitageController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new MarksWeitage",
+                    'title'=> "Create new MarksWeightageType",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -100,22 +100,22 @@ class MarksWeitageController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-                $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_by = Yii::$app->user->identity->id; 
                     $model->created_at = new \yii\db\Expression('NOW()');
-                    $model->updated_by = '0'; 
-                    $model->updated_at = '0';
+                    $model->updated_by = '0';
+                    $model->updated_at = '0'; 
                     $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new MarksWeitage",
-                    'content'=>'<span class="text-success">Create MarksWeitage success</span>',
+                    'title'=> "Create new MarksWeightageType",
+                    'content'=>'<span class="text-success">Create MarksWeightageType success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new MarksWeitage",
+                    'title'=> "Create new MarksWeightageType",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -129,7 +129,7 @@ class MarksWeitageController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->marks_weitage_id]);
+                return $this->redirect(['view', 'id' => $model->weightage_type_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -140,7 +140,7 @@ class MarksWeitageController extends Controller
     }
 
     /**
-     * Updates an existing MarksWeitage model.
+     * Updates an existing MarksWeightageType model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -158,7 +158,7 @@ class MarksWeitageController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update MarksWeitage #".$id,
+                    'title'=> "Update MarksWeightageType #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -166,14 +166,14 @@ class MarksWeitageController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
-                $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_by = Yii::$app->user->identity->id;
                     $model->updated_at = new \yii\db\Expression('NOW()');
                     $model->created_by = $model->created_by;
                     $model->created_at = $model->created_at;
                     $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "MarksWeitage #".$id,
+                    'title'=> "MarksWeightageType #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -182,7 +182,7 @@ class MarksWeitageController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update MarksWeitage #".$id,
+                    'title'=> "Update MarksWeightageType #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -195,7 +195,7 @@ class MarksWeitageController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->marks_weitage_id]);
+                return $this->redirect(['view', 'id' => $model->weightage_type_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -205,7 +205,7 @@ class MarksWeitageController extends Controller
     }
 
     /**
-     * Delete an existing MarksWeitage model.
+     * Delete an existing MarksWeightageType model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -233,7 +233,7 @@ class MarksWeitageController extends Controller
     }
 
      /**
-     * Delete multiple existing MarksWeitage model.
+     * Delete multiple existing MarksWeightageType model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -264,15 +264,15 @@ class MarksWeitageController extends Controller
     }
 
     /**
-     * Finds the MarksWeitage model based on its primary key value.
+     * Finds the MarksWeightageType model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return MarksWeitage the loaded model
+     * @return MarksWeightageType the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MarksWeitage::findOne($id)) !== null) {
+        if (($model = MarksWeightageType::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
