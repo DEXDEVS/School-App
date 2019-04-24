@@ -18,7 +18,7 @@ class AccountTransactionsSearch extends AccountTransactions
     public function rules()
     {
         return [
-            [['trans_id', 'account_register_id', 'created_by', 'updated_by'], 'integer'],
+            [['trans_id', 'branch_id', 'account_register_id', 'created_by', 'updated_by'], 'integer'],
             [['account_nature', 'date', 'description', 'created_at', 'updated_at'], 'safe'],
             [['total_amount'], 'number'],
         ];
@@ -58,6 +58,7 @@ class AccountTransactionsSearch extends AccountTransactions
 
         $query->andFilterWhere([
             'trans_id' => $this->trans_id,
+            'branch_id' => $this->branch_id,
             'account_register_id' => $this->account_register_id,
             'date' => $this->date,
             'total_amount' => $this->total_amount,
