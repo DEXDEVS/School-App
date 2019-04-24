@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\StdSubjects;
-use common\models\StdSubjectsSearch;
+use common\models\EmpAttendance;
+use common\models\EmpAttendanceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,9 +12,9 @@ use \yii\web\Response;
 use yii\helpers\Html;
 
 /**
- * StdSubjectsController implements the CRUD actions for StdSubjects model.
+ * EmpAttendanceController implements the CRUD actions for EmpAttendance model.
  */
-class StdSubjectsController extends Controller
+class EmpAttendanceController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +33,12 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Lists all StdSubjects models.
+     * Lists all EmpAttendance models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new StdSubjectsSearch();
+        $searchModel = new EmpAttendanceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +49,7 @@ class StdSubjectsController extends Controller
 
 
     /**
-     * Displays a single StdSubjects model.
+     * Displays a single EmpAttendance model.
      * @param integer $id
      * @return mixed
      */
@@ -59,7 +59,7 @@ class StdSubjectsController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdSubjects #".$id,
+                    'title'=> "EmpAttendance #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -74,7 +74,7 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Creates a new StdSubjects model.
+     * Creates a new EmpAttendance model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -82,7 +82,7 @@ class StdSubjectsController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new StdSubjects();  
+        $model = new EmpAttendance();  
 
         if($request->isAjax){
             /*
@@ -91,7 +91,7 @@ class StdSubjectsController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdSubjects",
+                    'title'=> "Create new EmpAttendance",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -99,23 +99,34 @@ class StdSubjectsController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
-                    $array = $model->subId;
-                    $subject = implode(",", $array);
-                    $model->std_subject_name = $subject;
+            }else if($model->load($request->post())){
+                    $cnic = $model->emp_cnic;
+                    $check_in = $model->check_in;
+                    $check_out = $model->check_out;
+                    $emp_id = Yii::$app->db->createCommand("SELECT emp_id FROM emp_info WHERE emp_cnic = '$cnic'")->queryAll();
+                    var_dump($check_in);
+
+                    $model->emp_id = $emp_id[0]['emp_id'];
+                    $model->att_date = Yii::$app->formatter->asDate('now', 'dd-MM-yyyy');
+                    $model->check_in = Yii::$app->formatter->asTime('now', 'H:i:s');
+                    $model->check_out = time('H:i:s');
+                    $model->attendance = "P";
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0';
+                    $model->updated_at = '0';
                     $model->save();
-        
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new StdSubjects",
-                    'content'=>'<span class="text-success">Create StdSubjects success</span>',
+                    'title'=> "Create new EmpAttendance",
+                    'content'=>'<span class="text-success">Create EmpAttendance success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new StdSubjects",
+                    'title'=> "Create new EmpAttendance",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -129,7 +140,7 @@ class StdSubjectsController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_subject_id]);
+                return $this->redirect(['view', 'id' => $model->att_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -140,7 +151,7 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Updates an existing StdSubjects model.
+     * Updates an existing EmpAttendance model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -158,17 +169,22 @@ class StdSubjectsController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdSubjects #".$id,
+                    'title'=> "Update EmpAttendance #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "StdSubjects #".$id,
+                    'title'=> "EmpAttendance #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -177,7 +193,7 @@ class StdSubjectsController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update StdSubjects #".$id,
+                    'title'=> "Update EmpAttendance #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -190,7 +206,7 @@ class StdSubjectsController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_subject_id]);
+                return $this->redirect(['view', 'id' => $model->att_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -200,7 +216,7 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Delete an existing StdSubjects model.
+     * Delete an existing EmpAttendance model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -228,7 +244,7 @@ class StdSubjectsController extends Controller
     }
 
      /**
-     * Delete multiple existing StdSubjects model.
+     * Delete multiple existing EmpAttendance model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -259,15 +275,15 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Finds the StdSubjects model based on its primary key value.
+     * Finds the EmpAttendance model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StdSubjects the loaded model
+     * @return EmpAttendance the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StdSubjects::findOne($id)) !== null) {
+        if (($model = EmpAttendance::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

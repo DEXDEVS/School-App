@@ -33,8 +33,8 @@ class MarksWeightageType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['weightage_type_name','created_by', 'updated_by'], 'required'],
-            [['weightage_type_description', 'created_at', 'updated_at'], 'safe'],
+            [['weightage_type_name'], 'required'],
+            [['weightage_type_description', 'created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['weightage_type_name'], 'string', 'max' => 30],
             [['weightage_type_description'], 'string', 'max' => 100],

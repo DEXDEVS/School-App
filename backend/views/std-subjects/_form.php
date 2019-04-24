@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Subjects;
 use common\models\StdClassName;
+use kartik\select2\Select2;
 
 
 /* @var $this yii\web\View */
@@ -20,7 +21,16 @@ use common\models\StdClassName;
     	['prompt'=>'Select Class']
 	)?>
 
-    <?= $form->field($model, 'std_subject_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'subId')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Subjects::find()->where(['delete_status'=>1])->all(),'subject_name','subject_name'),
+        'language' => 'en',
+        'options' => ['placeholder' => 'Select'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'multiple' => true
+        ],
+    ]);
+    ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

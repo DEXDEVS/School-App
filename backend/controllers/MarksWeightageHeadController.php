@@ -6,10 +6,11 @@ use Yii;
 use common\models\MarksWeightageHead;
 use common\models\MarksWeightageHeadSearch;
 use common\models\MarksWeightageDetails;
-use common\models\Model;
+use backend\models\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -24,6 +25,20 @@ class MarksWeightageHeadController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-subjects','marks-weightage-detail-view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -32,6 +47,11 @@ class MarksWeightageHeadController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionFetchSubjects()
+    {
+        return $this->render('fetch-subjects');
     }
 
     /**
@@ -49,31 +69,16 @@ class MarksWeightageHeadController extends Controller
         ]);
     }
 
+     public function actionView($id)
+    {
+       return $this->render('marks-weightage-detail-view'); 
+    }
 
     /**
      * Displays a single MarksWeightageHead model.
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {   
-        $request = Yii::$app->request;
-        if($request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                    'title'=> "MarksWeightageHead #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-        }else{
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
-    }
 
     /**
      * Creates a new MarksWeightageHead model.
@@ -110,7 +115,6 @@ class MarksWeightageHeadController extends Controller
                     $model->created_at = new \yii\db\Expression('NOW()');
                     $model->updated_by = '0';
                     $model->updated_at = '0'; 
-                    $model->save();
  
 
                     // validate all models
@@ -126,8 +130,7 @@ class MarksWeightageHeadController extends Controller
                                     $marksDetail->created_by = Yii::$app->user->identity->id; 
                                     $marksDetail->created_at = new \yii\db\Expression('NOW()');
                                     $marksDetail->updated_by = '0';
-                                    $marksDetail->updated_at = '0'; 
-                                    $marksDetail->save(false);
+                                    $marksDetail->updated_at = '0';    
 
                                     if (! ($flag = $marksDetail->save(false))) {
                                         $transaction->rollBack();
@@ -141,6 +144,7 @@ class MarksWeightageHeadController extends Controller
                             }
                         } catch (Exception $e) {
                             $transaction->rollBack();
+                            echo $e;
                         }
                   
 }

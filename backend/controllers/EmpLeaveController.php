@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\StdSubjects;
-use common\models\StdSubjectsSearch;
+use common\models\EmpLeave;
+use common\models\EmpLeaveSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,9 +12,9 @@ use \yii\web\Response;
 use yii\helpers\Html;
 
 /**
- * StdSubjectsController implements the CRUD actions for StdSubjects model.
+ * EmpLeaveController implements the CRUD actions for EmpLeave model.
  */
-class StdSubjectsController extends Controller
+class EmpLeaveController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +33,12 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Lists all StdSubjects models.
+     * Lists all EmpLeave models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new StdSubjectsSearch();
+        $searchModel = new EmpLeaveSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +49,7 @@ class StdSubjectsController extends Controller
 
 
     /**
-     * Displays a single StdSubjects model.
+     * Displays a single EmpLeave model.
      * @param integer $id
      * @return mixed
      */
@@ -59,7 +59,7 @@ class StdSubjectsController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdSubjects #".$id,
+                    'title'=> "EmpLeave #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -74,7 +74,7 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Creates a new StdSubjects model.
+     * Creates a new EmpLeave model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -82,7 +82,7 @@ class StdSubjectsController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new StdSubjects();  
+        $model = new EmpLeave();  
 
         if($request->isAjax){
             /*
@@ -91,7 +91,7 @@ class StdSubjectsController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdSubjects",
+                    'title'=> "Create new EmpLeave",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -100,22 +100,17 @@ class StdSubjectsController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-                    $array = $model->subId;
-                    $subject = implode(",", $array);
-                    $model->std_subject_name = $subject;
-                    $model->save();
-        
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new StdSubjects",
-                    'content'=>'<span class="text-success">Create StdSubjects success</span>',
+                    'title'=> "Create new EmpLeave",
+                    'content'=>'<span class="text-success">Create EmpLeave success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new StdSubjects",
+                    'title'=> "Create new EmpLeave",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -129,7 +124,7 @@ class StdSubjectsController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_subject_id]);
+                return $this->redirect(['view', 'id' => $model->app_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -140,7 +135,7 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Updates an existing StdSubjects model.
+     * Updates an existing EmpLeave model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -158,7 +153,7 @@ class StdSubjectsController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdSubjects #".$id,
+                    'title'=> "Update EmpLeave #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -168,7 +163,7 @@ class StdSubjectsController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "StdSubjects #".$id,
+                    'title'=> "EmpLeave #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -177,7 +172,7 @@ class StdSubjectsController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update StdSubjects #".$id,
+                    'title'=> "Update EmpLeave #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -190,7 +185,7 @@ class StdSubjectsController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->std_subject_id]);
+                return $this->redirect(['view', 'id' => $model->app_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -200,7 +195,7 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Delete an existing StdSubjects model.
+     * Delete an existing EmpLeave model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -228,7 +223,7 @@ class StdSubjectsController extends Controller
     }
 
      /**
-     * Delete multiple existing StdSubjects model.
+     * Delete multiple existing EmpLeave model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -259,15 +254,15 @@ class StdSubjectsController extends Controller
     }
 
     /**
-     * Finds the StdSubjects model based on its primary key value.
+     * Finds the EmpLeave model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StdSubjects the loaded model
+     * @return EmpLeave the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StdSubjects::findOne($id)) !== null) {
+        if (($model = EmpLeave::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

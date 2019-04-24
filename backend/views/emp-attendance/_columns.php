@@ -10,24 +10,37 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'marks_weightage_id',
-    // ],
+        [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'att_id',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'exam_category_id',
-        'value'=>'examCategory.category_name',
+        'attribute'=>'emp_id',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'att_date',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'check_in',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'check_out',
     ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'class_id',
-    //     'value'=>'class.class_name',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'attendance',
     // ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'subjects_id',
-    //     'value'=>'subjects.subject_name',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_by',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_by',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -37,14 +50,6 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_at',
     // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'created_by',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'updated_by',
-    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
@@ -52,7 +57,7 @@ return [
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },
-        'viewOptions'=>['role'=>'','title'=>'View','data-toggle'=>'tooltip'],
+        'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
         'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
                           'data-confirm'=>false, 'data-method'=>false,// for overide yii data api

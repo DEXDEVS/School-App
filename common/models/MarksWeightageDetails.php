@@ -35,10 +35,10 @@ class MarksWeightageDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['weightage_type_id', 'marks', 'created_by', 'updated_by'], 'required'],
-            [['weightage_head_id', 'weightage_type_id', 'created_by', 'updated_by'], 'integer'],
+            [['weightage_type_id', 'marks'], 'required'],
+            [['weightage_type_id', 'created_by', 'updated_by'], 'integer'],
             [['marks'], 'number'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['weightage_head_id','created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['weightage_head_id'], 'exist', 'skipOnError' => true, 'targetClass' => MarksWeightageHead::className(), 'targetAttribute' => ['weightage_head_id' => 'marks_weightage_id']],
             [['weightage_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => MarksWeightageType::className(), 'targetAttribute' => ['weightage_type_id' => 'weightage_type_id']],
         ];

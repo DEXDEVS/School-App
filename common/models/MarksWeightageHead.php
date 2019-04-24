@@ -18,7 +18,7 @@ use Yii;
  *
  * @property MarksWeightageDetails[] $marksWeightageDetails
  * @property ExamsCategory $examCategory
- * @property StdEnrollmentHead $class
+ * @property StdClassName $class
  * @property Subjects $subjects
  */
 class MarksWeightageHead extends \yii\db\ActiveRecord
@@ -37,11 +37,11 @@ class MarksWeightageHead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['exam_category_id', 'class_id', 'subjects_id', 'created_by', 'updated_by'], 'required'],
+            [['exam_category_id', 'class_id', 'subjects_id'], 'required'],
             [['exam_category_id', 'class_id', 'subjects_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['exam_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ExamsCategory::className(), 'targetAttribute' => ['exam_category_id' => 'exam_category_id']],
-            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdEnrollmentHead::className(), 'targetAttribute' => ['class_id' => 'std_enroll_head_id']],
+            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_id' => 'class_name_id']],
             [['subjects_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subjects_id' => 'subject_id']],
         ];
     }
@@ -53,9 +53,9 @@ class MarksWeightageHead extends \yii\db\ActiveRecord
     {
         return [
             'marks_weightage_id' => 'Marks Weightage ID',
-            'exam_category_id' => 'Exam Category',
-            'class_id' => 'Class Name',
-            'subjects_id' => 'Subjects Name',
+            'exam_category_id' => 'Exam Category ID',
+            'class_id' => 'Class ID',
+            'subjects_id' => 'Subjects ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
@@ -84,7 +84,7 @@ class MarksWeightageHead extends \yii\db\ActiveRecord
      */
     public function getClass()
     {
-        return $this->hasOne(StdEnrollmentHead::className(), ['std_enroll_head_id' => 'class_id']);
+        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_id']);
     }
 
     /**

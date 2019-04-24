@@ -266,10 +266,7 @@ class FeeTransactionDetailController extends Controller
         }
     }
 
-    public function actionFetchStudents()
-    {   
-        return $this->render('fetch-students');
-    }
+   
     
     public function actionFeeVoucher()
     {

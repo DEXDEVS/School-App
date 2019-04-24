@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\MarksWeightageHead;
+use common\models\EmpLeave;
 
 /**
- * MarksWeightageHeadSearch represents the model behind the search form about `common\models\MarksWeightageHead`.
+ * EmpLeaveSearch represents the model behind the search form about `common\models\EmpLeave`.
  */
-class MarksWeightageHeadSearch extends MarksWeightageHead
+class EmpLeaveSearch extends EmpLeave
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class MarksWeightageHeadSearch extends MarksWeightageHead
     public function rules()
     {
         return [
-            [['marks_weightage_id', 'exam_category_id', 'class_id', 'subjects_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['app_id', 'emp_id', 'no_of_days', 'created_by', 'updated_by'], 'integer'],
+            [['leave_type', 'starting_date', 'ending_date', 'applying_date', 'leave_purpose', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class MarksWeightageHeadSearch extends MarksWeightageHead
      */
     public function search($params)
     {
-        $query = MarksWeightageHead::find()->select('exam_category_id')->distinct();;
+        $query = EmpLeave::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,15 +56,21 @@ class MarksWeightageHeadSearch extends MarksWeightageHead
         }
 
         $query->andFilterWhere([
-            'marks_weightage_id' => $this->marks_weightage_id,
-            'exam_category_id' => $this->exam_category_id,
-            'class_id' => $this->class_id,
-            'subjects_id' => $this->subjects_id,
+            'app_id' => $this->app_id,
+            'emp_id' => $this->emp_id,
+            'starting_date' => $this->starting_date,
+            'ending_date' => $this->ending_date,
+            'applying_date' => $this->applying_date,
+            'no_of_days' => $this->no_of_days,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+
+        $query->andFilterWhere(['like', 'leave_type', $this->leave_type])
+            ->andFilterWhere(['like', 'leave_purpose', $this->leave_purpose])
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

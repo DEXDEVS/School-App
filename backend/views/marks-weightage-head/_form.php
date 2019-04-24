@@ -3,8 +3,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\ExamsCategory;
-use common\models\StdEnrollmentHead;
+use common\models\StdClassName;
+use common\models\Subjects;
 use common\models\MarksWeightageDetails;
+use common\models\MarksWeightageType;
 use wbraganca\dynamicform\DynamicFormWidget;
 /* @var $this yii\web\View */
 /* @var $model common\models\MarksWeightageHead */
@@ -23,12 +25,15 @@ use wbraganca\dynamicform\DynamicFormWidget;
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'class_id')->dropDownList(
-                    ArrayHelper::map(StdEnrollmentHead::find()->all(),'std_enroll_head_id','std_enroll_head_name'),
+                    ArrayHelper::map(StdClassName::find()->all(),'class_name_id','class_name'),
                         ['prompt'=>'Select Class', 'id'=>'classId']
                 )?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'subjects_id')->textInput() ?>
+            <?= $form->field($model, 'subjects_id')->dropDownList(
+                    ArrayHelper::map(Subjects::find()->all(),'subject_id','subject_name'),
+                        ['prompt'=>'Select Subject', 'id'=>'subjectId']
+                )?>
         </div>
     </div>
 
@@ -70,7 +75,10 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         ?>
                         <div class="row">
                             <div class="col-sm-6">
-                                 <?= $form->field($marksDetail, "[{$i}]weightage_type_id")->textInput() ?>
+                                 <?= $form->field($marksDetail, "[{$i}]weightage_type_id")->dropDownList(
+                                    ArrayHelper::map(MarksWeightageType::find()->all(),'weightage_type_id','weightage_type_name'),
+                                        ['prompt'=>'Select Exam Category']
+                                )?>
                             </div>
                             <div class="col-sm-6">
                                 <?= $form->field($marksDetail, "[{$i}]marks")->textInput() ?>
@@ -85,11 +93,6 @@ use wbraganca\dynamicform\DynamicFormWidget;
         </div>  
     </div>
     
-
-    
-
-    
-
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -99,3 +102,33 @@ use wbraganca\dynamicform\DynamicFormWidget;
     <?php ActiveForm::end(); ?>
     
 </div>
+
+<?php
+//$url = \yii\helpers\Url::to("marks-weightage-head/fetch-subjects");
+
+$script = <<< JS
+
+    $('#classId').change(function(){
+    var classId = $(this).val();
+    $.get('./subjects/get-subjects',{classId : classId},function(data){
+        // console.log(data);
+        var data =  $.parseJSON(data);
+      //  console.log(data[0].length);
+        var subjectName = data[0];
+        var subjectIds = data[1];
+
+        $('#subjectId').empty();
+        $('#subjectId').append("<option>"+"Select Subject"+"</option>");
+        var options = '';
+            for(var i=0; i<subjectName.length; i++) {
+                options += '<option value="'+subjectIds[i]+'">'+subjectName[i]+'</option>';
+            }
+        // Append to the html
+        $('#subjectId').append(options);
+    });
+});
+
+JS;
+$this->registerJs($script);
+?>
+</script>  

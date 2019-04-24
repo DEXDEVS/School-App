@@ -5,12 +5,15 @@ namespace backend\controllers;
 use Yii;
 use common\models\Subjects;
 use common\models\SubjectsSearch;
+use common\models\StdSubjects;
+use common\models\StdEnrollmentHead;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\helpers\Json;
 
 /**
  * SubjectsController implements the CRUD actions for Subjects model.
@@ -31,7 +34,7 @@ class SubjectsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','get-subjects'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -47,6 +50,19 @@ class SubjectsController extends Controller
         ];
     }
 
+    public function actionGetSubjects($classId){
+       
+        $subjectCombination = StdSubjects::find()->select('std_subject_name')->where(['class_id' =>$classId])->all();
+        $subjectComb = $subjectCombination[0]['std_subject_name'];
+        $subjectName = explode(',', $subjectComb);
+
+        foreach ($subjectName as $key => $value) {
+            $subjectId = Yii::$app->db->createCommand("SELECT subject_id FROM subjects WHERE subject_name = '$value'")->queryAll();
+            $subjectIds[$key] = $subjectId[0]['subject_id'];
+        }   
+        $obj = (object) array($subjectName,$subjectIds);
+        echo Json::encode($obj); 
+    }
     /**
      * Lists all Subjects models.
      * @return mixed
