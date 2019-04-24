@@ -39,7 +39,13 @@
     <form method="POST" action="class-account">
         <div class="row">
             <div class="col-md-12 text-center" style="margin-top: -20px;">
-                <?php echo "<h3> Class: ".$className." - Month: ".date('F', strtotime($month)) . ' / '.date('F, Y', strtotime($month))."</h3>"; ?>
+                <?php echo "<h3> Class: ".$className." - Month: ";
+                if($countMonth >1){
+                    echo date('F', strtotime($months[0])).'/'.date('F-Y', strtotime($months[1]))."</h3>";
+                } else {
+                    echo date('F-Y', strtotime($months[0]))."</h3>"; 
+                } 
+                ?>
                 <ol class="breadcrumb" style="float: right; margin-top: -40px;">
                     <li><a href="./home" style="color: #3C8DBC;"><i class="fa fa-dashboard"></i> Home</a></li>
                     <li><a href="./class-account" style="color: #3C8DBC;">Back</a></li>

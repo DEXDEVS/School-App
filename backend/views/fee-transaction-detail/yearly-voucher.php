@@ -89,12 +89,12 @@
             
                 $yearStart = date('Y-m', strtotime($sessionDetail[0]['session_start_date']));
                 $yearEnd = date('Y-m', strtotime($sessionDetail[0]['session_end_date']));
-                echo $yearStart . $yearEnd;
 
-                $transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fmd.voucher_no = fth.voucher_no WHERE fth.std_id = '$std_id' AND fmd.month >= '$yearStart' AND fmd.month <=  '$yearEnd'")->queryAll();
+                $transactionHead = Yii::$app->db->createCommand("SELECT DISTINCT fmd.voucher_no, fth.* FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fmd.voucher_no = fth.voucher_no WHERE fth.std_id = '$std_id' AND fmd.month >= '$yearStart' AND fmd.month <=  '$yearEnd'")->queryAll();
+                
 
                 if(empty($transactionHead)){
-                     Yii::$app->session->setFlash('warning', "Plese manage the account first, for further proceedings.");
+                     Yii::$app->session->setFlash('warning', "Please manage the account first, for further proceedings.");
                 } else { 
                 global $count;
                 $count = count($transactionHead);
@@ -130,13 +130,23 @@
             <?php 
                 for ($i=0; $i < $count ; $i++) { 
                 $collectionDate = $transactionHead[$i]['collection_date'];
+                $voucher = $transactionHead[$i]['voucher_no'];
+
                     if($transactionHead[$i]['status'] == 'Paid' OR $transactionHead[$i]['status'] == 'Partially Paid' OR $transactionHead[$i]['status'] == 'Added to next month' ){ ?>
                     <tr>
                         <td> 
                             <?php echo $transactionHead[$i]['voucher_no']; ?> 
                         </td>
                         <td> 
-                            <?php echo date('F-Y', strtotime($transactionHead[$i]['month'])); ?> 
+                            <?php
+                            $transactionMonth = Yii::$app->db->createCommand("SELECT fmd.month FROM fee_month_detail as fmd WHERE fmd.voucher_no = '$voucher'")->queryAll();
+                                $countMonth = count($transactionMonth);
+                                if($countMonth >1){
+                                    echo date('F', strtotime($transactionMonth[0]['month'])).'/'.date('F-Y', strtotime($transactionMonth[1]['month']));
+                                } else {
+                                    echo date('F-Y', strtotime($transactionMonth[0]['month'])); 
+                                } 
+                            ?>    
                         </td>
                         <td>
                             <?php echo $transactionHead[$i]['total_amount']; ?>
@@ -166,9 +176,19 @@
                     </div>
                     <tr>
                         <td> 
-                            <?php echo $transactionHead[$i]['voucher_no']; ?> 
+                            <?php echo $voucher; ?> 
                         </td>
-                        <td> <?php echo date('F-Y', strtotime($transactionHead[$i]['month']));?> </td>
+                        <td> 
+                            <?php 
+                                $transactionMonth = Yii::$app->db->createCommand("SELECT fmd.month FROM fee_month_detail as fmd WHERE fmd.voucher_no = '$voucher'")->queryAll();
+                                $countMonth = count($transactionMonth);
+                                if($countMonth >1){
+                                    echo date('F', strtotime($transactionMonth[0]['month'])).'/'.date('F-Y', strtotime($transactionMonth[1]['month']));
+                                } else {
+                                    echo date('F-Y', strtotime($transactionMonth[0]['month'])); 
+                                }
+                            ?>
+                        </td>
                         <td> 
                             <input type="number" name="totalAmount[]" value="<?php echo $transactionHead[$i]['total_amount']; ?>" id="totalAmount_<?php echo $i; ?>" readonly="" class="form-control" style="width: 100px">
                         </td>
@@ -211,7 +231,8 @@
             $yearStart = date('Y-m', strtotime($sessionDetail[0]['session_start_date']));
             $yearEnd = date('Y-m', strtotime($sessionDetail[0]['session_end_date']));
 
-            $transactionHead = Yii::$app->db->createCommand("SELECT * FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fmd.voucher_no = fth.voucher_no WHERE fth.std_id = '$stdId' AND fmd.month >= '$yearStart' AND fmd.month <=  '$yearEnd'")->queryAll();
+            $transactionHead = Yii::$app->db->createCommand("SELECT DISTINCT fmd.voucher_no, fth.*  FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fmd.voucher_no = fth.voucher_no WHERE fth.std_id = '$stdId' AND fmd.month >= '$yearStart' AND fmd.month <=  '$yearEnd'")->queryAll();
+
             if(empty($transactionHead)){
                  Yii::$app->session->setFlash('warning', "Please manage the account first, for further proceedings.");
             } else { 
@@ -248,13 +269,22 @@
         <tbody>
             <?php for ($i=0; $i < $count ; $i++) { 
                 $collectionDate = $transactionHead[$i]['collection_date'];
+                $voucher = $transactionHead[$i]['voucher_no'];
                 if($transactionHead[$i]['status'] == 'Paid' OR $transactionHead[$i]['status'] == 'Partially Paid' OR $transactionHead[$i]['status'] == 'Added to next month'){ ?>
                     <tr>
                         <td> 
                             <?php echo $transactionHead[$i]['voucher_no']; ?> 
                         </td>
                         <td> 
-                            <?php echo date('Y-F', strtotime($transactionHead[$i]['month'])); ?> 
+                            <?php 
+                                $transactionMonth = Yii::$app->db->createCommand("SELECT fmd.month FROM fee_month_detail as fmd WHERE fmd.voucher_no = '$voucher'")->queryAll();
+                                $countMonth = count($transactionMonth);
+                                if($countMonth >1){
+                                    echo date('F', strtotime($transactionMonth[0]['month'])).'/'.date('F-Y', strtotime($transactionMonth[1]['month']));
+                                } else {
+                                    echo date('F-Y', strtotime($transactionMonth[0]['month'])); 
+                                }
+                            ?> 
                         </td>
                         <td> 
                             <?php echo $transactionHead[$i]['total_amount']; ?> 
@@ -286,7 +316,16 @@
                         <?php echo $transactionHead[$i]['voucher_no']; ?> 
                     </td>
                     <td> 
-                        <?php echo date('F-Y', strtotime($transactionHead[$i]['month']));?> 
+                        <?php 
+                            $transactionMonth = Yii::$app->db->createCommand("SELECT fmd.month FROM fee_month_detail as fmd WHERE fmd.voucher_no = '$voucher'")->queryAll();
+
+                            $countMonth = count($transactionMonth);
+                            if($countMonth > 1){
+                                echo date('F', strtotime($transactionMonth[0]['month'])).'/'.date('F-Y', strtotime($transactionMonth[1]['month']));
+                            } else {
+                                echo date('F-Y', strtotime($transactionMonth[0]['month'])); 
+                            }
+                        ?> 
                     </td>
                     <td> 
                        <input type="number" name="totalAmount[]" value="<?php echo $transactionHead[$i]['total_amount']; ?>" id="totalAmount<?php echo $i; ?>" readonly="" class="form-control" style="width: 100px">
