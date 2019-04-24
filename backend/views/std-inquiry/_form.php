@@ -82,7 +82,8 @@ $year = date('y');
                         'options' => ['placeholder' => 'Select Institute'],
                         'pluginOptions' => [
                             'allowClear' => true,
-                            'multiple' => true
+                            'multiple' => true,
+                            'maximumSelectionLength'=> 1,
                         ],
                     ]);
                 ?>
@@ -102,7 +103,8 @@ $year = date('y');
                     'options' => ['placeholder' => 'Select'],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'multiple' => true
+                        'multiple' => true,
+                        'maximumSelectionLength'=> 1,
                     ],
                 ]);
             ?>
@@ -132,7 +134,8 @@ $year = date('y');
                     'options' => ['placeholder' => 'Select'],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'multiple' => true
+                        'multiple' => true,
+                        'maximumSelectionLength'=> 1,
                     ],
                 ]);
             ?>

@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\MarksWeitage;
+use common\models\EmpAttendance;
 
 /**
- * MarksWeitageSearch represents the model behind the search form about `common\models\MarksWeitage`.
+ * EmpAttendanceSearch represents the model behind the search form about `common\models\EmpAttendance`.
  */
-class MarksWeitageSearch extends MarksWeitage
+class EmpAttendanceSearch extends EmpAttendance
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class MarksWeitageSearch extends MarksWeitage
     public function rules()
     {
         return [
-            [['marks_weitage_id', 'exam_category_id', 'subject_id', 'presentation', 'assignment', 'attendance', 'dressing', 'theory', 'practical', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['att_id', 'emp_id', 'created_by', 'updated_by'], 'integer'],
+            [['att_date', 'check_in', 'check_out', 'attendance', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class MarksWeitageSearch extends MarksWeitage
      */
     public function search($params)
     {
-        $query = MarksWeitage::find();
+        $query = EmpAttendance::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,20 +56,18 @@ class MarksWeitageSearch extends MarksWeitage
         }
 
         $query->andFilterWhere([
-            'marks_weitage_id' => $this->marks_weitage_id,
-            'exam_category_id' => $this->exam_category_id,
-            'subject_id' => $this->subject_id,
-            'presentation' => $this->presentation,
-            'assignment' => $this->assignment,
-            'attendance' => $this->attendance,
-            'dressing' => $this->dressing,
-            'theory' => $this->theory,
-            'practical' => $this->practical,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'att_id' => $this->att_id,
+            'emp_id' => $this->emp_id,
+            'att_date' => $this->att_date,
+            'check_in' => $this->check_in,
+            'check_out' => $this->check_out,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'attendance', $this->attendance]);
 
         return $dataProvider;
     }

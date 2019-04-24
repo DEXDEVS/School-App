@@ -10,43 +10,41 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'marks_weitage_id',
-    // ],
-    [
+        [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'exam_category_id',
-        'value'=>'examCategory.category_name',
+        'attribute'=>'app_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'subject_id',
-        'value'=>'subject.subject_name',
+        'attribute'=>'emp_id',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'presentation',
+        'attribute'=>'leave_type',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'assignment',
+        'attribute'=>'starting_date',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ending_date',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'attendance',
+        // 'attribute'=>'applying_date',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'dressing',
+        // 'attribute'=>'no_of_days',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'theory',
+        // 'attribute'=>'leave_purpose',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'practical',
+        // 'attribute'=>'status',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

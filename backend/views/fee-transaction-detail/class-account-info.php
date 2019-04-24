@@ -13,6 +13,7 @@
         $sessionid = $_POST["sessionid"];
         $sectionid = $_POST["sectionid"];
         $months    = $_POST["month"];
+        $countMonth = count($months);
         $month     = $months[0];
         //$month1     = $months[1];     
         // previousMonth
@@ -30,13 +31,21 @@
         // Select Students...
         $student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
 
-        $classAccount = Yii::$app->db->createCommand("SELECT fee_trans_id, total_amount FROM fee_transaction_head WHERE class_name_id = '$classid' AND session_id = '$sessionid' AND section_id = '$sectionid' AND month = '$month'")->queryAll();
+       
+        $classAccount = Yii::$app->db->createCommand("SELECT fth.voucher_no ,fmd.monthly_amount FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fth.voucher_no = fmd.voucher_no WHERE fth.class_name_id = '$classid' AND fth.session_id = '$sessionid' AND fth.section_id = '$sectionid' AND fmd.month = '$month'")->queryAll();
+       
     ?>
 
     <form method="POST" action="class-account">
         <div class="row">
             <div class="col-md-12 text-center" style="margin-top: -20px;">
-                <?php echo "<h3> Class: ".$className." - Month: ".date('F', strtotime($month)) . ' / '.date('F, Y', strtotime($month))."</h3>"; ?>
+                <?php echo "<h3> Class: ".$className." - Month: ";
+                if($countMonth >1){
+                    echo date('F', strtotime($months[0])).'/'.date('F-Y', strtotime($months[1]))."</h3>";
+                } else {
+                    echo date('F-Y', strtotime($months[0]))."</h3>"; 
+                } 
+                ?>
                 <ol class="breadcrumb" style="float: right; margin-top: -40px;">
                     <li><a href="./home" style="color: #3C8DBC;"><i class="fa fa-dashboard"></i> Home</a></li>
                     <li><a href="./class-account" style="color: #3C8DBC;">Back</a></li>
@@ -107,8 +116,12 @@
                             $netTotal = $admissionFee + $tuitionFee + $remainingArrears;
                             $feeType     = Array('1','2','3','4','5','6','7','8');
                             if (!empty($classAccount)) {
-                                $headId = $classAccount[$id]['fee_trans_id'];
-                                $classAccountDetail = Yii::$app->db->createCommand("SELECT fee_type_id, fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = '$headId'")->queryAll(); 
+                                $voucherNo = $classAccount[$id]['voucher_no'];
+                                $detailId = Yii::$app->db->createCommand("SELECT month_detail_id FROM fee_month_detail WHERE voucher_no = '$voucherNo'")->queryAll(); 
+                                $detailHeadId = $detailId[0]['month_detail_id'];
+
+                                $classAccountDetail = Yii::$app->db->createCommand("SELECT fee_type_id, fee_amount FROM fee_transaction_detail WHERE fee_trans_detail_head_id = '$detailHeadId'")->queryAll(); 
+                                
                                 $updateCount = count($classAccountDetail);
                                 // adjust feeType Array with index....
                                 for ($x=0; $x < $updateCount ; $x++) {     
@@ -160,7 +173,7 @@
                         <?php 
                         for($m=0; $m < 8; $m++){
                             if($feeType[$m] == 1){
-                            if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
+                            if(!empty($classAccountDetail)){ ?>
                                 <td align="center">
                                     <input class="form-control text-center" type="number" name="admission_fee[]" value="<?php echo $feeAmount[$m]; ?>" readonly="" id="admissionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
                                 </td> 
@@ -171,7 +184,7 @@
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 2){
-                                if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
+                                if(!empty($classAccountDetail)){ ?>
                                     <td align="center">
                                         <input class="form-control text-center" type="number" name="tuition_fee[]" value="<?php echo $feeAmount[$m]; ?>" readonly="" id="tuitionFee_<?php echo $id; ?>" style="width: 70px; border: none;">
                                     </td>
@@ -182,7 +195,7 @@
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 3){
-                                if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
+                                if(!empty($classAccountDetail)){ ?>
                                     <td>
                                         <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
                                     </td>
@@ -193,7 +206,7 @@
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 4){
-                                if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
+                                if(!empty($classAccountDetail)){ ?>
                                    <td>
                                         <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="activity_fee[]"  onChange="activityFee(<?php echo $id; ?>)"  style="width: 70px; border: none;">
                                     </td> 
@@ -204,7 +217,7 @@
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 5){
-                                if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
+                                if(!empty($classAccountDetail)){ ?>
                                    <td>
                                         <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="stationary_expense[]"  onChange="stationaryExpense(<?php echo $id; ?>)" style="width: 100px; border: none;">
                                     </td> 
@@ -215,7 +228,7 @@
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 6){
-                                if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
+                                if(!empty($classAccountDetail)){ ?>
                                    <td>
                                         <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="board_uni_fee[]"  onChange="boardUniFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td> 
@@ -226,7 +239,7 @@
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 7){
-                                if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
+                                if(!empty($classAccountDetail)){ ?>
                                    <td>
                                         <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td> 
@@ -237,7 +250,7 @@
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 8){
-                                if(!empty($classAccountDetail) && $updateArray[$m] == $feeType[$m] ){ ?>
+                                if(!empty($classAccountDetail)){ ?>
                                    <td>
                                         <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="arrears[]" readonly="" style="width: 70px; border: none;">
                                     </td> 
@@ -252,7 +265,7 @@
                         // ending of m loop...
                                 if(!empty($classAccountDetail)){ ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name="total_amount[]" value="<?php echo $classAccount[$id]['total_amount'] ; ?>"  style="width: 80px; border: none;">
+                                        <input class="form-control text-center" type="number" id="totalAmount_<?php echo $id; ?>" readonly="" name="total_amount[]" value="<?php echo $classAccount[$id]['monthly_amount'] ; ?>"  style="width: 80px; border: none;">
                                     </td> 
                             <?php } else { ?>
                                     <td>

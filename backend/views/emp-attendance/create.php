@@ -2,13 +2,13 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\MarksWeitage */
-?>
-<div class="marks-weitage-update">
 
+/* @var $this yii\web\View */
+/* @var $model common\models\EmpAttendance */
+
+?>
+<div class="emp-attendance-create">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

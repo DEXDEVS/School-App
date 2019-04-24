@@ -100,6 +100,11 @@ class StdSubjectsController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                    $array = $model->subId;
+                    $subject = implode(",", $array);
+                    $model->std_subject_name = $subject;
+                    $model->save();
+        
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new StdSubjects",

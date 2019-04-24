@@ -22,7 +22,7 @@ CrudAsset::register($this);
         color: white;
     }
     h1{ 
-        color: #AA5397; 
+        color: black; 
     }
 </style>
 <div class="emp-info-index">

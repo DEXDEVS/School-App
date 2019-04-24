@@ -165,26 +165,27 @@
                     // Fee Module close...
                     // ------------------------------------------------
                     // Exams module start here
-                    [
-                        'label' => 'Examination',
-                        'icon' => 'book',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
-                            ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
-                            ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weitage"],],
-                            // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
-                            // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
-                            ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
-                            ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
-                            ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Quiz System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Examination Controller', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            // ['label' => 'Result cards', 'icon' => 'caret-right', 'url' => ["/view-result-cards "],],
+                    // [
+                    //     'label' => 'Examination',
+                    //     'icon' => 'book',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
+                    //         ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
+                    //         ['label' => 'Marks Weightage Type', 'icon' => 'caret-right', 'url' => ["/marks-weightage-type"],],
+                    //         ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weightage-head"],],
+                    //         // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
+                    //         // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
+                    //         ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
+                    //         ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
+                    //         ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Quiz System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Examination Controller', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         // ['label' => 'Result cards', 'icon' => 'caret-right', 'url' => ["/view-result-cards "],],
                             
-                        ],
-                    ],
+                    //     ],
+                    // ],
                     // ------------------------------------------------
                     // Exams module close ...
                     // ------------------------------------------------
@@ -196,7 +197,18 @@
                         'items' => [
                             ['label' => 'Employee Registration', 'icon' => 'caret-right', 'url' => './emp-info',],
                             ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => './teacher-subject-assign-head',],
-                            ['label' => 'Attendance System', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            [
+                                'label' => 'Attendance & Leave',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Manage Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance',],
+                                    ['label' => 'Attendance Report', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    ['label' => 'Manage Leave', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    ['label' => 'Leave Report', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                ],
+                            ],
+
                             ['label' => 'Payroll System', 'icon' => 'caret-right', 'url' => './premium-version',],
                             ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => './premium-version',],
                             ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => './premium-version',],
@@ -323,8 +335,8 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                             // ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
-                            // ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
+                             ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
+                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
                             ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],

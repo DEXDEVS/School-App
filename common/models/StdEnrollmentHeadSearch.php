@@ -18,8 +18,8 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
     public function rules()
     {
         return [
-            [['std_enroll_head_id', 'branch_id', 'class_name_id', 'session_id', 'section_id', 'created_by', 'updated_by'], 'integer'],
-            [['std_enroll_head_name', 'created_at', 'updated_at'], 'safe'],
+            [['std_enroll_head_id','class_name_id', 'session_id', 'section_id', 'created_by', 'updated_by'], 'integer'],
+            [[ 'branch_id', 'std_enroll_head_name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -54,10 +54,9 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
                 // $query->where('0=1');
                 return $dataProvider;
             }
-
+            $query->joinWith('branch');
             $query->andFilterWhere([
                 'std_enroll_head_id' => $this->std_enroll_head_id,
-                'branch_id' =>$this->branch_id,
                 'class_name_id' => $this->class_name_id,
                 'session_id' => $this->session_id,
                 'section_id' => $this->section_id,
@@ -67,7 +66,8 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
                 'updated_by' => $this->updated_by,
             ]);
 
-            $query->andFilterWhere(['like', 'std_enroll_head_name', $this->std_enroll_head_name]);
+            $query->andFilterWhere(['like', 'std_enroll_head_name', $this->std_enroll_head_name])
+                ->andFilterWhere(['like', 'branches.branch_name', $this->branch_id]);
 
             return $dataProvider;
         } else {

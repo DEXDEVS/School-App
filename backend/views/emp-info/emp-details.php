@@ -355,7 +355,7 @@
                   <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Refrence Information</p>
                 </div>
                 <div class="col-md-2 col-md-offset-5">
-                  <a href="emp-reference-update?id=<?php echo $empRefID;?>" class="btn btn-primary btn-sm fa fa-edit" style='color: white;'> Edit </a>
+                  <a href="./emp-reference-update?id=<?php echo $empRefID;?>" class="btn btn-primary btn-sm fa fa-edit" style='color: white;'> Edit </a>
                 </div>
               </div><hr>
               <!-- Employee refrence info start -->
