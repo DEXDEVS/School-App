@@ -126,6 +126,41 @@
                             ['label' => 'Class Fee Report', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-class-account-fee-report"]
                         ],
                     ],
+                    [
+                        'label' => 'Fee',
+                        'icon' => 'credit-card',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Class Account',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Manage Accounts', 'icon' => 'chevron-right', 'url' => './class-account',],
+                                    ['label' => 'Generate Vouchers', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-fee-voucher',],
+                                ],
+                            ],
+                            [
+                                'label' => 'Student Account',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Manage Account', 'icon' => 'chevron-right', 'url' => './student-account',],
+                                    ['label' => 'Generate Voucher', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-student-voucher',],
+                                ],
+                            ],
+                            [
+                                'label' => 'Vouchers Collection',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Collect Voucher', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-collect-voucher',],
+                                    //['label' => 'Monthly Collection', 'icon' => 'caret-right', 'url' => "./monthly-voucher"],
+                                    ['label' => 'Student Account Detail', 'icon' => 'chevron-right', 'url' => "./yearly-voucher"],
+                                ],
+                            ],
+                        ],
+                    ],
                     // ------------------------------------------------
                     // Fee Module close...
                     // ------------------------------------------------
