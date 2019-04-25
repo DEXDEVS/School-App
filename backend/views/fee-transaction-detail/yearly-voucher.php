@@ -370,6 +370,7 @@ if(isset($_POST['save'])){
     $voucherNo  = $_POST["voucherNo"];
     $counts     =count($paidAmount);
     $totalAmount = 0;
+    $branch_id = Yii::$app->user->identity->branch_id;
 
     $transaction = \Yii::$app->db->beginTransaction();
     try {
@@ -378,14 +379,15 @@ if(isset($_POST['save'])){
             $totalAmount += $paidAmount[$i]; 
         }
         $account = Yii::$app->db->createCommand()->insert('account_transactions', [
-                            'account_nature'=> 'Income',  
-                            'account_register_id' => 5,
-                            'date' => new \yii\db\Expression('NOW()'),
-                            'description' => $status[0],
-                            'total_amount' => $totalAmount,
-                            'created_at' => new \yii\db\Expression('NOW()'),
-                            'created_by' => Yii::$app->user->identity->id,
-                        ])->execute();
+            'branch_id'=> $branch_id,
+            'account_nature'=> 'Income',  
+            'account_register_id' => 5,
+            'date' => new \yii\db\Expression('NOW()'),
+            'description' => "Amount ".$status[0]." By Voucher #: ".$voucherNo$,
+            'total_amount' => $totalAmount,
+            'created_at' => new \yii\db\Expression('NOW()'),
+            'created_by' => Yii::$app->user->identity->id,
+        ])->execute();
         if ($account) {
             $transaction->commit();
             // success alert message...

@@ -10,9 +10,11 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'trans_id',
+            //'trans_id',
+            //'branch_id',
+            'branch.branch_name',
             'account_nature',
-            'account_register_id',
+            'accountRegister.account_name',
             'date',
             'description',
             'total_amount',

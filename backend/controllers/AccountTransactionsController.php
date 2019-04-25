@@ -31,7 +31,7 @@ class AccountTransactionsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-nature'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -115,6 +115,8 @@ class AccountTransactionsController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
+                        $branch_id = Yii::$app->user->identity->branch_id;
+                        $model->branch_id  = $branch_id;
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
                         $model->updated_by = '0';
