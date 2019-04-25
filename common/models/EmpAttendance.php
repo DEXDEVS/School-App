@@ -52,8 +52,8 @@ class EmpAttendance extends \yii\db\ActiveRecord
     {
         return [
             'att_id' => 'Att ID',
-            'emp_id' => 'Emp ID',
-            'att_date' => 'Att Date',
+            'emp_id' => 'Employee Name',
+            'att_date' => 'Date',
             'check_in' => 'Check In',
             'check_out' => 'Check Out',
             'attendance' => 'Attendance',

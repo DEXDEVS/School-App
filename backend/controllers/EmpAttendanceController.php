@@ -8,6 +8,7 @@ use common\models\EmpAttendanceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -22,6 +23,20 @@ class EmpAttendanceController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-att-report','final-attendance'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -31,7 +46,18 @@ class EmpAttendanceController extends Controller
             ],
         ];
     }
-
+      public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+     public function actionEmpAttReport()
+    { 
+        return $this->render('emp-att-report');
+    }
+     public function actionFinalAttendance()
+    { 
+        return $this->render('final-attendance');
+    }
     /**
      * Lists all EmpAttendance models.
      * @return mixed
@@ -102,20 +128,42 @@ class EmpAttendanceController extends Controller
             }else if($model->load($request->post())){
                     $cnic = $model->emp_cnic;
                     $check_in = $model->check_in;
-                    $check_out = $model->check_out;
                     $emp_id = Yii::$app->db->createCommand("SELECT emp_id FROM emp_info WHERE emp_cnic = '$cnic'")->queryAll();
-                    var_dump($check_in);
+                    $date = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+                    $empId = $emp_id[0]['emp_id'];
 
-                    $model->emp_id = $emp_id[0]['emp_id'];
-                    $model->att_date = Yii::$app->formatter->asDate('now', 'dd-MM-yyyy');
-                    $model->check_in = Yii::$app->formatter->asTime('now', 'H:i:s');
-                    $model->check_out = time('H:i:s');
-                    $model->attendance = "P";
-                    $model->created_by = Yii::$app->user->identity->id; 
-                    $model->created_at = new \yii\db\Expression('NOW()');
-                    $model->updated_by = '0';
-                    $model->updated_at = '0';
-                    $model->save();
+                    if($check_in == 0){
+                        $emp_att = Yii::$app->db->createCommand("SELECT emp_id FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '2019-04-05' ")->queryAll();
+
+                        if(!empty($emp_att)){
+                            Yii::$app->session->setFlash('warning',"You have already checked in..!");
+                        } else {
+                            $model->emp_id = $empId;
+                            $model->att_date = "2019-04-05";
+                            $model->check_in = Yii::$app->formatter->asDatetime('now', 'H:i:s');
+                            $model->attendance = "P";
+                            $model->created_by = Yii::$app->user->identity->id; 
+                            $model->created_at = new \yii\db\Expression('NOW()');
+                            $model->updated_by = '0';
+                            $model->updated_at = '0';
+                            $model->save();
+                        }
+                    }
+                    if($check_in == 1){
+                        $emp_att = Yii::$app->db->createCommand("SELECT check_in FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '2019-04-05' ")->queryAll();
+                        
+                        if(empty($emp_att)){
+                            Yii::$app->session->setFlash('warning',"You are not checked in yet..!");
+                        } else {
+                            $att = Yii::$app->db->createCommand()->update('emp_attendance', [
+                                'check_out'=> Yii::$app->formatter->asDatetime('now', 'H:i:s'),
+                                'updated_at'    => new \yii\db\Expression('NOW()'),
+                                'updated_by'    => Yii::$app->user->identity->id,
+                                ],
+                                ['emp_id' => $emp_id, 'att_date' => "2019-04-05"]
+                            )->execute();
+                        }
+                    }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new EmpAttendance",

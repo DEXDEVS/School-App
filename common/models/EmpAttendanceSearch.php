@@ -41,10 +41,11 @@ class EmpAttendanceSearch extends EmpAttendance
      */
     public function search($params)
     {
-        $query = EmpAttendance::find();
+        $query = EmpAttendance::find()->where(['att_date'=>Yii::$app->formatter->asDate('now', 'yyyy-MM-dd')]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => false,
         ]);
 
         $this->load($params);
