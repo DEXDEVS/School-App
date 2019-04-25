@@ -43,7 +43,7 @@
 	$classes = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE branch_id = '$id' AND  delete_status = 1")->queryAll();
 	$countclasses = count($classes);  
   // employee query...
-	$employees = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_branch_id  = '$id' AND delete_status = 1")->queryAll();
+	$employees = Yii::$app->db->createCommand("SELECT emp_id FROM emp_info as e INNER JOIN emp_designation as ed ON e.emp_designation_id = ed.emp_designation_id WHERE e.emp_branch_id  = '$id' AND e.delete_status = 1 AND ed.emp_designation != 'Principal'")->queryAll();
   $teacher = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_branch_id  = '$id' AND  emp_designation_id = 4 AND delete_status = 1")->queryAll();
   // Employee Designation...
   $empDesignation = Yii::$app->db->createCommand("SELECT * FROM emp_designation WHERE  delete_status = 1")->queryAll();

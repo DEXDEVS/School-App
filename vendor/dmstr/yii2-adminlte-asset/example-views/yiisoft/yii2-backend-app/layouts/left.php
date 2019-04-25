@@ -117,13 +117,35 @@
                         'icon' => 'credit-card',
                         'url' => '#',
                         'items' => [
-                            //['label' => 'Manage Fee Vouchers', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-transaction-detail',],
-                            ['label' => 'Manage Class Account', 'icon' => 'caret-right', 'url' => "./class-account"],
-                            ['label' => 'Generate Vouchers', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-fee-voucher"],
-                            ['label' => 'Collect Vouchers', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-collect-voucher"],
-                            ['label' => 'Monthly Collection', 'icon' => 'caret-right', 'url' => "./monthly-voucher"],
-                            ['label' => 'Yearly Collection', 'icon' => 'caret-right', 'url' => "./yearly-voucher"],
-                            ['label' => 'Class Fee Report', 'icon' => 'caret-right', 'url' => "./fee-transaction-detail-class-account-fee-report"]
+                            [
+                                'label' => 'Class Account',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Manage Accounts', 'icon' => 'chevron-right', 'url' => './class-account',],
+                                    ['label' => 'Generate Vouchers', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-fee-voucher',],
+                                ],
+                            ],
+                            [
+                                'label' => 'Student Account',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Manage Account', 'icon' => 'chevron-right', 'url' => './student-account',],
+                                    ['label' => 'Generate Voucher', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-student-voucher',],
+                                ],
+                            ],
+                            [
+                                'label' => 'Vouchers Collection',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Collect Voucher', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-collect-voucher',],
+                                    //['label' => 'Monthly Collection', 'icon' => 'caret-right', 'url' => "./monthly-voucher"],
+                                    ['label' => 'Student Account Detail', 'icon' => 'chevron-right', 'url' => "./yearly-voucher"],
+                                ],
+                            ],
+                            ['label' => 'Class Fee Report', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-class-account-fee-report',],
                         ],
                     ],
                     // ------------------------------------------------
@@ -183,6 +205,29 @@
                     ],
                     // ------------------------------------------------
                     // Employee Module close...
+                    // Account Module start...
+                    [
+                        'label' => 'Accounting System',
+                        'icon' => 'credit-card',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
+                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
+                            ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+
+                            ['label' => 'Transaction Logs', 'icon' => 'caret-right', 'url' => ["./premium-version"],]
+
+                        ],
+                    ],
+                    // ------------------------------------------------
+                    // Account Module close...
                     // ------------------------------------------------
                     // Msg of Day start...
                     [
@@ -294,31 +339,7 @@
                     ['label' => 'Alumni', 'icon' => 'recycle', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Alumni close...                    
-                     // Account Module start...
-                    [
-                        'label' => 'Account Module',
-                        'icon' => 'credit-card',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                             ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
-                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
-                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-
-                            ['label' => 'Transaction Logs', 'icon' => 'caret-right', 'url' => ["./premium-version"],]
-
-                        ],
-                    ],
-                    // ------------------------------------------------
-                    // Account Module close...
+                     
                     // ------------------------------------------------
                     
                     // System Settings start...

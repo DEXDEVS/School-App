@@ -15,7 +15,7 @@
 <body>
 
 <div class="container-fluid" style="margin-top: -30px;">
-	<h1 class="well well-sm bg-navy" align="center">Voucher Collection</h1>
+	<h1 class="well well-sm bg-navy" align="center" style="font-family: serif;">Collect Voucher</h1>
     <form method="POST">
     	<div class="row">
             <div class="col-md-4">
@@ -209,21 +209,44 @@ if(isset($_POST['save'])){
     $remainingAmount  = $_POST["remaining_amount"];
     $status           = $_POST["status"];
     $collectionDate   = new \yii\db\Expression('NOW()');
+    $branch_id = Yii::$app->user->identity->branch_id;
 
-    $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount, 'remaining'=> $remainingAmount , 'status' => $status, 'collection_date' => $collectionDate], ['voucher_no' => $voucherNo])->execute();
+    $transaction = \Yii::$app->db->beginTransaction();
+    try {
+        $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount, 'remaining'=> $remainingAmount , 'status' => $status, 'collection_date' => $collectionDate], ['voucher_no' => $voucherNo])->execute();
+
+        $account = Yii::$app->db->createCommand()->insert('account_transactions', [
+                'branch_id'=> $branch_id,
+                'account_nature'=> 'Income',  
+                'account_register_id' => 5,
+                'date' => new \yii\db\Expression('NOW()'),
+                'description' => "Amount ".$status." By Voucher #: ".$voucherNo,
+                'total_amount' => $paidAmount,
+                'created_at' => new \yii\db\Expression('NOW()'),
+                'created_by' => Yii::$app->user->identity->id,
+            ])->execute();
      
-    if ($updateTransactionHead) {
-    	if ($status == "Partially Paid") {
-    		// success partaill paid alert message...
-        	Yii::$app->session->setFlash('success', "Voucher Partially Paid Successfully...!"); 
-    	} else if ($status == "Paid") {
-        	// success alert message...
-        	Yii::$app->session->setFlash('success', "Voucher Paid Successfully...!"); 
-        } else {
-        	// failure alert message
-        	Yii::$app->session->setFlash('danger', "Voucher not paid, Try again...!");      
-    	}
-	}
+        if ($updateTransactionHead) {
+            $transaction->commit();
+            // success alert message...
+            if ($status == "Partially Paid") {
+                // success partaill paid alert message...
+                Yii::$app->session->setFlash('success', "Voucher Partially Paid Successfully...!"); 
+            } else if ($status == "Paid") {
+                // success alert message...
+                Yii::$app->session->setFlash('success', "Voucher Paid Successfully...!"); 
+            } else {
+                // failure alert message
+                Yii::$app->session->setFlash('danger', "Voucher not paid, Try again...!");      
+            } 
+        } 
+    } 
+    // ending try....
+    catch (Exception $e) {
+        $transaction->rollBack();
+        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+    }
+    // ending catch...
 }
 // ending isset....!
 ?>  

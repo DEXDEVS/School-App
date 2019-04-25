@@ -75,8 +75,9 @@ $('#accountRegister').on('change',function(){
         data:{accountRegister:accountRegister},
         url: "$url",
             success: function(result){ 
-                var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1)); 
-                var nature = jsonResult['account_nature_name'];
+                var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1)); 
+                var data = jsonResult[0];
+                var nature = data['account_nature_name'];
                 $('#accountNature').val(nature);
             }         
     }); 

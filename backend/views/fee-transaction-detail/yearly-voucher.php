@@ -15,11 +15,11 @@
 <body>
 
 <div class="container-fluid" style="margin-top: -30px;">
-	<h1 class="well well-sm bg-navy" align="center">Yearly Fee Collection</h1>
+	<h1 class="well well-sm bg-navy" align="center" style="font-family: serif;">Student Account Detail</h1>
     <form method="POST">
     	<div class="row">
             <div class="col-md-8">
-                <p class="text-green"><i><b>Enter <span class="text-red">Registration Number</span> or Select <span class="text-red">Class</span> and <span class="text-red">Student</span> to view Fee Details</i></b></p>
+                <p class="text-green"><i><b>Enter <span class="text-red">Registration Number</span> or Select <span class="text-red">Class</span> and <span class="text-red">Student</span> to view Details</i></b></p>
                 <div class="form-group">
                     <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
                 </div>    
@@ -59,7 +59,7 @@
             </div>    
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> View Fee Details</b></button>
+                    <button type="submit" name="submit" class="btn btn-success btn-flat"><i class="fa fa-sign-in"></i><b> View Details</b></button>
                 </div>    
             </div>   
         </div>
@@ -370,6 +370,7 @@ if(isset($_POST['save'])){
     $voucherNo  = $_POST["voucherNo"];
     $counts     =count($paidAmount);
     $totalAmount = 0;
+    $branch_id = Yii::$app->user->identity->branch_id;
 
     $transaction = \Yii::$app->db->beginTransaction();
     try {
@@ -378,14 +379,15 @@ if(isset($_POST['save'])){
             $totalAmount += $paidAmount[$i]; 
         }
         $account = Yii::$app->db->createCommand()->insert('account_transactions', [
-                            'account_nature'=> 'Income',  
-                            'account_register_id' => 5,
-                            'date' => new \yii\db\Expression('NOW()'),
-                            'description' => $status[0],
-                            'total_amount' => $totalAmount,
-                            'created_at' => new \yii\db\Expression('NOW()'),
-                            'created_by' => Yii::$app->user->identity->id,
-                        ])->execute();
+            'branch_id'=> $branch_id,
+            'account_nature'=> 'Income',  
+            'account_register_id' => 5,
+            'date' => new \yii\db\Expression('NOW()'),
+            'description' => "Amount ".$status[0]." By Voucher #: ".$voucherNo$,
+            'total_amount' => $totalAmount,
+            'created_at' => new \yii\db\Expression('NOW()'),
+            'created_by' => Yii::$app->user->identity->id,
+        ])->execute();
         if ($account) {
             $transaction->commit();
             // success alert message...
