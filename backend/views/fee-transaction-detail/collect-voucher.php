@@ -15,7 +15,7 @@
 <body>
 
 <div class="container-fluid" style="margin-top: -30px;">
-	<h1 class="well well-sm bg-navy" align="center">Voucher Collection</h1>
+	<h1 class="well well-sm bg-navy" align="center" style="font-family: serif;">Collect Voucher</h1>
     <form method="POST">
     	<div class="row">
             <div class="col-md-4">
