@@ -1,6 +1,7 @@
 <?php 
 
-	$empInfo = Yii::$app->db->createCommand("SELECT * FROM emp_info")->queryAll();
+	$branch_id = Yii::$app->user->identity->branch_id;
+	$empInfo = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_branch_id = '$branch_id'")->queryAll();
 	$countEmp = count($empInfo);
 
  ?>
@@ -23,14 +24,14 @@
 						<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">
 						<div class="form-group">
 							<label><i class="glyphicon glyphicon-user" style="color:#3C8DBC;"></i> Select Employee</label>
-							<select name="emp_id" class="form-control" required>
+							<select name="empId" class="form-control" required>
 								<option value="">-- Select Employee --</option>
 								<?php  
 
 								for ($i=0; $i <$countEmp ; $i++) { 
 									$empName = $empInfo[$i]['emp_name'];
 								?>
-								<option value="<?php echo $empInfo[0]['emp_id']; ?>">
+								<option value="<?php echo $empInfo[$i]['emp_id']; ?>">
 									<?php echo $empName; ?>
 								</option>
 								<?php } ?>
@@ -49,7 +50,7 @@
 
 		if(isset($_POST['report'])){
 
-			$emp_id = $_POST['emp_id'];
+			$emp_id = $_POST['empId'];
 			$month_report = $_POST['month_report'];
 
 			$empWorkingDays = Yii::$app->db->createCommand("SELECT attendance FROM emp_attendance WHERE emp_id = '$emp_id' AND  DATE_FORMAT(att_Date ,'%Y-%m') = '$month_report'")->queryAll();

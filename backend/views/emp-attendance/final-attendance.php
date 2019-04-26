@@ -35,14 +35,16 @@
 			$day = date('l',strtotime($date));
 			$dateformat = date('d-m-Y',strtotime($date));
 
+			$branch_id = Yii::$app->user->identity->branch_id;
+
 			$empAttId = array();
-			$empIds = Yii::$app->db->createCommand("SELECT emp_id FROM emp_attendance WHERE att_date = '$date'")->queryAll();
+			$empIds = Yii::$app->db->createCommand("SELECT emp_id FROM emp_attendance WHERE att_date = '$date' AND branch_id = '$branch_id'")->queryAll();
 			foreach ($empIds as $key => $value) {
 				$empAttId[$key] = $value['emp_id'];
 			}
 
 			$empInfoId = array();
-			$empIds_2 = Yii::$app->db->createCommand("SELECT emp_id FROM emp_info")->queryAll();
+			$empIds_2 = Yii::$app->db->createCommand("SELECT emp_id FROM emp_info WHERE emp_branch_id = '$branch_id'")->queryAll();
 			foreach ($empIds_2 as $key => $value) {
 				$empInfoId[$key] = $value['emp_id'];
 			}
@@ -91,6 +93,7 @@
 						</table>
 						<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">
 						<input type="hidden" name="date" value="<?php echo $date; ?>">
+						<input type="hidden" name="branch_id" value="<?php echo $branch_id; ?>">
 						<?php 
 
 						foreach ($result as $key => $valu) { ?>
@@ -110,6 +113,7 @@
 		{
 			$absentDate = $_POST['date'];
 			$employee_id = $_POST['absent'];
+			$branch_id = $_POST['branch_id'];
 			$countEmployee_id = count($employee_id);
 
 			$transection = Yii::$app->db->beginTransaction();
@@ -118,6 +122,7 @@
 
 				for ($i=0; $i <$countEmployee_id ; $i++) { 
 				$emp_absent = Yii::$app->db->createCommand()->insert('emp_attendance',[
+							'branch_id'		=> $branch_id,		
 	            			'emp_id' 		=> $employee_id[$i],
 							'att_date' 		=> $absentDate,
 							'check_in' 		=> '00:00:00',
@@ -134,7 +139,6 @@
 			} // closing of try
 			catch(Exception $e){
 				$transection->rollback();
-				echo $e;
 				Yii::$app->session->setFlash('danger', "Not marked...Try again...!!!");
 			} // closing of catch
 

@@ -19,7 +19,7 @@ class EmpLeaveSearch extends EmpLeave
     {
         return [
             [['app_id', 'emp_id', 'no_of_days', 'created_by', 'updated_by'], 'integer'],
-            [['leave_type', 'starting_date', 'ending_date', 'applying_date', 'leave_purpose', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['leave_type', 'starting_date', 'ending_date', 'applying_date', 'leave_purpose', 'status', 'remarks', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,11 @@ class EmpLeaveSearch extends EmpLeave
      */
     public function search($params)
     {
-        $query = EmpLeave::find();
+        $branch_id = Yii::$app->user->identity->branch_id;
+        $userCnic = Yii::$app->user->identity->username;
+        $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_cnic = '$userCnic'")->queryAll();
+
+        $query = EmpLeave::find()->where(['emp_id'=>$empId[0]['emp_id'], 'branch_id'=>$branch_id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -70,7 +74,8 @@ class EmpLeaveSearch extends EmpLeave
 
         $query->andFilterWhere(['like', 'leave_type', $this->leave_type])
             ->andFilterWhere(['like', 'leave_purpose', $this->leave_purpose])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'remarks', $this->remarks]);
 
         return $dataProvider;
     }

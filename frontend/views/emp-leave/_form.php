@@ -13,13 +13,10 @@ use dosamigos\datetimepicker\DateTimePicker;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
-        <div class="col-md-4">
-             <?= $form->field($model, 'emp_id')->textInput() ?>
+        <div class="col-md-6">
+           <?= $form->field($model, 'leave_type')->dropDownList([ 'Casual Leave' => 'Casual Leave', 'Medical Leave' => 'Medical Leave'], ['prompt' => 'Select Leave Type']) ?>
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'leave_type')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label>Starting Date</label>
             <?= DateTimePicker::widget([
                 'model' => $model,
@@ -35,7 +32,7 @@ use dosamigos\datetimepicker\DateTimePicker;
         </div>
     </div>
      <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label>Ending Date</label>
             <?= DateTimePicker::widget([
                 'model' => $model,
@@ -49,21 +46,7 @@ use dosamigos\datetimepicker\DateTimePicker;
                 ]
             ]);?>
         </div>
-        <div class="col-md-4">
-            <label>Applying Date</label>
-            <?= DateTimePicker::widget([
-                'model' => $model,
-                'attribute' => 'applying_date',
-                'language' => 'en',
-                'size' => 'ms',
-                'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy-mm-dd HH:ii:ss',
-                    'todayBtn' => true
-                ]
-            ]);?>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
              <?= $form->field($model, 'no_of_days')->textInput() ?>
         </div>
     </div>
@@ -73,11 +56,11 @@ use dosamigos\datetimepicker\DateTimePicker;
         </div>
     </div>   
 
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
-	<?php } ?>
+    <?php if (!Yii::$app->request->isAjax){ ?>
+        <div class="form-group">
+            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+    <?php } ?>
 
     <?php ActiveForm::end(); ?>
     

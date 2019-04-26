@@ -19,6 +19,7 @@ use yii\widgets\DetailView;
             'no_of_days',
             'leave_purpose',
             'status',
+            'remarks',
             'created_at',
             'updated_at',
             'created_by',
