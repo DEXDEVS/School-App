@@ -115,6 +115,7 @@ return [
                 'partial-voucher-head' => 'fee-transaction-detail/partial-voucher-head',
                 'monthly-voucher' => 'fee-transaction-detail/monthly-voucher',
                 'yearly-voucher' => 'fee-transaction-detail/yearly-voucher',
+                'student-account' => 'fee-transaction-detail/student-account',
                 //std-enrollment
                 'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-enrollment-head' => 'std-enrollment-head/index',

@@ -232,6 +232,7 @@
             $yearEnd = date('Y-m', strtotime($sessionDetail[0]['session_end_date']));
 
             $transactionHead = Yii::$app->db->createCommand("SELECT DISTINCT fmd.voucher_no, fth.*  FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fmd.voucher_no = fth.voucher_no WHERE fth.std_id = '$stdId' AND fmd.month >= '$yearStart' AND fmd.month <=  '$yearEnd'")->queryAll();
+        
 
             if(empty($transactionHead)){
                  Yii::$app->session->setFlash('warning', "Please manage the account first, for further proceedings.");
@@ -383,7 +384,7 @@ if(isset($_POST['save'])){
             'account_nature'=> 'Income',  
             'account_register_id' => 5,
             'date' => new \yii\db\Expression('NOW()'),
-            'description' => "Amount ".$status[0]." By Voucher #: ".$voucherNo$,
+            'description' => "Amount ".$status[0]." By Voucher #: ".$voucherNo,
             'total_amount' => $totalAmount,
             'created_at' => new \yii\db\Expression('NOW()'),
             'created_by' => Yii::$app->user->identity->id,
