@@ -39,7 +39,7 @@ class EmpAttendance extends \yii\db\ActiveRecord
         return [
             [['emp_cnic'], 'required'],
             [['emp_id', 'created_by', 'updated_by'], 'integer'],
-            [['att_date', 'check_in', 'check_out', 'created_at', 'updated_at', 'emp_id', 'att_date', 'attendance', 'created_by', 'updated_by'], 'safe'],
+            [['att_date', 'check_in', 'check_out', 'created_at', 'updated_at', 'emp_id', 'att_date', 'attendance', 'created_by', 'updated_by', 'branch_id'], 'safe'],
             [['attendance'], 'string', 'max' => 2],
             [['emp_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['emp_id' => 'emp_id']],
         ];

@@ -103,6 +103,7 @@ return [
                 'emp-download-doc' => 'emp-documents/download-doc',
                 'emp-type' => 'emp-type/index',
                 'emp-designation' => 'emp-designation/index',
+                
                 //fee-transaction-detail
                 'class-account' => 'fee-transaction-detail/class-account',
                 'fee-transaction-detail-fee-voucher' => 'fee-transaction-detail/fee-voucher',
@@ -115,6 +116,8 @@ return [
                 'partial-voucher-head' => 'fee-transaction-detail/partial-voucher-head',
                 'monthly-voucher' => 'fee-transaction-detail/monthly-voucher',
                 'yearly-voucher' => 'fee-transaction-detail/yearly-voucher',
+                'student-account' => 'fee-transaction-detail/student-account',
+                'student-account-info' => 'fee-transaction-detail/student-account-info',
                 //std-enrollment
                 'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-enrollment-head' => 'std-enrollment-head/index',

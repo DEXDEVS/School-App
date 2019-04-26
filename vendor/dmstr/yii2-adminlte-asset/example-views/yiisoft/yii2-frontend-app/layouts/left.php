@@ -105,6 +105,12 @@
                              ['label' => 'Email', 'icon' => 'caret-right', 'url' => ["./home"],],
                         ]
                     ],
+
+                   [
+                        'label' => 'Apply Leave',
+                        'icon' => '',
+                        'url' => './emp-leave',
+                    ],
                     
                     // ------------------------------------------------
                     // Student Attendance end...

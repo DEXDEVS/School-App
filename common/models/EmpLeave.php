@@ -16,6 +16,7 @@ use Yii;
  * @property int $no_of_days
  * @property string $leave_purpose
  * @property string $status
+ * @property string $remarks
  * @property string $created_at
  * @property string $updated_at
  * @property int $created_by
@@ -39,12 +40,13 @@ class EmpLeave extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['emp_id', 'leave_type', 'starting_date', 'ending_date', 'applying_date', 'no_of_days', 'leave_purpose', 'status', 'created_by', 'updated_by'], 'required'],
-            [['emp_id', 'no_of_days', 'created_by', 'updated_by'], 'integer'],
-            [['starting_date', 'ending_date', 'applying_date', 'created_at', 'updated_at'], 'safe'],
-            [['leave_type'], 'string', 'max' => 50],
+            [['leave_type', 'starting_date', 'ending_date','no_of_days', 'leave_purpose'], 'required'],
+            [['emp_id',  'no_of_days', 'created_by', 'updated_by'], 'integer'],
+            [['leave_type'], 'string'],
+            [['emp_id', 'starting_date', 'ending_date', 'applying_date', 'created_at', 'updated_at', 'status', 'remarks', 'created_by', 'updated_by','branch_id'], 'safe'],
             [['leave_purpose'], 'string', 'max' => 100],
             [['status'], 'string', 'max' => 20],
+            [['remarks'], 'string', 'max' => 200],
             [['emp_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['emp_id' => 'emp_id']],
         ];
     }
@@ -62,8 +64,9 @@ class EmpLeave extends \yii\db\ActiveRecord
             'ending_date' => 'Ending Date',
             'applying_date' => 'Applying Date',
             'no_of_days' => 'No Of Days',
-            'leave_purpose' => 'Leave Purpose',
+            'leave_purpose' => 'Reason',
             'status' => 'Status',
+            'remarks' => 'Remarks',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

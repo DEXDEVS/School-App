@@ -41,7 +41,7 @@ use yii\helpers\Html;
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li>
-                    <p style="color: #FFF; margin: 18px 50px;  font-family: serif;"><i><b>For Technical Support Feel Free to Contact Us 24/7 on (0306-3772105 / 0306-3772106)</b></i></p>
+                    <p style="color: #FFF; margin: 18px 50px;  font-family: serif;"><i><b>For Technical Support Feel Free to Contact Us 24/7 on (0300-6999824)</b></i></p>
                 </li>
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu invisible">
