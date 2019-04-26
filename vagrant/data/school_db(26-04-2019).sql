@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2019 at 10:20 AM
+-- Generation Time: Apr 26, 2019 at 10:48 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -86,6 +86,7 @@ INSERT INTO `account_register` (`account_register_id`, `account_nature_id`, `acc
 
 CREATE TABLE `account_transactions` (
   `trans_id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
   `account_nature` varchar(11) NOT NULL,
   `account_register_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
@@ -101,12 +102,8 @@ CREATE TABLE `account_transactions` (
 -- Dumping data for table `account_transactions`
 --
 
-INSERT INTO `account_transactions` (`trans_id`, `account_nature`, `account_register_id`, `date`, `description`, `total_amount`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(1, 'Income', 5, '2019-03-08 09:19:28', 'partiall student fee', 10000, '2019-03-08 09:19:54', '2019-03-08 09:20:46', 3, 3),
-(2, 'Expense', 3, '2019-03-08 09:20:59', 'Guests', 500, '2019-03-08 09:21:17', '0000-00-00 00:00:00', 3, 0),
-(3, 'Income', 5, '2019-04-06 13:50:55', 'Paid', 5200, '2019-04-06 13:50:55', '0000-00-00 00:00:00', 1, 0),
-(4, 'Income', 5, '2019-04-06 14:11:18', 'Paid', 3910, '2019-04-06 14:11:18', '2019-04-06 14:13:05', 1, 1),
-(5, 'Income', 5, '2019-04-06 14:25:36', 'Paid', 2000, '2019-04-06 14:25:36', '0000-00-00 00:00:00', 1, 0);
+INSERT INTO `account_transactions` (`trans_id`, `branch_id`, `account_nature`, `account_register_id`, `date`, `description`, `total_amount`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 6, 'Expense', 2, '2019-04-26 01:47:44', 'Utility Bill', 123, '2019-04-26 13:48:00', '0000-00-00 00:00:00', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -825,7 +822,10 @@ INSERT INTO `fee_month_detail` (`month_detail_id`, `voucher_no`, `month`, `month
 (9, 1008, '2019-04', 9000),
 (10, 1008, '2019-05', 2000),
 (11, 1009, '2019-04', 9000),
-(12, 1009, '2019-05', 2000);
+(12, 1009, '2019-05', 2000),
+(13, 1010, '2019-01', 6500),
+(14, 1011, '2019-01', 7000),
+(15, 1012, '2019-01', 7000);
 
 -- --------------------------------------------------------
 
@@ -871,7 +871,13 @@ INSERT INTO `fee_transaction_detail` (`fee_trans_detail_id`, `fee_trans_detail_h
 (18, 10, 2, 2000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
 (19, 11, 2, 2000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
 (20, 11, 8, 7000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
-(21, 12, 2, 2000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1);
+(21, 12, 2, 2000, 0, '2019-04-18 07:41:26', '0000-00-00 00:00:00', 0, 0, 1),
+(22, 13, 1, 4000, 0, '2019-04-26 08:40:15', '0000-00-00 00:00:00', 0, 0, 1),
+(23, 13, 2, 2500, 0, '2019-04-26 08:40:15', '0000-00-00 00:00:00', 0, 0, 1),
+(24, 14, 1, 4000, 0, '2019-04-26 08:40:15', '0000-00-00 00:00:00', 0, 0, 1),
+(25, 14, 2, 3000, 0, '2019-04-26 08:40:15', '0000-00-00 00:00:00', 0, 0, 1),
+(26, 15, 1, 4000, 0, '2019-04-26 08:40:16', '0000-00-00 00:00:00', 0, 0, 1),
+(27, 15, 2, 3000, 0, '2019-04-26 08:40:16', '0000-00-00 00:00:00', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -915,7 +921,10 @@ INSERT INTO `fee_transaction_head` (`fee_trans_id`, `voucher_no`, `branch_id`, `
 (6, 1006, 5, 1, 4, 3, 18, 'Asra', '', '2019-04-18 12:35:43', 7000, 0, 0, '0000-00-00 00:00:00', 'Added to next month', '2019-04-18 07:41:26', '0000-00-00 00:00:00', 1, 0, 1),
 (7, 1007, 5, 1, 4, 3, 5, 'Aniqa Gull', '', '2019-04-18 12:41:26', 10775, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-18 07:41:26', '0000-00-00 00:00:00', 1, 0, 1),
 (8, 1008, 5, 1, 4, 3, 8, 'Sadia Gull', '', '2019-04-18 12:41:26', 11000, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-18 07:41:26', '0000-00-00 00:00:00', 1, 0, 1),
-(9, 1009, 5, 1, 4, 3, 18, 'Asra', '', '2019-04-18 12:41:26', 11000, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-18 07:41:26', '0000-00-00 00:00:00', 1, 0, 1);
+(9, 1009, 5, 1, 4, 3, 18, 'Asra', '', '2019-04-18 12:41:26', 11000, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-18 07:41:26', '0000-00-00 00:00:00', 1, 0, 1),
+(10, 1010, 6, 11, 6, 5, 1, 'zahid saeed', '', '2019-04-26 13:40:15', 6500, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-26 08:40:15', '0000-00-00 00:00:00', 4, 0, 1),
+(11, 1011, 6, 11, 6, 5, 46, 'Wqas', '', '2019-04-26 13:40:15', 7000, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-26 08:40:15', '0000-00-00 00:00:00', 4, 0, 1),
+(12, 1012, 6, 11, 6, 5, 47, 'Sheeza ', '', '2019-04-26 13:40:16', 7000, 0, 0, '0000-00-00 00:00:00', 'Unpaid', '2019-04-26 08:40:16', '0000-00-00 00:00:00', 4, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1377,7 +1386,7 @@ CREATE TABLE `std_academic_info` (
 --
 
 INSERT INTO `std_academic_info` (`academic_id`, `std_id`, `class_name_id`, `subject_combination`, `previous_class`, `passing_year`, `previous_class_rollno`, `total_marks`, `obtained_marks`, `grades`, `percentage`, `Institute`, `std_enroll_status`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(1, 1, 11, 14, '6th', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'signed', '2019-04-06 07:48:46', '0000-00-00 00:00:00', 4, 0, 1),
+(1, 1, 11, 14, '6th', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'signed', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 4, 0, 1),
 (4, 5, 1, 7, '10th', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'signed', '2019-04-06 07:57:36', '0000-00-00 00:00:00', 1, 0, 1),
 (7, 8, 1, 6, 'KG', 2018, 12345, 1100, 880, 'A', '80%', 'Colony High School', 'signed', '2019-04-06 07:57:36', '0000-00-00 00:00:00', 1, 0, 1),
 (8, 11, 8, 12, '4th', 2018, 12345, 1100, 880, 'A', '80%', 'National Garrison ', 'unsign', '2019-03-29 16:22:47', '0000-00-00 00:00:00', 1, 0, 1),
@@ -1397,8 +1406,8 @@ INSERT INTO `std_academic_info` (`academic_id`, `std_id`, `class_name_id`, `subj
 (22, 40, 6, 10, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'unsign', '2019-04-02 08:40:52', '0000-00-00 00:00:00', 17, 0, 1),
 (23, 42, 6, 10, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'unsign', '2019-04-02 08:42:26', '0000-00-00 00:00:00', 17, 0, 1),
 (24, 45, 6, 10, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'unsign', '2019-04-02 08:46:11', '0000-00-00 00:00:00', 17, 0, 1),
-(25, 46, 6, 10, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'unsign', '2019-04-02 08:50:28', '0000-00-00 00:00:00', 17, 0, 1),
-(26, 47, 7, 11, '', NULL, NULL, NULL, NULL, '', '', 'Colony High School', 'unsign', '2019-04-02 09:00:30', '0000-00-00 00:00:00', 1, 0, 1),
+(25, 46, 11, 14, '', NULL, NULL, NULL, NULL, '', '', 'National Garrison ', 'signed', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 17, 0, 1),
+(26, 47, 11, 14, '', NULL, NULL, NULL, NULL, '', '', 'Colony High School', 'signed', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 1, 0, 1),
 (27, 48, 3, 7, 'Nursery', NULL, NULL, NULL, NULL, 'F', '', 'Colony High School', 'unsign', '2019-04-04 05:08:15', '0000-00-00 00:00:00', 1, 0, 1),
 (28, 50, 3, 7, 'Nursery', NULL, NULL, NULL, NULL, 'F', '', 'Colony High School', 'unsign', '2019-04-04 05:11:53', '0000-00-00 00:00:00', 1, 0, 1),
 (29, 52, 3, 7, 'Nursery', NULL, NULL, NULL, NULL, 'F', '', 'Colony High School', 'unsign', '2019-04-04 05:14:51', '0000-00-00 00:00:00', 1, 0, 1),
@@ -1516,7 +1525,10 @@ INSERT INTO `std_enrollment_detail` (`std_enroll_detail_id`, `std_enroll_detail_
 (2, 5, 'STD-Y19-54', '9th-Re19-1', 54, 'Inam', '2019-04-06 07:49:06', '0000-00-00 00:00:00', 4, 0, 1),
 (3, 6, 'STD-Y19-2', 'KG--Gr19-1', 5, 'Aniqa Gull', '2019-04-06 07:57:36', '0000-00-00 00:00:00', 1, 0, 1),
 (4, 6, 'STD-Y19-6', 'KG--Gr19-2', 8, 'Sadia Gull', '2019-04-06 07:57:36', '0000-00-00 00:00:00', 1, 0, 1),
-(6, 6, 'STD-Y19-15', 'KG--Gr19-3', 18, 'Asra', '2019-04-06 08:17:48', '0000-00-00 00:00:00', 1, 0, 1);
+(6, 6, 'STD-Y19-15', 'KG--Gr19-3', 18, 'Asra', '2019-04-06 08:17:48', '0000-00-00 00:00:00', 1, 0, 1),
+(7, 7, 'STD-Y19-1', '7th-Gr19-1', 1, 'zahid saeed', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 4, 0, 1),
+(8, 7, 'STD-Y19-46', '7th-Gr19-2', 46, 'Wqas', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 4, 0, 1),
+(9, 7, 'STD-Y19-47', '7th-Gr19-3', 47, 'Sheeza ', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 4, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1543,9 +1555,8 @@ CREATE TABLE `std_enrollment_head` (
 --
 
 INSERT INTO `std_enrollment_head` (`std_enroll_head_id`, `branch_id`, `class_name_id`, `session_id`, `section_id`, `std_enroll_head_name`, `created_at`, `updated_at`, `created_by`, `updated_by`, `delete_status`) VALUES
-(4, 6, 11, 6, 6, '7th-2019 - 2020-Red', '2019-04-06 07:48:46', '0000-00-00 00:00:00', 4, 0, 1),
-(5, 6, 13, 6, 6, '9th-2019 - 2020-Red', '2019-04-06 07:49:06', '0000-00-00 00:00:00', 4, 0, 1),
-(6, 5, 1, 4, 3, 'KG-1-2019 - 2020 -Green', '2019-04-06 07:57:36', '0000-00-00 00:00:00', 1, 0, 1);
+(6, 5, 1, 4, 3, 'KG-1-2019 - 2020 -Green', '2019-04-06 07:57:36', '0000-00-00 00:00:00', 1, 0, 1),
+(7, 6, 11, 6, 5, '7th-2019 - 2020-Green', '2019-04-26 08:38:29', '0000-00-00 00:00:00', 4, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1880,8 +1891,8 @@ INSERT INTO `std_personal_info` (`std_id`, `branch_id`, `std_reg_no`, `std_name`
 (40, 5, 'STD-Y19-40', 'Wqas', 'Umer', '+92-345-6789098', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas@gmail.com', 'uploads/std_default.jpg', '31303-8765670-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 08:40:50', '0000-00-00 00:00:00', 17, 0, 1),
 (42, 5, 'STD-Y19-41', 'Wqas', 'Umer', '+92-345-6789098', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas01@gmail.com', 'uploads/std_default.jpg', '31303-8765679-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 08:42:24', '0000-00-00 00:00:00', 17, 0, 1),
 (45, 5, 'STD-Y19-43', 'Wqas', 'Umer', '+92-345-6789698', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas02@gmail.com', 'uploads/std_default.jpg', '31303-8785679-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 08:46:08', '0000-00-00 00:00:00', 17, 0, 1),
-(46, 5, 'STD-Y19-46', 'Wqas', 'Umer', '+92-345-6789698', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas03@gmail.com', 'uploads/std_default.jpg', '31303-8385679-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 08:50:26', '0000-00-00 00:00:00', 17, 0, 1),
-(47, 5, 'STD-Y19-47', 'Sheeza ', 'Umer', '', '2019-04-02', 'Female', 'Chak # 145/p, Adaam Sahaba', '', 'sheeza@gmail.com', 'uploads/Sheeza _photo.jpg', '31303-7654456-7', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-02 09:00:28', '0000-00-00 00:00:00', 1, 0, 1),
+(46, 6, 'STD-Y19-46', 'Wqas', 'Umer', '+92-345-6789698', '2019-04-02', 'Male', 'Chak # 145/p, Adaam Sahaba', '', 'waqas03@gmail.com', 'uploads/std_default.jpg', '31303-8385679-9', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-26 08:35:32', '0000-00-00 00:00:00', 17, 0, 1),
+(47, 6, 'STD-Y19-47', 'Sheeza ', 'Umer', '', '2019-04-02', 'Female', 'Chak # 145/p, Adaam Sahaba', '', 'sheeza@gmail.com', 'uploads/Sheeza _photo.jpg', '31303-7654456-7', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-26 08:35:18', '0000-00-00 00:00:00', 1, 0, 1),
 (48, 5, 'STD-Y19-48', 'Zahid Saeed', 'M. Saeed', '+92-331-7375025', '2015-02-03', 'Male', 'RYK', 'Chak # 145/p, Adaam Sahaba', 'zahid@gmail.com', 'uploads/Zahid Saeed_photo.jpg', '31303-8489489-4', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-04 05:08:14', '0000-00-00 00:00:00', 1, 0, 1),
 (50, 5, 'STD-Y19-49', 'Zahid Saeed', 'M. Saeed', '+92-331-7375025', '2015-02-03', 'Male', 'RYK', 'Chak # 145/p, Adaam Sahaba', 'zahid@gmail.com', 'uploads/Zahid Saeed_photo.jpg', '31303-8489489-3', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-04 05:11:52', '0000-00-00 00:00:00', 1, 0, 1),
 (52, 5, 'STD-Y19-51', 'Zahid Saeed', 'M. Saeed', '+92-331-7375025', '2015-02-03', 'Male', 'RYK', 'Chak # 145/p, Adaam Sahaba', 'zahid@gmail.com', 'uploads/Zahid Saeed_photo.jpg', '31303-8489489-5', 'Rahim Yar Khan ', 'Islam', 'Pakistani', 'Rahim Yar Khan', '', 'Active', 'Active', '2019-04-04 05:14:49', '0000-00-00 00:00:00', 1, 0, 1),
@@ -2209,7 +2220,8 @@ ALTER TABLE `account_register`
 ALTER TABLE `account_transactions`
   ADD PRIMARY KEY (`trans_id`),
   ADD KEY `trans_head_account_id` (`account_nature`),
-  ADD KEY `trans_head_voucher_type_id` (`account_register_id`);
+  ADD KEY `trans_head_voucher_type_id` (`account_register_id`),
+  ADD KEY `branch_id` (`branch_id`);
 
 --
 -- Indexes for table `auth_assignment`
@@ -2671,7 +2683,7 @@ ALTER TABLE `account_register`
 -- AUTO_INCREMENT for table `account_transactions`
 --
 ALTER TABLE `account_transactions`
-  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `branches`
@@ -2785,19 +2797,19 @@ ALTER TABLE `exams_schedule`
 -- AUTO_INCREMENT for table `fee_month_detail`
 --
 ALTER TABLE `fee_month_detail`
-  MODIFY `month_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `month_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `fee_transaction_detail`
 --
 ALTER TABLE `fee_transaction_detail`
-  MODIFY `fee_trans_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `fee_trans_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `fee_transaction_head`
 --
 ALTER TABLE `fee_transaction_head`
-  MODIFY `fee_trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `fee_trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `fee_type`
@@ -2905,13 +2917,13 @@ ALTER TABLE `std_class_name`
 -- AUTO_INCREMENT for table `std_enrollment_detail`
 --
 ALTER TABLE `std_enrollment_detail`
-  MODIFY `std_enroll_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `std_enroll_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `std_enrollment_head`
 --
 ALTER TABLE `std_enrollment_head`
-  MODIFY `std_enroll_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `std_enroll_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `std_fee_details`
@@ -3017,7 +3029,8 @@ ALTER TABLE `account_register`
 -- Constraints for table `account_transactions`
 --
 ALTER TABLE `account_transactions`
-  ADD CONSTRAINT `account_transactions_ibfk_2` FOREIGN KEY (`account_register_id`) REFERENCES `account_register` (`account_register_id`);
+  ADD CONSTRAINT `account_transactions_ibfk_2` FOREIGN KEY (`account_register_id`) REFERENCES `account_register` (`account_register_id`),
+  ADD CONSTRAINT `account_transactions_ibfk_3` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`);
 
 --
 -- Constraints for table `auth_assignment`
