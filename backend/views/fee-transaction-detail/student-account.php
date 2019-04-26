@@ -16,7 +16,7 @@ use common\models\FeeTransactionHead;
 </head>
 <body>
 <div class="container-fluid" style="margin-top: -30px;">
-    <h1 class="well well-sm bg-navy" align="center" style="color:#001F3F; font-family: serif;">Manage Class Fee Accounts</h1>
+    <h1 class="well well-sm bg-navy" align="center" style="color:#001F3F;">Manage Class Fee Accounts</h1>
     <!-- action="index.php?r=fee-transaction-detail/class-account-info" -->
     <form method="POST" action="fee-transaction-detail-class-account-info">
         <div class="row">
