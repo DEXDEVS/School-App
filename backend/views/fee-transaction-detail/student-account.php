@@ -11,14 +11,12 @@ use common\models\FeeTransactionHead;
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>Fee Vocher</title>
-    <link rel="stylesheet" href="select2/dist/css/select2.min.css">
-
 </head>
 <body>
 <div class="container-fluid" style="margin-top: -30px;">
-    <h1 class="well well-sm bg-navy" align="center" style="color:#001F3F;">Manage Class Fee Accounts</h1>
+    <h1 class="well well-sm bg-navy" align="center" style="color:#001F3F;">Manage Student Fee Account</h1>
     <!-- action="index.php?r=fee-transaction-detail/class-account-info" -->
-    <form method="POST" action="fee-transaction-detail-class-account-info">
+    <form method="POST" action="student-account-info">
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -31,44 +29,27 @@ use common\models\FeeTransactionHead;
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select Class</label>
-                    <select class="form-control" name="classid" id="classId" required="required">
-                        <option>Select Class</option>
+                    <select class="form-control" name="classid" id="classId" >
+                        <option >Select Class</option>
                             <?php 
-                                $className = Yii::$app->db->createCommand("SELECT * FROM std_class_name where delete_status=1 AND branch_id = $branch_id")->queryAll();
+                                $className = Yii::$app->db->createCommand("SELECT * FROM std_enrollment_head where delete_status=1 AND branch_id = $branch_id")->queryAll();
                                 
                                     foreach ($className as  $value) { ?>    
-                                    <option value="<?php echo $value["class_name_id"]; ?>">
-                                        <?php echo $value["class_name"]; ?> 
+                                    <option value="<?php echo $value["std_enroll_head_id"]; ?>">
+                                        <?php echo $value["std_enroll_head_name"]; ?> 
                                     </option>
                             <?php } ?>
                     </select>      
-                </div>    
-            </div>  
+                </div>     
+            </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>Select Session</label>
-                    <select class="form-control" name="sessionid" id="sessionId" required="">
-                            <option value="">Select Session</option>
-                            <?php 
-                                $sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND session_branch_id = $branch_id")->queryAll();
-                                    foreach ($sessionName as  $value) { ?>  
-                                    <option value="<?php echo $value["session_id"]; ?>">
-                                        <?php echo $value["session_name"]; ?>   
-                                    </option>
-                            <?php } ?>
-                    </select>      
-                </div>    
-            </div>  
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Select Section</label>
-                    <select class="form-control" name="sectionid" id="section" required="">
-                            <option value="">Select Section</option>
+                    <label>Select Student</label>
+                    <select class="form-control" name="studentid" id="std">
+                            <option value="">Select Student</option>
                     </select>      
                 </div>    
             </div>    
-        </div>
-        <div class="row">              
             <div class="col-md-4"> 
                 <label>Select Month</label>
                 <?php 
@@ -96,9 +77,11 @@ use common\models\FeeTransactionHead;
                     ]);
                 ?>
             </div>
+        </div>
+        <div class="row">              
             <div class="col-md-2">
                 <div class="form-group" style="margin-top: 24px;">
-                    <button type="submit" name="submit" class="btn btn-success btn-flat btn-block"><i class="fa fa-check-square-o" aria-hidden="true"></i><b> Get Class</b></button>
+                    <button type="submit" name="submit" class="btn btn-success btn-flat btn-block"><i class="fa fa-check-square-o" aria-hidden="true"></i><b> Get Details</b></button>
                 </div>    
             </div>
         </div>
@@ -532,26 +515,25 @@ use common\models\FeeTransactionHead;
 $url = \yii\helpers\Url::to("fee-transaction-detail/fetch-students");
 
 $script = <<< JS
-$('#sessionId').on('change',function(){
-   var session_Id = $('#sessionId').val();
-   alert(session_Id);
-  
+$('#classId').on('change',function(){
+   var classId = $('#classId').val();
+   
    $.ajax({
         type:'post',
-        data:{session_Id:session_Id},
+        data:{class_Id:classId},
         url: "$url",
 
         success: function(result){
-            console.log(result);
             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
             var options = '';
-            $('#section').empty();
-            $('#section').append("<option>"+"Select Section"+"</option>");
+            $('#std').empty();
+            $('#std').append("<option>"+"Select Student"+"</option>");
             for(var i=0; i<jsonResult.length; i++) { 
-                options += '<option value="'+jsonResult[i].section_id+'">'+jsonResult[i].section_name+'</option>';
+                options += '<option value="'+jsonResult[i].std_enroll_detail_std_id+'">'+jsonResult[i].std_enroll_detail_std_name+'</option>';
             }
             // Append to the html
-            $('#section').append(options);
+            $('#std').append(options);
+
         }         
     });       
 });

@@ -103,6 +103,7 @@ return [
                 'emp-download-doc' => 'emp-documents/download-doc',
                 'emp-type' => 'emp-type/index',
                 'emp-designation' => 'emp-designation/index',
+                
                 //fee-transaction-detail
                 'class-account' => 'fee-transaction-detail/class-account',
                 'fee-transaction-detail-fee-voucher' => 'fee-transaction-detail/fee-voucher',
@@ -116,6 +117,7 @@ return [
                 'monthly-voucher' => 'fee-transaction-detail/monthly-voucher',
                 'yearly-voucher' => 'fee-transaction-detail/yearly-voucher',
                 'student-account' => 'fee-transaction-detail/student-account',
+                'student-account-info' => 'fee-transaction-detail/student-account-info',
                 //std-enrollment
                 'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-enrollment-head' => 'std-enrollment-head/index',
@@ -147,9 +149,6 @@ return [
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
-                //emp attendance report
-                'emp-att-report' => 'emp-attendance/emp-att-report',
-                'final-attendance' => 'emp-attendance/final-attendance',
             ],
         ],
     ],
