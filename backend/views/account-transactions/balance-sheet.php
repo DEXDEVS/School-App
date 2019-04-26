@@ -7,7 +7,7 @@
 <div class="container-fluid" style="margin-top: -30px;">  
   <div class="row">
     <div class="col-md-12">
-      <h2 class="well well-sm" align="center" style="font-family: serif;">Balance Sheet</h2>
+      <h2 class="well well-sm" align="center" style="font-family: serif;"><b><i>Balance Sheet</i></b></h2>
     </div>
   </div>
   <div class="row">
@@ -50,61 +50,97 @@
       $end_date = $_POST['end_date'];
       // getting user branch_id....
       $branch_id = Yii::$app->user->identity->branch_id;
-
-    $income = Yii::$app->db->createCommand("SELECT description, total_amount, date FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Income' AND CAST(date AS DATE) >= '$start_date' AND CAST(date AS DATE) <= '$end_date'")->queryAll();
-
-    $expense = Yii::$app->db->createCommand("SELECT description, total_amount, date FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$start_date' AND CAST(date AS DATE) <= '$end_date'")->queryAll();
-    $count = count($income);
-
+      // getting income...
+      $income = Yii::$app->db->createCommand("SELECT description, total_amount, date FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Income' AND CAST(date AS DATE) >= '$start_date' AND CAST(date AS DATE) <= '$end_date'")->queryAll();
+      // getting expense...
+      $expense = Yii::$app->db->createCommand("SELECT description, total_amount, date FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$start_date' AND CAST(date AS DATE) <= '$end_date'")->queryAll();
   ?><hr>
-  <!-- table start-->
+  <!-- Income -->
   <div class="row">
     <div class="col-md-6">
       <table class="table table-responsive table-bordered table-striped table-hover">
         <thead>
+          <tr class="info">
+            <th colspan="4" class="text-center">
+              <b><i>Income Statments</i></b>
+            </th>
+          </tr>
           <tr class="bg-navy">
-            <th>Sr. #</th>
-            <th>Income</th>
-            <th>Amount</th>
-            <th>Date</th>
+            <th><i>Sr. #</i></th>
+            <th><i>Income Description</i></th>
+            <th><i>Amount</i></th>
+            <th><i>Date</i></th>
           </tr>
         </thead>
         <tbody>
+          <?php $totalIncome = $totalExpense = 0; ?>
           <?php foreach ($income as $key => $value) { ?>
           <tr>
-            <td><?php echo $key+1; ?></td>
+            <td width="55px" class="text-center">
+              <b><i><?php echo $key+1; ?></i></b>
+            </td>
             <td><?php echo $value['description']; ?></td>
-            <td><?php echo $value['total_amount']; ?></td>
-            <td><?php echo $value['date']; ?></td>
+            <td><?php echo number_format($value['total_amount'], 0); ?></td>
+            <td><?php echo date("d-M-Y", strtotime($value['date'])); ?></td>
           </tr>
           <?php
+            $totalIncome += $value['total_amount'];
           } ?>
         </tbody>
       </table>
     </div>
-    <!-- expense -->
+    <!-- Expense -->
     <div class="col-md-6">
       <table class="table table-responsive table-bordered table-striped table-hover">
         <thead>
+          <tr class="info">
+            <th colspan="4" class="text-center">
+              <b><i>Expense Statments</i></b>
+            </th>
+          </tr>
           <tr class="bg-navy">
-            <th>Sr. #</th>
-            <th>Expense</th>
-            <th>Amount</th>
-            <th>Date</th>
+            <th><i>Sr. #</i></th>
+            <th><i>Expense Description</i></th>
+            <th><i>Amount</i></th>
+            <th><i>Date</i></th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($expense as $key => $value) { ?>
           <tr>
-            <td><?php echo $key+1; ?></td>
+            <td width="55px" class="text-center">
+              <b><i><?php echo $key+1; ?></i></b>
+            </td>
             <td><?php echo $value['description']; ?></td>
-            <td><?php echo $value['total_amount']; ?></td>
-            <td><?php echo $value['date']; ?></td>
+            <td><?php echo number_format($value['total_amount'], 0); ?></td>
+            <td><?php echo date("d-M-Y", strtotime($value['date'])); ?></td>
           </tr>
           <?php
+            $totalExpense += $value['total_amount'];
           } ?>
         </tbody>
       </table>
+    </div>
+    <!-- Balance -->
+    <div class="row">
+      <div class="col-md-6">
+        <table class="table table-responsive table-striped table-bordered table-hover">
+          <tbody>
+            <tr class="success">
+              <th class="text-center"><i>Total Income</i></th>
+              <th class="text-center"><i><?php echo number_format($totalIncome, 0); ?></i></th>
+            </tr>
+            <tr class="danger">
+              <th class="text-center"><i>Total Expense</i></th>
+              <th class="text-center"><i><?php echo number_format($totalExpense, 0); ?></i></th>
+            </tr>
+            <tr class="info">
+              <th class="text-center"><i>Remaining Balance</i></th>
+              <th class="text-center"><i><?php echo number_format($totalIncome - $totalExpense, 0); ?></i></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <?php 
