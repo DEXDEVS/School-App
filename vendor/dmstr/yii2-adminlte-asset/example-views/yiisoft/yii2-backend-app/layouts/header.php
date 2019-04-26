@@ -30,7 +30,7 @@ use yii\helpers\Html;
 <body>
 <header class="main-header fixed text-dark">
 
-    <?= Html::a('<span class="logo-mini"><b style="color: #FFF;">IC</b></span><span class="logo-lg">' . "<b style='color: #FFF;'>Institute on Cloud</b>" . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini"><b style="color: #FFF; font-family: serif;">IC</b></span><span class="logo-lg">' . "<b style='color: #FFF; font-family: serif;'>Institute on Cloud</b>" . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top">
 
