@@ -213,7 +213,10 @@ if(isset($_POST['save'])){
 
     $transaction = \Yii::$app->db->beginTransaction();
     try {
-        $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $paidAmount, 'remaining'=> $remainingAmount , 'status' => $status, 'collection_date' => $collectionDate], ['voucher_no' => $voucherNo])->execute();
+        $paid_amount = Yii::$app->db->createCommand("SELECT paid_amount FROM fee_transaction_head WHERE voucher_no = '$voucherNo'")->queryAll();
+        $amountPaid = $paidAmount  + $paid_amount[0]['paid_amount'];
+
+        $updateTransactionHead = Yii::$app->db->createCommand()->update('fee_transaction_head', ['paid_amount'=> $amountPaid, 'remaining'=> $remainingAmount , 'status' => $status, 'collection_date' => $collectionDate], ['voucher_no' => $voucherNo])->execute();
 
         $account = Yii::$app->db->createCommand()->insert('account_transactions', [
                 'branch_id'=> $branch_id,
