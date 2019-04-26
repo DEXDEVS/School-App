@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\datetimepicker\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\EmpLeave */
@@ -11,31 +12,67 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'emp_id')->textInput() ?>
+    <div class="row">
+        <div class="col-md-4">
+             <?= $form->field($model, 'emp_id')->textInput() ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'leave_type')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <label>Starting Date</label>
+            <?= DateTimePicker::widget([
+                'model' => $model,
+                'attribute' => 'starting_date',
+                'language' => 'en',
+                'size' => 'ms',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd HH:ii:ss',
+                    'todayBtn' => true
+                ]
+            ]);?>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-4">
+            <label>Ending Date</label>
+            <?= DateTimePicker::widget([
+                'model' => $model,
+                'attribute' => 'ending_date',
+                'language' => 'en',
+                'size' => 'ms',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd HH:ii:ss',
+                    'todayBtn' => true
+                ]
+            ]);?>
+        </div>
+        <div class="col-md-4">
+            <label>Applying Date</label>
+            <?= DateTimePicker::widget([
+                'model' => $model,
+                'attribute' => 'applying_date',
+                'language' => 'en',
+                'size' => 'ms',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd HH:ii:ss',
+                    'todayBtn' => true
+                ]
+            ]);?>
+        </div>
+        <div class="col-md-4">
+             <?= $form->field($model, 'no_of_days')->textInput() ?>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-12">
+             <?= $form->field($model, 'leave_purpose')->textArea(['maxlength' => true]) ?>
+        </div>
+    </div>   
 
-    <?= $form->field($model, 'leave_type')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'starting_date')->textInput() ?>
-
-    <?= $form->field($model, 'ending_date')->textInput() ?>
-
-    <?= $form->field($model, 'applying_date')->textInput() ?>
-
-    <?= $form->field($model, 'no_of_days')->textInput() ?>
-
-    <?= $form->field($model, 'leave_purpose')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-  
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
