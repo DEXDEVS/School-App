@@ -4,7 +4,22 @@
 	<title>All Branches</title>
 </head>
 <body>
-	
+	<?php 
+
+  $d = new \yii\db\Expression('NOW()');
+
+  echo $d;
+
+  // echo Yii::$app->localtime->fromLocalDateTime(
+  //       '2019-04-24');
+
+  // echo Yii::$app->Date->now();
+
+  // $date1 = (new DateTime)->getTimestamp();
+  // echo $date1;
+
+
+  ?>
 	<?php
   // branch_id..
 	$id = $_GET['id'];
