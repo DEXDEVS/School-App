@@ -23,14 +23,14 @@ CrudAsset::register($this);
     }
 </style>
 <?php 
-    $month = date('Y-m-d');
+    $month = date('Y-m');
     // getting user branch_id....
     $branch_id = Yii::$app->user->identity->branch_id;
     // getting total income of the current month...
-    $income = Yii::$app->db->createCommand("SELECT SUM(total_amount) FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month' AND CAST(date AS DATE) <= '$month'");
+    $income = Yii::$app->db->createCommand("SELECT SUM(total_amount) FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month' OR CAST(date AS DATE) <= '$month'");
     $totalIncome = $income->queryScalar();
     // getting total expense of the current month...
-    $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month' AND CAST(date AS DATE) <= '$month'");
+    $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month' OR CAST(date AS DATE) <= '$month'");
     $totalExpense = $expense->queryScalar();
 ?>
 <div class="account-transactions-index">
