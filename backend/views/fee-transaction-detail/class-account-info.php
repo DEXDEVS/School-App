@@ -61,7 +61,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-bordered table-responsive table-condensed" border="1" style="text-align: center;">
+                <table class="table table-bordered table-responsive table-condensed" border="1" style="text-align: center; font-family: serif;">
                     <tr class="bg-navy">
                         <th style="text-align: center">Sr #</th>
                         <th style="text-align: center">Roll #</th>

@@ -1,4 +1,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style media="print" type="text/css">
+  @media print{
+    .employee_card {
+      margin: 0 auto;
+      background-color: #fff !important;
+    }
+    img{
+      position: static;
+    }
+    .employee_card img{
+      border-radius: 50%; 
+      position: absolute; 
+      top: 90px; 
+      left: 105px;
+    }
+  }
+</style>
 <style type="text/css">
   #photo{
     border-radius: 50%; 
@@ -6,18 +23,6 @@
     top: 90px; 
     left: 105px;
   }
-  @media print{
-
-    .modal-body {
-      background-color: red !important;
-    }
-  }
-</style>
-
-  <style media="print" type="text/css">
-    body{
-      background-color: red !important;
-    }
 </style>
 <?php 
   use yii\helpers\Html;
@@ -197,79 +202,6 @@
                           </div>
                           <!-- /.modal-dialog -->
                     </div>
-                    <!-- ID Card Modal start -->
-                    <div class="modal fade" id="modal-id-card">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Employee ID Card</h4>
-                          </div>
-                          <?php 
-                            $empID    = $empInfo[0]['emp_reg_no'];
-                            $empName  = $empInfo[0]['emp_name'];
-                            $empfName = $empInfo[0]['emp_father_name'];
-                            $empCnic  = $empInfo[0]['emp_cnic'];
-                            $empPhone = $empInfo[0]['emp_contact_no'];
-                            $empPhoto = $empInfo[0]['emp_photo'];
-                            $empEmail = $empInfo[0]['emp_email'];
-                            $empBlood = "A +ve";
-                            $empDesignationName;
-                          ?>
-                            <div class="modal-body">  
-                              <div class="row">
-                                <div class="col-md-12">
-                                <div id="id-card">  
-                                  <img src="images/employee_card.png" width="100%" class="img-responsive">
-                                  <!-- employee photo -->
-                                  <img src="<?php echo $empPhoto; ?>" width="80px" height="80px" id="photo">
-                                  <!-- employee name -->
-                                  <h4 style="font-family: verdana; position: absolute; top: 170px; left: 100px; color: #110037">
-                                    <?php echo $empName; ?>
-                                  </h4>
-                                  <!-- employee father name -->
-                                  <!-- <h5 style="font-family: verdana; position: absolute; top: 182px; left:120px; color: #110037">
-                                    <?php echo $empfName; ?>
-                                  </h5> -->
-                                  <!-- employee ID -->
-                                  <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 203px; left: 100px; color: #110037">
-                                    <b><?php echo $empID; ?></b>
-                                  </h6>
-                                  <!-- employee designation -->
-                                  <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 218px; left: 130px; color: #110037">
-                                    <b><?php echo $empDesignationName; ?></b>
-                                  </h6>
-                                  <!-- employee cnic -->
-                                  <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 233px; left: 110px; color: #110037">
-                                    <b><?php echo $empCnic; ?></b>
-                                  </h6>
-                                  <!-- employee phone -->
-                                  <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 248px; left: 115px; color: #110037">
-                                    <b><?php echo $empPhone; ?></b>
-                                  </h6>
-                                  <!-- employee phone -->
-                                  <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 261px; left: 110px; color: #110037">
-                                    <b><?php echo $empBlood; ?></b>
-                                  </h6>
-                                  <!-- website address -->
-                                  <p style="font-family: verdana; position: absolute; right: 160px; bottom: 137px; font-size: 6px; color: #110037">www.abclearning.edu.pk</p>
-                                  <!-- employee email -->
-                                  <p style="font-family: verdana; position: absolute; right: 160px; bottom: 137px; font-size: 6px; color: #110037">www.abclearning.edu.pk</p>
-                                </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-danger btn-sm pull-left" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary btn-sm fa fa-print" onclick="printContent('id-card')"> Print</button>
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-                      </div>
-                      <!-- /.modal-dialog -->
-                    </div>
-                    <!-- ID Card Modal CLose -->
                   </div>
                 </div>
               </div><hr>
@@ -449,6 +381,79 @@
   </section>
   <!-- main content close -->
 </div>	
+<!-- ID Card Modal start -->
+  <div class="modal fade" id="modal-id-card">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Employee ID Card</h4>
+        </div>
+        <?php 
+          $empID    = $empInfo[0]['emp_reg_no'];
+          $empName  = $empInfo[0]['emp_name'];
+          $empfName = $empInfo[0]['emp_father_name'];
+          $empCnic  = $empInfo[0]['emp_cnic'];
+          $empPhone = $empInfo[0]['emp_contact_no'];
+          $empPhoto = $empInfo[0]['emp_photo'];
+          $empEmail = $empInfo[0]['emp_email'];
+          $empBlood = "A +ve";
+          $empDesignationName;
+        ?>
+          <div class="modal-body employee_card">  
+            <div class="row">
+              <div class="col-md-12">
+              <div id="id-card">  
+                <img src="images/employee_card.png" width="100%" class="img-responsive">
+                <!-- employee photo -->
+                <img src="<?php echo $empPhoto; ?>" width="80px" height="80px" id="photo">
+                <!-- employee name -->
+                <h4 style="font-family: verdana; position: absolute; top: 170px; left: 100px; color: #110037">
+                  <?php echo $empName; ?>
+                </h4>
+                <!-- employee father name -->
+                <!-- <h5 style="font-family: verdana; position: absolute; top: 182px; left:120px; color: #110037">
+                  <?php echo $empfName; ?>
+                </h5> -->
+                <!-- employee ID -->
+                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 203px; left: 100px; color: #110037">
+                  <b><?php echo $empID; ?></b>
+                </h6>
+                <!-- employee designation -->
+                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 218px; left: 130px; color: #110037">
+                  <b><?php echo $empDesignationName; ?></b>
+                </h6>
+                <!-- employee cnic -->
+                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 233px; left: 110px; color: #110037">
+                  <b><?php echo $empCnic; ?></b>
+                </h6>
+                <!-- employee phone -->
+                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 248px; left: 115px; color: #110037">
+                  <b><?php echo $empPhone; ?></b>
+                </h6>
+                <!-- employee phone -->
+                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 261px; left: 110px; color: #110037">
+                  <b><?php echo $empBlood; ?></b>
+                </h6>
+                <!-- website address -->
+                <p style="font-family: verdana; position: absolute; right: 160px; bottom: 137px; font-size: 6px; color: #110037">www.abclearning.edu.pk</p>
+                <!-- employee email -->
+                <p style="font-family: verdana; position: absolute; right: 160px; bottom: 137px; font-size: 6px; color: #110037">www.abclearning.edu.pk</p>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-sm pull-left" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary btn-sm fa fa-print" onclick="printContent('id-card')"> Print</button>
+          </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- ID Card Modal CLose -->
 </body>
 </html>
 
