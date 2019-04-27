@@ -59,25 +59,6 @@
                     ['label' => 'Login', 'url' => ["../login"], 'visible' => Yii::$app->user->isGuest],
 
                     // ------------------------------------------------
-                    // ------------------------------------------------
-                    // System Configuration start...
-                    // [
-                    //     'label' => 'System Configuration',
-                    //     'icon' => 'cogs',
-                    //     'url' => '#',
-                    //     'items' => [
-                    //         // ['label' => 'Institute', 'icon' => 'caret-right', 'url' => ["/institute"],],
-                    //         // ['label' => 'Branches', 'icon' => 'caret-right', 'url' => ["/branches"],],
-                    //         // //['label' => 'Departments', 'icon' => 'caret-right', 'url' => ["/departments"],],
-                    //         // ['label' => 'Sessions', 'icon' => 'caret-right', 'url' => ["/std-sessions"],],
-                    //         // ['label' => 'Sections', 'icon' => 'caret-right', 'url' => ["/std-sections"],],
-                    //         //['label' => 'Class', 'icon' => 'caret-right', 'url' => ["/std-class"],],
-                    //         // ['label' => 'Students Enrolment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
-                    //         // ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => ["/teacher-subject-assign-head"],],
-                    //     ],
-                    // ],
-                    // System Configuration close...
-                    // ------------------------------------------------
                     // Student Module start...
                     [
                         'label' => 'Students',
@@ -213,11 +194,11 @@
                         'items' => [
                             ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
                             ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
+                            ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./balance-sheet"],],
                             ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => ["./premium-version"],],

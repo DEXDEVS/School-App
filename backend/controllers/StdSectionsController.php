@@ -119,6 +119,8 @@ class StdSectionsController extends Controller
             }else if($model->load($request->post())){
                 $transaction = \Yii::$app->db->beginTransaction();
                     try {
+                    $branch_id = Yii::$app->user->identity->branch_id;
+                    $model->branch_id = $branch_id;
                     $model->created_by = Yii::$app->user->identity->id; 
                     $model->created_at = new \yii\db\Expression('NOW()');
                     $model->updated_by = '0';
@@ -126,7 +128,7 @@ class StdSectionsController extends Controller
                     $model->save();                       
 
                     $transaction->commit();
-                    Yii::$app->session->setFlash('warning', "You have successfully add section...!");
+                    //Yii::$app->session->setFlash('warning', "You have successfully add section...!");
                 } catch (Exception $e) {
                     $transaction->rollBack();
                     Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
@@ -194,6 +196,8 @@ class StdSectionsController extends Controller
             }else if($model->load($request->post())){
                 $transaction = \Yii::$app->db->beginTransaction();
                     try {
+                    $branch_id = Yii::$app->user->identity->branch_id;
+                    $model->branch_id = $branch_id;
                     $model->updated_by = Yii::$app->user->identity->id;
                     $model->updated_at = new \yii\db\Expression('NOW()');
                     $model->created_by = $model->created_by;
