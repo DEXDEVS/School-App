@@ -161,7 +161,11 @@ class EmpInfoController extends Controller
                         $user->username = $model->emp_cnic;
                         $user->email = $model->emp_email;
                         $user->user_photo = $model->emp_photo;
-                        $user->user_type = 'Employee';
+                        if($model->group_by == 'Faculty'){
+                            $user->user_type = 'Teacher';
+                        } else {
+                            $user->user_type = 'Employee';
+                        }
                         $user->setPassword($empPassword);
                         $user->generateAuthKey();
                         $user->save();

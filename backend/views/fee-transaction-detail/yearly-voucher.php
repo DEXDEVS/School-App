@@ -384,7 +384,7 @@ if(isset($_POST['save'])){
             'account_nature'=> 'Income',  
             'account_register_id' => 5,
             'date' => new \yii\db\Expression('NOW()'),
-            'description' => "Amount ".$status[0]." By Voucher #: ".$voucherNo,
+            'description' => "Amount ".$status[0]." By Voucher #: ".$voucherNo[0],
             'total_amount' => $totalAmount,
             'created_at' => new \yii\db\Expression('NOW()'),
             'created_by' => Yii::$app->user->identity->id,
@@ -422,11 +422,9 @@ if(isset($_POST['save'])){
     }
     function setStatuss(i){
         var totalAmount = parseInt($('#totalAmount'+i).val());
-        alert(totalAmount);
         var paidAmount = parseInt($('#paidAmount'+i).val());
-        alert(paidAmount);
         var remaining = totalAmount - paidAmount;
-        alert(totalAmount + paidAmount + remaining );
+
         $('#remaining'+i).val(remaining);
         if( remaining == 0 ) {
             paid = "Paid";
