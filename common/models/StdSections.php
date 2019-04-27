@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "std_sections".
  *
  * @property int $section_id
+ * @property int $branch_id
  * @property int $session_id
  * @property string $section_name
  * @property string $section_description
@@ -43,10 +44,11 @@ class StdSections extends \yii\db\ActiveRecord
         return [
             [['session_id', 'section_name', 'section_description', 'section_intake'], 'required'],
             [['session_id', 'section_intake', 'created_by', 'updated_by', 'delete_status'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['branch_id', 'created_at', 'updated_at'], 'safe'],
             [['section_name'], 'string', 'max' => 50],
             [['section_description'], 'string', 'max' => 100],
             [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
+             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],
         ];
     }
 
@@ -57,6 +59,7 @@ class StdSections extends \yii\db\ActiveRecord
     {
         return [
             'section_id' => 'Section ID',
+            'branch_id' => 'Branch Name',
             'session_id' => 'Session',
             'section_name' => 'Section Name',
             'section_description' => 'Section Description',
@@ -112,4 +115,9 @@ class StdSections extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getBranch()
+    {
+        return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
+    }
+
 }

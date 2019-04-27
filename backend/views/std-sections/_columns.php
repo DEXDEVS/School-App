@@ -16,6 +16,11 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'branch_id',
+        'value'=>'branch.branch_name',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'session_id',
         'value'=>'session.session_name',
     ],
