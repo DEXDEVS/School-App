@@ -73,6 +73,7 @@ return [
                 'marks-sheet'=>'std-attendance/marks-sheet',
                 'view-datesheet'=>'std-attendance/view-datesheet',
                 'view-marks-list'=>'marks-details/view-marks-list',
+                'emp-leave'=>'emp-leave/index',
             ],
         ],
         

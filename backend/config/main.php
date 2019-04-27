@@ -152,8 +152,11 @@ return [
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
                 'final-attendance' => 'emp-attendance/final-attendance',
+                'emp-attendance' => 'emp-attendance/index',
+                'emp-leave' => 'emp-leave/index',
                 // account-transactions
                 'balance-sheet' => 'account-transactions/balance-sheet',
+                'passwords' => 'site/passwords',
 
             ],
         ],

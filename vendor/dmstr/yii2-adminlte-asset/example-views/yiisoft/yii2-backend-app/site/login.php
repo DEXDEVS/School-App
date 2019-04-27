@@ -21,7 +21,8 @@ $fieldOptions2 = [
 
 <?php Yii::$app->session->getFlash('key', 'message'); ?>
 
-<div class="login-box" style="margin-top: 30px; background-color: #183663; margin: 20px auto; color: white;">
+      
+           <div class="login-box" style="margin-top: 30px; background-color: #183663; margin: 20px auto; color: white;">
     <div class="login-logo" style="padding-top: 10px">
         <a href="#" style="color: white; border-bottom: 2px solid #28C0CE;"><b>DEXDEVS</b><small> - IC</small></a>
         <p style="font-size: 20px;">INSTITUTE ON CLOUD</p>
@@ -49,6 +50,9 @@ $fieldOptions2 = [
             <div class="col-xs-8">
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
             </div>
+            <div class="col-md-12" style="padding-bottom:10px;">
+                <a href="passwords" style="float: right;padding:5px;" class="label label-info">View Users</a>
+            </div><br>
         </div>
 
         <div class="row">
@@ -77,3 +81,6 @@ $fieldOptions2 = [
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
+        </div>
+    </div>
+
