@@ -149,6 +149,12 @@ return [
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
+                // emp attendance report
+                'emp-att-report' => 'emp-attendance/emp-att-report',
+                'final-attendance' => 'emp-attendance/final-attendance',
+                // account-transactions
+                'balance-sheet' => 'account-transactions/balance-sheet',
+                
             ],
         ],
     ],

@@ -97,7 +97,6 @@
 						<?php 
 
 						foreach ($result as $key => $valu) { ?>
-
 							<input type="hidden" name="absent[]" value="<?php echo $valu; ?>">
 						<?php } ?>
 						<button name="absent_emp" type="submit" class="btn btn-danger btn-sm" style="float: right;"><i class="glyphicon glyphicon-check"></i> Mark Absent</button>
