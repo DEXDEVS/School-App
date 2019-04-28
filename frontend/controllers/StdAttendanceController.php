@@ -32,7 +32,7 @@ class StdAttendanceController extends Controller
                     ],
                     [
                      
-                        'actions' => ['logout', 'index','list-of-classes','view','update','delete','fetch-section','attendance','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','activity-view','fetch-attendance-report','marks-sheet','view-datesheet'],
+                        'actions' => ['logout', 'index','view','update','delete','fetch-section','attendance','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','fetch-attendance-report'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -93,15 +93,7 @@ class StdAttendanceController extends Controller
             ]);
         }
     }
-     public function actionViewDatesheet()
-    { 
-        return $this->render('view-datesheet');
-    }
-
-    public function actionTestAttendance()
-    { 
-        return $this->render('test-attendance');
-    }
+    
 
     public function actionTakeAttendance()
     { 
@@ -133,15 +125,22 @@ class StdAttendanceController extends Controller
         return $this->render('daterangewise-student-attendance');
     }
 
-    public function actionActivityView()
-    { 
-        return $this->render('activity-view');
+
+    public function actionAttendance()
+    {
+        return $this->render('attendance');
     }
 
-     public function actionMarksSheet()
-    { 
-        return $this->render('marks-sheet');
+    public function actionFetchSection()
+    {   
+        return $this->render('fetch-section');
     }
+
+    public function actionViewClassAttendance()
+    {   
+        return $this->render('view-class-attendance');
+    }
+    
     /**
      * Creates a new StdAttendance model.
      * For ajax request will return json object
@@ -261,21 +260,6 @@ class StdAttendanceController extends Controller
                 ]);
             }
         }
-    }
-
-    public function actionAttendance()
-    {
-        return $this->render('attendance');
-    }
-
-    public function actionFetchSection()
-    {   
-        return $this->render('fetch-section');
-    }
-
-    public function actionViewClassAttendance()
-    {   
-        return $this->render('view-class-attendance');
     }
 
     /**

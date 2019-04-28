@@ -73,7 +73,7 @@
                         'label' => 'Class',
                         'icon' => 'copy',
                         'items' =>[
-                             ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./test-attendance"],],
+                             ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./list-of-classes"],],
                             ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],   
                         ]
                     ],
@@ -82,7 +82,6 @@
                         'icon' => 'users',
                         'items' => [
                             ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
-                            ['label' => 'View Class Attendance', 'icon' => 'caret-right', 'url' => ["./home"],],
                         ]
                     ],
                     [
