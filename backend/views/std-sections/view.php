@@ -30,6 +30,8 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             // 'section_id',
+            // 'branch_id',
+            'branch.branch_name',
             // 'session_id',
             'session.session_name',
             'section_name',

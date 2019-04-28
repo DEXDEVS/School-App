@@ -534,7 +534,6 @@ $url = \yii\helpers\Url::to("fee-transaction-detail/fetch-students");
 $script = <<< JS
 $('#sessionId').on('change',function(){
    var session_Id = $('#sessionId').val();
-   alert(session_Id);
   
    $.ajax({
         type:'post',

@@ -135,7 +135,7 @@ class EmpAttendanceController extends Controller
 
                     if($check_in == 0){
 
-                        $emp_att = Yii::$app->db->createCommand("SELECT emp_id FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '2019-04-01' AND branch_id = '$branch_id' ")->queryAll();
+                        $emp_att = Yii::$app->db->createCommand("SELECT emp_id FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '$date' AND branch_id = '$branch_id' ")->queryAll();
 
                         if(!empty($emp_att)){
                             Yii::$app->session->setFlash('warning',"You have already checked in..!");
@@ -153,8 +153,7 @@ class EmpAttendanceController extends Controller
                         }
                     }
                     if($check_in == 1){
-
-                        $emp_att = Yii::$app->db->createCommand("SELECT check_in FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '2019-04-01'  AND branch_id = '$branch_id' ")->queryAll();
+                        $emp_att = Yii::$app->db->createCommand("SELECT check_in FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '$date'  AND branch_id = '$branch_id' ")->queryAll();
 
                         
                         if(empty($emp_att)){
@@ -166,7 +165,7 @@ class EmpAttendanceController extends Controller
                                 'updated_by'    => Yii::$app->user->identity->id,
                                 ],
 
-                                ['emp_id' => $emp_id, 'att_date' => "2019-04-01", 'branch_id' => $branch_id]
+                                ['emp_id' => $emp_id, 'att_date' => "$date", 'branch_id' => $branch_id]
 
                             )->execute();
                         }

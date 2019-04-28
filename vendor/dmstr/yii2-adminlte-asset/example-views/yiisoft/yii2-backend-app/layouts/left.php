@@ -173,7 +173,7 @@
                                     ['label' => 'Manage Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance',],
                                      ['label' => 'Final Attendance', 'icon' => 'chevron-right', 'url' => './final-attendance',],
                                     ['label' => 'Attendance Report', 'icon' => 'chevron-right', 'url' => './emp-att-report',],
-                                    ['label' => 'Manage Leave', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    ['label' => 'Manage Leave', 'icon' => 'chevron-right', 'url' => './emp-leave',],
                                     ['label' => 'Leave Report', 'icon' => 'chevron-right', 'url' => './premium-version',],
                                 ],
                             ],

@@ -32,7 +32,7 @@ class MarksDetailsController extends Controller
                     ],
                     [
                      
-                        'actions' => ['logout', 'index','view','update','delete','view-marks-list'],
+                        'actions' => ['logout', 'index','view','update','delete','view-marks-list','marks-sheet'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,12 +48,19 @@ class MarksDetailsController extends Controller
         ];
     }
 
-
-
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
 
      public function actionViewMarksList()
     { 
         return $this->render('view-marks-list');
+    }
+
+     public function actionMarksSheet()
+    { 
+        return $this->render('marks-sheet');
     }
     /**
      * Lists all MarksDetails models.

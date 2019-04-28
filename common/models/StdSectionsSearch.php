@@ -18,7 +18,7 @@ class StdSectionsSearch extends StdSections
     public function rules()
     {
         return [
-            [['section_id', 'session_id', 'section_intake', 'section_description','created_by', 'updated_by'], 'integer'],
+            [['section_id', 'branch_id', 'session_id', 'section_intake', 'section_description','created_by', 'updated_by'], 'integer'],
             [['section_name', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -58,6 +58,7 @@ class StdSectionsSearch extends StdSections
             $query->joinWith('session');
             $query->andFilterWhere([
                 'section_id' => $this->section_id,
+                'branch_id' => $this->branch_id,
                 'section_intake' => $this->section_intake,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
@@ -89,6 +90,7 @@ class StdSectionsSearch extends StdSections
 
         $query->andFilterWhere([
             'section_id' => $this->section_id,
+            'branch_id' => $this->branch_id,
             'section_intake' => $this->section_intake,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

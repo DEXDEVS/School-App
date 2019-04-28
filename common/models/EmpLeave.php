@@ -41,11 +41,11 @@ class EmpLeave extends \yii\db\ActiveRecord
     {
         return [
             [['leave_type', 'starting_date', 'ending_date','no_of_days', 'leave_purpose'], 'required'],
-            [['emp_id',  'no_of_days', 'created_by', 'updated_by'], 'integer'],
+            [['no_of_days', 'created_by', 'updated_by'], 'integer'],
             [['leave_type'], 'string'],
             [['emp_id', 'starting_date', 'ending_date', 'applying_date', 'created_at', 'updated_at', 'status', 'remarks', 'created_by', 'updated_by','branch_id'], 'safe'],
             [['leave_purpose'], 'string', 'max' => 100],
-            [['status'], 'string', 'max' => 20],
+            [['status'], 'string'],
             [['remarks'], 'string', 'max' => 200],
             [['emp_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['emp_id' => 'emp_id']],
         ];
@@ -58,12 +58,12 @@ class EmpLeave extends \yii\db\ActiveRecord
     {
         return [
             'app_id' => 'App ID',
-            'emp_id' => 'Emp ID',
+            'emp_id' => 'Employee Name',
             'leave_type' => 'Leave Type',
             'starting_date' => 'Starting Date',
             'ending_date' => 'Ending Date',
             'applying_date' => 'Applying Date',
-            'no_of_days' => 'No Of Days',
+            'no_of_days' => 'No of days',
             'leave_purpose' => 'Reason',
             'status' => 'Status',
             'remarks' => 'Remarks',

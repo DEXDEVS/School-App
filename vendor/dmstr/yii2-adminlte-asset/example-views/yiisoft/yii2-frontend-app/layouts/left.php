@@ -62,7 +62,7 @@
                 'items' => [
                     ['label' => 'Menus', 'options' => ['class' => 'header center']],
                     ['label' => 'Home', 'icon' => 'home', 'url' => './home'],
-                    ['label' => 'portfolio', 'icon' => 'user', 'url' => './employee-portfolio'],
+                    ['label' => 'Portfolio', 'icon' => 'user', 'url' => './employee-portfolio'],
                     // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     // ------------------------------------------------
@@ -85,16 +85,15 @@
                         'label' => 'Class',
                         'icon' => 'copy',
                         'items' =>[
-                             ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./test-attendance"],],
+                             ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./list-of-classes"],],
                             ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],   
                         ]
                     ],
                     [
-                        'label' => 'Studnets',
+                        'label' => 'Students',
                         'icon' => 'users',
                         'items' => [
                             ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
-                            ['label' => 'View Class Attendance', 'icon' => 'caret-right', 'url' => ["./home"],],
                         ]
                     ],
                     [

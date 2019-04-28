@@ -10,13 +10,14 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'app_id',
-    ],
+    //     [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'app_id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'emp_id',
+        'value'=>'emp.emp_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -30,22 +31,22 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ending_date',
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'applying_date',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'no_of_days',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'leave_purpose',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'status',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'applying_date',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'no_of_days',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'leave_purpose',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',

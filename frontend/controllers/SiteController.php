@@ -34,7 +34,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes'],
+                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -62,6 +62,11 @@ class SiteController extends Controller
     }
 
 
+    public function actionActivityView()
+    { 
+        return $this->render('activity-view');
+    }
+
     public function actionEmployeDashboard()
     {
         return $this->render('employe-dashboard');
@@ -84,6 +89,17 @@ class SiteController extends Controller
     {
         return $this->render('employee-portfolio');
     }
+
+    public function actionViewDatesheet()
+    { 
+        return $this->render('view-datesheet');
+    }
+
+    public function actionListOfClasses()
+    { 
+        return $this->render('list-of-classes');
+    }
+
     /**
      * Displays homepage.
      *

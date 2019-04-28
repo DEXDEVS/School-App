@@ -93,7 +93,7 @@
 					<table class="table table-hover">
 						<thead>
 							<tr style="">
-								<th style="background-color: lightgray;font-size:20px;text-align: center;">Statistics</th>
+								<th style="background-color: lightgray;font-size:20px;text-align: center;border-radius:10px;">Statistics</th>
 								<th>Working Days <span class="label label-primary"><?php echo $countWorkingDays; ?></span></th>
 								<th>Present <span class="label label-success"><?php echo $countPresentDays; ?></span>
 								</th>
@@ -139,23 +139,23 @@
 								<td>
 									<?php 
 									if(empty($attReport)){
-										echo "";
+										echo "--";
 									} else {
 										echo $attReport[0]['attendance'];
 									}
 								 	?>
 								 </td>
 								<td><?php 
-								 if(empty($attReport)){
-										echo "";
+								 if(empty($attReport) || $attReport[0]['check_in'] == '00:00:00'){
+										echo "--";
 									} else {
 										echo $attReport[0]['check_in'];
 									}
 								 	?>
 								 </td>
 								 <td><?php 
-								 if(empty($attReport)){
-										echo "";
+								 if(empty($attReport) || $attReport[0]['check_out'] == '00:00:00'){
+										echo "--";
 									} else {
 										echo $attReport[0]['check_out'];
 									}
@@ -178,7 +178,7 @@
 								<td>
 									<?php 
 									if(empty($attReport)){
-										echo "-";
+										echo "--";
 									} else {
 										echo $attReport[0]['attendance'];
 									}
@@ -186,16 +186,16 @@
 								 	?>
 								 </td>
 								 <td><?php 
-								 if(empty($attReport)){
-										echo "";
+								 if(empty($attReport) || $attReport[0]['check_in'] == '00:00:00'){
+										echo "--";
 									} else {
 										echo $attReport[0]['check_in'];
 									}
 								 	?>
 								 </td>
 								 <td><?php 
-								 if(empty($attReport)){
-										echo "";
+								 if(empty($attReport) || $attReport[0]['check_out'] == '00:00:00'){
+										echo "--";
 									} else {
 										echo $attReport[0]['check_out'];
 									}

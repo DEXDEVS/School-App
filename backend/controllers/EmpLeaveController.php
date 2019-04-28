@@ -59,7 +59,7 @@ class EmpLeaveController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "EmpLeave #".$id,
+                    'title'=> "Leave".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -99,7 +99,12 @@ class EmpLeaveController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $model->created_by = Yii::$app->user->identity->id; 
+                $model->created_at = new \yii\db\Expression('NOW()');
+                $model->updated_by = '0';
+                $model->updated_at = '0'; 
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new EmpLeave",
@@ -160,7 +165,45 @@ class EmpLeaveController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post())){
+                $empName = $model->emp_id;
+                $emp_id = Yii::$app->db->createCommand("SELECT emp_id,emp_branch_id FROM emp_info WHERE emp_name = '$empName'")->queryAll();
+                $empId = $emp_id[0]['emp_id'];
+                $branch_id = $emp_id[0]['emp_branch_id'];
+                $status = $model->status;
+                $startDate = $model->starting_date;
+                $Date = $model->no_of_days;
+
+                if ($status == "Accpeted") {
+                    $model->emp_id     = $empId;
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
+                    for ($i=0; $i <$Date ; $i++) { 
+                        $date = strtotime("$i day", strtotime($startDate));
+                        $emp_leave = Yii::$app->db->createCommand()->insert('emp_attendance',[
+                            'branch_id'     => $branch_id,      
+                            'emp_id'        => $empId,
+                            'att_date'      => date("Y-m-d", $date),
+                            'check_in'      => '00:00:00',
+                            'check_out'     => '00:00:00' ,
+                            'attendance'    => 'L',
+                            'created_at'    => new \yii\db\Expression('NOW()'),
+                            'created_by'    => Yii::$app->user->identity->id, 
+                        ])->execute();
+                    }
+                    
+                } else {
+                    $model->emp_id     = $empId;
+                    $model->updated_by = Yii::$app->user->identity->id;
+                    $model->updated_at = new \yii\db\Expression('NOW()');
+                    $model->created_by = $model->created_by;
+                    $model->created_at = $model->created_at;
+                    $model->save();
+                }
+               
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "EmpLeave #".$id,

@@ -10,8 +10,8 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'app_id',
-            'emp_id',
+            // 'app_id',
+            // 'emp_id',
             'leave_type',
             'starting_date',
             'ending_date',
@@ -20,10 +20,10 @@ use yii\widgets\DetailView;
             'leave_purpose',
             'status',
             'remarks',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            // 'created_at',
+            // 'updated_at',
+            // 'created_by',
+            // 'updated_by',
         ],
     ]) ?>
 
