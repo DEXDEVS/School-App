@@ -63,7 +63,7 @@ class EmpLeave extends \yii\db\ActiveRecord
             'starting_date' => 'Starting Date',
             'ending_date' => 'Ending Date',
             'applying_date' => 'Applying Date',
-            'no_of_days' => 'No Of Days',
+            'no_of_days' => 'No of days',
             'leave_purpose' => 'Reason',
             'status' => 'Status',
             'remarks' => 'Remarks',

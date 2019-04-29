@@ -22,6 +22,7 @@ use dosamigos\datetimepicker\DateTimePicker;
                 'model' => $model,
                 'attribute' => 'starting_date',
                 'language' => 'en',
+                'id' => 'startdate',
                 'size' => 'ms',
                 'clientOptions' => [
                     'autoclose' => true,
@@ -39,20 +40,22 @@ use dosamigos\datetimepicker\DateTimePicker;
                 'attribute' => 'ending_date',
                 'language' => 'en',
                 'size' => 'ms',
-                'clientOptions' => [
+                
+               'clientOptions' => [
                     'autoclose' => true,
+                    'id' => 'enddate',
                     'format' => 'yyyy-mm-dd HH:ii:ss',
-                    'todayBtn' => true
+                    'todayBtn' => true,
                 ]
             ]);?>
         </div>
         <div class="col-md-6">
-             <?= $form->field($model, 'no_of_days')->textInput() ?>
+             <?= $form->field($model, 'no_of_days')->textInput(['id' => 'noofdays']) ?>
         </div>
     </div>
      <div class="row">
         <div class="col-md-12">
-             <?= $form->field($model, 'leave_purpose')->textArea(['maxlength' => true]) ?>
+             <?= $form->field($model, 'leave_purpose')->textArea(['maxlength' => true, 'rows'=>10]) ?>
         </div>
     </div>   
 
@@ -65,3 +68,16 @@ use dosamigos\datetimepicker\DateTimePicker;
     <?php ActiveForm::end(); ?>
     
 </div>
+<!-- <script type="text/javascript">
+    $('#enddate').on('change',function(){
+        alert("welcome");
+
+        // var tMarks = $('#totalMarks').val();
+        // var obtMarks = $('#obtainedMarks').val();
+        // var percentage = ((parseInt(obtMarks) / parseInt(tMarks))*100);
+        // var per = Math.round(percentage)+'%';
+        // $('#percentage').val(per);
+        
+    });
+</script>
+ -->

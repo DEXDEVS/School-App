@@ -59,7 +59,7 @@ class EmpLeaveController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "EmpLeave #".$id,
+                    'title'=> "View Leave",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -166,7 +166,7 @@ class EmpLeaveController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update EmpLeave #".$id,
+                    'title'=> "Update Leave",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
