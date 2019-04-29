@@ -1,12 +1,4 @@
-<h1 class="well well-sm bg-navy" align="center" style="color: #3C8DBC; margin-top: -10px">Class Fee Account Information</h1>
 
-<style>
-    input[type=number]::-webkit-inner-spin-button, 
-    input[type=number]::-webkit-outer-spin-button { 
-      -webkit-appearance: none; 
-      margin: 0; 
-    }
-</style>
 <?php 
     if(isset($_POST['submit'])) { 
         $classid   = $_POST["classid"];
@@ -34,6 +26,15 @@
             // Select Student RollNo
             $stdRollNo = Yii::$app->db->createCommand("SELECT std_roll_no FROM std_enrollment_detail WHERE std_enroll_detail_std_id = '$studentid'")->queryAll();
     ?>
+<h1 class="well well-sm bg-navy" align="center" style="color: #3C8DBC; margin-top: -10px">Class Fee Account Information</h1>
+
+<style>
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+</style>
     <form method="POST" action="class-account">
         <div class="row">
             <div class="col-md-12 text-center" style="margin-top: -20px;">
