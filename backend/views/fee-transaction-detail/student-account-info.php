@@ -14,17 +14,25 @@
         $months    = $_POST["month"];
         $countMonth = count($months);
         $month     = $months[0];
-          
-        // previousMonth
-        $previousMonth = date('Y-m', strtotime('-1 months', strtotime($month)));
+
+        $classId = Yii::$app->db->createCommand("SELECT class_name_id FROM std_enrollment_head WHERE std_enroll_head_id = '$classid'")->queryAll();
+        $classID = $classId[0]['class_name_id'];
         
-        // Select CLass...
-        $class = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classid'")->queryAll();
-        
-        // Select Student Name
-        $studentName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$studentid'")->queryAll();
-        // Select Student RollNo
-        $stdRollNo = Yii::$app->db->createCommand("SELECT std_roll_no FROM std_enrollment_detail WHERE std_enroll_detail_std_id = '$studentid'")->queryAll();
+        $studentAccount = Yii::$app->db->createCommand("SELECT fth.voucher_no FROM fee_transaction_head as fth INNER JOIN fee_month_detail as fmd ON fth.voucher_no = fmd.voucher_no WHERE fth.class_name_id = '$classID' AND fth.std_id = '$studentid' AND fmd.month = '$months[0]'")->queryAll();
+        var_dump($studentAccount);
+        if(!empty($studentAccount)){
+                Yii::$app->session->setFlash('warning', "try again...!");
+        } else {
+            // previousMonth
+            $previousMonth = date('Y-m', strtotime('-1 months', strtotime($month)));
+            
+            // Select CLass...
+            $class = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classid'")->queryAll();
+            
+            // Select Student Name
+            $studentName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$studentid'")->queryAll();
+            // Select Student RollNo
+            $stdRollNo = Yii::$app->db->createCommand("SELECT std_roll_no FROM std_enrollment_detail WHERE std_enroll_detail_std_id = '$studentid'")->queryAll();
     ?>
     <form method="POST" action="class-account">
         <div class="row">
@@ -271,5 +279,7 @@
     </form>
     <!-- Fee Transaction Form Close -->
 <?php
+        // end of else 
+        }
     }
 ?>

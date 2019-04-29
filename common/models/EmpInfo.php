@@ -28,6 +28,7 @@ use yii\helpers\Url;
  * @property integer $emp_passing_year
  * @property string $emp_institute_name
  * @property string $degree_scan_copy
+ * @property string $emp_cv
  * @property double $emp_salary
  * @property string $created_at
  * @property string $updated_at
@@ -60,19 +61,19 @@ class EmpInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_perm_address', 'emp_temp_address', 'emp_marital_status', 'emp_gender', 'emp_photo', 'emp_designation_id', 'emp_type_id', 'group_by', 'emp_branch_id', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name', 'degree_scan_copy', 'emp_salary'], 'safe'],
+            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_perm_address', 'emp_temp_address', 'emp_marital_status', 'emp_gender', 'emp_photo', 'emp_designation_id', 'emp_type_id', 'group_by', 'emp_branch_id', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name', 'degree_scan_copy', 'emp_salary','emp_cv'], 'safe'],
             [['emp_reg_no', 'emp_marital_status', 'emp_gender', 'group_by'], 'string'],
             [['emp_designation_id', 'emp_type_id', 'emp_branch_id', 'emp_passing_year', 'created_by', 'updated_by'], 'integer'],
             [['emp_salary'], 'number'],
             [['emp_reg_no','created_at', 'updated_at','created_by', 'updated_by'], 'safe'],
             [['emp_name', 'emp_father_name', 'emp_qualification', 'emp_institute_name'], 'string', 'max' => 50],
             [['emp_cnic', 'emp_contact_no'], 'string', 'max' => 15],
-            [['emp_perm_address', 'emp_temp_address', 'emp_photo', 'degree_scan_copy'], 'string', 'max' => 200],
+            [['emp_perm_address', 'emp_temp_address', 'emp_photo', 'degree_scan_copy','emp_cv'], 'string', 'max' => 200],
             [['emp_email'], 'string', 'max' => 84],
             [['emp_designation_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpDesignation::className(), 'targetAttribute' => ['emp_designation_id' => 'emp_designation_id']],
             [['emp_branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['emp_branch_id' => 'branch_id']],
             [['emp_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpType::className(), 'targetAttribute' => ['emp_type_id' => 'emp_type_id']],
-            [['emp_photo', 'degree_scan_copy'], 'image', 'extensions' => 'jpg'],
+            [['emp_photo', 'degree_scan_copy','emp_cv'], 'image', 'extensions' => 'jpg'],
             [['emp_email'],'email'],
             [['reference'],'string', 'max' => 84],
         ];
@@ -104,6 +105,7 @@ class EmpInfo extends \yii\db\ActiveRecord
             'emp_passing_year' => 'Passing Year',
             'emp_institute_name' => 'Institute Name',
             'degree_scan_copy' => 'Last Degree Scan Copy',
+            'emp_cv' => 'CV Scan copy',
             'emp_salary' => 'Salary',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -180,6 +182,21 @@ class EmpInfo extends \yii\db\ActiveRecord
         $path = Url::to('@web/uploads/');
         $url = Url::to('@web/uploads/');
         $filename = $this->emp_name.'_degree_scan_copy'.'.jpg';
+        $alt = $this->emp_name."'s image not exist!";
+
+        $imageInfo = ['alt'=>$alt];
+
+        if(file_exists($path.$filename)){
+            $imageInfo['url'] = $url.'default.jpg';
+        }  else {
+            $imageInfo['url'] = $url.$filename; 
+        }
+        return $imageInfo;
+    }
+    public function getCvInfo(){
+        $path = Url::to('@web/uploads/');
+        $url = Url::to('@web/uploads/');
+        $filename = $this->emp_name.'emp_cv'.'.jpg';
         $alt = $this->emp_name."'s image not exist!";
 
         $imageInfo = ['alt'=>$alt];

@@ -184,7 +184,7 @@ class StdRegistrationController extends Controller
                     $contact = $stdGuardianInfo->guardian_contact_no_1;
                     $num = str_replace('-', '', $contact);
                     $to = str_replace('+', '', $num);
-                    $message = "Aasalam-O-Aalikum! \nYour S/D has been successfully registered in Brookfield College. \n\nLogin credentials as Parent (username :".$stdGuardianInfo->guardian_cnic.", Password: ".$prntPassword.") \nLogin credentials as Student (usename:".$model->std_b_form.", Password: ".$stdPassword.")";
+                    $message = "AOA! \nCongradulations! Your S/D has been successfully registered in Brookfield College. \n\nLogin credentials as Parent (username :".$stdGuardianInfo->guardian_cnic.", Password: ".$prntPassword.") \nLogin credentials as Student (usename:".$model->std_b_form.", Password: ".$stdPassword.")";
                     $sms = SmsController::sendSMS($to, $message);
                     return $this->redirect(['std-personal-info/index']);
 
