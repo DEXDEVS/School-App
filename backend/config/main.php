@@ -154,7 +154,9 @@ return [
                 'final-attendance' => 'emp-attendance/final-attendance',
                 'emp-attendance' => 'emp-attendance/index',
                 'emp-leave' => 'emp-leave/index',
+
                 // account-transactions
+                'account-transactions' => 'account-transactions/index',
                 'balance-sheet' => 'account-transactions/balance-sheet',
                 'passwords' => 'site/passwords',
 

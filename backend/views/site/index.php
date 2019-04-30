@@ -17,11 +17,11 @@ use yii\helpers\Url;
           <div class="small-box bg-aqua">
             <div class="inner">
               <?php 
-              $query = (new \yii\db\Query())->from('std_personal_info');
+              $query = (new \yii\db\Query())->from('std_personal_info')->where(['status' => 'Active']);
               $id = $query->count('std_id'); ?>
               <h3><?php echo $id; ?> </h3>
 
-              <p>Student Registrations</p>
+              <p>Active Students</p>
             </div>
             <div class="icon">
               <i class="fa fa-users"></i>
@@ -38,7 +38,7 @@ use yii\helpers\Url;
               $query = (new \yii\db\Query())->from('emp_info');
               $id = $query->count('emp_id'); ?>
               <h3><?php echo $id; ?> </h3>
-              <p>Employee Registrations</p>
+              <p>Active Employees</p>
             </div>
             <div class="icon">
               <i class="fa fa-user-plus"></i>
@@ -52,10 +52,11 @@ use yii\helpers\Url;
           <div class="small-box bg-yellow">
             <div class="inner">
              <?php 
-              $query = (new \yii\db\Query())->from('user');
-              $id = $query->count('id'); ?>
+              $branch_id = Yii::$app->user->identity->branch_id;
+              $query = (new \yii\db\Query())->from('std_sessions')->where(['session_branch_id'=>$branch_id , 'status'=> 'Active']);
+              $id = $query->count('session_id'); ?>
               <h3><?php echo $id; ?> </h3>
-              <p>User Registrations</p>
+              <p>Active Sessions</p>
             </div>
             <div class="icon">
               <i class="fa fa-user"></i>
@@ -68,8 +69,11 @@ use yii\helpers\Url;
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
-              <p>Unique Visitors</p>
+              <?php 
+              $query = (new \yii\db\Query())->from('branches')->where(['status'=>'Active']);
+              $id = $query->count('branch_id'); ?>
+              <h3><?php echo $id; ?></h3>
+              <p>Active Branches</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-eye-open" style="font-size: 70px;"></i>

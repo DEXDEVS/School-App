@@ -125,7 +125,7 @@ class EmpInfoController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $empRefModel->load($request->post())){
+            }else if($model->load($request->post()) && $model->validate() && $empRefModel->load($request->post()) ){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
@@ -145,6 +145,15 @@ class EmpInfoController extends Controller
                             $model->degree_scan_copy = 'uploads/'.$imageName.'.'.$model->degree_scan_copy->extension;
                         } else {
                            $model->degree_scan_copy = '0'; 
+                        }
+                        $model->emp_cv = UploadedFile::getInstance($model,'emp_cv');
+                        if(!empty($model->emp_cv)){
+                            $imageName = $model->emp_name.'_emp_cv'; 
+                            $model->emp_cv->saveAs('uploads/'.$imageName.'.'.$model->emp_cv->extension);
+                            //save the path in the db column
+                            $model->emp_cv = 'uploads/'.$imageName.'.'.$model->emp_cv->extension;
+                        } else {
+                           $model->emp_cv = '0'; 
                         }
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
@@ -175,7 +184,7 @@ class EmpInfoController extends Controller
                         $contact = $model->emp_contact_no;
                         $num = str_replace('-', '', $contact);
                         $to = str_replace('+', '', $num);
-                        $message = "Aasalam-O-Aalikum! \nWelcome to become a part of Brookfield Family. \n\nYour Login credentials (username :".$model->emp_cnic.", Password: ".$empPassword.") ";
+                        $message = "AOA! \nCongradulations! You have become a part of Brookfield Family. \n\nYour Login credentials (username :".$model->emp_cnic.", Password: ".$empPassword.") ";
                         $sms = SmsController::sendSMS($to, $message);
                         return $this->redirect(['index']);
 
@@ -198,6 +207,7 @@ class EmpInfoController extends Controller
                     'title'=> "Create new EmpInfo",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'empRefModel' => $empRefModel,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
@@ -213,6 +223,7 @@ class EmpInfoController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'empRefModel' => $empRefModel,
                 ]);
             }
         }
@@ -230,7 +241,7 @@ class EmpInfoController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id); 
-        $emp_info = Yii::$app->db->createCommand("SELECT emp_photo, degree_scan_copy FROM emp_info where emp_id = $id")->queryAll();      
+        $emp_info = Yii::$app->db->createCommand("SELECT emp_photo, degree_scan_copy,emp_cv FROM emp_info where emp_id = $id")->queryAll();      
 
         if($request->isAjax){
             /*
@@ -266,6 +277,15 @@ class EmpInfoController extends Controller
                             $model->degree_scan_copy = 'uploads/'.$imageName.'.'.$model->degree_scan_copy->extension;
                         } else {
                            $model->degree_scan_copy = $emp_info[0]['degree_scan_copy'];  
+                        }
+                        $model->emp_cv = UploadedFile::getInstance($model,'emp_cv');
+                        if(!empty($model->emp_cv)){
+                            $imageName = $model->emp_name.'_emp_cv'; 
+                            $model->emp_cv->saveAs('uploads/'.$imageName.'.'.$model->emp_cv->extension);
+                            //save the path in the db column
+                            $model->emp_cv = 'uploads/'.$imageName.'.'.$model->emp_cv->extension;
+                        } else {
+                           $model->emp_cv = $emp_info[0]['emp_cv'];  
                         }
                         $model->updated_by = Yii::$app->user->identity->id;
                         $model->updated_at = new \yii\db\Expression('NOW()');

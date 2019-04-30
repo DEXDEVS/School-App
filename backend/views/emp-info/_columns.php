@@ -16,12 +16,22 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'emp_branch_id',
+        'value'=>'empBranch.branch_name',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'emp_name',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_father_name',
+        'attribute'=>'emp_designation_id',
+        'value'=>'empDesignation.emp_designation',
     ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'emp_father_name',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'emp_cnic',
@@ -50,10 +60,7 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_photo',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'emp_designation_id',
-    // ],
+    
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_type_id',
@@ -62,10 +69,7 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'group_by',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'emp_branch_id',
-    // ],
+    
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_email',
@@ -85,6 +89,10 @@ return [
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'degree_scan_copy',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_cv',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
