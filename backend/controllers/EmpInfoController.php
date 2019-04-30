@@ -125,7 +125,7 @@ class EmpInfoController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $empRefModel->load($request->post()) && $model->validate()){
+            }else if($model->load($request->post()) && $model->validate() && $empRefModel->load($request->post()) ){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
@@ -207,6 +207,7 @@ class EmpInfoController extends Controller
                     'title'=> "Create new EmpInfo",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'empRefModel' => $empRefModel,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
@@ -222,6 +223,7 @@ class EmpInfoController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'empRefModel' => $empRefModel,
                 ]);
             }
         }
