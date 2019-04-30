@@ -34,7 +34,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes'],
+                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children','premium-version','fee-details'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -61,12 +61,46 @@ class SiteController extends Controller
         ];
     }
 
-
+     public function actionChildren()
+    { 
+        return $this->render('Children');
+    }
+     public function actionPremiumVersion()
+    { 
+        return $this->render('premium-version');
+    }
     public function actionActivityView()
     { 
         return $this->render('activity-view');
     }
-
+    public function actionStdProfile()
+    { 
+        return $this->render('std-profile');
+    }
+    public function actionStdFee()
+    { 
+        return $this->render('std-fee');
+    }
+    public function actionFeeDetails()
+    { 
+        return $this->render('fee-details');
+    }
+     public function actionStdFeeDetails()
+    { 
+        return $this->render('std-fee-details');
+    }
+    public function actionStdExams()
+    { 
+        return $this->render('std-exams');
+    }
+    public function actionStdExamSchedule()
+    { 
+        return $this->render('std-exam-schedule');
+    }
+    public function actionStdExamResult()
+    { 
+        return $this->render('std-exam-result');
+    }
     public function actionEmployeDashboard()
     {
         return $this->render('employe-dashboard');

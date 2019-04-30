@@ -67,7 +67,7 @@
                      [
                         'label' => 'Class Time Table',
                         'icon' => 'calendar',
-                        'url' => './home',
+                        'url' => './premium-version',
                     ],
                     [
                         'label' => 'Class',
@@ -88,8 +88,8 @@
                         'label' => 'Communication',
                         'icon' => 'envelope-o',
                         'items' => [
-                            ['label' => 'SMS', 'icon' => 'caret-right', 'url' => ["./home"],],
-                             ['label' => 'Email', 'icon' => 'caret-right', 'url' => ["./home"],],
+                            ['label' => 'SMS', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                             ['label' => 'Email', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                         ]
                     ],
 
@@ -116,7 +116,12 @@
                 'items' => [
                     ['label' => 'Menus', 'options' => ['class' => 'header center']],
                     ['label' => 'Home', 'icon' => 'home', 'url' => './home'],
-                    ['label' => 'Porfile', 'icon' => 'user', 'url' => './employee-portfolio'],
+                    ['label' => 'Porfile', 'icon' => 'user', 'url' => './std-profile'],
+                    ['label' => 'Fees', 'icon' => 'money', 'url' => './fee-details'],
+                    ['label' => 'Exam', 'icon' => 'book', 'url' => './std-exams'],
+                    ['label' => 'Time Table', 'icon' => 'calendar', 'url' => './premium-version'],
+                    ['label' => 'Homework', 'icon' => 'book', 'url' => './premium-version'],
+                     ['label' => 'Attendance', 'icon' => 'check-square-o', 'url' => './premium-version'],
                     // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     
@@ -133,7 +138,7 @@
                 'items' => [
                     ['label' => 'Menus', 'options' => ['class' => 'header center']],
                     ['label' => 'Home', 'icon' => 'home', 'url' => './home'],
-                    ['label' => 'Portfolio', 'icon' => 'user', 'url' => './employee-portfolio'],
+                    ['label' => 'Children', 'icon' => 'user', 'url' => './children'],
                     // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     
@@ -143,8 +148,6 @@
 
         } // closing of Parent 
         ?>
-
-
     </section>
 
 </aside>
