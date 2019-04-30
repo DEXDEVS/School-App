@@ -71,6 +71,7 @@ return [
                 'datewise-student-attendance' => 'std-attendance/datewise-student-attendance',
                 'daterangewise-class-attendance' => 'std-attendance/daterangewise-class-attendance',
                 'daterangewise-student-attendance' => 'std-attendance/daterangewise-student-attendance',
+                'monthly-attendance-view' => 'std-attendance/monthly-attendance-view',
                 'marks-sheet'=>'marks-details/marks-sheet',
                 'view-marks-list'=>'marks-details/view-marks-list',
                 'emp-leave'=>'emp-leave/index',

@@ -100,16 +100,9 @@
         $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classid'")->queryAll();
 
         $headId = $student[0]['std_enroll_head_id'];
-        // get SbjectsCombinationId for selected class
-        $subjectComb = Yii::$app->db->createCommand("SELECT s.section_subjects,h.section_id
-            FROM std_sections as s
-            INNER JOIN std_enrollment_head as h
-            ON s.section_id = h.section_id
-            WHERE h.std_enroll_head_id = '$headId'")->queryAll();
-        $combinationId = $subjectComb[0]['section_subjects'];
         // getting subjectCombination Name
         $combinations = Yii::$app->db->createCommand("
-                SELECT std_subject_name FROM std_subjects WHERE std_subject_id = '$combinationId'
+                SELECT std_subject_name FROM std_subjects WHERE class_id = '$classid'
                     ")->queryAll();
         $subComb = $combinations[0]['std_subject_name'];
         $singleSubject = explode(',', $subComb);
