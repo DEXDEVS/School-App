@@ -58,7 +58,7 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
             'teacher_subject_assign_detail_head_id' => 'Teacher Name',
             'class_id' => 'Class Name',
             'subject_id' => 'Subject Name',
-            'no_of_lecture' => 'No Of Lecture',
+            'no_of_lecture' => 'No of Lecture',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

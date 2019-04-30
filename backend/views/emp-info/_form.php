@@ -28,29 +28,29 @@ use common\models\Branches;
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 125px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 135px; top: 6px"></i>
             <?= $form->field($model, 'emp_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 101px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 113px; top: 6px"></i>
             <?= $form->field($model, 'emp_father_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 129px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 6px"></i>
             <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '99999-9999999-9', ]) ?>
         </div>
     </div>    
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 162px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 172px; top: 6px"></i>
             <?= $form->field($model, 'emp_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
         </div>
         <div class="col-md-4">
-            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 55px; top: 6px"></i> -->
+             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 60px; top: 6px"></i> 
             <?= $form->field($model, 'emp_email')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 66px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 72px; top: 6px"></i>
             <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => 'Select Gender']) ?>
         </div>
     </div>
@@ -60,7 +60,7 @@ use common\models\Branches;
             <?= $form->field($model, 'emp_photo')->fileInput() ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 148px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 160px; top: 6px"></i>
             <?= $form->field($model, 'emp_perm_address')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
@@ -70,7 +70,7 @@ use common\models\Branches;
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 108px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i>
             <?= $form->field($model, 'emp_marital_status')->dropDownList([ 'Single' => 'Single', 'Married' => 'Married', ], ['prompt' => 'Select Merital Status']) ?>
         </div>
         <div class="col-md-4">
@@ -92,34 +92,38 @@ use common\models\Branches;
             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 173px; top: 6px"></i> -->
             <?= $form->field($model, 'degree_scan_copy')->fileInput() ?>
         </div>
+        <div class="col-md-4">
+            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 173px; top: 6px"></i> -->
+            <?= $form->field($model, 'emp_cv')->fileInput() ?>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 97px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 105px; top: 6px"></i>
             <?= $form->field($model, 'emp_designation_id')->dropDownList(
                     ArrayHelper::map(EmpDesignation::find()->where(['delete_status'=>1])->all(),'emp_designation_id','emp_designation'), ['prompt'=>'Select Designation']
                 )?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 50px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 52px; top: 6px"></i>
             <?= $form->field($model, 'emp_type_id')->dropDownList(
                     ArrayHelper::map(EmpType::find()->where(['delete_status'=>1])->all(),'emp_type_id','emp_type'), ['prompt'=>'Select Type']
                 )?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 80px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 85px; top: 6px"></i>
             <?= $form->field($model, 'group_by')->dropDownList([ 'Faculty' => 'Faculty', 'Non-Faculty' => 'Non-Faculty', ], ['prompt' => 'Select Group']) ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 107px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 117px; top: 6px"></i>
             <?= $form->field($model, 'emp_branch_id')->dropDownList(
                     ArrayHelper::map(Branches::find()->where(['delete_status'=>1])->all(),'branch_id','branch_name'), ['prompt'=>'Select Branch']
                 )?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 58px; top: 6px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 64px; top: 6px"></i>
             <?= $form->field($model, 'emp_salary')->textInput() ?>
         </div>
         <div class="col-md-4">

@@ -47,6 +47,7 @@ $degOptions = ['data-lightbox'=>'profile image','data-title'=>$degreeInfo['alt']
             'emp_passing_year',
             'emp_institute_name',
             'degree_scan_copy',
+            'emp_cv',
             'emp_salary',
             'created_at',
             'updated_at',

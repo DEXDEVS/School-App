@@ -41,35 +41,68 @@ class StdSessionsSearch extends StdSessions
      */
     public function search($params)
     {
-        $query = StdSessions::find()->where(['delete_status' => 1]);
+        if(Yii::$app->user->identity->user_type == 'Superadmin'){
+            $query = StdSessions::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
 
-        $this->load($params);
+            $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+
+            // $query->joinWith('sessionBranch');
+            // $query->andFilterWhere([
+            //     'session_id' => $this->session_id,
+            //     'session_start_date' => $this->session_start_date,
+            //     'session_end_date' => $this->session_end_date,
+            //     'created_at' => $this->created_at,
+            //     'updated_at' => $this->updated_at,
+            //     'created_by' => $this->created_by,
+            //     'updated_by' => $this->updated_by,
+            // ]);
+
+            $query->andFilterWhere(['like', 'session_name', $this->session_name])
+                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'branches.branch_name', $this->session_branch_id]);
+
+            return $dataProvider;
+        } else {
+            $branch_id = Yii::$app->user->identity->branch_id;
+            $query = StdSessions::find()->where(['session_branch_id' => $branch_id]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            $this->load($params);
+
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+
+            // $query->joinWith('sessionBranch');
+            // $query->andFilterWhere([
+            //     'session_id' => $this->session_id,
+            //     'session_start_date' => $this->session_start_date,
+            //     'session_end_date' => $this->session_end_date,
+            //     'created_at' => $this->created_at,
+            //     'updated_at' => $this->updated_at,
+            //     'created_by' => $this->created_by,
+            //     'updated_by' => $this->updated_by,
+            // ]);
+
+            $query->andFilterWhere(['like', 'session_name', $this->session_name])
+                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'branches.branch_name', $this->session_branch_id]);
+
             return $dataProvider;
         }
-
-        // $query->joinWith('sessionBranch');
-        // $query->andFilterWhere([
-        //     'session_id' => $this->session_id,
-        //     'session_start_date' => $this->session_start_date,
-        //     'session_end_date' => $this->session_end_date,
-        //     'created_at' => $this->created_at,
-        //     'updated_at' => $this->updated_at,
-        //     'created_by' => $this->created_by,
-        //     'updated_by' => $this->updated_by,
-        // ]);
-
-        $query->andFilterWhere(['like', 'session_name', $this->session_name])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'branches.branch_name', $this->session_branch_id]);
-
-        return $dataProvider;
     }
 }
