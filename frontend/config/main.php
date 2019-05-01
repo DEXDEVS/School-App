@@ -84,6 +84,8 @@ return [
                 'children'=>'site/children',
                 'premium-version'=>'site/premium-version',
                 'fee-details'=>'site/fee-details',
+                'dates'=>'site/dates',
+                'fetch-days-count'=>'emp-leave/fetch-days-count',
             ],
         ],
         

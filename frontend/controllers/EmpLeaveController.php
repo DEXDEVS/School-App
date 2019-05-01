@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\filters\AccessControl;
 
 /**
  * EmpLeaveController implements the CRUD actions for EmpLeave model.
@@ -22,6 +23,20 @@ class EmpLeaveController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-days-count'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -32,6 +47,12 @@ class EmpLeaveController extends Controller
         ];
     }
 
+
+
+     public function actionFetchDaysCount()
+    { 
+        return $this->render('fetch-days-count');
+    }
     /**
      * Lists all EmpLeave models.
      * @return mixed
