@@ -74,7 +74,8 @@
                         'icon' => 'copy',
                         'items' =>[
                              ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./list-of-classes"],],
-                            ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],   
+                            ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],
+                            ['label' => 'Take Attendance', 'icon' => 'caret-right', 'url' => ["./take-attendance-by-incharge"],],   
                         ]
                     ],
                     [
