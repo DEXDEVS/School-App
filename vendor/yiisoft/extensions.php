@@ -148,24 +148,6 @@ return array (
       '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
-  'philippfrenzel/yii2fullcalendar' => 
-  array (
-    'name' => 'philippfrenzel/yii2fullcalendar',
-    'version' => '3.9.0.0',
-    'alias' => 
-    array (
-      '@yii2fullcalendar' => $vendorDir . '/philippfrenzel/yii2fullcalendar',
-    ),
-  ),
-  'yiisoft/yii2-bootstrap' => 
-  array (
-    'name' => 'yiisoft/yii2-bootstrap',
-    'version' => '2.0.9.0',
-    'alias' => 
-    array (
-      '@yii/bootstrap' => $vendorDir . '/yiisoft/yii2-bootstrap/src',
-    ),
-  ),
   'kartik-v/yii2-widget-activeform' => 
   array (
     'name' => 'kartik-v/yii2-widget-activeform',
@@ -218,6 +200,33 @@ return array (
     'alias' => 
     array (
       '@wbraganca/dynamicform' => $vendorDir . '/wbraganca/yii2-dynamicform',
+    ),
+  ),
+  'yiisoft/yii2-bootstrap' => 
+  array (
+    'name' => 'yiisoft/yii2-bootstrap',
+    'version' => '2.0.10.0',
+    'alias' => 
+    array (
+      '@yii/bootstrap' => $vendorDir . '/yiisoft/yii2-bootstrap/src',
+    ),
+  ),
+  'philippfrenzel/yii2fullcalendar' => 
+  array (
+    'name' => 'philippfrenzel/yii2fullcalendar',
+    'version' => '4.0.2.0',
+    'alias' => 
+    array (
+      '@yii2fullcalendar' => $vendorDir . '/philippfrenzel/yii2fullcalendar',
+    ),
+  ),
+  'kartik-v/yii2-widget-datepicker' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-datepicker',
+    'version' => '1.4.6.0',
+    'alias' => 
+    array (
+      '@kartik/date' => $vendorDir . '/kartik-v/yii2-widget-datepicker/src',
     ),
   ),
 );

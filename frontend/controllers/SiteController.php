@@ -34,7 +34,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children','premium-version','fee-details'],
+                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children','premium-version','fee-details','dates'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,8 +60,11 @@ class SiteController extends Controller
             ],
         ];
     }
-
-     public function actionChildren()
+    public function actionDates()
+    { 
+        return $this->render('dates');
+    }
+    public function actionChildren()
     { 
         return $this->render('Children');
     }
