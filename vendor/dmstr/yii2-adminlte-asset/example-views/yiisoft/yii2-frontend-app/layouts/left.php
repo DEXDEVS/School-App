@@ -78,13 +78,13 @@
                             ['label' => 'Take Attendance', 'icon' => 'caret-right', 'url' => ["./take-attendance-by-incharge"],],   
                         ]
                     ],
-                    [
-                        'label' => 'Students',
-                        'icon' => 'users',
-                        'items' => [
-                            ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
-                        ]
-                    ],
+                    // [
+                    //     'label' => 'Students',
+                    //     'icon' => 'users',
+                    //     'items' => [
+                    //         ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
+                    //     ]
+                    // ],
                     [
                         'label' => 'Communication',
                         'icon' => 'envelope-o',
