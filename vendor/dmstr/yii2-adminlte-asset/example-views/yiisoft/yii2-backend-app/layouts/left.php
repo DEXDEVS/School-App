@@ -263,6 +263,7 @@
                         'icon' => 'bar-chart',
                         'url' => '#',
                         'items' => [
+                            ['label' => 'Income & Expense', 'icon' => 'caret-right', 'url' => './income-expense',],
                             [
                                 'label' => 'Main Branch',
                                 'icon' => 'caret-right',

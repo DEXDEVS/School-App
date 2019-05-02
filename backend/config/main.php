@@ -57,11 +57,12 @@ return [
             'rules' => [
                 //site
                 'admin' => 'admin/',
+                'user' => 'admin/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
                 'premium-version' => 'site/premium-version',
-                'income-expense-main' => 'site/income-expense-main',
+                'income-expense' => 'site/income-expense',
                 'income-expense-sub' => 'site/income-expense-sub',
                 'fee-statistics-main' => 'site/fee-statistics-main',
                 'fee-statistics-sub' => 'site/fee-statistics-sub',

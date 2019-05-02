@@ -52,6 +52,14 @@ return [
                 //'logout' => 'site/login',
                 'signup' => 'site/signup',
                 'home' => 'site/index',
+                //-------------------------------------------
+                // executive-portal route
+                'executive-portal' => 'site/executive-portal',
+                'income-expense' => 'site/income-expense',
+                'balance-sheet' => 'site/balance-sheet',
+                'std-attendance-report' => 'site/std-attendance-report',
+                'emp-attendance-report' => 'site/emp-attendance-report',
+                //-------------------------------------------
                 'list-of-classes' => 'site/list-of-classes',
                 'activity-view' => 'site/activity-view',
                 'employe-dashboard'=>'site/employe-dashboard',
