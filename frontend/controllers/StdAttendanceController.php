@@ -32,7 +32,7 @@ class StdAttendanceController extends Controller
                     ],
                     [
                      
-                        'actions' => ['logout', 'index','view','update','delete','fetch-section','attendance','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','fetch-attendance-report'],
+                        'actions' => ['logout', 'index','view','update','delete','fetch-section','attendance','view-class-attendance','test-attendance','take-attendance','view-attendance','datewise-class-attendance','daterangewise-class-attendance','datewise-student-attendance','daterangewise-student-attendance','fetch-attendance-report','monthly-attendance-view','take-attendance-by-incharge'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -93,7 +93,14 @@ class StdAttendanceController extends Controller
             ]);
         }
     }
-    
+    public function actionTakeAttendanceByIncharge()
+    { 
+        return $this->render('take-attendance-by-incharge');
+    }
+    public function actionMonthlyAttendanceView()
+    { 
+        return $this->render('monthly-attendance-view');
+    }
 
     public function actionTakeAttendance()
     { 

@@ -2,6 +2,10 @@
 <?php 
   use yii\helpers\Html;
   use common\models\StdPersonalInfo;
+
+  $userType = Yii::$app->user->identity->user_type;
+
+  if ($userType == "Teacher") {
   // Get `emp_id` from `emp_info` table
   $id = Yii::$app->user->identity->username;
   // Employee Personal Info..... 
@@ -38,13 +42,6 @@
   $emp_photo = $empInfo[0]['emp_photo'];
 ?>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <ol class="breadcrumb">
-        <li><a href="./home"><i class="fa fa-dashboard"></i> Home</a></li>
-      </ol>
-    </div>
-  </div>
 	<section class="content-header">
     <h1 style="color: #3C8DBC;">
         <i class="fa fa-user"></i> Profile
@@ -442,7 +439,13 @@
     <!-- /.row -->
   </section>
   <!-- main content close -->
-</div>	
+</div>
+<?php } ?>
+<?php 
+if ($userType == "Student") {
+  echo "heloooooo World";
+}
+ ?>	
 </body>
 </html>
 

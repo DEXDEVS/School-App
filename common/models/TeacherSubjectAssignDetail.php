@@ -38,8 +38,8 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['teacher_subject_assign_detail_head_id', 'class_id', 'subject_id', 'no_of_lecture', 'created_by', 'updated_by'], 'required'],
-            [['teacher_subject_assign_detail_head_id', 'class_id', 'subject_id', 'created_by', 'updated_by', 'delete_status'], 'integer'],
+            [['teacher_subject_assign_detail_head_id', 'class_id', 'subject_id', 'no_of_lecture', 'created_by', 'updated_by', 'incharge'], 'required'],
+            [['teacher_subject_assign_detail_head_id', 'class_id', 'subject_id', 'created_by', 'updated_by', 'delete_status', 'incharge'], 'integer'],
             [['no_of_lecture'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
@@ -59,6 +59,7 @@ class TeacherSubjectAssignDetail extends \yii\db\ActiveRecord
             'class_id' => 'Class Name',
             'subject_id' => 'Subject Name',
             'no_of_lecture' => 'No of Lecture',
+            'incharge' => 'Class Incharge',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

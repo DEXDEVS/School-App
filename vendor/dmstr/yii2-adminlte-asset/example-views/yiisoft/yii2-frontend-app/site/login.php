@@ -18,8 +18,18 @@ $fieldOptions2 = [
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
 ];
 ?>
-
-<div class="login-box" style="margin-top: 30px; background-color: #183663; margin: 20px auto; color: white;">
+<style type="text/css">
+    .imgee{
+    background-image:url('images/background.jpeg');
+   background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    }
+</style>
+<div class="imgee">
+<div class="row">
+    <div class="col-md-12">
+        <div class="login-box" style="margin-top: 30px; background-color: #183663; margin: 10px auto; color: white;">
     <div class="login-logo" style="padding-top: 20px">
         <a href="#" style="color: white; border-bottom: 2px solid #28C0CE;"><b>DEXDEVS</b><small> - IC</small></a>
         <p style="font-size: 20px;">INSTITUTE ON CLOUD</p>
@@ -80,3 +90,7 @@ $fieldOptions2 = [
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
+    </div>
+</div>
+
+</div>

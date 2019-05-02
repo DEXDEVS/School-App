@@ -118,6 +118,7 @@ class TeacherSubjectAssignDetailController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $teacherSubjectAssignHead->load($request->post())){
+                $incharge = $model->incharge;
                 $techer_enrollment_head = Yii::$app->db->createCommand("SELECT * FROM teacher_subject_assign_head where teacher_id = $teacherSubjectAssignHead->teacher_id")->queryAll();
                 if(!empty($techer_enrollment_head)){
                     $teacherAssignHead = $techer_enrollment_head[0]['teacher_subject_assign_head_id'];
@@ -130,6 +131,7 @@ class TeacherSubjectAssignDetailController extends Controller
                         foreach ($array as  $value) {
                             $model = new TeacherSubjectAssignDetail();
                             $model->teacher_subject_assign_detail_head_id = $teacherAssignHead;
+                            $model->incharge = $incharge;
                             $model->class_id = $value;
                             $model->subject_id = $valu;
                             $model->no_of_lecture = $lec;
@@ -163,6 +165,7 @@ class TeacherSubjectAssignDetailController extends Controller
                         foreach ($array as  $value) {
                             $model = new TeacherSubjectAssignDetail();
                             $model->teacher_subject_assign_detail_head_id = $teacherSubjectAssignHead->teacher_subject_assign_head_id;
+                            $model->incharge = $incharge;
                             $model->class_id = $value;
                             $model->subject_id = $valu;
                             $model->no_of_lecture = $lec;

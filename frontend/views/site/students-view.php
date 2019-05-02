@@ -5,6 +5,9 @@
   	$empInfo = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_cnic = '$id'")->queryAll();
   	$empID = $empInfo[0]['emp_id'];
   	$teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empID'")->queryAll();
+  if(empty($teacherName)){
+      Yii::$app->session->setFlash('warning',"Sorry. No class assigned to you..!");
+  } else {
     $teacherHeadId = $teacherId[0]['teacher_subject_assign_head_id'];
 
   	$classId = Yii::$app->db->createCommand("SELECT DISTINCT d.class_id FROM teacher_subject_assign_detail as d 
@@ -98,5 +101,6 @@
 		<?php } ?>
 	</div>
 </div>
+<?php } ?>
 </body>
 </html>
