@@ -10,10 +10,16 @@ use yii\helpers\Url;
       $branch_id = Yii::$app->user->identity->branch_id;
       $userType = Yii::$app->user->identity->user_type;
       
-if ($userType == 'Teacher') {  ?>
+if ($userType == 'Teacher') { 
+
+      $teacherCnic = Yii::$app->user->identity->username; 
+       $teacherName = Yii::$app->db->createCommand("SELECT  emp_name FROM  emp_info WHERE emp_cnic = '$teacherCnic'")->queryAll();
+
+ ?>
   <div class="site-index">
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="padding:0px;margin-top:-20px;">
+      <h3 style="border-left:3px solid #00A65A;font-family:georgia;" class="well"><i class="glyphicon glyphicon-hand-right"></i> Welcome <b style="color:#00A65A;"><?php echo $teacherName[0]['emp_name']; ?>,</b> to <b>Teacher</b> Portal</h3>
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-lg-3 col-xs-6">
@@ -631,10 +637,14 @@ Modal::end();
 
       <?php }  // student index page start here.....?>
       <?php
-      if ($userType == 'Student') { ?>
+      if ($userType == 'Student') {
+        $stdCnic = Yii::$app->user->identity->username;
+       $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_b_form = '$stdCnic'")->queryAll();
+       ?>
         <div class="site-index">
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="padding:0px;margin-top:-20px;">
+      <h3 style="border-left:3px solid #00A65A;font-family:georgia;" class="well">Welcome <b style="color:#00A65A;"><?php echo $stdPersonalInfo[0]['std_name']; ?>,</b> to <b>Student</b> Portal</h3>
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-lg-3 col-xs-6">
@@ -1335,10 +1345,15 @@ Modal::end();
       
  <?php }?>
   <?php
-      if ($userType == 'Parent') { ?>
+      if ($userType == 'Parent') { 
+          $parentCnic = Yii::$app->user->identity->username;
+          echo $parentCnic; 
+       $parentName = Yii::$app->db->createCommand("SELECT  guardian_name FROM  std_guardian_info WHERE guardian_cnic = '$parentCnic'")->queryAll();
+        ?>
         <div class="site-index">
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="padding:0px;margin-top:-20px;">
+      <h3 style="border-left:3px solid #00A65A;font-family:georgia;" class="well">Welcome <b style="color:#00A65A;"><?php echo $parentName[0]['guardian_name']; ?>,</b> to <b>Parent</b> Portal</h3>
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-lg-3 col-xs-6">

@@ -14,7 +14,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?php echo $userPhoto ?>" class="img-circle" alt="User Image"/>
+                <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p>
