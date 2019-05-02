@@ -1,3 +1,4 @@
+<?php use kartik\select2\Select2; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@
 <!-- class fee account report start-->
 <div class="container-fluid" style="margin-top: -30px;">
 	<h1 class="well well-sm bg-navy" align="center" style="color: #3C8DBC;">Class Account Fee Report</h1>
-	<form method="POST" action="./monthly-fee-report" >
+	<form method="POST" action="./monthly-report-detail" >
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -71,12 +72,33 @@
             </div>    
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4"> 
                 <label>Select Month</label>
-                <div class="form-group">
-                    <input type="month" name="month" required="" id="month">   
-                </div>    
-            </div>   
+                <?php 
+                    $year = date('Y');  
+
+                    $data = [
+                        $year.'-01'=>'January '.$year, $year.'-02'=>'February '.$year, 
+                        $year.'-03'=>'March '.$year, $year.'-04'=>'April '.$year, 
+                        $year.'-05'=>'May '.$year, $year.'-06'=>'June '.$year, 
+                        $year.'-07'=>'July '.$year, $year.'-08'=>'August '.$year, 
+                        $year.'-09'=>'September '.$year, $year.'-10'=>'October '.$year, 
+                        $year.'-11'=>'November '.$year, $year.'-12'=>'December '.$year,
+                    ];
+                    echo Select2::widget([
+                        'name' => 'month',
+                        //'value' => 2, // value to initialize
+                        'data' => $data,
+                        'options' => ['placeholder' => 'Select Month'],
+                        'showToggleAll' => false,
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            'multiple' => true,
+                            'maximumSelectionLength'=> 2,
+                        ],
+                    ]);
+                ?>
+            </div> 
             <div class="col-md-3">
                 <div class="form-group">
                     <button type="submit" name="submit" class="btn btn-success btn-flat" id="sub" value='Yes'><i class="fa fa-check-square-o" aria-hidden="true"></i><b> Get Class</b></button>
