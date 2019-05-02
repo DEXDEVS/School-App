@@ -60,7 +60,7 @@ class SiteController extends Controller
             ],
         ];
     }
-
+    
     public function beforeAction($action) {
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
@@ -91,6 +91,10 @@ class SiteController extends Controller
         return $this->render('emp-attendance-report');
     }
     
+    public function actionDates()
+    { 
+        return $this->render('dates');
+    }
     public function actionChildren()
     { 
         return $this->render('Children');

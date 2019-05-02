@@ -127,7 +127,7 @@ transition: all 0.4s ease-in-out;
 <div class="row container-fluid">
 	<div class="row">
         <div class="col-md-3 col-md-offset-9">
-            <a href="./test-attendance"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
+            <a href="./list-of-classes"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
         </div>
     </div><br>
 	<div class="row">

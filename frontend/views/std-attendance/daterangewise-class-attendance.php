@@ -134,7 +134,7 @@
                             <td>
                                 <?php 
                                     if(empty($atten)){
-                                        echo 'N/A';
+                                        echo 'Not Marked';
                                     } else {
                                         echo $atten[$j]['status']; 
                                     }?>

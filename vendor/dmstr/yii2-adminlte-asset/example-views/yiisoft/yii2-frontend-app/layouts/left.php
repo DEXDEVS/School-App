@@ -62,7 +62,7 @@
                 'items' => [
                     ['label' => 'Menus', 'options' => ['class' => 'header center']],
                     ['label' => 'Home', 'icon' => 'home', 'url' => './home'],
-                    ['label' => 'Portfolio', 'icon' => 'user', 'url' => './employee-portfolio'],
+                    ['label' => 'Porfile', 'icon' => 'user', 'url' => './employee-portfolio'],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                      [
                         'label' => 'Class Time Table',
@@ -74,16 +74,17 @@
                         'icon' => 'copy',
                         'items' =>[
                              ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./list-of-classes"],],
-                            ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],   
+                            ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],
+                            ['label' => 'Take Attendance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],   
                         ]
                     ],
-                    [
-                        'label' => 'Students',
-                        'icon' => 'users',
-                        'items' => [
-                            ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
-                        ]
-                    ],
+                    // [
+                    //     'label' => 'Students',
+                    //     'icon' => 'users',
+                    //     'items' => [
+                    //         ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
+                    //     ]
+                    // ],
                     [
                         'label' => 'Communication',
                         'icon' => 'envelope-o',
@@ -180,8 +181,10 @@
                                 'icon' => 'caret-right',
                                 'url' => '#',
                                 'items' => [
-                                    ['label' => 'Students Attendance', 'icon' => 'chevron-right', 'url' => './std-attendance-report',],
-                                    ['label' => 'Employees Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance-report',],
+                                    ['label' => 'Students Attendance', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    ['label' => 'Employees Attendance', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    // ['label' => 'Students Attendance', 'icon' => 'chevron-right', 'url' => './std-attendance-report',],
+                                    // ['label' => 'Employees Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance-report',],
                                 ],
                             ],
                         ],

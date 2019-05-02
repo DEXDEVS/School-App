@@ -9,11 +9,11 @@ use yii\widgets\ActiveForm;
 
 <div class="emp-attendance-form">
 
-    <?php $form = ActiveForm::begin(); ?>
-
+    <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
+    
     <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, [
-        'mask' => '99999-9999999-9',
-        ]) ?>
+        'mask' => '99999-9999999-9','id'=>'empCnic'
+        ]); ?>
 
     <?= $form->field($model, 'check_in')->radio(['label'=>'Check In', 'value' => 0, 'checked' => true]) ?>
 
@@ -30,3 +30,23 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     
 </div>
+<?php
+//$url = \yii\helpers\Url::to("std-personal-info/fetch-fee");
+
+$script = <<< JS
+
+$('form#{$model->formName()}').on('beforeSubmit',function(e)
+{
+    var \$form = $(this);
+    
+       $.ajax({
+            var empCnic = $('#empCnic').val();
+            alert(empCnic);
+        });      
+});
+
+
+JS;
+$this->registerJs($script);
+?>
+</script>  

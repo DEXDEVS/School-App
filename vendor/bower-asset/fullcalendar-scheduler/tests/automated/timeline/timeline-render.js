@@ -23,7 +23,7 @@ describe('timeline rendering', function() {
 
   it('has correct vertical scroll and gutters', function() {
     initCalendar({
-      defaultView: 'timeline',
+      defaultView: 'resourceTimeline',
       resources: buildResources(50)
     })
 
@@ -48,7 +48,7 @@ describe('timeline rendering', function() {
     })
 
     expect(
-      $('.fc-head .fc-time-area th:first .fc-cell-text').text()
-    ).toBe('P 23.10.2017.')
+      $('.fc-head .fc-time-area th:first').attr('data-date')
+    ).toBe('2017-10-22T00:00:00')
   })
 })

@@ -98,7 +98,7 @@
                                 <td align="center">
                                     <?php 
                                     if(empty($atten)){
-                                        echo 'N/A';
+                                        echo 'Not Marked';
                                     } else {
                                         echo $atten[0]['status']; 
                                     }?>

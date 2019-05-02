@@ -1,3 +1,4 @@
+
 <?php
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -119,6 +120,9 @@ return [
                 'yearly-voucher' => 'fee-transaction-detail/yearly-voucher',
                 'student-account' => 'fee-transaction-detail/student-account',
                 'student-account-info' => 'fee-transaction-detail/student-account-info',
+                'monthly-fee-report' =>'fee-transaction-detail/monthly-fee-report',
+                'monthly-report-head' =>'fee-transaction-detail/monthly-report-head',
+                'monthly-report-detail' => 'fee-transaction-detail/monthly-report-detail',
                 //std-enrollment
                 'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-enrollment-head' => 'std-enrollment-head/index',
@@ -152,6 +156,7 @@ return [
                 'manage-exams' => 'exams-schedule/manage-exams',
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
+                'employess-att-report' => 'emp-attendance/employess-att-report',
                 'final-attendance' => 'emp-attendance/final-attendance',
                 'emp-attendance' => 'emp-attendance/index',
                 'emp-leave' => 'emp-leave/index',

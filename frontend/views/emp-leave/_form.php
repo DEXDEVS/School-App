@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 use dosamigos\datetimepicker\DateTimePicker;
 
 /* @var $this yii\web\View */
@@ -17,40 +18,27 @@ use dosamigos\datetimepicker\DateTimePicker;
            <?= $form->field($model, 'leave_type')->dropDownList([ 'Casual Leave' => 'Casual Leave', 'Medical Leave' => 'Medical Leave'], ['prompt' => 'Select Leave Type']) ?>
         </div>
         <div class="col-md-6">
-            <label>Starting Date</label>
-            <?= DateTimePicker::widget([
-                'model' => $model,
-                'attribute' => 'starting_date',
-                'language' => 'en',
-                'id' => 'startdate',
-                'size' => 'ms',
-                'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy-mm-dd HH:ii:ss',
-                    'todayBtn' => true
+         <?= $form->field($model, 'starting_date')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Enter birth date ...', 'id'=>'startDate'],
+                'pluginOptions' => [
+                    'format' => 'yyyy-mm-dd',
+                    'autoclose'=>true
                 ]
-            ]);?>
+            ]); ?>
         </div>
     </div>
      <div class="row">
         <div class="col-md-6">
-            <label>Ending Date</label>
-            <?= DateTimePicker::widget([
-                'model' => $model,
-                'attribute' => 'ending_date',
-                'language' => 'en',
-                'size' => 'ms',
-                
-               'clientOptions' => [
-                    'autoclose' => true,
-                    'id' => 'enddate',
-                    'format' => 'yyyy-mm-dd HH:ii:ss',
-                    'todayBtn' => true,
+            <?= $form->field($model, 'ending_date')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Enter end date ...', 'id'=>'endDate'],
+                'pluginOptions' => [
+                     'format' => 'yyyy-mm-dd',
+                    'autoclose'=>true
                 ]
-            ]);?>
+            ]); ?>
         </div>
         <div class="col-md-6">
-             <?= $form->field($model, 'no_of_days')->textInput(['id' => 'noofdays']) ?>
+             <?= $form->field($model, 'no_of_days')->textInput(['id' => 'noofdays', 'readonly'=>true]) ?>
         </div>
     </div>
      <div class="row">
@@ -68,16 +56,31 @@ use dosamigos\datetimepicker\DateTimePicker;
     <?php ActiveForm::end(); ?>
     
 </div>
-<!-- <script type="text/javascript">
-    $('#enddate').on('change',function(){
-        alert("welcome");
 
-        // var tMarks = $('#totalMarks').val();
-        // var obtMarks = $('#obtainedMarks').val();
-        // var percentage = ((parseInt(obtMarks) / parseInt(tMarks))*100);
-        // var per = Math.round(percentage)+'%';
-        // $('#percentage').val(per);
-        
-    });
-</script>
- -->
+<?php
+$url = \yii\helpers\Url::to("emp-leave/fetch-days-count");
+
+$script = <<< JS
+
+$('#endDate').on('change',function(){
+   
+    var endDate = $('#endDate').val();
+    var startDate = $('#startDate').val();
+   $.ajax({
+        type:'post',
+        data:{endDate:endDate,startDate:startDate},
+        url: "$url",
+        success: function(result){
+            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
+            var days = jsonResult[0];
+          //console.log(days);
+          $('#noofdays').val(days);
+        }         
+    }); 
+});
+
+JS;
+$this->registerJs($script);
+?>
+</script> 
+ 
