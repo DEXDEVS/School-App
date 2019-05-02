@@ -172,7 +172,15 @@
                                 'items' => [
                                     ['label' => 'Manage Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance',],
                                      ['label' => 'Final Attendance', 'icon' => 'chevron-right', 'url' => './final-attendance',],
-                                    ['label' => 'Attendance Report', 'icon' => 'chevron-right', 'url' => './emp-att-report',],
+                                    [
+                                    'label' => 'Attendance Report',
+                                    'icon' => 'caret-right',
+                                    'url' => '#',
+                                    'items' => [
+                                            ['label' => 'Single Employee', 'icon' => 'chevron-right', 'url' => './emp-att-report',],
+                                            ['label' => 'All Employees', 'icon' => 'chevron-right', 'url' => './employess-att-report',],
+                                        ],
+                                    ],
                                     ['label' => 'Manage Leave', 'icon' => 'chevron-right', 'url' => './emp-leave',],
                                     ['label' => 'Leave Report', 'icon' => 'chevron-right', 'url' => './premium-version',],
                                 ],
