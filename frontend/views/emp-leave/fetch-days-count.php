@@ -1,15 +1,15 @@
 <?php 
 
-	if(isset($_POST['endDate'])){
+	// if(isset($_POST['endDate'])){
 
-		$endDate = $_POST['endDate'];
-		$startDate = $_POST['startDate'];
+	// 	$endDate = $_POST['endDate'];
+	// 	$startDate = $_POST['startDate'];
 
-		//$startDate  = date('2019-05-01');
+		$startDate  = date('2019-05-29');
 $day1  = date('d', strtotime($startDate));
 $month1  = date('m', strtotime($startDate));
 $year1 = date('y',  strtotime($startDate));
-//$endDate  = date('2019-05-03');
+$endDate  = date('2019-06-07');
 $day2  = date('d', strtotime($endDate));
 $month2  = date('m', strtotime($endDate));
 $year2 = date('y',  strtotime($endDate));
@@ -27,7 +27,7 @@ $totalDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month1,$year1);
 	  			continue;
 	   		} else {
 	   			//echo date("Y-m-d", strtotime($day)). " ".$result."<br>";
-	   			$countDate++;
+	   			$countDate = $countDate +1;
 	   		}
 	    }
 	}
@@ -45,7 +45,7 @@ $totalDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month1,$year1);
 	  			continue;
 	   		} else {
 	   			//echo date("Y-m-d", strtotime($day)). " ".$result."<br>";
-	   			$countDate++;
+	   			$countDate = $countDate +1;;
 		   			
 	   		}
 	   }
@@ -63,7 +63,7 @@ $totalDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month1,$year1);
 		  			continue;
 		   		} else {
 		   					//echo date("Y-m-d", strtotime($day)). " ".$result."<br>";
-		   			$countDate++;   			
+		   			$countDate = $countDate +1;   			
 	    		}
 	    	}
 	 }
@@ -71,5 +71,5 @@ $totalDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month1,$year1);
 	 
 
 echo json_encode($countDate);
-	} // isset close
+	//} // isset close
  ?>
