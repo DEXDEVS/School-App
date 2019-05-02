@@ -32,7 +32,7 @@ class FeeTransactionDetailController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index',  'create', 'view', 'update', 'delete', 'bulk-delete', 'fee-voucher', 'fetch-students', 'collect-voucher', 'update-voucher', 'generate-voucher', 'class-account','voucher','class-voucher','class-account-info','class-account-fee-report','partial-voucher-head','partial-voucher-detail','class-fee-report-detail','monthly-voucher','yearly-voucher','student-account','student-account-info'],
+                        'actions' => ['logout', 'index',  'create', 'view', 'update', 'delete', 'bulk-delete', 'fee-voucher', 'fetch-students', 'collect-voucher', 'update-voucher', 'generate-voucher', 'class-account','voucher','class-voucher','class-account-info','class-account-fee-report','partial-voucher-head','partial-voucher-detail','class-fee-report-detail','monthly-voucher','yearly-voucher','student-account','student-account-info','monthly-fee-report','monthly-report-head','monthly-report-detail'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -265,6 +265,20 @@ class FeeTransactionDetailController extends Controller
             }
         }
     }
+
+    public function actionMonthlyReportHead()
+    {
+        return $this->render('monthly-report-head');
+    } 
+    public function actionMonthlyReportDetail()
+    {
+        return $this->render('monthly-report-detail');
+    } 
+
+    public function actionMonthlyFeeReport()
+    {
+        return $this->render('monthly-fee-report');
+    } 
 
     public function actionStudentAccountInfo()
     {
