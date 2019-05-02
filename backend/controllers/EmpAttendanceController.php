@@ -31,7 +31,7 @@ class EmpAttendanceController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-att-report','final-attendance'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-att-report','employess-att-report','final-attendance'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,6 +53,10 @@ class EmpAttendanceController extends Controller
      public function actionEmpAttReport()
     { 
         return $this->render('emp-att-report');
+    }
+     public function actionEmployessAttReport()
+    { 
+        return $this->render('employess-att-report');
     }
      public function actionFinalAttendance()
     { 

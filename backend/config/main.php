@@ -155,6 +155,7 @@ return [
                 'manage-exams' => 'exams-schedule/manage-exams',
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
+                'employess-att-report' => 'emp-attendance/employess-att-report',
                 'final-attendance' => 'emp-attendance/final-attendance',
                 'emp-attendance' => 'emp-attendance/index',
                 'emp-leave' => 'emp-leave/index',
