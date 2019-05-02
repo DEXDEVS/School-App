@@ -38,7 +38,7 @@ use dosamigos\datetimepicker\DateTimePicker;
             ]); ?>
         </div>
         <div class="col-md-6">
-             <?= $form->field($model, 'no_of_days')->textInput(['id' => 'noofdays']) ?>
+             <?= $form->field($model, 'no_of_days')->textInput(['id' => 'noofdays', 'readonly'=>true]) ?>
         </div>
     </div>
      <div class="row">
@@ -71,10 +71,10 @@ $('#endDate').on('change',function(){
         data:{endDate:endDate,startDate:startDate},
         url: "$url",
         success: function(result){
-           
-            var jsonResult =  result;
-           console.log(jsonResult);
-            $('#noofdays').append(days);
+            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
+            var days = jsonResult[0];
+          //console.log(days);
+          $('#noofdays').val(days);
         }         
     }); 
 });
