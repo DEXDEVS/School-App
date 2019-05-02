@@ -23,7 +23,7 @@ if ($userType == 'Teacher') {
   <div class="site-index">
     <!-- Main content -->
     <section class="content" style="padding:0px;margin-top:-20px;">
-      <h3 style="border-left:3px solid #00A65A;font-family:georgia;" class="well"><i class="glyphicon glyphicon-hand-right"></i> Welcome <b style="color:#00A65A;"><?php echo $teacherName[0]['emp_name']; ?>,</b> to <b>Teacher</b> Portal</h3>
+      <h3 style="border-left:3px solid #00A65A;font-family:georgia;" class="well"><i class="glyphicon glyphicon-hand-right" style="color:#00A65A;"></i> Welcome <b style="color:#00A65A;"><?php echo $teacherName[0]['emp_name']; ?>,</b> to <b>Teacher</b> Portal</h3>
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-lg-3 col-xs-6">
@@ -34,7 +34,7 @@ if ($userType == 'Teacher') {
               $query = (new \yii\db\Query())->from('std_personal_info');
               $id = $query->count('std_id'); ?>
               <h3>View</h3>
-              <p>Portfolio</p>
+              <p>Profile</p>
             </div>
             <div class="icon">
               <i class="fa fa-user"></i>
