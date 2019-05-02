@@ -62,7 +62,7 @@
                 'items' => [
                     ['label' => 'Menus', 'options' => ['class' => 'header center']],
                     ['label' => 'Home', 'icon' => 'home', 'url' => './home'],
-                    ['label' => 'Portfolio', 'icon' => 'user', 'url' => './employee-portfolio'],
+                    ['label' => 'Porfile', 'icon' => 'user', 'url' => './employee-portfolio'],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                      [
                         'label' => 'Class Time Table',
@@ -75,7 +75,7 @@
                         'items' =>[
                              ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./list-of-classes"],],
                             ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],
-                            ['label' => 'Take Attendance', 'icon' => 'caret-right', 'url' => ["./take-attendance-by-incharge"],],   
+                            ['label' => 'Take Attendance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],   
                         ]
                     ],
                     // [
