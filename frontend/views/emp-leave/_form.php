@@ -71,10 +71,10 @@ $('#endDate').on('change',function(){
         data:{endDate:endDate,startDate:startDate},
         url: "$url",
         success: function(result){
-            console.log(result);
-            // var jsonResult =  JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
-            // alert(jsonResult);
-            // $('#noofdays').append(result);
+           
+            var jsonResult =  result;
+           console.log(jsonResult);
+            $('#noofdays').append(days);
         }         
     }); 
 });
