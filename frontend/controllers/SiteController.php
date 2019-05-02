@@ -34,7 +34,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children','premium-version','fee-details','dates'],
+                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,6 +60,37 @@ class SiteController extends Controller
             ],
         ];
     }
+    
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
+    public function actionExecutivePortal()
+    { 
+        return $this->render('executive-portal');
+    }
+
+    public function actionIncomeExpense()
+    { 
+        return $this->render('income-expense');
+    }
+
+    public function actionBalanceSheet()
+    { 
+        return $this->render('balance-sheet');
+    }
+
+    public function actionStdAttendanceReport()
+    { 
+        return $this->render('std-attendance-report');
+    }
+
+    public function actionEmpAttendanceReport()
+    { 
+        return $this->render('emp-attendance-report');
+    }
+    
     public function actionDates()
     { 
         return $this->render('dates');
@@ -68,7 +99,8 @@ class SiteController extends Controller
     { 
         return $this->render('Children');
     }
-     public function actionPremiumVersion()
+
+    public function actionPremiumVersion()
     { 
         return $this->render('premium-version');
     }

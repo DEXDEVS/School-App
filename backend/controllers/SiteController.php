@@ -28,7 +28,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['logout', 'index', 'system-settings', 
                             'system-configuration', 'students', 'employees', 
-                            'communication', 'fee','premium-version', 'income-expense-main', 'income-expense-sub', 'fee-statistics-main' , 'fee-statistics-sub','passwords'],
+                            'communication', 'fee','premium-version', 'income-expense', 'income-expense-sub', 'fee-statistics-main' , 'fee-statistics-sub','passwords'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -156,9 +156,9 @@ class SiteController extends Controller
     }
     // Data Visulization routes...
     // income-expense-main
-    public function actionIncomeExpenseMain()
+    public function actionIncomeExpense()
     {
-        return $this->render('income-expense-main');
+        return $this->render('income-expense');
     }
     // income-expense-sub
     public function actionIncomeExpenseSub()
