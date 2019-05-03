@@ -8,7 +8,7 @@
         $userPhoto = 'backend/web/images/default.png';
     }
     if(Yii::$app->user->identity->user_type == 'Parent'){
-         $userPhoto = 'backend/web/images/abc_logo.jpg';
+         $userPhoto = 'backend/web/images/default.png';
     } else {
          $userPhoto = $user[0]['user_photo'];
     }
