@@ -10,8 +10,12 @@ use yii\helpers\Html;
     $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
     $userPhoto = $user[0]['user_photo'];
+
     if(empty($userPhoto)){
         $userPhoto = 'backend/web/images/default.png';
+    }
+    if(Yii::$app->user->identity->user_type == 'Parent'){
+         $userPhoto = 'backend/web/images/abc_logo.jpg';
     }
 ?>
 <header class="main-header">
