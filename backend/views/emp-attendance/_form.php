@@ -12,8 +12,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
     
     <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, [
-        'mask' => '99999-9999999-9','id'=>'empCnic'
-        ]); ?>
+        'mask' => '99999-9999999-9', 'id' => 'empCnic' ]); ?>
 
     <?= $form->field($model, 'check_in')->radio(['label'=>'Check In', 'value' => 0, 'checked' => true]) ?>
 
@@ -35,6 +34,7 @@ use yii\widgets\ActiveForm;
 
 $script = <<< JS
 
+
 $('form#{$model->formName()}').on('beforeSubmit',function(e)
 {
     alert("welcome");      
@@ -44,6 +44,7 @@ $('#empCnic').on('change',function(){
         var tMarks = $('#empCnic').val();
         alert(tMarks);
     });
+
 
 
 JS;

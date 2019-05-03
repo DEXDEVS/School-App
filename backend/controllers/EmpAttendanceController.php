@@ -153,26 +153,26 @@ class EmpAttendanceController extends Controller
                             $model->created_at = new \yii\db\Expression('NOW()');
                             $model->updated_by = '0';
                             $model->updated_at = '0';
-                            $model->save();
+                            //$model->save();
                         }
                     }
                     if($check_in == 1){
                         $emp_att = Yii::$app->db->createCommand("SELECT check_in FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '$date'  AND branch_id = '$branch_id' ")->queryAll();
 
                         
-                        if(empty($emp_att)){
-                            Yii::$app->session->setFlash('warning',"You are not checked in yet..!");
-                        } else {
-                            $att = Yii::$app->db->createCommand()->update('emp_attendance', [
-                                'check_out'=> Yii::$app->formatter->asDatetime('now', 'H:i:s'),
-                                'updated_at'    => new \yii\db\Expression('NOW()'),
-                                'updated_by'    => Yii::$app->user->identity->id,
-                                ],
+                        // if(empty($emp_att)){
+                        //     Yii::$app->session->setFlash('warning',"You are not checked in yet..!");
+                        // } else {
+                        //     $att = Yii::$app->db->createCommand()->update('emp_attendance', [
+                        //         'check_out'=> Yii::$app->formatter->asDatetime('now', 'H:i:s'),
+                        //         'updated_at'    => new \yii\db\Expression('NOW()'),
+                        //         'updated_by'    => Yii::$app->user->identity->id,
+                        //         ],
 
-                                ['emp_id' => $emp_id, 'att_date' => "$date", 'branch_id' => $branch_id]
+                        //         ['emp_id' => $emp_id, 'att_date' => "$date", 'branch_id' => $branch_id]
 
-                            )->execute();
-                        }
+                        //     )->execute();
+                        // }
                     }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
