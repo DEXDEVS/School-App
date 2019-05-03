@@ -10,7 +10,7 @@ use yii\helpers\Html;
     $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
 
-    if(empty($userPhoto)){
+    if(empty($user)){
         $userPhoto = 'backend/web/images/default.png';
     } else if(Yii::$app->user->identity->user_type == 'Parent'){
          $userPhoto = 'backend/web/images/default.png';

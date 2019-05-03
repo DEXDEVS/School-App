@@ -4,7 +4,7 @@
     // Student Photo...
     // var_dump($user);
    
-    if(empty($userPhoto)){
+    if(empty($user)){
         $userPhoto = 'backend/web/images/default.png';
     } else if(Yii::$app->user->identity->user_type == 'Parent'){
          $userPhoto = 'backend/web/images/default.png';
