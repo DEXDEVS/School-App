@@ -129,7 +129,7 @@ class EmpAttendanceController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post())){
+            }else if($model->load($request->post()) && $model->validate()){
                     $branch_id = Yii::$app->user->identity->branch_id;
                     $cnic = $model->emp_cnic;
                     $check_in = $model->check_in;
