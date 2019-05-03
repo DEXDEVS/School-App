@@ -37,13 +37,13 @@ $script = <<< JS
 
 $('form#{$model->formName()}').on('beforeSubmit',function(e)
 {
-    var \$form = $(this);
-    
-       $.ajax({
-            var empCnic = $('#empCnic').val();
-            alert(empCnic);
-        });      
+    alert("welcome");      
 });
+
+$('#empCnic').on('change',function(){
+        var tMarks = $('#empCnic').val();
+        alert(tMarks);
+    });
 
 
 JS;
