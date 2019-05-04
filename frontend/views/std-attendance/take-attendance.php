@@ -1,6 +1,5 @@
 <?php 
 use yii\db\Connection;
-use backend\controllers\CustomSmsController;
 $conn = \Yii::$app->db;
 
 	if(isset($_GET['sub_id'])){

@@ -24,14 +24,16 @@ CrudAsset::register($this);
 </style>
 <?php 
     $month = date('Y-m');
+    // initialize $totalIncome and $totalExpense...
+    $totalIncome = $totalExpense = 0;
     // getting user branch_id....
     $branch_id = Yii::$app->user->identity->branch_id;
     // getting total income of the current month...
-    $income = Yii::$app->db->createCommand("SELECT SUM(total_amount) FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month' OR CAST(date AS DATE) <= '$month'");
-    $totalIncome = $income->queryScalar();
+    $income = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
+    $totalIncome = $income[0]['date'];
     // getting total expense of the current month...
-    $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month' OR CAST(date AS DATE) <= '$month'");
-    $totalExpense = $expense->queryScalar();
+    $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
+    $totalExpense = $expense[0]['date'];
 ?>
 <div class="account-transactions-index">
     <!-- Income and Expense Widgets start -->

@@ -3,9 +3,11 @@
     $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
     // var_dump($user);
-    $userPhoto = $user[0]['user_photo'];
-    if(empty($userPhoto)){
+   
+    if(empty($user)){
         $userPhoto = 'backend/web/images/default.png';
+    } else {
+         $userPhoto = $user[0]['user_photo'];
     }
 ?>
 <aside class="main-sidebar">
@@ -14,7 +16,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?php echo $userPhoto ?>" class="img-circle" alt="User Image"/>
+                <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p>
@@ -62,7 +64,7 @@
                 'items' => [
                     ['label' => 'Menus', 'options' => ['class' => 'header center']],
                     ['label' => 'Home', 'icon' => 'home', 'url' => './home'],
-                    ['label' => 'Portfolio', 'icon' => 'user', 'url' => './employee-portfolio'],
+                    ['label' => 'Porfile', 'icon' => 'user', 'url' => './employee-portfolio'],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                      [
                         'label' => 'Class Time Table',
@@ -75,16 +77,16 @@
                         'items' =>[
                              ['label' => 'Activity', 'icon' => 'caret-right', 'url' => ["./list-of-classes"],],
                             ['label' => 'View Classes', 'icon' => 'caret-right', 'url' => ["./view-classes"],],
-                            ['label' => 'Take Attendance', 'icon' => 'caret-right', 'url' => ["./take-attendance-by-incharge"],],   
+                            ['label' => 'Take Attendance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],   
                         ]
                     ],
-                    [
-                        'label' => 'Students',
-                        'icon' => 'users',
-                        'items' => [
-                            ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
-                        ]
-                    ],
+                    // [
+                    //     'label' => 'Students',
+                    //     'icon' => 'users',
+                    //     'items' => [
+                    //         ['label' => 'Profile', 'icon' => 'caret-right', 'url' => ["./students-view"],],
+                    //     ]
+                    // ],
                     [
                         'label' => 'Communication',
                         'icon' => 'envelope-o',
@@ -106,11 +108,11 @@
                 ],
             ]
         );
-
-        } // closing of Teacher 
-        if (Yii::$app->user->identity->user_type == 'Student') {
-             ?>
-
+        } 
+        // Closing of Teacher Nav Bar....
+        // ---------------------------------------------------------
+        // Starting of Student Nav Bar...
+        if (Yii::$app->user->identity->user_type == 'Student') { ?>
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
@@ -129,10 +131,11 @@
                 ],
             ]
         );
-
-        } // closing of Students 
+        } 
+        // Closing of Students Nav Bar...
+        // ---------------------------------------------------------
+        // Starting of Parent Nav Bar...
         if(Yii::$app->user->identity->user_type == 'Parent') { ?>
-
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
@@ -146,8 +149,58 @@
                 ],
             ]
         );
+        } 
+        // Closing of Parent Nav Bar...
+        // ---------------------------------------------------------
+        // Starting of Director Nav Bar...
+        if(Yii::$app->user->identity->user_type == 'Director' || Yii::$app->user->identity->user_type == 'Executive') { ?>
+        <?= dmstr\widgets\Menu::widget(
+            [
+                'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
+                'items' => [
+                    ['label' => 'Menus', 'options' => ['class' => 'header center']],
+                    ['label' => 'Home', 'icon' => 'home', 'url' => './home'],
+                    // ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
+                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
 
-        } // closing of Parent 
+                    // Data Visualization start...
+                    [
+                        'label' => 'Data Visualization',
+                        'icon' => 'bar-chart',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Financial Reports',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    //['label' => 'Income/Expence', 'icon' => 'chevron-right', 'url' => './income-expense',],
+                                    ['label' => 'Balance Sheet', 'icon' => 'chevron-right', 'url' => './balance-sheet',],
+                                ],
+                            ],
+                            [
+                                'label' => 'Attendance Reports',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Students Attendance', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    ['label' => 'Employees Attendance', 'icon' => 'chevron-right', 'url' => './premium-version',],
+                                    // ['label' => 'Students Attendance', 'icon' => 'chevron-right', 'url' => './std-attendance-report',],
+                                    // ['label' => 'Employees Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance-report',],
+                                ],
+                            ],
+                        ],
+                    ],
+                    // ------------------------------------------------
+                    // Data Visualization  close...
+                ],
+
+            ]
+
+        );
+        } 
+        
+        // Closing of Director Nav Bar...
         ?>
     </section>
 

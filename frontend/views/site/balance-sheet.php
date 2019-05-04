@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Balance Sheet</title>
+	<title>Balance Sheet</title>
 </head>
 <body>
 <div class="container-fluid" style="margin-top: -30px;">  
@@ -262,14 +262,6 @@ Highcharts.chart('container1', {
     // subtitle: {
     //     text: 'anything'
     // },
-    tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} PKR</b></td></tr>',
-        footerFormat: '</table>',
-        shared: true,
-        useHTML: true
-    },
     plotOptions: {
         pie: {
             innerSize: 100,

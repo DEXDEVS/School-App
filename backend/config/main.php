@@ -57,11 +57,12 @@ return [
             'rules' => [
                 //site
                 'admin' => 'admin/',
+                'user' => 'admin/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
                 'premium-version' => 'site/premium-version',
-                'income-expense-main' => 'site/income-expense-main',
+                'income-expense' => 'site/income-expense',
                 'income-expense-sub' => 'site/income-expense-sub',
                 'fee-statistics-main' => 'site/fee-statistics-main',
                 'fee-statistics-sub' => 'site/fee-statistics-sub',
@@ -154,6 +155,7 @@ return [
                 'manage-exams' => 'exams-schedule/manage-exams',
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
+                'employess-att-report' => 'emp-attendance/employess-att-report',
                 'final-attendance' => 'emp-attendance/final-attendance',
                 'emp-attendance' => 'emp-attendance/index',
                 'emp-leave' => 'emp-leave/index',

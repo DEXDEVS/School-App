@@ -184,12 +184,12 @@
                     </div>
                     <div class="col-md-7">
                       <div  style="float: right;">
-                        <a href="./premium-version" class="btn btn-warning btn-sm fa fa-envelope-o" style='color: white;'> Send Email </a>
-                        <!-- <a href="./sms?id=<?php echo $id;?>" class="btn btn-info btn-sm fa fa-comments-o" style='color: white;'> Send SMS </a> -->
+                        <!-- <a href="./premium-version" class="btn btn-warning btn-sm fa fa-envelope-o" style='color: white;'> Send Email </a> -->
+                        <!-- <a href="./sms?id=<?php //echo $id;?>" class="btn btn-info btn-sm fa fa-comments-o" style='color: white;'> Send SMS </a> -->
                         
-                        <button type="button" class="btn btn-info btn-sm fa fa-comments" data-toggle="modal" data-target="#modal-default">
+                       <!--  <button type="button" class="btn btn-info btn-sm fa fa-comments" data-toggle="modal" data-target="#modal-default">
                           Send SMS
-                        </button>
+                        </button> -->
                         <div class="modal fade" id="modal-default">
                           <div class="modal-dialog">
                             <div class="modal-content">

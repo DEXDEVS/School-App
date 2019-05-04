@@ -260,9 +260,6 @@
                 <div class="col-md-5">
                   <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Document Information</p>
                 </div>
-                <div class="col-md-2 col-md-offset-4">
-                  <a href="./emp-documents-create?id=<?php echo $id;?>" class="btn btn-success btn-sm fa fa-plus" style='color: white;'> Add Document </a>
-                </div>
               </div><hr>
               <!-- Employee Document info start -->
                 <div class="row">
