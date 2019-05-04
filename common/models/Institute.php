@@ -35,10 +35,10 @@ class Institute extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['institute_name', 'institute_logo', 'institute_account_no', 'created_by', 'updated_by'], 'required'],
+            [['institute_name', 'institute_logo', 'institute_account_no'], 'required'],
 
             [['created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['institute_name'], 'string', 'max' => 65],
             [['institute_logo'], 'string', 'max' => 200],
             [['institute_account_no'], 'string', 'max' => 200],

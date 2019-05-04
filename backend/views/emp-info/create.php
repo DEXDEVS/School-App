@@ -8,8 +8,9 @@ use yii\helpers\Html;
 
 ?>
 <div class="emp-info-create">
-    <?= $this->render('_form', [
+    <?= $this->render('_form2', [
         'model' => $model,
+        'empDesignation' => $empDesignation,
         'empRefModel' => $empRefModel,
     ]) ?>
 </div>

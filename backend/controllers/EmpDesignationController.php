@@ -8,7 +8,6 @@ use common\models\EmpDesignationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -23,20 +22,6 @@ class EmpDesignationController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -71,16 +56,15 @@ class EmpDesignationController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
-        $model = $this->findModel($id);
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "<b>Employee Designation: </b>".$model->emp_designation,
+                    'title'=> "EmpDesignation #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -107,36 +91,36 @@ class EmpDesignationController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "<b>Create new Employee Designation</b>",
+                    'title'=> "Create new EmpDesignation",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post())){
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0';
-                $model->updated_at = '0'; 
-                $model->save();
+                        $model->created_by = Yii::$app->user->identity->id; 
+                        $model->created_at = new \yii\db\Expression('NOW()');
+                        $model->updated_by = '0';
+                        $model->updated_at = '0'; 
+                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new EmpDesignation",
                     'content'=>'<span class="text-success">Create EmpDesignation success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-success','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new Employee Designation",
+                    'title'=> "Create new EmpDesignation",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -174,27 +158,27 @@ class EmpDesignationController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "<b>Update Employee Designation: </b>".$model->emp_designation,
+                    'title'=> "Update EmpDesignation #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post())){
-                $model->updated_by = Yii::$app->user->identity->id;
-                $model->updated_at = new \yii\db\Expression('NOW()');
-                $model->created_by = $model->created_by;
-                $model->created_at = $model->created_at;
-                $model->save();
+                        $model->updated_by = Yii::$app->user->identity->id;
+                        $model->updated_at = new \yii\db\Expression('NOW()');
+                        $model->created_by = $model->created_by;
+                        $model->created_at = $model->created_at;
+                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "EmpDesignation #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-success','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
@@ -202,8 +186,8 @@ class EmpDesignationController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
