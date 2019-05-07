@@ -1350,8 +1350,7 @@ Modal::end();
  <?php }?>
   <?php
       if ($userType == 'Parent') { 
-          $parentCnic = Yii::$app->user->identity->username;
-          echo $parentCnic; 
+          $parentCnic = Yii::$app->user->identity->username; 
        $parentName = Yii::$app->db->createCommand("SELECT  guardian_name FROM  std_guardian_info WHERE guardian_cnic = '$parentCnic'")->queryAll();
         ?>
         <div class="site-index">

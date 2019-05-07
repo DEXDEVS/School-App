@@ -26,6 +26,7 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     
 </div>
+
 <?php
 $url = \yii\helpers\Url::to("./fetch-cnic");
 
@@ -55,3 +56,4 @@ JS;
 $this->registerJs($script);
 ?>
 </script>  
+

@@ -3,7 +3,7 @@
 <head>
 	<title></title>
 </head>
-<body style="">
+<body>
 <div class="container-fluid">
 	<div class="row">
 		<form method="POST" action="employess-att-report">
@@ -22,7 +22,7 @@
     <?php   
     if(isset($_POST['report'])){ 
         $mon = $_POST['att_month'];
-        $currentMonth = date("Y-M-", strtotime($mon));
+        $currentMonth = date("Y - F", strtotime($mon));
         $month  = date("m", strtotime($mon));
         $year  = date("Y", strtotime($mon));
         $days = cal_days_in_month(CAL_GREGORIAN, $month,$year);
@@ -44,16 +44,16 @@
                     <thead>
                         <tr style="background-color:#008D4C;color:white;">
                             <th>Sr.#</th>
-                            <th>Name</th>
+                            <td style="padding:2px 0px 2px 0px;">Name</td>
                             <?php for ($i=1; $i<=$days; $i++) { 
                                    $var = $year."-".$month."-".$i;
                                     $day  = date('Y-m-d',strtotime($var));
                                    $result = date("D", strtotime($day)); ?>
-                            <th style="padding:1px 1px;"><?php echo date("d", strtotime($day)); ?><br><?php echo $result; ?></th>
+                            <td style="padding:1px 1px;"><?php echo date("d", strtotime($day)); ?><br><?php echo $result; ?></td>
                             <?php } ?>
-                            <th>P</th>
-                            <th>A</th>
-                            <th>L</th>
+                            <td>P</td>
+                            <td>A</td>
+                            <td>L</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,7 +61,9 @@
                         for($i=0; $i <$countEmp ; $i++){
                             $empName = $empInfo[$i]['emp_name'];
                             $empID = $empInfo[$i]['emp_id'];
-
+                            $presentCount = 0;
+                            $absentCount = 0;
+                            $leaveCount = 0;
                          ?>
                         <tr>
                             <td><?php echo $i+1; ?></td>
@@ -82,12 +84,28 @@
                                 }
                                 else{
                                     echo "<td style='padding:1px 1px;'>".$empatt[0]['attendance']."</td>";
+                                    if ($empatt[0]['attendance'] == 'P') {
+                                        $presentCount++;
+
+                                    }
+                                    if ($empatt[0]['attendance'] == 'A') {
+                                        $absentCount++;
+                                    }
+                                    if ($empatt[0]['attendance'] == 'L') {
+                                        $leaveCount++;
+                                    }
                                 }
                                  ?>
                             <?php } ?>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td class="success">
+                                <?php echo $presentCount; ?> 
+                            </td>
+                            <td class="warning">
+                                <?php echo $absentCount; ?>
+                            </td>
+                            <td class="info">
+                                <?php echo $leaveCount; ?>
+                            </td>
                         </tr>
                     <?php } ?>
                     </tbody>
