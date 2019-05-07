@@ -3,8 +3,8 @@
 /**
  * @package   yii2-krajee-base
  * @author    Kartik Visweswaran <kartikv2@gmail.com>
- * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2018
- * @version   1.9.9
+ * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2019
+ * @version   2.0.5
  */
 
 namespace kartik\base;
@@ -36,6 +36,7 @@ trait BootstrapTrait
         self::BS_PANEL_TITLE => ['panel-title', 'card-title'],
         self::BS_PANEL_BODY => ['panel-body', 'card-body'],
         self::BS_PANEL_FOOTER => ['panel-footer', 'card-footer'],
+        self::BS_PANEL_DEFAULT => ['panel-default', ''],
         self::BS_PANEL_PRIMARY => ['panel-primary', ['bg-primary', 'text-white']],
         self::BS_PANEL_SUCCESS => ['panel-success', ['bg-success', 'text-white']],
         self::BS_PANEL_INFO => ['panel-info', ['bg-info', 'text-white']],
@@ -97,11 +98,12 @@ trait BootstrapTrait
         self::BS_PULL_RIGHT => ['pull-right', 'float-right'],
         self::BS_PULL_LEFT => ['pull-left', 'float-left'],
         self::BS_CENTER_BLOCK => ['center-block', ['mx-auto', 'd-block']],
+        self::BS_HIDE => ['hide', 'd-none'],
         self::BS_HIDDEN_PRINT => ['hidden-print', 'd-print-none'],
-        self::BS_HIDDEN_XS => ['hidden-xs', 'd-none'],
-        self::BS_HIDDEN_SM => ['hidden-sm', 'd-sm-none'],
-        self::BS_HIDDEN_MD => ['hidden-md', 'd-md-none'],
-        self::BS_HIDDEN_LG => ['hidden-lg', 'd-lg-none'],
+        self::BS_HIDDEN_XS => ['hidden-xs', ['d-none', 'd-sm-block']],
+        self::BS_HIDDEN_SM => ['hidden-sm', ['d-sm-none', 'd-md-block']],
+        self::BS_HIDDEN_MD => ['hidden-md', ['d-md-none', 'd-lg-block']],
+        self::BS_HIDDEN_LG => ['hidden-lg', ['d-lg-none', 'd-xl-block']],
         self::BS_VISIBLE_PRINT => ['visible-print-block', ['d-print-block', 'd-none']],
         self::BS_VISIBLE_XS => ['visible-xs', ['d-block', 'd-sm-none']],
         self::BS_VISIBLE_SM => ['visible-sm', ['d-none', 'd-sm-block', 'd-md-none']],
@@ -176,19 +178,21 @@ trait BootstrapTrait
      */
     protected function initBsVersion()
     {
-        $v = empty($this->bsVersion) ? ArrayHelper::getValue(Yii::$app->params, 'bsVersion', '3') : $this->bsVersion;
-        $this->_isBs4 = static::parseVer($v) === '4';
+        $ver = $this->configureBsVersion();
         $this->_defaultIconPrefix = 'glyphicon glyphicon-';
         $this->_defaultBtnCss = 'btn-default';
+        $ext = 'bootstrap' . ($this->_isBs4 ? '4' : '');
+        if (!class_exists("yii\\{$ext}\\Html")) {
+            $message = "You must install 'yiisoft/yii2-{$ext}' extension for Bootstrap {$ver}.x version support. " .
+                "Dependency to 'yii2-{$ext}' has not been included with 'yii2-krajee-base'. To resolve, you must add " .
+                "'yiisoft/yii2-{$ext}' to the 'require' section of your application's composer.json file and then " .
+                "run 'composer update'.\n\n" .
+                "NOTE: This dependency change has been done since v2.0 of 'yii2-krajee-base' because only one of " .
+                "'yiisoft/yii2-bootstrap' OR 'yiisoft/bootstrap4' bootstrap extensions can be installed. The " .
+                "developer can thus choose and control which bootstrap extension library to install.";
+            throw new InvalidConfigException($message);
+        }
         if ($this->_isBs4) {
-            if (!class_exists('yii\bootstrap4\Html')) {
-                throw new InvalidConfigException(
-                    "You must install 'yiisoft/yii2-bootstrap4' extension for Bootstrap 4.x version support. " .
-                    "Dependency to 'yii2-bootstrap4' has not been included with 'yii2-krajee-base'. To resolve, you " .
-                    "must add 'yiisoft/yii2-bootstrap4' to the 'require' section of your application's composer.json " .
-                    "and then run 'composer update'."
-                );
-            }
             $this->_defaultIconPrefix = 'fas fa-';
             $this->_defaultBtnCss = 'btn-outline-secondary';
         }
@@ -218,6 +222,18 @@ trait BootstrapTrait
     }
 
     /**
+     * Configures the bootstrap version settings
+     * @return string the bootstrap lib parsed version number
+     */
+    protected function configureBsVersion()
+    {
+        $v = empty($this->bsVersion) ? ArrayHelper::getValue(Yii::$app->params, 'bsVersion', '3') : $this->bsVersion;
+        $ver = static::parseVer($v);
+        $this->_isBs4 = $ver === '4';
+        return $ver;
+    }
+
+    /**
      * Validate if Bootstrap 4.x version
      * @return bool
      *
@@ -226,7 +242,7 @@ trait BootstrapTrait
     public function isBs4()
     {
         if (!isset($this->_isBs4)) {
-            $this->initBsVersion();
+            $this->configureBsVersion();
         }
         return $this->_isBs4;
     }
@@ -271,6 +287,7 @@ trait BootstrapTrait
      * Adds bootstrap CSS class to options by parsing the bootstrap version for the specified Bootstrap CSS type
      * @param array $options the HTML attributes for the container element that will be modified
      * @param string $type the bootstrap CSS class type
+     * @return \kartik\base\Widget|mixed current object instance that uses this trait
      * @throws InvalidConfigException
      */
     public function addCssClass(&$options, $type)
@@ -279,12 +296,14 @@ trait BootstrapTrait
         if (!empty($css)) {
             Html::addCssClass($options, $css);
         }
+        return $this;
     }
 
     /**
      * Removes bootstrap CSS class from options by parsing the bootstrap version for the specified Bootstrap CSS type
      * @param array $options the HTML attributes for the container element that will be modified
      * @param string $type the bootstrap CSS class type
+     * @return \kartik\base\Widget|mixed current object instance that uses this trait
      * @throws InvalidConfigException
      */
     public function removeCssClass(&$options, $type)
@@ -293,6 +312,7 @@ trait BootstrapTrait
         if (!empty($css)) {
             Html::removeCssClass($options, $css);
         }
+        return $this;
     }
 
     /**
