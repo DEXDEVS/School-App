@@ -133,27 +133,27 @@
                     // Fee Module close...
                     // ------------------------------------------------
                     // Exams module start here
-                    // [
-                    //     'label' => 'Examination',
-                    //     'icon' => 'book',
-                    //     'url' => '#',
-                    //     'items' => [
-                    //         ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
-                    //         ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
-                    //         ['label' => 'Marks Weightage Type', 'icon' => 'caret-right', 'url' => ["/marks-weightage-type"],],
-                    //         ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weightage-head"],],
-                    //         // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
-                    //         // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
-                    //         ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
-                    //         ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
-                    //         ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Quiz System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Examination Controller', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         // ['label' => 'Result cards', 'icon' => 'caret-right', 'url' => ["/view-result-cards "],],
+                    [
+                        'label' => 'Examination',
+                        'icon' => 'book',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
+                            ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
+                            ['label' => 'Marks Weightage Type', 'icon' => 'caret-right', 'url' => ["/marks-weightage-type"],],
+                            ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weightage-head"],],
+                            // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
+                            // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
+                            ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
+                            ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
+                            ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Quiz System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            ['label' => 'Examination Controller', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Result cards', 'icon' => 'caret-right', 'url' => ["/view-result-cards "],],
                             
-                    //     ],
-                    // ],
+                        ],
+                    ],
                     // ------------------------------------------------
                     // Exams module close ...
                     // ------------------------------------------------

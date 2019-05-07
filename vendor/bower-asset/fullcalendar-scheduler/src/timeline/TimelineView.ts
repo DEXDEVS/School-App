@@ -101,8 +101,8 @@ export default class TimelineView extends View {
   // Scroll System
   // ------------------------------------------------------------------------------------------
 
-  computeInitialDateScroll() {
-    return this.timeAxis.computeInitialDateScroll()
+  computeDateScroll(timeMs: number) {
+    return this.timeAxis.computeDateScroll(timeMs)
   }
 
   applyScroll(scroll, isResize) {
@@ -133,6 +133,11 @@ export default class TimelineView extends View {
 
   // Hit System
   // ------------------------------------------------------------------------------------------
+
+
+  buildPositionCaches() {
+    this.timeAxis.slats.updateSize()
+  }
 
 
   queryHit(positionLeft: number, positionTop: number, elWidth: number, elHeight: number): Hit {

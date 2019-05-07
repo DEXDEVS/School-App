@@ -160,6 +160,7 @@ return [
                 'final-attendance' => 'emp-attendance/final-attendance',
                 'emp-attendance' => 'emp-attendance/index',
                 'emp-leave' => 'emp-leave/index',
+                'fetch-cnic' => 'emp-attendance/fetch-cnic',
 
                 // account-transactions
                 'account-transactions' => 'account-transactions/index',

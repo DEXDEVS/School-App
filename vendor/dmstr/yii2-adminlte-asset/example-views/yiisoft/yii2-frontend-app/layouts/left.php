@@ -3,9 +3,11 @@
     $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
     // var_dump($user);
-    $userPhoto = $user[0]['user_photo'];
-    if(empty($userPhoto)){
+   
+    if(empty($user)){
         $userPhoto = 'backend/web/images/default.png';
+    } else {
+         $userPhoto = $user[0]['user_photo'];
     }
 ?>
 <aside class="main-sidebar">
