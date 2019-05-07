@@ -29,25 +29,3 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     
 </div>
-<?php
-//$url = \yii\helpers\Url::to("std-personal-info/fetch-fee");
-
-$script = <<< JS
-
-
-$('form#{$model->formName()}').on('beforeSubmit',function(e)
-{
-    alert("welcome");      
-});
-
-$('#empCnic').on('change',function(){
-        var tMarks = $('#empCnic').val();
-        alert(tMarks);
-    });
-
-
-
-JS;
-$this->registerJs($script);
-?>
-</script>  
