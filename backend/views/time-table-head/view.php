@@ -13,6 +13,7 @@ use yii\widgets\DetailView;
             'time_table_h_id:datetime',
             'class_id',
             'days',
+            'status',
             'created_by',
             'updated_by',
             'created_at',

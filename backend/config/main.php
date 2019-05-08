@@ -166,6 +166,9 @@ return [
                 'balance-sheet' => 'account-transactions/balance-sheet',
                 'passwords' => 'site/passwords',
 
+                //timeTable
+                'fetch-subjects' => 'time-table-head/fetch-subjects',
+
             ],
         ],
     ],
