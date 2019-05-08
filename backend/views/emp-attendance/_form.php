@@ -11,16 +11,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
     
-    <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, [
-        'mask' => '99999-9999999-9','id'=>'empCnic'
-        ]); ?>
+    <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'empCnic'], 'mask' => '99999-9999999-9']); ?>
 
     <?= $form->field($model, 'check_in')->radio(['label'=>'Check In', 'value' => 0, 'checked' => true]) ?>
 
     <?= $form->field($model, 'check_in')->radio(['label'=>'Check Out','value' => 1]) ?>
 
-
-  
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -30,23 +26,34 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     
 </div>
+
 <?php
-//$url = \yii\helpers\Url::to("std-personal-info/fetch-fee");
+$url = \yii\helpers\Url::to("./fetch-cnic");
 
 $script = <<< JS
+$('#empCnic').on('change',function(){
+    var cnic = $('#empCnic').val();
 
-$('form#{$model->formName()}').on('beforeSubmit',function(e)
-{
-    var \$form = $(this);
+    $.ajax({
+        type:'post',
+        data:{cnic:cnic},
+        url: "$url",
+
+        success: function(result){
+            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
+            if(jsonResult[0] == 0){
+                alert("Invalid Cnic");
+            }
+            if(jsonResult[0] == 1){
+                
+            }
+        }         
+    });
     
-       $.ajax({
-            var empCnic = $('#empCnic').val();
-            alert(empCnic);
-        });      
 });
-
 
 JS;
 $this->registerJs($script);
 ?>
 </script>  
+
