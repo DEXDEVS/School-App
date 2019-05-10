@@ -7,6 +7,7 @@ use common\models\TimeTableHead;
 use common\models\TimeTableHeadSearch;
 use common\models\TimeTableDetail;
 use yii\web\Controller;
+use backend\models\Model;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -122,7 +123,7 @@ class TimeTableHeadController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-                $timeTableDetails = Model::createMultiple(MarksWeightageDetails::classname()); 
+                $timeTableDetails = Model::createMultiple(TimeTableDetail::classname()); 
                 Model::loadMultiple($timeTableDetails, Yii::$app->request->post());
 
                     $array = $model->days;

@@ -105,6 +105,7 @@ class ComposerStaticInit0c51b51caa7b76089a6868de9dd1f3ad
         ),
         'k' => 
         array (
+            'kartik\\time\\' => 12,
             'kartik\\sortable\\' => 16,
             'kartik\\select2\\' => 15,
             'kartik\\popover\\' => 15,
@@ -240,6 +241,10 @@ class ComposerStaticInit0c51b51caa7b76089a6868de9dd1f3ad
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'kartik\\time\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-timepicker/src',
         ),
         'kartik\\sortable\\' => 
         array (

@@ -14,7 +14,7 @@ use Yii;
  * @property string $end_time
  * @property string $room
  * @property int $created_by
- * @property int $update_by
+ * @property int $updated_by
  * @property string $created_at
  * @property string $updated_at
  *
@@ -37,9 +37,9 @@ class TimeTableDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['time_table_h_id', 'subject_id', 'start_time', 'end_time', 'room', 'created_by', 'update_by'], 'required'],
-            [['time_table_h_id', 'subject_id', 'created_by', 'update_by'], 'integer'],
-            [['start_time', 'end_time', 'created_at', 'updated_at'], 'safe'],
+            [['subject_id', 'start_time', 'end_time', 'room'], 'required'],
+            [['time_table_h_id', 'subject_id', 'created_by', 'updated_by'], 'integer'],
+            [['time_table_h_id', 'start_time', 'end_time', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['room'], 'string', 'max' => 10],
             [['time_table_h_id'], 'exist', 'skipOnError' => true, 'targetClass' => TimeTableHead::className(), 'targetAttribute' => ['time_table_h_id' => 'time_table_h_id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subjects::className(), 'targetAttribute' => ['subject_id' => 'subject_id']],
@@ -54,12 +54,12 @@ class TimeTableDetail extends \yii\db\ActiveRecord
         return [
             'time_table_d_id' => 'Time Table D ID',
             'time_table_h_id' => 'Time Table H ID',
-            'subject_id' => 'Subject ID',
+            'subject_id' => 'Subject Name',
             'start_time' => 'Start Time',
             'end_time' => 'End Time',
             'room' => 'Room',
             'created_by' => 'Created By',
-            'update_by' => 'Update By',
+            'updated_by' => 'Update By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

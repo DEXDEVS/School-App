@@ -35,11 +35,11 @@ class TimeTableHead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_id', 'days'], 'required'],
+            [['class_id'], 'required'],
             [['class_id', 'created_by', 'updated_by'], 'integer'],
             [['status'], 'string'],
-            [['created_at', 'updated_at', 'status', 'created_by', 'updated_by'], 'safe'],
-            [['days'], 'string', 'max' => 200],
+            [['created_at', 'updated_at', 'status', 'created_by', 'updated_by', 'days'], 'safe'],
+            //[['days'], 'string', 'max' => 200],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdEnrollmentHead::className(), 'targetAttribute' => ['class_id' => 'std_enroll_head_id']],
         ];
     }

@@ -18,6 +18,7 @@ return array(
     'wbraganca\\dynamicform\\' => array($vendorDir . '/wbraganca/yii2-dynamicform'),
     'rmrevin\\yii\\fontawesome\\' => array($vendorDir . '/rmrevin/yii2-fontawesome'),
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
+    'kartik\\time\\' => array($vendorDir . '/kartik-v/yii2-widget-timepicker/src'),
     'kartik\\sortable\\' => array($vendorDir . '/kartik-v/yii2-sortable/src'),
     'kartik\\select2\\' => array($vendorDir . '/kartik-v/yii2-widget-select2/src'),
     'kartik\\popover\\' => array($vendorDir . '/kartik-v/yii2-popover-x'),
