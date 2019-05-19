@@ -16,7 +16,13 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
+                <?php 
+                    if (Yii::$app->user->identity->user_type == 'Executive') { ?>
+                        <img src="<?php echo $userPhoto; ?>" class="img-circle" alt="User Image"/>
+                <?php }
+                    else { ?>
+                        <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
+                <?php } ?>
             </div>
             <div class="pull-left info">
                 <p>

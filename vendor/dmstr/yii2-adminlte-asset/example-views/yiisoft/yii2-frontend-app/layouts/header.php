@@ -210,7 +210,14 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="user-image" alt="User Image"/>
+                        <?php  
+                            if (Yii::$app->user->identity->username == 'Executive') { ?>
+                                <img src="<?php echo $userPhoto; ?>" class="user-image" alt="User Image"/>
+                        <?php }
+                            else { ?>
+                                <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="user-image" alt="User Image"/>
+                        <?php } ?>
+                        
                         <span class="hidden-xs">
                             <?php 
                             //var_dump($userPhoto);
@@ -237,7 +244,13 @@ use yii\helpers\Html;
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header" style="height: 200px">
-                            <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
+                            <?php  
+                            if (Yii::$app->user->identity->username == 'Executive') { ?>
+                                <img src="<?php echo $userPhoto; ?>" class="img-circle" alt="User Image"/>
+                            <?php }
+                                else { ?>
+                                    <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
+                            <?php } ?>
                             <p>
                                 <label for="">Contact Info</label><br>
                                 <!-- email -->
