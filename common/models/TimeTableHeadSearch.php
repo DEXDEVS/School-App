@@ -19,7 +19,7 @@ class TimeTableHeadSearch extends TimeTableHead
     {
         return [
             [['time_table_h_id', 'class_id', 'created_by', 'updated_by'], 'integer'],
-            [['days', 'created_at', 'updated_at'], 'safe'],
+            [['days', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -64,7 +64,8 @@ class TimeTableHeadSearch extends TimeTableHead
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'days', $this->days]);
+        $query->andFilterWhere(['like', 'days', $this->days])
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

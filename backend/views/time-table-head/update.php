@@ -7,7 +7,7 @@ use yii\helpers\Html;
 ?>
 <div class="time-table-head-update">
 
-    <?= $this->render('_form', [
+    <?= $this->render('_form1', [
         'model' => $model,
     ]) ?>
 

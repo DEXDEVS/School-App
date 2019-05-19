@@ -5,9 +5,12 @@ namespace backend\controllers;
 use Yii;
 use common\models\TimeTableHead;
 use common\models\TimeTableHeadSearch;
+use common\models\TimeTableDetail;
 use yii\web\Controller;
+use backend\models\Model;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
@@ -22,6 +25,20 @@ class TimeTableHeadController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-subjects'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -47,6 +64,10 @@ class TimeTableHeadController extends Controller
         ]);
     }
 
+     public function actionFetchSubjects()
+    { 
+        return $this->render('fetch-subjects');
+    }
 
     /**
      * Displays a single TimeTableHead model.
@@ -82,7 +103,8 @@ class TimeTableHeadController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new TimeTableHead();  
+        $model = new TimeTableHead(); 
+        $timeTableDetails = [new TimeTableDetail]; 
 
         if($request->isAjax){
             /*
@@ -94,12 +116,16 @@ class TimeTableHeadController extends Controller
                     'title'=> "Create new TimeTableHead",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'timeTableDetails'=>(empty($timeTableDetails)) ? [new TimeTableDetail] : $timeTableDetails,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post())){
+                $timeTableDetails = Model::createMultiple(TimeTableDetail::classname()); 
+                Model::loadMultiple($timeTableDetails, Yii::$app->request->post());
+
                     $array = $model->days;
                     $day = implode(",", $array);
                     $model->days = $day;
@@ -108,6 +134,37 @@ class TimeTableHeadController extends Controller
                     $model->updated_by = '0';
                     $model->updated_at = '0'; 
                     $model->save();
+
+                    // validate all models
+                    $valid = $model->validate();
+                    $valid = Model::validateMultiple($timeTableDetails) && $valid;
+                    
+                    if ($valid) {
+                        $transaction = \Yii::$app->db->beginTransaction();
+                        try {
+                            if ($flag = $model->save(false)) {
+                                foreach ($timeTableDetails as $timeTableDetail) {
+                                    $timeTableDetail->time_table_h_id = $model->time_table_h_id;
+                                    $timeTableDetail->created_by = Yii::$app->user->identity->id; 
+                                    $timeTableDetail->created_at = new \yii\db\Expression('NOW()');
+                                    $timeTableDetail->updated_by = '0';
+                                    $timeTableDetail->updated_at = '0';    
+
+                                    if (! ($flag = $timeTableDetail->save(false))) {
+                                        $transaction->rollBack();
+                                        break;
+                                    }
+                                }
+                            }
+                            if ($flag) {
+                                $transaction->commit();
+                                return $this->redirect(['index']);
+                            }
+                        } catch (Exception $e) {
+                            $transaction->rollBack();
+                            echo $e;
+                        }
+                    }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new TimeTableHead",

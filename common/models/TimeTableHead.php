@@ -10,13 +10,14 @@ use Yii;
  * @property int $time_table_h_id
  * @property int $class_id
  * @property string $days
+ * @property string $status
  * @property int $created_by
  * @property int $updated_by
  * @property string $created_at
  * @property string $updated_at
  *
  * @property TimeTableDetail[] $timeTableDetails
- * @property StdClassName $class
+ * @property StdEnrollmentHead $class
  */
 class TimeTableHead extends \yii\db\ActiveRecord
 {
@@ -34,11 +35,12 @@ class TimeTableHead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_id', 'days'], 'required'],
+            [['class_id'], 'required'],
             [['class_id', 'created_by', 'updated_by'], 'integer'],
-            [['days'], 'string', 'max' => 200],
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
-            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_id' => 'class_name_id']],
+            [['status'], 'string'],
+            [['created_at', 'updated_at', 'status', 'created_by', 'updated_by', 'days'], 'safe'],
+            //[['days'], 'string', 'max' => 200],
+            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdEnrollmentHead::className(), 'targetAttribute' => ['class_id' => 'std_enroll_head_id']],
         ];
     }
 
@@ -51,6 +53,7 @@ class TimeTableHead extends \yii\db\ActiveRecord
             'time_table_h_id' => 'Time Table H ID',
             'class_id' => 'Class Name',
             'days' => 'Days',
+            'status' => 'Status',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             'created_at' => 'Created At',
@@ -71,6 +74,6 @@ class TimeTableHead extends \yii\db\ActiveRecord
      */
     public function getClass()
     {
-        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_id']);
+        return $this->hasOne(StdEnrollmentHead::className(), ['std_enroll_head_id' => 'class_id']);
     }
 }

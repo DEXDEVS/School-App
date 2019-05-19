@@ -17,19 +17,23 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_id',
-        'value'=>'class.class_name',
+        'value'=>'class.std_enroll_head_name'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'days',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
     ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'created_by',
     // ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'updated_by',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_by',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

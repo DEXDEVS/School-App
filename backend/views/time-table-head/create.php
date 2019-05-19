@@ -10,5 +10,6 @@ use yii\helpers\Html;
 <div class="time-table-head-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'timeTableDetails' => $timeTableDetails,
     ]) ?>
 </div>

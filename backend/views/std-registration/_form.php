@@ -451,6 +451,7 @@ $('#classId').on('change',function(){
         data:{class_Id:classId},
         url: "$url",
         success: function(result){ 
+            console.log(result);
             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
             var options = '';
             $('#subjectId').empty();
