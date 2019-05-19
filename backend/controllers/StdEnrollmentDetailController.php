@@ -113,8 +113,8 @@ class StdEnrollmentDetailController extends Controller
                         'model' => $model,
                         'stdEnrollmentHead' => $stdEnrollmentHead,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-success pull-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-danger','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-success','type'=>"submit"])
         
                 ];         
             }else if($stdEnrollmentHead->load($request->post()) && $model->load($request->post())){

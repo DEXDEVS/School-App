@@ -12,9 +12,9 @@ use common\models\StdClassName;
 /* @var $model common\models\StdInquiry */
 /* @var $form yii\widgets\ActiveForm */
  
-$stdInquiry = StdInquiry::find()->orderBy(['std_inquiry_id'=> SORT_DESC])->one();
-$id = $stdInquiry['std_inquiry_id']+1;
-$year = date('y');
+// $stdInquiry = StdInquiry::find()->orderBy(['std_inquiry_id'=> SORT_DESC])->one();
+// $id = $stdInquiry['std_inquiry_id']+1;
+//$year = date('y');
 
 ?>
 
@@ -22,9 +22,7 @@ $year = date('y');
     <?php $form = ActiveForm::begin(); ?>
     <h3 style="color: #337AB7; margin-top: -10px"><small> ( Fields with <span style="color: red;">red stars </span>are required )</small> </h3>
     <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_inquiry_no')->textInput(['maxlength' => true,'value'=> 'STD-Y'.$year.'-0'.$id, 'readonly'=> true]) ?>
-        </div>
+        
         <div class="col-md-4">
             <?php   $sDate = date('Y'); 
                     $eDate = $sDate + 1;

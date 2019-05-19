@@ -37,7 +37,7 @@ $in = 1;
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($stdEnrollmentHead, 'section_id')->dropDownList(
-                    ArrayHelper::map(StdSections::find()->where(['delete_status'=>1])->all(),'section_id','section_name'),
+                    ArrayHelper::map(StdSections::find()->where(['delete_status'=>1,'branch_id'=> $branch_id])->all(),'section_id','section_name'),
                     ['prompt'=>'Select Section','id'=>'sectionId']
                 )?>
             </div>

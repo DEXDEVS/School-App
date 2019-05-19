@@ -105,6 +105,7 @@ return [
                 'emp-download-doc' => 'emp-documents/download-doc',
                 'emp-type' => 'emp-type/index',
                 'emp-designation' => 'emp-designation/index',
+                'print-id-card' => 'emp-info/print-id-card',
                 
                 //fee-transaction-detail
                 'class-account' => 'fee-transaction-detail/class-account',
