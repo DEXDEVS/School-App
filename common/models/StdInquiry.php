@@ -53,7 +53,7 @@ class StdInquiry extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_inquiry_no', 'inquiry_session', 'std_name', 'std_father_name', 'gender', 'std_father_contact_no', 'std_inquiry_date', 'std_intrested_class', 'std_previous_class', 'previous_institute', 'std_roll_no', 'std_obtained_marks', 'std_total_marks', 'std_percentage'], 'required'],
+            [['inquiry_session', 'std_name', 'std_father_name', 'gender', 'std_father_contact_no', 'std_inquiry_date', 'std_intrested_class', 'std_previous_class', 'previous_institute', 'std_roll_no', 'std_obtained_marks', 'std_total_marks', 'std_percentage'], 'required'],
             [['branch_id', 'std_obtained_marks', 'std_total_marks', 'created_by', 'updated_by'], 'integer'],
             [['gender', 'inquiry_status'], 'string'],
             [['branch_id','std_inquiry_date', 'created_at', 'updated_at','inquiry_status', 'created_by', 'updated_by', 'refrence_name', 'refrence_contact_no', 'refrence_designation', 'std_address', 'comment', 'std_contact_no'], 'safe'],
@@ -77,7 +77,7 @@ class StdInquiry extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'std_inquiry_id' => 'Student Inquiry ID',
+            'std_inquiry_id' => 'Inquiry No',
             'branch_id' => 'Branch ID',
             'std_inquiry_no' => 'Student Inquiry No',
             'inquiry_session' => 'Inquiry Session',

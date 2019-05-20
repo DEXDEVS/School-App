@@ -90,7 +90,7 @@ class StdInquirySearch extends StdInquiry
             return $dataProvider;
         } else {
             $branch_id = Yii::$app->user->identity->branch_id;
-            $query = StdInquiry::find()->where(['branch_id' => $branch_id]);;
+            $query = StdInquiry::find()->where(['branch_id' => $branch_id]);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,

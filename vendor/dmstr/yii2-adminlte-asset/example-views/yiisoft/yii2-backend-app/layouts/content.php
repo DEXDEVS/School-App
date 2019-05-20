@@ -39,13 +39,20 @@ use dmstr\widgets\Alert;
 
 <footer class="main-footer" style="background-color: #000000; color: white; font-family: serif;">
     <div class="pull-right hidden-xs">
-        <b style="color:gold;"><i>Beta Version</b> 1.0</i>
+        
     </div>
     <i>Copyright &copy; <?php echo date('Y'); ?>
         <a href="http://www.dexdevs.com" target="_blank" style="color:gold;">
             <b>DEXDEVS</b>
         </a> /  All Rights Reserved.
+
+        <span style="margin-left: 150px">
+            <i>For <span style="color: gold;">Technical Support</span> Feel Free to Contact Us 24/7 on <span style="color:gold;">(0300-6999824)</span></i>
+        </span>
     </i>
+    <div class="pull-right hidden-xs">
+        <b style="color:gold;"><i>Beta Version</b> 1.0</i>
+    </div>
 </footer>
 
 <!-- Control Sidebar -->
