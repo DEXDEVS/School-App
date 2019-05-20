@@ -33,7 +33,7 @@ class TimeTableHeadController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-subjects'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-subjects','time-table-view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -49,6 +49,11 @@ class TimeTableHeadController extends Controller
         ];
     }
 
+
+    public function actionTimeTableView()
+    { 
+        return $this->render('time-table-view');
+    }
     /**
      * Lists all TimeTableHead models.
      * @return mixed

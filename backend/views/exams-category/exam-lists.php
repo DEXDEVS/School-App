@@ -4,32 +4,32 @@
 	$examCateogryId = $_GET['id'];
 
 	$inactiveSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'inactive'
+				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'inactive'
 					")->queryAll();
 	$countinactiveSchedules = count($inactiveSchedules);
 	$announcedSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'announced'
+				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'announced'
 					")->queryAll();
 	$countannouncedSchedules = count($announcedSchedules);
 	$conductedSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'conducted'
+				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'conducted'
 					")->queryAll();
 	$countconductedSchedules = count($conductedSchedules);
 	$ResultPrepareSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared'
+				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared'
 					")->queryAll();
 	$countResultPrepareSchedules = count($ResultPrepareSchedules);
 	$ResultAnnouncedSchedules = Yii::$app->db->createCommand("
-				SELECT std_enroll_head_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced'
+				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced'
 					")->queryAll();
 	$countResultAnnouncedSchedules = count($ResultAnnouncedSchedules);
 	// getting exam `category_name` from `exams_cateogry`
 	$examCategoryName = Yii::$app->db->createCommand("
 				SELECT category_name FROM exams_category WHERE exam_category_id = '$examCateogryId'
 					")->queryAll();
-	// getting class IDs `std_enroll_head_id` from `exams_criteria` against `exam_category_id`
+	// getting class IDs `class_id` from `exams_criteria` against `exam_category_id`
 	$classIds = Yii::$app->db->createCommand("
-				SELECT DISTINCT (std_enroll_head_id) FROM exams_criteria WHERE exam_category_id = '$examCateogryId'
+				SELECT DISTINCT (class_id) FROM exams_criteria WHERE exam_category_id = '$examCateogryId'
 					")->queryAll();
 
 	$countClassIds = count($classIds);
@@ -43,53 +43,24 @@
 	<title></title>
 	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style type="text/css">
-	#tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-#tooltip #tooltiptext {
-  visibility: hidden;
-  width:400px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 15px;
-  
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: -5px;
-  left: 105%;
-}
-
-#tooltip:hover #tooltiptext {
-  visibility: visible;
-}
-	</style>
 </head>
 <body>
 	<!-- container fluid div start -->
 <div class="container-fluid">
 
-	<!-- back button div start -->
-	<div class="row">
-		<div class="col-md-12">
-			<a href="./exams-category" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
-		</div>
-	</div><br>
-	<!-- back button div close -->
+	<!-- back button start -->
+	 <ol class="breadcrumb">
+      <li><a href="exams-category-view?id=<?php echo $examCateogryId; ?>"><i class=""></i> Back</a></li>
+    </ol>
+	<!-- back button close -->
 
 	<!-- heading div start -->
 	<div class="row">
 			<div class="col-md-12">
 				<div class="box box-primary">
-					<div class="box-header" style="padding: 0px;text-align: center;">
+					<div class="box-header" style="padding:0px;text-align: center;">
 						<h3 style="text-align: center;font-family: georgia;font-size:30px;">
-							<?php echo $examCategoryName[0]['category_name']."<br>"; ?>(<?php echo date('Y'); ?>)
+							<?php echo $examCategoryName[0]['category_name']; ?>(<?php echo date('Y'); ?>)
 						</h3>
 						<p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p>
 					</div>
@@ -173,7 +144,7 @@
 				                          	<?php
 				                          	for ($i=0; $i <$countinactiveSchedules ; $i++) { 
 				                          		//getting class names
-				                          		$classHeadId = $inactiveSchedules[$i]['std_enroll_head_id'];
+				                          		$classHeadId = $inactiveSchedules[$i]['class_id'];
 				                          		$examType = $inactiveSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
@@ -233,7 +204,7 @@
 				                            <tbody>
 				                          	<?php
 				                          	for ($i=0; $i <$countannouncedSchedules ; $i++) { 
-				                          		$classHeadId = $announcedSchedules[$i]['std_enroll_head_id'];
+				                          		$classHeadId = $announcedSchedules[$i]['class_id'];
 				                          		$examType = $announcedSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
@@ -292,7 +263,7 @@
 				                            <tbody>
 				                          	<?php
 				                          	for ($i=0; $i <$countconductedSchedules ; $i++) { 
-				                          		$classHeadId = $conductedSchedules[$i]['std_enroll_head_id'];
+				                          		$classHeadId = $conductedSchedules[$i]['class_id'];
 				                          		$examType = $conductedSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
@@ -352,7 +323,7 @@
 				                            <tbody>
 				                          	<?php
 				                          	for ($i=0; $i <$countResultPrepareSchedules ; $i++) { 
-				                          		$classHeadId = $ResultPrepareSchedules[$i]['std_enroll_head_id'];
+				                          		$classHeadId = $ResultPrepareSchedules[$i]['class_id'];
 				                          		$examType = $ResultPrepareSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
@@ -419,7 +390,7 @@
 				                            <tbody>
 				                          	<?php
 				                          	for ($i=0; $i <$countResultAnnouncedSchedules ; $i++) { 
-				                          		$classHeadId = $ResultAnnouncedSchedules[$i]['std_enroll_head_id'];
+				                          		$classHeadId = $ResultAnnouncedSchedules[$i]['class_id'];
 				                          		$examType = $ResultAnnouncedSchedules[$i]['exam_type'];
 				                          		$className = Yii::$app->db->createCommand("
 												SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadId'
@@ -457,194 +428,10 @@
 			</div>
 		</div>
 	</div>
-	<!-- invagilator section start -->
-	<div class="row">
-		<div class="col-md-12">
-			<div class="box box-primary">
-				<div class="box-header" style="padding: 0px;text-align: center;">
-					<h3 style="text-align: center;font-family: georgia;font-size:30px;">
-						Invigilators Attendance
-					</h3>
-					<!-- <p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p> -->
-				</div><hr>	
-				<div class="box-body">					
-					<div class="row">
-				        <div class="col-md-12">
-	                		<form method="POST" action="view?id=<?php echo $examCateogryId; ?>">
-	                			<div class="row">
-	                				<div class="col-md-4">
-	                					<div class="form-group">
-			                				<label>Select Date</label>
-			                				<input type="date" name="date" class="form-control">
-	                					</div>
-	                				</div>
-
-	                				<input type="hidden" name="examCatId" value="<?php echo $examCateogryId;?>">
-
-	                				<div class="col-md-4" style="margin-top: 24px;">
-		                				<button class="btn btn-info" type="submit" name="search" > Search </button>
-		                			</div>
-	                			</div>	
-	                		</form>
-				        </div>
-				    </div><hr>
-            		<?php 
-            		if(isset($_POST["search"]))
-            		{
-            			$date = $_POST['date'];
-						$examCatId = $_POST['examCatId'];
-						//get all invegilators against selected date
-						$invigilator = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,c.std_enroll_head_id,s.subject_id,s.emp_id
-							        FROM exams_criteria as c
-									INNER JOIN exams_schedule as s
-									ON c.exam_criteria_id = s.exam_criteria_id
-							        WHERE c.exam_category_id = '$examCatId'
-							        AND c.exam_status = 'announced'
-							        AND s.date = '$date'")->queryAll();
-						var_dump($invigilator);
-						if (empty($invigilator)) {
-							echo "No schedule announced yet..!";
-						}else{
-							$invigilatorAtt = Yii::$app->db->createCommand("SELECT s.emp_attendance
-							        FROM exams_criteria as c
-									INNER JOIN exams_schedule as s
-									ON c.exam_criteria_id = s.exam_criteria_id
-							        WHERE c.exam_category_id = '$examCatId'
-							        AND c.exam_status = 'announced'
-							        AND s.date = '$date'")->queryAll();
-							
-							if(empty($invigilatorAtt[0]['emp_attendance'])){
-						$countinvigilator = count($invigilator);
-
-            	 	?>
-            	 	<div class="row">
-            	 		<div class="col-md-12">
-							<form method="POST">
-            	 			<table class="table">
-            	 				<thead>
-            	 					<tr>
-            	 						<th>Sr.#</th>
-            	 						<th>Class</th>
-            	 						<th>Subject</th>
-            	 						<th>Invagilator</th>
-            	 						<th>Attendance</th>
-            	 					</tr>
-            	 				</thead>
-            	 				<tbody>
-            	 					<?php 
-            	 					$criteriaArray = array();
-            	 					$classArray = array();
-            	 					$subjectArray = array();
-            	 					$empArray = array();
-            	 					for ($i=0; $i <$countinvigilator ; $i++) {
-            	 						//get criteria id
-            	 						$criteriaId = $invigilator[$i]['exam_criteria_id']; 
-            	 						$criteriaArray[$i] = $criteriaId;
-            	 						//get class name
-            	 						$classId = $invigilator[$i]['std_enroll_head_id'];
-            	 						$classArray[$i] = $classId;
-            	 						$classesName = Yii::$app->db->createCommand("
-										SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classId'
-											")->queryAll();
-            	 						//get subject name
-            	 						$subId = $invigilator[$i]['subject_id'];
-            	 						$subjectArray[$i] = $subId;
-            	 						$subName = Yii::$app->db->createCommand("
-										SELECT subject_name FROM subjects WHERE subject_id = '$subId'
-											")->queryAll();
-            	 						//get invagilator name
-            	 						$empId = $invigilator[$i]['emp_id'];
-            	 						$empArray[$i] = $empId;
-            	 						$empName = Yii::$app->db->createCommand("
-										SELECT emp_name FROM emp_info WHERE emp_id = '$empId'
-											")->queryAll();
-            	 					 ?>
-            	 					<tr>
-            	 						<td><?php echo $i+1; ?></td>
-            	 						<td><?php echo $classesName[0]['std_enroll_head_name'];  ?></td>
-            	 						<td>
-            	 							<?php echo $subName[0]['subject_name']; ?>
-            	 						</td>
-            	 						<td>
-            	 							<?php echo $empName[0]['emp_name']; ?>
-            	 						</td>
-            	 						<td>
-            	 							<input type="radio" name="emp<?php echo $i+1?>" value="P"/> <b  style="color:green">P </b>
-											<input type="radio" name="emp<?php echo $i+1?>" value="A"  checked="checked"/> <b style="color: red">A </b>
-											<input type="radio" name="emp<?php echo $i+1?>" value="L" /><b style="color: #F7C564;"> L</b>
-            	 						</td>
-            	 					</tr>
-            	 					<?php } ?>
-            	 				</tbody>
-            	 			</table>
-            	 			<input type="hidden" name="date" value="<?php echo $date; ?>">
-            	 			 <?php foreach ($criteriaArray as $value) {
-				                		echo '<input type="hidden" name="criteriaArray[]" value="'.$value.'" style="width: 30px">';
-				                	}
-				                  foreach ($classArray as $value) {
-				                		echo '<input type="hidden" name="classArray[]" value="'.$value.'" style="width: 30px">';
-				                	}
-				                  foreach ($subjectArray as $value) {
-				                		echo '<input type="hidden" name="subjectArray[]" value="'.$value.'" style="width: 30px">';
-				                	}
-				                  foreach ($empArray as $value) {
-				                		echo '<input type="hidden" name="empArray[]" value="'.$value.'" style="width: 30px">';
-				                	} ?>
-            	 			<input type="hidden" name="countinvigilator" value="<?php echo $countinvigilator; ?>"> 
-            	 			
-            	 			<button type="submit" name="save_attendance" class="btn btn-success btn-xs" style="float: right;">Save Attendance</button>
-            	 		</form>
-            	 		</div>
-            	 	</div>
-            	 	<?php } else {
-            	 		echo "Attendance already marked";
-            	 	} //end of else attendance
-            	 	 } //end of else 
-            	 	  } //end of if isset ?>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- invagilator section close -->
+	
 </div>
 <!-- container fluid div close -->	
 <?php 
-
-	if(isset($_POST['save_attendance'])){
-		$date = $_POST['date'];
-		$criteriaArray = $_POST['criteriaArray'];
-		$classArray = $_POST['classArray'];
-		$subjectArray = $_POST['subjectArray'];
-		$empArray = $_POST['empArray'];
-		$countinvigilator = $_POST['countinvigilator'];
-
-		for($i=0; $i<$countinvigilator;$i++){
-			$q=$i+1;
-			$emp = "emp".$q;
-			$emp_attendance[$i] = $_POST["$emp"];
-		}
-
-		$transection = Yii::$app->db->beginTransaction();
-			try{
-				for($i=0; $i<$countinvigilator; $i++){
-					$invigilator = Yii::$app->db->createCommand()->update('exams_schedule', [
-							'emp_attendance'=> $emp_attendance[$i],
-							'updated_at'	=> new \yii\db\Expression('NOW()'),
-							'updated_by'	=> Yii::$app->user->identity->id,
-	                        ],
-	                        ['exam_criteria_id' => $criteriaArray[$i], 'subject_id' => $subjectArray[$i], 'emp_id' => $empArray[$i], 'date' => $date]
-	                    )->execute();
-				}
-				if($invigilator){
-				$transection->commit();
-					Yii::$app->session->setFlash('success', "Attendance for Invigilator marked successfully...!");
-				}
-			} catch(Exception $e){
-				$transection->rollback();
-				Yii::$app->session->setFlash('warning', "Attendance not marked. Try again!");
-			}
-	}// save_attendance clossing
-
 	// result announce isset
 	if(isset($_POST['result_announced']))
 	{
@@ -653,7 +440,7 @@
 		$examType = $_POST['examType'];
 
 		$resultAnnounced = Yii::$app->db->createCommand("
-		SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$cat_id' AND std_enroll_head_id = '$class_id' AND exam_status = 'Result Prepared' AND exam_type = '$examType'
+		SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$cat_id' AND class_id = '$class_id' AND exam_status = 'Result Prepared' AND exam_type = '$examType'
 			")->queryAll();
 		if (empty($resultAnnounced)) {
 			Yii::$app->session->setFlash('warning', "You can not announce result before result prepared...!");
@@ -666,7 +453,7 @@
 							'updated_at'			=> new \yii\db\Expression('NOW()'),
 							'updated_by'			=> Yii::$app->user->identity->id,
 	                        ],
-	                        ['exam_criteria_id' => $criteriaId, 'exam_category_id' => $cat_id, 'std_enroll_head_id' => $class_id, 'exam_status' => "Result Prepared",'exam_type' => $examType]
+	                        ['exam_criteria_id' => $criteriaId, 'exam_category_id' => $cat_id, 'class_id' => $class_id, 'exam_status' => "Result Prepared",'exam_type' => $examType]
 	                    )->execute();
 				if($statusUpdate){
 					$transection->commit();
@@ -706,7 +493,7 @@
 	try{
 		$examCriteriaUpdate = Yii::$app->db->createCommand()->update('exams_criteria', 				[
 						'exam_category_id' 		=> $exam_category,
-						'std_enroll_head_id' 	=> $headId ,
+						'class_id' 	=> $headId ,
 						'exam_start_date' 		=> $exam_start_date,
 						'exam_end_date'			=> $exam_end_date ,
 						'exam_start_time'		=> $exam_start_time,

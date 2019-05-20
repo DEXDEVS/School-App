@@ -145,6 +145,7 @@
                             // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
                             // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
                             ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
+                            ['label' => 'Invigilator Attendance', 'icon' => 'caret-right', 'url' => ["./emp-exam-attendance"],],
                             ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
                             ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
@@ -166,21 +167,28 @@
                             ['label' => 'Employee Registration', 'icon' => 'caret-right', 'url' => './emp-info',],
                             ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => './teacher-subject-assign-head',],
                             [
-                                'label' => 'Attendance & Leave',
-                                'icon' => 'caret-right',
+                                'label' => 'Attendance Management',
+                                'icon' => 'cancel',
                                 'url' => '#',
                                 'items' => [
                                     ['label' => 'Manage Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance',],
                                      ['label' => 'Final Attendance', 'icon' => 'chevron-right', 'url' => './final-attendance',],
                                     [
                                     'label' => 'Attendance Report',
-                                    'icon' => 'caret-right',
+                                    'icon' => 'list',
                                     'url' => '#',
                                     'items' => [
                                             ['label' => 'Single Employee', 'icon' => 'chevron-right', 'url' => './emp-att-report',],
                                             ['label' => 'All Employees', 'icon' => 'chevron-right', 'url' => './employess-att-report',],
                                         ],
-                                    ],
+                                    ],  
+                                ],
+                            ],
+                            [
+                                'label' => 'Leave Management',
+                                'icon' => 'cancel',
+                                'url' => '#',
+                                'items' => [
                                     ['label' => 'Manage Leave', 'icon' => 'chevron-right', 'url' => './emp-leave',],
                                     ['label' => 'Leave Report', 'icon' => 'chevron-right', 'url' => './premium-version',],
                                 ],
