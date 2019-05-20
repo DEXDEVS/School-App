@@ -41,7 +41,7 @@ class MarksWeightageHeadSearch extends MarksWeightageHead
      */
     public function search($params)
     {
-        $query = MarksWeightageHead::find()->select('exam_category_id')->distinct();;
+        $query = MarksWeightageHead::find('exam_category_id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

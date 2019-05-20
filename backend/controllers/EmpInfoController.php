@@ -34,7 +34,7 @@ class EmpInfoController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-details'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-details', 'print-id-card'],
                         'allow' => true,
                         'roles' => ['@','view'],
                     ],
@@ -94,6 +94,11 @@ class EmpInfoController extends Controller
     public function actionView($id)
     {
        return $this->render('emp-details'); 
+    }
+
+    public function actionPrintIdCard($id)
+    {
+       return $this->render('print-id-card'); 
     }
 
    

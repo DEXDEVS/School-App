@@ -118,6 +118,7 @@ class StdInquiryController extends Controller
             }else if($model->load($request->post()) && $model->validate()){
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
+                    
                     $branch_id = Yii::$app->user->identity->branch_id;
                     $model->branch_id = $branch_id;
                     $preClass = $model->std_previous_class[0];
@@ -127,7 +128,6 @@ class StdInquiryController extends Controller
                     $intrestedClass = $model->std_intrested_class[0];
                     $model->std_intrested_class = $intrestedClass;
 
-                    
                     $model->created_by = Yii::$app->user->identity->id; 
                     $model->created_at = new \yii\db\Expression('NOW()');
                     $model->updated_by = '0';
@@ -135,7 +135,7 @@ class StdInquiryController extends Controller
                     $model->save();
 
                     $transaction->commit();
-                        Yii::$app->session->setFlash('warning', "You have successfully add record...!");
+                        Yii::$app->session->setFlash('success', "You have successfully add new record...!");
                 } catch (Exception $e) {
                     $transaction->rollBack();
                     Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");

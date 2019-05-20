@@ -7,9 +7,9 @@
 	//getting `examType`
 	$examType = $_GET['examType'];
 	// geeting all info from `exams_criteria` table and `exams_schedule` table
-	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND std_enroll_head_id = '$classId' AND exam_type = '$examType'
+	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND class_id = '$classId' AND exam_type = '$examType'
 					")->queryAll();
-	$classId = $examCriteriaData[0]['std_enroll_head_id'];
+	$classId = $examCriteriaData[0]['class_id'];
 	// getting classes name `std_enroll_head_name` from `std_enrollment_head` against `std_enroll_head_id`
 	$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classId'
 					")->queryAll();
@@ -22,7 +22,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<a href="./view?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+			<a href="./exams-category-view?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
 		</div>
 	</div><br>
 	<div class="row">

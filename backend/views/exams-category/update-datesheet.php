@@ -7,7 +7,7 @@
 	//getting `examType`
 	$examType = $_GET['examType'];
 	// geeting all info from `exams_criteria` table and `exams_schedule` table
-	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND std_enroll_head_id = '$classId' AND exam_type = '$examType' AND exam_status = 'Inactive' OR exam_status = 'announced' OR exam_status = 'conducted'
+	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND class_id = '$classId' AND exam_type = '$examType' AND exam_status = 'Inactive' OR exam_status = 'announced' OR exam_status = 'conducted'
 					")->queryAll();
 	$criteriaId = $examCriteriaData[0]['exam_criteria_id'];
 
@@ -40,7 +40,7 @@
 				<h3 style="box-shadow:1px 1px 1px 1px;">Exams Criteria</h3>
 			</div>
 			<div class="box-body">
-				<form method="POST" action="view?id=<?php echo $examCateogryId ?>">
+				<form method="POST" action="exams-category-view?id=<?php echo $examCateogryId ?>">
 					<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
 					<div class="row">
 						<div class="col-md-4">	

@@ -1,4 +1,3 @@
-
 <?php
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -148,6 +147,9 @@ return [
                 'update-datesheet' => 'exams-category/update-datesheet',
                 'view-result-cards' => 'exams-category/view-result-cards',
                 'exams-category-view' => 'exams-category/view',
+                'emp-exam-attendance' => 'exams-category/emp-exam-attendance',
+                'exam-cateogry-details' => 'exams-category/exam-cateogry-details',
+                'view-marks-weightage' => 'exams-category/view-marks-weightage',
                 //marks-details
                 'grades' => 'grades/index',
                 'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
@@ -155,6 +157,7 @@ return [
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
+                //'marks-weightage-view' => 'marks-weightage-head/view',
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
                 'employess-att-report' => 'emp-attendance/employess-att-report',
@@ -170,8 +173,12 @@ return [
                 //timeTable
                 'fetch-subjects' => 'time-table-head/fetch-subjects',
 
+                'time-table-view' => 'time-table-head/time-table-view',
+
             ],
         ],
     ],
     'params' => $params,
 ];
+
+

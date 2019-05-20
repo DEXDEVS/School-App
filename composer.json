@@ -26,8 +26,8 @@
         "kartik-v/yii2-export": "*",
         "wbraganca/yii2-dynamicform": "*",
         "kartik-v/yii2-widget-datepicker": "@dev",
-        "kartik-v/yii2-widget-timepicker": "*",
-        "vilochane/yii2-barcode-generator": "dev-master"
+        "vilochane/yii2-barcode-generator": "*",
+        "kartik-v/yii2-widget-timepicker": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -19,19 +19,10 @@ return [
         'attribute'=>'exam_category_id',
         'value'=>'examCategory.category_name',
     ],
+    // 
     // [
     //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'class_id',
-    //     'value'=>'class.class_name',
-    // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'subjects_id',
-    //     'value'=>'subjects.subject_name',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'created_at',
+    //     'attribute'=>'created_at',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

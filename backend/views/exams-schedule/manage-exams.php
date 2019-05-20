@@ -1,3 +1,4 @@
+
 	<!DOCTYPE html>
 	<html>
 	<head>
@@ -53,11 +54,11 @@
 									<option value="">Select Class</option>
 									<?php 
 
-									 $Classes = Yii::$app->db->createCommand("SELECT std_enroll_head_id,std_enroll_head_name FROM std_enrollment_head")->queryAll();					 	
+									 $Classes = Yii::$app->db->createCommand("SELECT class_name,class_name_id FROM std_class_name")->queryAll();					 	
 									 ?>
 									 <?php foreach ($Classes as $key => $value) { ?>
-									 <option value="<?php echo $value['std_enroll_head_id']; ?>">
-									 	<?php echo $value['std_enroll_head_name']; ?>
+									 <option value="<?php echo $value['class_name_id']; ?>">
+									 	<?php echo $value['class_name']; ?>
 									 </option>
 									<?php } ?>
 								</select>
@@ -110,8 +111,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<button style="float: right;" type="submit" name="submit" class="btn btn-success btn-xs">
-								<i class="fa fa-sign-in"></i> Get Subjects</button>
+							<button style="float: right;" type="submit" name="submit" class="btn btn-success btn-xs"></i> Get Subjects</button>
 						</div>
 					</div>
 				</form>
@@ -136,7 +136,7 @@
 			$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
 			FROM  exams_criteria
 			WHERE exam_category_id 		= '$exam_category' AND
-				  std_enroll_head_id 	= '$headId' AND
+				  class_id 				= '$headId' AND
 				  exam_start_date 		= '$exam_start_date' AND
 				  exam_end_date 		= '$exam_end_date' AND
 				  exam_type				= 'Regular'
@@ -145,22 +145,19 @@
 		if (!empty($examCriteriaData)) {
 			Yii::$app->session->setFlash('warning', "Exams Schedule already managed against selected Date range ...!");
 		}else{
-
-		$marks = Yii::$app->db->createCommand("SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category'")->queryAll();
-
+			$marks = Yii::$app->db->createCommand("SELECT mwh.subjects_id,mwd.weightage_type_id,mwd.marks
+			FROM marks_weightage_head as mwh
+			INNER JOIN marks_weightage_details as mwd
+			ON mwh.marks_weightage_id = mwd.weightage_head_id
+			WHERE mwh.exam_category_id = '$exam_category'
+			AND mwh.class_id = '$headId'")->queryAll();
 		if(empty($marks)){
 			Yii::$app->session->setFlash('warning',"Marks waitage for this category is not set.");
 		} else {
-			$subjects = Yii::$app->db->createCommand("SELECT s.section_subjects,h.section_id
-			FROM std_sections as s
-			INNER JOIN std_enrollment_head as h
-			ON s.section_id = h.section_id
-			WHERE h.std_enroll_head_id = '$headId'")->queryAll();
-			$combinationId = $subjects[0]['section_subjects'];
-			$combinations = Yii::$app->db->createCommand("
-				SELECT std_subject_name FROM std_subjects WHERE std_subject_id = '$combinationId'
-					")->queryAll();
-			$subject = $combinations[0]['std_subject_name'];
+			$subjects = Yii::$app->db->createCommand("SELECT std_subject_name
+			FROM std_subjects
+			WHERE class_id = '$headId'")->queryAll();
+			$subject = $subjects[0]['std_subject_name'];
 			$subjectarray = explode(',', $subject);
 			$subjCount = count($subjectarray); ?>
 <div class="container-fluid">
@@ -180,23 +177,32 @@
 					")->queryAll();
 				$subarray[$i] = $subjectId[0]['subject_id'];
 
-				$marks = Yii::$app->db->createCommand("
-				SELECT * FROM marks_weitage WHERE exam_category_id = '$exam_category' AND subject_id = '$subarray[$i]'
-					")->queryAll();
+				$marks = Yii::$app->db->createCommand("SELECT mwd.weightage_type_id,mwd.marks
+					FROM marks_weightage_head as mwh
+					INNER JOIN marks_weightage_details as mwd
+					ON mwh.marks_weightage_id = mwd.weightage_head_id
+					WHERE mwh.exam_category_id = '$exam_category'
+					AND mwh.class_id = '$headId'
+					AND mwh.subjects_id = '$subarray[$i]'")->queryAll();
+				
+				$markcount = count($marks);
+				$totalMarks = 0;
+				foreach($marks as $value){
+					$totalMarks += $value['marks'];
+				}
+				 
 
-					$totalMarks = $marks[0]['presentation']+$marks[0]['assignment']+$marks[0]['attendance']+$marks[0]['dressing']+$marks[0]['theory']+$marks[0]['practical'];
-
-					if ($totalMarks == 100) {
-						$passmarks = 33;
-					}
-					elseif ($totalMarks == 75) {
-						$passmarks = 25;
-					}
-					elseif ($totalMarks == 50) {
-						$passmarks = 17;
-					} else {
-						$passmarks = 0;
-					}
+				if ($totalMarks == 100) {
+					$passmarks = 33;
+				}
+				elseif ($totalMarks == 75) {
+					$passmarks = 25;
+				}
+				elseif ($totalMarks == 50) {
+					$passmarks = 17;
+				} else {
+					$passmarks = 0;
+				}
 
 				?>
 
@@ -211,104 +217,79 @@
 									</h4>
 								</div>
 							</div><br>
-							<div class="row" style="border-bottom:1px solid #ebd6e7; ">
-								<div class="col-md-12">
-									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group" >
-											<label>Date</label>
-											<input type="date" name="date[]" class="form-control" required="">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>Presentation</label>
-											<input type="text" name="presentation[]" class="form-control" value="<?php echo $marks[0]['presentation'];?>" readonly="">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>Assignment</label>
-											<input type="text" name="assignment[]" class="form-control" value="<?php echo $marks[0]['assignment'];?>" readonly="">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>Attendance</label>
-											<input type="text" name="attendance[]" class="form-control" value="<?php echo $marks[0]['attendance'];?>" readonly="">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>Dressing</label>
-											<input type="text" name="dressing[]" class="form-control" value="<?php echo $marks[0]['dressing'];?>" readonly="">
-											</div>
-										</div>
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="form-group" >
+										<label>Date</label>
+										<input type="date" name="date[]" class="form-control" required="">
 									</div>
-									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group">
-											<label>Invagilator</label>
-											<select name="Invagilator[]" class="form-control" required>
+									<div class="form-group">
+										<label>Invagilator</label>
+										<select name="Invagilator[]" class="form-control" required>
 
-												<?php 
+											<?php 
 
-												$teacher = Yii::$app->db->createCommand("
-												SELECT emp_id,emp_name
-												FROM emp_info WHERE group_by ='Faculty'
-												")->queryAll();
-												$countteacher = count($teacher);
-												 ?>
-												<option value="">Select invagilator</option>
-												<?php 
-												for ($j=0; $j <$countteacher ; $j++) { ?>
-												<option value="<?php
-														echo $teacher[$j]['emp_id'];
-												?>">
-												<?php
-														echo $teacher[$j]['emp_name'];
-												?>
-												</option>
-												<?php } ?>
-											</select>
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>Theory</label>
-											<input type="text" name="theory" class="form-control" value="<?php echo $marks[0]['theory'];?>" readonly="">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>Practical</label>
-											<input type="text" name="practical[]" class="form-control" value="<?php echo $marks[0]['practical'];?>" readonly="">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>Full Marks</label>
-											<input type="text" name="fullmarks[]" class="form-control" value="<?php echo $totalMarks;?>" readonly="">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>Passing Marks</label>
-											<input type="text" name="passingmarks[]" class="form-control" value="<?php echo $passmarks; ?>" readonly="">
-											</div>
-										</div>
+											$teacher = Yii::$app->db->createCommand("
+											SELECT emp_id,emp_name
+											FROM emp_info WHERE group_by ='Faculty'
+											")->queryAll();
+											$countteacher = count($teacher);
+											 ?>
+											<option value="">Select invagilator</option>
+											<?php 
+											for ($j=0; $j <$countteacher ; $j++) { ?>
+											<option value="<?php
+													echo $teacher[$j]['emp_id'];
+											?>">
+											<?php
+													echo $teacher[$j]['emp_name'];
+											?>
+											</option>
+											<?php } ?>
+										</select>
 									</div>
 								</div>
-								
+								<div class="col-sm-10">
+									<div class="row">
+										<?php 
+										for ($m=0; $m <$markcount ; $m++) { 
+											$weightageId = $marks[$m]['weightage_type_id'];
+											$weightageName = Yii::$app->db->createCommand("
+											SELECT weightage_type_name
+											FROM marks_weightage_type WHERE weightage_type_id ='$weightageId'
+											")->queryAll();
+											$weightageMarks = $marks[$m]['marks'];
+										 ?>
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label><?php echo $weightageName[0]['weightage_type_name']; ?></label>
+												<input type="text" class="form-control" value="<?php echo $weightageMarks;?>" readonly=""> 
+
+											</div>
+										</div>
+ 									<?php } ?>
+ 									<div class="col-sm-2">
+										<div class="form-group">
+											<label>Total Marks</label>
+											<input type="text" class="form-control" value="<?php echo $totalMarks;?>" readonly="" name="fullmarks[]"> 
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label>Passing Marks</label>
+											<input type="text" class="form-control" value="<?php echo $passmarks;?>" readonly="" name="passingmarks[]"> 
+										</div>
+									</div>
+									</div>
+								</div>
 							</div>
-						
 					</td>
 				</tr>
 			
 
 		<?php
 			//end of for loop
-			} ?>
+			}?>
 	
 
 	<?php 
@@ -346,7 +327,7 @@
 		$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
 			FROM  exams_criteria
 			WHERE exam_category_id 		= '$exam_category' AND
-				  std_enroll_head_id 	= '$headId' AND
+				  class_id 				= '$headId' AND
 				  exam_start_date 		= '$exam_start_date' AND
 				  exam_end_date 		= '$exam_end_date' AND
 				  exam_type				= 'Supply'
@@ -367,7 +348,7 @@
 				INNER JOIN exams_schedule as s
 				ON c.exam_criteria_id = s.exam_criteria_id
 				WHERE c.exam_category_id = $exam_category
-				AND c.std_enroll_head_id = $headId
+				AND c.class_id = $headId
 				AND c.exam_status = 'Result Announced'
 				AND c.exam_type = 'Regular'")->queryAll();
 
@@ -607,7 +588,7 @@
 		$inactive = "Inactive";
 		$examCriteria = Yii::$app->db->createCommand()->insert('exams_criteria',[
             			'exam_category_id' 		=> $exam_category,
-						'std_enroll_head_id' 	=> $headId ,
+						'class_id' 	=> $headId ,
 						'exam_start_date' 		=> $exam_start_date,
 						'exam_end_date'			=> $exam_end_date ,
 						'exam_start_time'		=> $exam_start_time,
@@ -622,7 +603,7 @@
 			$examCriteriaId = Yii::$app->db->createCommand("SELECT exam_criteria_id
 			FROM  exams_criteria
 			WHERE exam_category_id 		= '$exam_category' AND
-				  std_enroll_head_id 	= '$headId' AND
+				  class_id 				= '$headId' AND
 				  exam_start_date 		= '$exam_start_date' AND
 				  exam_end_date 		= '$exam_end_date' AND
 				  exam_start_time 		= '$exam_start_time' AND
@@ -638,7 +619,7 @@
             			'exam_criteria_id' 	=> $criteriaId,
 						'subject_id' 		=> $subarray[$i],
 						'emp_id' 			=> $Invagilator[$i],
-						'date'				=> $date[$i] ,
+						'date'				=> $date[$i],
 						'full_marks'		=> $fullmarks[$i],
 						'passing_marks'		=> $passingmarks[$i],
 						'status'			=> "not",
