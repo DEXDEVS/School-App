@@ -152,7 +152,7 @@ class EmpAttendanceController extends Controller
                             $model->branch_id = $branch_id;
                             $model->emp_id = $empId;
                             $model->att_date = $date;
-                            $model->check_in = Yii::$app->formatter->asDatetime('now', 'H:i:s');
+                            $model->check_in = new \yii\db\Expression('NOW()');
                             $model->attendance = "P";
                             $model->created_by = Yii::$app->user->identity->id; 
                             $model->created_at = new \yii\db\Expression('NOW()');
@@ -168,7 +168,7 @@ class EmpAttendanceController extends Controller
                             Yii::$app->session->setFlash('warning',"You are not checked in yet..!");
                         } else {
                             $att = Yii::$app->db->createCommand()->update('emp_attendance', [
-                                'check_out'=> Yii::$app->formatter->asDatetime('now', 'H:i:s'),
+                                'check_out'=> new \yii\db\Expression('NOW()'),
                                 'updated_at'    => new \yii\db\Expression('NOW()'),
                                 'updated_by'    => Yii::$app->user->identity->id,
                                 ],

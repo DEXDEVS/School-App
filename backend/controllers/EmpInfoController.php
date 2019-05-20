@@ -223,6 +223,7 @@ class EmpInfoController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'empRefModel' => $empRefModel,
                 ]);
             }
         }

@@ -319,7 +319,7 @@ class SmsController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch); //This is the result from SMS4CONNECT
         curl_close($ch);
-        Yii::$app->session->setFlash('success', .$result);     
+        Yii::$app->session->setFlash('success', $result);     
     }
 
 }

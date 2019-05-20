@@ -238,4 +238,13 @@ return array (
       '@kartik/time' => $vendorDir . '/kartik-v/yii2-widget-timepicker/src',
     ),
   ),
+  'vilochane/yii2-barcode-generator' => 
+  array (
+    'name' => 'vilochane/yii2-barcode-generator',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@barcode/barcode' => $vendorDir . '/vilochane/yii2-barcode-generator',
+    ),
+  ),
 );
