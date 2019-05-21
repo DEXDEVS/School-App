@@ -59,7 +59,7 @@ use common\models\Branches;
 ?>
 <div class="emp-info-form">
 
-    <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
+    <?php $form = ActiveForm::begin(); ?>
     <h3 style="color: #337AB7; margin-top: -10px"> Employee Info <small> ( Fields with <span style="color: red;">red stars </span>are required )</small> </h3>
     <div class="row">
         <div class="col-md-4">
@@ -284,13 +284,6 @@ use common\models\Branches;
 
 <?php
 $script = <<< JS
-
-$('form#{$model->formName()}').on('beforeSubmit',function(e){
-    // var canvas = document.getElementById("canvasTarget");
-    // var dataURL = canvas.toDataURL("image/png");
-    // var d = document.getElementById('barcode_ID').value = dataURL;
-    alert("ERTYUIO");   
-}); 
 
 $('#reference').on('change',function(){
         
