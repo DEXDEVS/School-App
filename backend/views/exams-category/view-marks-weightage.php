@@ -33,15 +33,23 @@
 				AND mwh.class_id = '$class_ID'")->queryAll();
 				$countSubjects = count($subjects);
 		?>
-		<div class="col-md-6">
-			<div class="panel panel-default">
-				<div class="panel-heading" style="background-color:#001F3F;color:white;">
-					<h4><?php echo $className[0]['class_name']; ?></h4>
-				</div>
-				<div class="panel-body">
-
-
-					<div class="table-responsive">
+		<div class="col-md-4">
+			<div class="box box-default collapsed-box" style=" border-left:2px solid;">
+                    <div class="box-header" style="background-color:#3d6ea0;padding: 15px;">
+                        <h3 class="box-title">
+                            <b style="color:white;">
+                            <?php echo $className[0]['class_name']; ?>
+                            </b>
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">  <br><i class="fa fa-plus" style="font-size:15px;color:white;"></i>
+                            </button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+						<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
 								<?php 
@@ -86,8 +94,10 @@
 							</thead>
 						</table>
 					</div>
-				</div>
-			</div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+              <!-- /.box -->
 		</div>
 		<?php } ?>
 	</div>

@@ -6,7 +6,7 @@
 		$classID 	= $_GET['classID'];
 		$examType 	= $_GET['examType'];
 
-		$examStatus = Yii::$app->db->createCommand("SELECT exam_status FROM exams_criteria WHERE exam_category_id = '$examCatID' AND std_enroll_head_id = '$classID' AND exam_status = 'Result Prepared' OR exam_status = 'Result Announced' AND exam_type = '$examType' ")->queryAll();
+		$examStatus = Yii::$app->db->createCommand("SELECT exam_status FROM exams_criteria WHERE exam_category_id = '$examCatID' AND class_id = '$classID' AND exam_status = 'Result Prepared' OR exam_status = 'Result Announced' AND exam_type = '$examType' ")->queryAll();
 		if (empty($examStatus)) {
 			Yii::$app->session->setFlash('warning',"Result card not prepared yet..!");
 		} 
@@ -20,7 +20,7 @@
 			FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
-			WHERE c.std_enroll_head_id = '$classID'
+			WHERE c.class_id = '$classID'
 			AND c.exam_category_id = '$examCatID'
 			AND c.exam_status = 'Result Prepared'
 			 OR c.exam_status = 'Result Announced' 
@@ -48,7 +48,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<a href="./view?id=<?php echo $examCatID ;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+			<a href="./exam-lists?id=<?php echo $examCatID ;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
 		</div>
 	</div><br>
 	<div class="row">

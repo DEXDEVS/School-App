@@ -181,7 +181,7 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="">
 					<div class="offer offer-radius offer-success">
 						<div class="shape">
 							<div class="shape-text">
@@ -196,40 +196,7 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-					<div class="offer offer-radius offer-primary">
-						<div class="shape">
-							<div class="shape-text">
-								<span class="glyphicon  glyphicon-user"></span>							
-							</div>
-						</div>
-						<div class="offer-content">
-							<h3 class="lead">
-								Assignment
-							</h3>
-							<a href="">View assignment</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-					<div class="offer offer-radius offer-info">
-						<div class="shape">
-							<div class="shape-text">
-								<span class="glyphicon  glyphicon-bell"></span>							
-							</div>
-						</div>
-						<div class="offer-content">
-							<h3 class="lead">
-								Quiz
-							</h3>
-							<a href="">View Quiz</a>
-						</div>
-					</div>
-				</div>
-	        </div>
-	        <!-- row 2 start -->
-	        <div class="row">
-		    	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
+				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
 					<div class="offer offer-radius offer-warning">
 						<div class="shape">
 							<div class="shape-text">
@@ -259,8 +226,11 @@ transition: all 0.4s ease-in-out;
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-					<div class="offer offer-radius offer-seagreen">
+	        </div>
+	        <!-- row 2 start -->
+	        <div class="row">
+	        	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+					<div class="offer offer-radius offer-primary">
 						<div class="shape">
 							<div class="shape-text">
 								<span class="glyphicon  glyphicon-user"></span>							
@@ -275,10 +245,10 @@ transition: all 0.4s ease-in-out;
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-					<div class="offer offer-radius offer-brown">
+					<div class="offer offer-radius offer-info">
 						<div class="shape">
 							<div class="shape-text">
-								<span class="glyphicon  glyphicon-home"></span>							
+								<span class="glyphicon  glyphicon-bell"></span>							
 							</div>
 						</div>
 						<div class="offer-content">
@@ -310,6 +280,7 @@ if(isset($_POST['saveMarks'])){
 	$classHeadId 	= $_POST['classHeadId'];
 	$subjectId 		= $_POST['subId'];
 	$stdId 			= $_POST['stdId'];
+	$classNameId	= $_POST['classNameId'];
 
 	for($i=0; $i<$countStudents;$i++){
 		$q=$i+1;
@@ -326,15 +297,16 @@ if(isset($_POST['saveMarks'])){
 	try{
 		for ($j=0; $j < $countStudents; $j++) { 
 			$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
-					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_id = '$stdId[$j]'")->queryAll();
+					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_enroll_head_id = '$classHeadId' AND std_id = '$stdId[$j]'")->queryAll();
 
 			if(empty($marksHeadId)){
 			$marksHead = Yii::$app->db->createCommand()->insert('marks_head',[
-	            			'exam_criteria_id' 		=> $examCriteriaId,
-							'std_id' 				=> $stdId[$j],
-							'created_at'		    => new \yii\db\Expression('NOW()'),
-							'created_by'			=> Yii::$app->user->identity->id, 
-						])->execute();
+    			'exam_criteria_id' 		=> $examCriteriaId,
+    			'std_enroll_head_id'	=> $classHeadId,
+				'std_id' 				=> $stdId[$j],
+				'created_at'		    => new \yii\db\Expression('NOW()'),
+				'created_by'			=> Yii::$app->user->identity->id, 
+			])->execute();
 				if($marksHead){
 					$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
 					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_id = '$stdId[$j]'")->queryAll();
@@ -362,7 +334,7 @@ if(isset($_POST['saveMarks'])){
 				$examScheduleId = Yii::$app->db->createCommand("SELECT s.exam_schedule_id FROM exams_schedule as s
 				INNER JOIN exams_criteria as c 
 				ON s.exam_criteria_id = c.exam_criteria_id
-				WHERE c.std_enroll_head_id = '$classHeadId'
+				WHERE c.class_id = '$classNameId'
 				AND c.exam_category_id = '$categoryId'
 				AND s.subject_id = '$subjectId'
 				AND c.exam_status = 'conducted'

@@ -23,8 +23,8 @@
             	INNER JOIN teacher_subject_assign_head as h
             	ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
             $countClassIds = count($classId);
-            echo $countClassIds;
-            $Invagilation = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.exam_room,c.std_enroll_head_id,c.exam_start_time,c.exam_end_time,s.date
+            
+            $Invagilation = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.exam_room,c.class_id,s.exam_start_time,s.exam_end_time,s.date
                 FROM exams_criteria as c
                 INNER JOIN exams_schedule as s
                 ON c.exam_criteria_id = s.exam_criteria_id
@@ -48,9 +48,9 @@
 					$catIDD = $Invagilation[$i]['exam_category_id'];
 					$catName = Yii::$app->db->createCommand("SELECT category_name
              		FROM exams_category WHERE exam_category_id = '$catIDD' ")->queryAll();
-             		$classIDD = $Invagilation[$i]['std_enroll_head_id'];
-             		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name
-             		FROM std_enrollment_head WHERE std_enroll_head_id = '$classIDD' ")->queryAll();
+             		$classIDD = $Invagilation[$i]['class_id'];
+             		$className = Yii::$app->db->createCommand("SELECT class_name
+             		FROM std_class_name WHERE class_name_id = '$classIDD' ")->queryAll();
 
 				 ?>
 				<table class="table table-hover">
@@ -59,7 +59,7 @@
 					</tr>
 					<tr style="background-color: #D0F0C0;">
 						<th>Class</th>
-						<td><?php echo $className[0]['std_enroll_head_name']; ?></td>
+						<td><?php echo $className[0]['class_name']; ?></td>
 					</tr>
 					<tr>
 						<th>Date</th>
@@ -127,21 +127,24 @@
 				<?php 
 
 				for ($i=0; $i <$countClassIds ; $i++) {
-            $id = $classId[$i]['class_id'];
-            echo $id;
+            $headId = $classId[$i]['class_id'];
+            
             $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name
                 FROM std_enrollment_head as seh
                 INNER JOIN teacher_subject_assign_detail as tsad
-                ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
+                ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$headId' AND seh.branch_id = '$branch_id' ")->queryAll();
             $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
             FROM teacher_subject_assign_detail as tsad
-            WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$teacherHeadId'")->queryAll();
-            print_r($subjectsIDs);
-             $dateSheetCheck = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.exam_room,s.date
+            WHERE tsad.class_id = '$headId' AND tsad.teacher_subject_assign_detail_head_id = '$teacherHeadId'")->queryAll();
+            $ClassNameID = Yii::$app->db->createCommand("SELECT class_name_id
+            FROM std_enrollment_head
+            WHERE std_enroll_head_id = '$headId'")->queryAll();
+            $classNameId = $ClassNameID[0]['class_name_id'];
+            $dateSheetCheck = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.exam_room,s.date
                 FROM exams_criteria as c
                 INNER JOIN exams_schedule as s
                 ON c.exam_criteria_id = s.exam_criteria_id
-                WHERE c.exam_status = 'announced' AND c.std_enroll_head_id = '$id' ")->queryAll();
+                WHERE c.exam_status = 'announced' AND c.class_id = '$classNameId' ")->queryAll();
              if (!empty($dateSheetCheck)) {
              	$catId = $dateSheetCheck[0]['exam_category_id'];
              	$catName = Yii::$app->db->createCommand("SELECT category_name
@@ -160,7 +163,7 @@
 						<tr style="background-color: #D0F0C0;">
 							<th>Date</th>
 							<th>Day</th>
-							<th>subject</th>
+							<th>Subject</th>
 							<th>Room</th>
 						</tr>
 					</thead>
@@ -173,7 +176,8 @@
 			                FROM exams_criteria as c
 			                INNER JOIN exams_schedule as s
 			                ON c.exam_criteria_id = s.exam_criteria_id
-			                WHERE c.exam_status = 'announced' AND c.std_enroll_head_id = '$id' AND s.subject_id = '$subID' ")->queryAll();
+			                WHERE c.exam_status = 'announced' AND c.class_id = '$classNameId' AND s.subject_id = '$subID' ")->queryAll();
+						 
 						 ?>
 						<tr>
 							<td>
@@ -211,8 +215,6 @@
 		</div>
 	</div>
 </div>
-
-
 </div>
 <?php } ?>
 </body>
