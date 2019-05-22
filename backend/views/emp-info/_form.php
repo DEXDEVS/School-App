@@ -52,6 +52,7 @@ use common\models\Branches;
     </style>
 </head>
 <body>
+
 <?php 
     $EmpInfo = EmpInfo::find()->orderBy(['emp_id'=> SORT_DESC])->one();
     $id = $EmpInfo['emp_id']+1;
@@ -59,7 +60,7 @@ use common\models\Branches;
 ?>
 <div class="emp-info-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
     <h3 style="color: #337AB7; margin-top: -10px"> Employee Info <small> ( Fields with <span style="color: red;">red stars </span>are required )</small> </h3>
     <div class="row">
         <div class="col-md-4">
@@ -78,7 +79,7 @@ use common\models\Branches;
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 6px"></i>
-            <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'empCnic', 'onchange'=> 'generateBarcode();'],  'mask' => '99999-9999999-9']) ?>
+            <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'empCnic', 'onchange' => 'generateBarcode();'],  'mask' => '99999-9999999-9']) ?>
         </div>
     </div>    
     <div class="row">
@@ -94,13 +95,12 @@ use common\models\Branches;
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 72px; top: 6px"></i>
             <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => 'Select Gender']) ?>
         </div>
-    </div>
+    </div> 
     <div class="col-md-12">
-                <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
-                <div id="barcodeTarget" class="barcodeTarget"></div>
-                <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
-                
-            </div> 
+        <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
+        <div id="barcodeTarget" class="barcodeTarget"></div>
+        <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
+    </div>
     <div class="row">        
         <div class="col-md-4">
             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 56px; top: 6px"></i> -->
@@ -218,12 +218,12 @@ use common\models\Branches;
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="jquery-barcode.js"></script>
 <script type="text/javascript">
-   
+    
     function generateBarcode(){
         var value = $("#empCnic").val();
         var btype = 'codabar';
         var renderer = "canvas";
-        
+
         var settings = {
           output:renderer,
           bgColor:'#FFFFFF',
@@ -279,11 +279,17 @@ use common\models\Branches;
         });
         generateBarcode();
       });
-      
-</script>
 
+</script>
 <?php
 $script = <<< JS
+
+$('form#{$model->formName()}').on('beforeSubmit',function(e){
+    var canvas = document.getElementById("canvasTarget");
+    var dataURL = canvas.toDataURL("image/png");
+    var d = document.getElementById('barcode_ID').value = dataURL;   
+    
+}); 
 
 $('#reference').on('change',function(){
         
