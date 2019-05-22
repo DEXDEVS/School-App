@@ -147,6 +147,8 @@ class StdPersonalInfoController extends Controller
             }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post()) && $stdFeeInstallments->load($request->post())){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
+                        var_dump($model->barcode);
+                        die();
                         $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                         if(!empty($model->std_photo)){
                             $imageName = $model->std_name.'_photo'; 

@@ -96,6 +96,7 @@ return [
                 'std-fee-details-update' => 'std-fee-details/update',
                 //emp-info
                 'emp-info' => 'emp-info/index',
+                'emp-info-create' => 'emp-info/create',
                 'emp-info-view' => 'emp-info/view',
                 'emp-info-update' => 'emp-info/update',
                 'emp-reference-update' => 'emp-reference/update',
