@@ -32,7 +32,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<a href="./exams-category-view?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
+				<a href="./exam-lists?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
 			</div>
 			</div><br>
 		<div class="box box-primary">
@@ -40,7 +40,7 @@
 				<h3 style="box-shadow:1px 1px 1px 1px;">Exams Criteria</h3>
 			</div>
 			<div class="box-body">
-				<form method="POST" action="exams-category-view?id=<?php echo $examCateogryId ?>">
+				<form method="POST" action="exam-lists?id=<?php echo $examCateogryId ?>">
 					<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
 					<div class="row">
 						<div class="col-md-4">	
@@ -85,20 +85,6 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Exam Start Time</label>
-								<input type="time" name="exam_start_time" class="form-control" value="<?php echo $examCriteriaData[0]['exam_start_time'];?>">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>Exam End Time</label>
-								<input type="time" name="exam_end_time" class="form-control" value="<?php echo $examCriteriaData[0]['exam_end_time'];?>">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group">
 								<label>Room</label>
 								<input type="text" name="room" class="form-control" value="<?php echo $examCriteriaData[0]['exam_room'];?>">
 							</div>
@@ -122,6 +108,8 @@
 								</select>
 							</div>
 						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Exam Type</label>
@@ -157,13 +145,11 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="row">
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<div class="form-group">
-											<label>Date</label>
-											<input type="date" name="date[]" class="form-control" value="<?php echo $examScheduleData[$i]['date']; ?>">
+												<label>Date</label>
+												<input type="date" name="date[]" class="form-control" value="<?php echo $examScheduleData[$i]['date']; ?>">
 											</div>
-										</div>
-										<div class="col-md-4">
 											<div class="form-group">
 											<label>Invagilator</label>
 											<select name="Invagilator[]" class="form-control">
@@ -195,6 +181,19 @@
 												<?php } ?>
 											</select>
 											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label>Exam Start Time</label>
+												<input type="time" name="exam_start_time[]" class="form-control" value="<?php echo $examScheduleData[$i]['exam_start_time']; ?>">
+											</div>
+											<div class="form-group">
+												<label>Exam End Time</label>
+												<input type="time" name="exam_end_time[]" class="form-control" value="<?php echo $examScheduleData[$i]['exam_end_time']; ?>">
+											</div>
+										</div>
+										<div class="col-md-6">
+											
 										</div>
 									</div>
 								</div>

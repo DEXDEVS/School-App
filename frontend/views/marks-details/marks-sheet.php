@@ -7,11 +7,16 @@ if(isset($_GET['class_id']))
 	$subID = $_GET['sub_id'];
 	$empID = $_GET['emp_id'];
 
+	$ClassNameID = Yii::$app->db->createCommand("SELECT std_enroll_head_name, class_name_id
+            FROM std_enrollment_head
+            WHERE std_enroll_head_id = '$classID'")->queryAll();
+    $classNameId = $ClassNameID[0]['class_name_id'];
+
 	$examDataCond = Yii::$app->db->createCommand("SELECT c.exam_criteria_id,c.exam_category_id,s.full_marks,s.passing_marks,c.exam_type
 	FROM exams_criteria as c
 	INNER JOIN exams_schedule as s 
 	ON c.exam_criteria_id = s.exam_criteria_id
-	WHERE c.std_enroll_head_id = '$classID'  
+	WHERE c.class_id = '$classNameId'  
 	AND c.exam_status = 'conducted' 
 	AND c.exam_type = 'Regular'
 	OR c.exam_type = 'Supply'
@@ -26,7 +31,7 @@ if(isset($_GET['class_id']))
 		FROM exams_criteria as c
 		INNER JOIN exams_schedule as s 
 		ON c.exam_criteria_id = s.exam_criteria_id
-		WHERE c.std_enroll_head_id = '$classID'
+		WHERE c.class_id = '$classNameId'
 		AND c.exam_criteria_id = '$examCriteriaId'
 		AND s.subject_id = '$subID' 
 		AND s.status = 'result prepared'
@@ -39,9 +44,9 @@ if(isset($_GET['class_id']))
 		FROM exams_category
 		WHERE exam_category_id = '$examCatId' 
 					")->queryAll();
-		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name
-		FROM std_enrollment_head
-		WHERE std_enroll_head_id = '$classID' 
+		$className = Yii::$app->db->createCommand("SELECT class_name
+		FROM std_class_name
+		WHERE class_name_id = '$classNameId' 
 					")->queryAll();
 		$subjectName = Yii::$app->db->createCommand("SELECT subject_name
 		FROM subjects
@@ -51,9 +56,11 @@ if(isset($_GET['class_id']))
 		FROM emp_info
 		WHERE emp_id = '$empID' 
 					")->queryAll();
-		$students = Yii::$app->db->createCommand("SELECT std_roll_no, std_enroll_detail_std_id, std_enroll_detail_std_name
-		FROM std_enrollment_detail
-		WHERE std_enroll_detail_head_id = '$classID'")->queryAll();
+		$students = Yii::$app->db->createCommand("SELECT d.std_roll_no, d.std_enroll_detail_std_id, d.std_enroll_detail_std_name
+		FROM std_enrollment_detail as d 
+		INNER JOIN std_enrollment_head as h 
+		ON h.std_enroll_head_id = d.std_enroll_detail_head_id
+		WHERE h.class_name_id = '$classNameId'")->queryAll();
 		$countStudents = count($students);
 
  ?>
@@ -85,7 +92,7 @@ if(isset($_GET['class_id']))
 									<tr>
 										<b>Class Name</b>
 										<center>
-											<?php echo $className[0]['std_enroll_head_name']; ?>
+											<?php echo $ClassNameID[0]['std_enroll_head_name']; ?>
 										</center>
 									</tr>
 							</table>
@@ -158,7 +165,7 @@ if(isset($_GET['class_id']))
 				             <input class="form-control" type="hidden" name="examCriteriaId" value="<?php echo $examCriteriaId; ?>">
 				             <input class="form-control" type="hidden" name="classHeadId" value="<?php echo $classID; ?>">
 				             <input class="form-control" type="hidden" name="subId" value="<?php echo $subID; ?>">
-				             <input class="form-control" type="hidden" name="subId" value="<?php echo $subID; ?>">
+				             <input class="form-control" type="hidden" name="classNameId" value="<?php echo $classNameId; ?>">
 
 							<button style="float: right;s" type="submit" name="saveMarks" class="btn btn-success btn-flat btn-xs" onclick="return confirm('are you sure')">
 									<i class="fa fa-sign-in"></i> <b>Submit Marks</b>
