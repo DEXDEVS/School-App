@@ -116,15 +116,13 @@
 
 		$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
 		FROM  exams_criteria
-		WHERE exam_category_id 		= '$exam_category' AND
-			  class_id 				= '$headId' AND
+		WHERE class_id 				= '$headId' AND
 			  exam_start_date 		= '$exam_start_date' AND
-			  exam_end_date 		= '$exam_end_date' AND
-			  exam_type				= 'Regular'
+			  exam_end_date 		= '$exam_end_date'
 		")->queryAll();
 
 	if (!empty($examCriteriaData)) {
-		Yii::$app->session->setFlash('warning', "Exams Schedule already managed against selected Date range ...!");
+		Yii::$app->session->setFlash('warning', "Exams Schedule already managed against selected class in selected date range ...!");
 	}else{
 		$marks = Yii::$app->db->createCommand("SELECT mwh.subjects_id,mwd.weightage_type_id,mwd.marks
 		FROM marks_weightage_head as mwh
@@ -173,13 +171,13 @@
 				}
 				 
 
-				if ($totalMarks == 100) {
+				if ($totalMarks <= 100) {
 					$passmarks = 33;
 				}
-				elseif ($totalMarks == 75) {
+				elseif ($totalMarks <= 75) {
 					$passmarks = 25;
 				}
-				elseif ($totalMarks == 50) {
+				elseif ($totalMarks <= 50) {
 					$passmarks = 17;
 				} else {
 					$passmarks = 0;

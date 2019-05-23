@@ -14,8 +14,8 @@
 	$examScheduleData = Yii::$app->db->createCommand("SELECT * FROM exams_schedule WHERE exam_criteria_id = '$criteriaId'
 					")->queryAll();
 	$count = count($examScheduleData);
-	// getting classes name `std_enroll_head_name` from `std_enrollment_head` against `std_enroll_head_id`
-	$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classId'
+	// getting classes name `class_name` from `std_class_name` against `class_name_id`
+	$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'
 					")->queryAll();
 	
 	// getting exam `category_name` from `exams_cateogry`
@@ -66,7 +66,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Class Name</label>
-								<input class="form-control" type="text" name="classId" value="<?php echo $className[0]['std_enroll_head_name']; ?>" readonly="">
+								<input class="form-control" type="text" name="classId" value="<?php echo $className[0]['class_name']; ?>" readonly="">
 							</div>
 						</div>
 						<div class="col-md-4">

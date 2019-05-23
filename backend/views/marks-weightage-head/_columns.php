@@ -19,6 +19,16 @@ return [
         'attribute'=>'exam_category_id',
         'value'=>'examCategory.category_name',
     ],
+     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'class_id',
+        'value'=>'class.class_name',
+    ],
+     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'exam_category_id',
+        'value'=>'subjects.subject_name',
+    ],
     // 
     // [
     //     'class'=>'\kartik\grid\DataColumn',

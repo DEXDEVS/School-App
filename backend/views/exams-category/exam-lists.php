@@ -3,38 +3,35 @@
 	// getting `exam_category_id` from `exams_criteria`
 	$examCateogryId = $_GET['id'];
 
-	$inactiveSchedules = Yii::$app->db->createCommand("
-				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'inactive'
+	$inactiveSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'inactive'
 					")->queryAll();
 	$countinactiveSchedules = count($inactiveSchedules);
-	$announcedSchedules = Yii::$app->db->createCommand("
-				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'announced'
+
+	$announcedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'announced'
 					")->queryAll();
 	$countannouncedSchedules = count($announcedSchedules);
-	$conductedSchedules = Yii::$app->db->createCommand("
-				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'conducted'
+
+	$conductedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'conducted'
 					")->queryAll();
 	$countconductedSchedules = count($conductedSchedules);
-	$ResultPrepareSchedules = Yii::$app->db->createCommand("
-				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared'
+
+	$ResultPrepareSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared'
 					")->queryAll();
 	$countResultPrepareSchedules = count($ResultPrepareSchedules);
-	$ResultAnnouncedSchedules = Yii::$app->db->createCommand("
-				SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced'
+
+	$ResultAnnouncedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced'
 					")->queryAll();
 	$countResultAnnouncedSchedules = count($ResultAnnouncedSchedules);
+
 	// getting exam `category_name` from `exams_cateogry`
-	$examCategoryName = Yii::$app->db->createCommand("
-				SELECT category_name FROM exams_category WHERE exam_category_id = '$examCateogryId'
+	$examCategoryName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCateogryId'
 					")->queryAll();
 	// getting class IDs `class_id` from `exams_criteria` against `exam_category_id`
-	$classIds = Yii::$app->db->createCommand("
-				SELECT DISTINCT (class_id) FROM exams_criteria WHERE exam_category_id = '$examCateogryId'
+	$classIds = Yii::$app->db->createCommand("SELECT DISTINCT (class_id) FROM exams_criteria WHERE exam_category_id = '$examCateogryId'
 					")->queryAll();
 
 	$countClassIds = count($classIds);
-	$examCriteria = Yii::$app->db->createCommand("
-				SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId'
+	$examCriteria = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId'
 					")->queryAll();
  ?>
 <!DOCTYPE html>
@@ -139,8 +136,7 @@
 				                          		//getting class names
 				                          		$classId = $inactiveSchedules[$i]['class_id'];
 				                          		$examType = $inactiveSchedules[$i]['exam_type'];
-				                          		$className = Yii::$app->db->createCommand("
-												SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'
+				                          		$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'
 													")->queryAll();
 				                          	?>
 				                          	<tr>
@@ -215,7 +211,7 @@
 				                          		<td>
 				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 
-													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>""><i class="fa fa-edit"></i> 
+													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
 															Update Date Sheet
 															</a>
 				                          		</td>
@@ -304,7 +300,7 @@
 				                          	  	<?php
 				                          	  }else{
 				                      	 ?>
-				                      	 <form method="POST">
+				                      	<form method="POST">
 				                        <table class="table table-striped table-hover table-responsive">
 					                        <thead>
 					                            <tr>

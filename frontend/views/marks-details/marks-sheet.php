@@ -22,6 +22,7 @@ if(isset($_GET['class_id']))
 	OR c.exam_type = 'Supply'
 	AND s.subject_id = '$subID'
 				")->queryAll();
+	print_r($examDataCond);
 	if (empty($examDataCond)){
 		Yii::$app->session->setFlash('warning', "No Exam Found.!");
 	} else {
@@ -44,10 +45,7 @@ if(isset($_GET['class_id']))
 		FROM exams_category
 		WHERE exam_category_id = '$examCatId' 
 					")->queryAll();
-		$className = Yii::$app->db->createCommand("SELECT class_name
-		FROM std_class_name
-		WHERE class_name_id = '$classNameId' 
-					")->queryAll();
+		
 		$subjectName = Yii::$app->db->createCommand("SELECT subject_name
 		FROM subjects
 		WHERE subject_id = '$subID' 
@@ -60,7 +58,7 @@ if(isset($_GET['class_id']))
 		FROM std_enrollment_detail as d 
 		INNER JOIN std_enrollment_head as h 
 		ON h.std_enroll_head_id = d.std_enroll_detail_head_id
-		WHERE h.class_name_id = '$classNameId'")->queryAll();
+		WHERE h.std_enroll_head_id = '$classID'")->queryAll();
 		$countStudents = count($students);
 
  ?>

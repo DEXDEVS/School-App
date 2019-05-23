@@ -158,6 +158,7 @@ return [
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
+                'marks-weightage-head' => 'marks-weightage-head/index',
                 //'marks-weightage-view' => 'marks-weightage-head/view',
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
