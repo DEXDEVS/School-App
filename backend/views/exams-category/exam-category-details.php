@@ -12,6 +12,11 @@
 </head>
 <body>
 <div class="container-fluid">
+	<!-- back button start -->
+	 <ol class="breadcrumb">
+      <li><a href="exams-category"><i class=""></i> Back</a></li>
+    </ol>
+	<!-- back button close -->
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			<div class="box box-default">

@@ -20,33 +20,37 @@
 
  ?>
 <div class="container-fluid">
-	<div class="row">
+	<!-- back button start -->
+	 <ol class="breadcrumb">
+      <li><a class="btn btn-primary btn-xs" href="./exam-lists?id=<?php echo $examCateogryId;?>"><i class="fa fa-backward"></i> Back</a></li>
+      <li style="float:right;">
+      	<button onclick="printContent('datesheet')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-print"></i> Print</button>
+      </li>
+    </ol>
+	<!-- back button close -->
+	<div class="row" id="datesheet">
 		<div class="col-md-12">
-			<a href="./exam-lists?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
-		</div>
-	</div><br>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel panel-primary">
+			<div class="panel panel-primary" style="border:1px solid;">
 				
 				<div class="panel-body">
-					<div class="row">
+					<div class="row container-fluid">
 						<div class="col-md-3">
 							<center>
 								<img src="uploads/abc.png" height="140px" width="130px">
 							</center>
 						</div>
-						<div class="col-md-9">
-							<h2 style="text-align: center;font-family: georgia;box-shadow: 1px 1px 1px 1px;">
+						<div class="col-md-9 well well-sm" style="text-align: center;font-family: georgia;">
+							<h2>
 							<?php echo $examCategoryName[0]['category_name']; ?> (<?php echo date('Y'); ?>)
-							</h2>
 							<br>
-							<p style="text-align: center;font-weight: bold;font-size: 20px;">Date Sheet</p><br>
+							<br>
+							<p style="font-size:20px;">Date Sheet</p>
+							</h2>
 						</div>
 					</div><hr>
-					<div class="row">
-						<div class="col-md-4" style="border-right:1px solid;text-align: center;">
-							<table class="table">
+					<div class="row	">
+						<div class="col-md-4" style="text-align: center;">
+							<table class="table table-hover table-responsive">
 									<tr>
 										<b>Exam Date</b><br>
 										<center>
@@ -60,7 +64,7 @@
 									</tr>
 							</table>
 						</div>
-						<div class="col-md-4" style="border-right:1px solid;text-align: center;">
+						<div class="col-md-4" style="border-left:1px solid; text-align: center;">
 							<table class="table">
 									<tr>
 										<b>Exam Room</b><br>
@@ -70,7 +74,7 @@
 									</tr>
 							</table>
 						</div>
-						<div class="col-md-4" style="text-align: center;">
+						<div class="col-md-4" style="border-left:1px solid;text-align: center;">
 							<table class="table">
 									<tr>
 										<b>Class Name</b>
@@ -148,7 +152,7 @@
 						</div>
 					</div> <hr>
 					 <?php }?>
-					<div class="row" style="text-align:center;margin-top:70px;">
+					<div class="row" style="padding-bottom:20px; text-align:center;margin-top:70px;">
 						<div class="col-md-6">
 							<h3>Examination Controller</h3><br>
 							___________________________	
@@ -163,3 +167,12 @@
 		</div>
 	</div>
 </div>
+<script>
+function printContent(el){
+	var restorepage = document.body.innerHTML;
+	var printcontent = document.getElementById(el).innerHTML;
+	document.body.innerHTML = printcontent;
+	window.print();
+	document.body.innerHTML = restorepage;
+}
+</script>
