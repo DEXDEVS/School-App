@@ -310,6 +310,7 @@
 		}
 		//closing of else for exam schedule date
 	} //closing of if(reguler)
+	
 	if($exam_type == "Supply"){
 		$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
 			FROM  exams_criteria
@@ -574,16 +575,16 @@
 	try{
 		$inactive = "Inactive";
 		$examCriteria = Yii::$app->db->createCommand()->insert('exams_criteria',[
-            			'exam_category_id' 		=> $exam_category,
-						'class_id' 				=> $headId ,
-						'exam_start_date' 		=> $exam_start_date,
-						'exam_end_date'			=> $exam_end_date ,
-						'exam_room' 			=> $room ,
-						'exam_status'			=> $inactive,
-						'exam_type'				=> $exam_type,
-						'created_at'			=> new \yii\db\Expression('NOW()'),
-						'created_by'			=> Yii::$app->user->identity->id, 
-					])->execute();
+    			'exam_category_id' 		=> $exam_category,
+				'class_id' 				=> $headId ,
+				'exam_start_date' 		=> $exam_start_date,
+				'exam_end_date'			=> $exam_end_date ,
+				'exam_room' 			=> $room ,
+				'exam_status'			=> $inactive,
+				'exam_type'				=> $exam_type,
+				'created_at'			=> new \yii\db\Expression('NOW()'),
+				'created_by'			=> Yii::$app->user->identity->id, 
+			])->execute();
 		if ($examCriteria) {
 			$examCriteriaId = Yii::$app->db->createCommand("SELECT exam_criteria_id
 			FROM  exams_criteria
@@ -629,6 +630,7 @@
 </body>
 </html>
 
+
 <script type="text/javascript">
 	function getSections(){
 		var classId = $("#class_id").val();
@@ -671,3 +673,4 @@
 
 
 </script>
+

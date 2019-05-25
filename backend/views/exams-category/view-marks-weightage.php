@@ -16,7 +16,7 @@
 <div class="container-fluid">
 	<!-- back button start -->
 	 <ol class="breadcrumb">
-      <li style="float:right;"><a href="exams-category-view?id=<?php echo $examCateogryId; ?>"><i class=""></i> Back</a></li><br>
+      <li><a href="exams-category-view?id=<?php echo $examCateogryId; ?>"><i class=""></i> Back</a></li>
     </ol>
 	<!-- back button close -->
 	<div class="row">

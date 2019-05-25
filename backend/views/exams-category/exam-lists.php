@@ -58,6 +58,7 @@
 						<h3 style="text-align: center;font-family: georgia;font-size:30px;">
 							<?php echo $examCategoryName[0]['category_name']; ?>(<?php echo date('Y'); ?>)
 						</h3>
+						<p style="text-align: center;font-weight: bolder;">All Schedules</p>
 				</div>
 			</div>
 	</div>
@@ -70,7 +71,7 @@
 			            <ul class="nav nav-tabs">
 			              <li class="active">
 			              	<a href="#inactive" data-toggle="tab">Inactive
-			              		<span class="badge" style="background-color:red;">
+			              		<span class="badge" style="background-color:#c15d5d;">
 			              			<?php echo $countinactiveSchedules; ?>
 			              		</span>
 			              	</a>
@@ -84,7 +85,7 @@
 			              </li>
 			              <li>
 			              	<a href="#conducted" data-toggle="tab">Conducted
-								<span class="badge" style="background-color:blue;">
+								<span class="badge" style="background-color:#4997e5;">
 			              			<?php echo $countconductedSchedules; ?>
 			              		</span>
 			              	</a>
@@ -127,6 +128,7 @@
 					                            <tr>
 					                              <th>Sr.#</th>
 					                              <th>Class</th>
+					                              <th>Exam Type</th>
 					                              <th>Action</th>
 					                          	</tr>
 					                        </thead>
@@ -141,7 +143,11 @@
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['class_name']." ";
+				                          		<td><?php echo $className[0]['class_name'];
+				                          		?>
+				                          		</td>
+				                          		<td>
+				                          			<?php $className[0]['class_name']." ";
 				                          			if($examType == "Supply"){
 				                          				echo "<span class='label label-primary'>".$examType."</span>";
 				                          			} else {
@@ -150,11 +156,20 @@
 				                          		?>
 				                          		</td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
-
-													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
+				                          			<div class="dropdown">
+													    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
+													    <span class="caret"></span></button>
+													    <ul class="dropdown-menu">
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+													      </li>
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
 															Update Date Sheet
 															</a>
+													      </li>
+													    </ul>
+													  </div>
 				                          		</td>
 				                          	</tr>
 				                          	<?php } } ?>
@@ -187,6 +202,7 @@
 					                            <tr>
 					                              <th>Sr.#</th>
 					                              <th>Class</th>
+					                              <th>Exam Type</th>
 					                              <th>Action</th>
 					                          	</tr>
 					                        </thead>
@@ -201,19 +217,32 @@
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['class_name']." ";
+				                          		<td><?php echo $className[0]['class_name'];
+				                          		 ?></td>
+				                          		 <td>
+				                          		 	<?php $className[0]['class_name']." ";
 				                          		if($examType == "Supply"){
 			                          				echo "<span class='label label-primary'>".$examType."</span>";
 			                          			} else {
 			                          				echo "<span class='label label-success'>".$examType."</span>";
 			                          			}
-				                          		 ?></td>
+				                          		 ?>
+				                          		 </td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
-
-													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
+				                          			<div class="dropdown">
+													    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
+													    <span class="caret"></span></button>
+													    <ul class="dropdown-menu">
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+													      </li>
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
 															Update Date Sheet
 															</a>
+													      </li>
+													    </ul>
+													  </div>
 				                          		</td>
 				                          	</tr>
 				                          	<?php } } ?>
@@ -246,6 +275,7 @@
 					                            <tr>
 					                              <th>Sr.#</th>
 					                              <th>Class</th>
+					                              <th>Exam Type</th>
 					                              <th>Action</th>
 					                          	</tr>
 					                        </thead>
@@ -260,7 +290,9 @@
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['class_name']." "; 
+				                          		<td><?php echo $className[0]['class_name'];
+				                          		?></td>
+				                          		<td><?php $className[0]['class_name']." "; 
 				                          		if($examType == "Supply"){
 			                          				echo "<span class='label label-primary'>".$examType."</span>";
 			                          			} else {
@@ -268,11 +300,20 @@
 			                          			}
 				                          		?></td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
-
-													<a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
+				                          			<div class="dropdown">
+													    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
+													    <span class="caret"></span></button>
+													    <ul class="dropdown-menu">
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+													      </li>
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
 															Update Date Sheet
 															</a>
+													      </li>
+													    </ul>
+													  </div>
 				                          		</td>
 				                          	</tr>
 				                          	<?php } } ?>
@@ -306,6 +347,7 @@
 					                            <tr>
 					                              <th>Sr.#</th>
 					                              <th>Class</th>
+					                              <th>Exam Type</th>
 					                              <th>Action</th>
 					                          	</tr>
 					                        </thead>
@@ -320,18 +362,31 @@
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['class_name']." "; 
+				                          		<td><?php echo $className[0]['class_name'];?></td>
+			                          			<td><?php $className[0]['class_name']." "; 
 				                          		if($examType == "Supply"){
 			                          				echo "<span class='label label-primary'>".$examType."</span>";
 			                          			} else {
 			                          				echo "<span class='label label-success'>".$examType."</span>";
 			                          			}?></td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
-
-				                          			<a class="btn btn-info btn-xs" href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Result Card</a>
-
-				                          			<button class="btn btn-success btn-xs" name="result_announced"><i class="fa fa-eye"></i> Announce Result</button>
+				                          			<div class="dropdown">
+													    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
+													    <span class="caret"></span></button>
+													    <ul class="dropdown-menu">
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+													      </li>
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
+															Update Date Sheet
+															</a>
+													      </li>
+													      <li>
+													      	<button class="btn btn-success btn-xs" name="result_announced"><i class="fa fa-eye"></i> Announce Result</button>
+													      </li>
+													    </ul>
+													  </div>
 
 													<!-- <a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php //echo $examCateogryId;?>&classID=<?php //echo $classId;?>""><i class="fa fa-edit"></i> 
 															Update Date Sheet
@@ -373,6 +428,7 @@
 					                            <tr>
 					                              <th>Sr.#</th>
 					                              <th>Class</th>
+					                              <th>Exam Type</th>
 					                              <th>Action</th>
 					                          	</tr>
 					                        </thead>
@@ -387,19 +443,31 @@
 				                          	?>
 				                          	<tr>
 				                          		<td><?php echo $i+1; ?></td>
-				                          		<td><?php echo $className[0]['class_name']." "; 
+				                          		<td><?php echo $className[0]['class_name'];?></td>
+			                          			<td><?php $className[0]['class_name']." "; 
 				                          		if($examType == "Supply"){
 			                          				echo "<span class='label label-primary'>".$examType."</span>";
 			                          			} else {
 			                          				echo "<span class='label label-success'>".$examType."</span>";
 			                          			}?></td>
 				                          		<td>
-				                          			<a class="btn btn-warning btn-xs" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
-
-													<!-- <a class="btn btn-info btn-xs" href="./update-datesheet?examcatID=<?php //echo $examCateogryId;?>&classID=<?php //echo $classId;?>""><i class="fa fa-edit"></i> 
+				                          			<div class="dropdown">
+													    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
+													    <span class="caret"></span></button>
+													    <ul class="dropdown-menu">
+													      <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
+													      </li>
+													      <!-- <li>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-result-cards?examcatID=<?php //echo $examCateogryId;?>&classID=<?php //echo $classId;?>&examType=<?php //echo $examType;?>"><i class="fa fa-edit"></i> 
 															Update Date Sheet
-															</a> -->
-													<a class="btn btn-info btn-xs" href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Result Card</a>
+															</a>
+													      </li> -->
+													      <li>
+													      	<a class="btn btn-info btn-xs" href="./view-result-cards?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Result Card</a>
+													      </li>
+													    </ul>
+													  </div>
 				                          		</td>
 				                          	</tr>
 				                          	<?php } } ?>

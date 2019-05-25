@@ -4,11 +4,13 @@
 	$examCateogryId = $_GET['examcatID'];
 	// getting `class_id`
 	$classId = $_GET['classID'];
+	
 	//getting `examType`
 	$examType = $_GET['examType'];
 	// geeting all info from `exams_criteria` table and `exams_schedule` table
-	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND class_id = '$classId' AND exam_type = '$examType' AND exam_status = 'Inactive' OR exam_status = 'announced' OR exam_status = 'conducted'
+	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND class_id = '$classId' AND exam_type = '$examType'
 					")->queryAll();
+	
 	$criteriaId = $examCriteriaData[0]['exam_criteria_id'];
 
 	$examScheduleData = Yii::$app->db->createCommand("SELECT * FROM exams_schedule WHERE exam_criteria_id = '$criteriaId'
@@ -27,17 +29,26 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Datesheet Update</title>
+		<style type="text/css">
+			#hover-effect:hover{
+				background-color:#001F3F;
+				color:white;
+			}
+		</style>
 	</head>
 	<body>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<a href="./exam-lists?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
-			</div>
-			</div><br>
+	<!-- back button start -->
+	 <ol class="breadcrumb">
+      <li><a href="./exam-lists?id=<?php echo $examCateogryId;?>"><i class=""></i> Back</a></li>
+    </ol>
+	<!-- back button close -->
 		<div class="box box-primary">
 			<div class="box-header" style="text-align: center;">
-				<h3 style="box-shadow:1px 1px 1px 1px;">Exams Criteria</h3>
+				<div class="well well-sm" style="text-align:center;border-left:2px solid;border-right:2px solid;margin-top:10px;font-size:20px;font-weight:bolder;">
+				<p>Update Date Sheet</p>
+			</div>
+				<h3 class="well well-sm" style="border-left:1px solid;border-right:2px solid; font-family:georgia;background-color:#001F3F;color:white;">Exams Criteria</h3>
 			</div>
 			<div class="box-body">
 				<form method="POST" action="exam-lists?id=<?php echo $examCateogryId ?>">
@@ -66,7 +77,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Class Name</label>
-								<input class="form-control" type="text" name="classId" value="<?php echo $className[0]['class_name']; ?>" readonly="">
+								<input class="form-control" type="text" value="<?php echo $className[0]['class_name']; ?>" readonly="">
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -117,9 +128,9 @@
 							</div>
 						</div>
 					</div>
-					<table class="table table-stripped"> 
+					
 						<div class="box-header" style="text-align: center;">
-							<h3 style="box-shadow:1px 1px 1px 1px;">Exams Schedule</h3>
+							<h3 class="well well-sm" style="border-left:2px solid;border-right:2px solid; font-family:georgia;background-color:#001F3F;color:white;">Exams Schedule</h3>
 						</div>
 		<?php
 			 for ($i=0; $i <$count ; $i++) {
@@ -131,12 +142,12 @@
 			 	$subarray[$i] = $subjectId;
 
 				?>
-
+				<table class="table table-stripped well well-sm"> 
 				<tr>
 					<td>
-							<div class="row">
-								<div class="col-md-12" style="border:1px solid;">
-									<p>
+							<div class="row container-fluid">
+								<div class="col-md-12">
+									<p id="hover-effect" style="text-align: center;border-bottom:1px solid;padding:10px;border-radius:20px;font-size:20px;">
 									<i class="fa fa-book"></i>
 									<?php echo $subjectName[0]['subject_name'];?>
 									</p>
@@ -147,11 +158,11 @@
 									<div class="row">
 										<div class="col-md-3">
 											<div class="form-group">
-												<label>Date</label>
+												<label><i class="glyphicon glyphicon-calendar" style="color:#4997e5;"></i> Date</label>
 												<input type="date" name="date[]" class="form-control" value="<?php echo $examScheduleData[$i]['date']; ?>">
 											</div>
 											<div class="form-group">
-											<label>Invagilator</label>
+											<label><i class="glyphicon glyphicon-user" style="color:#4997e5;"></i> Invagilator</label>
 											<select name="Invagilator[]" class="form-control">
 												<?php 
 												$empId = $examScheduleData[$i]['emp_id'];
@@ -184,11 +195,11 @@
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label>Exam Start Time</label>
+												<label><i class="glyphicon glyphicon-time" style="color:#4997e5;"></i> Exam Start Time</label>
 												<input type="time" name="exam_start_time[]" class="form-control" value="<?php echo $examScheduleData[$i]['exam_start_time']; ?>">
 											</div>
 											<div class="form-group">
-												<label>Exam End Time</label>
+												<label><i class="glyphicon glyphicon-time" style="color:#4997e5;"></i> Exam End Time</label>
 												<input type="time" name="exam_end_time[]" class="form-control" value="<?php echo $examScheduleData[$i]['exam_end_time']; ?>">
 											</div>
 										</div>
