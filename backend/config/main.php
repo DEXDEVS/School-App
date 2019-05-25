@@ -160,6 +160,7 @@ return [
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
+                'fetch-sections' => 'exams-schedule/fetch-sections',
                 'marks-weightage-head' => 'marks-weightage-head/index',
                 //'marks-weightage-view' => 'marks-weightage-head/view',
                 // emp attendance report
@@ -167,6 +168,7 @@ return [
                 'employess-att-report' => 'emp-attendance/employess-att-report',
                 'final-attendance' => 'emp-attendance/final-attendance',
                 'emp-attendance' => 'emp-attendance/index',
+                'emp-attendance-create' => 'emp-attendance/create',
                 'emp-leave' => 'emp-leave/index',
 
                 // account-transactions

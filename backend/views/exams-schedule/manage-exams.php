@@ -46,8 +46,13 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
+<<<<<<< HEAD
 								<label><i class="fa fa-university" style="color:#4997e5;"></i> Select Class</label>
 								<select name="class_head" class="form-control" required>
+=======
+								<label>Select Class</label>
+								<select name="class_head" id="class_id" class="form-control" onchange="getSections()" required>
+>>>>>>> 0a458594b0ec0f8c6859f38e82c580b033892da9
 									<option value="">Select Class</option>
 									<?php 
 
@@ -632,4 +637,47 @@
 </body>
 </html>
 
+
+<script type="text/javascript">
+	function getSections(){
+		var classId = $("#class_id").val();
+		alert(classId);
+
+		$.ajax({
+        method:'POST',
+        data:{classId:classId},
+        url: './fetch-sections',
+        success: function(result){
+        	//console.log(result);
+	            //var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
+	            var jsonResult = jQuery.parseJSON(result);
+	        console.log(jsonResult);
+	        //     var student = jsonResult[0];
+	        //     $('#std_name').val(student['std_name']);
+	        //     $('#std_father_name').val(student['std_father_name']);
+	        //     $('#std_contact_no').val(student['std_contact_no']);
+	        //     $('#std_father_contact_no').val(student['std_father_contact_no']);
+	        //     $('#previous_class').val(student['std_previous_class']);
+	        //     $('#previous_class_rollno').val(student['std_roll_no']);
+	        //     $('#obtainedMarks').val(student['std_obtained_marks']);
+	        //     $('#totalMarks').val(student['std_total_marks']);
+	        //     $('#percentage').val(student['std_percentage']);
+	        //     $('#std_permanent_address').val(student['std_address']);
+	        //     $('#std_temporary_address').val(student['std_address']);
+	    },
+
+	         
+	        // $.ajax({
+         // url: 'php/test.php',
+         // method:'POST',
+         // data: parameters,
+         // success: function(msg) {
+         //    $('#test').append(msg);
+         // }
+    // })       
+    	});
+	}
+
+
+</script>
 
