@@ -4,42 +4,28 @@
 	<title></title>
 </head>
 <body>
-<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-					<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-step-backward"></i> Back</a>
-			</div>
-		</div><br>
-</div>
-<?php 
-	
+<?php
 		$examCategory = $_GET['exam_category'];
-		echo $examCategory;
-		$classId = $_GET['class_id'];
-		echo $classId;
+		$classHead = $_GET['class_head'];
 		$exam_type = $_GET['exam_type'];
-		echo $exam_type;
 
-		//$classId = Yii::$app->db->createCommand("SELECT class_name_id FROM std_enrollment_head WHERE std_enroll_head_id = '$classId'")->queryAll();
-		//$classId = $classId[0]['class_name_id'];
-		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND class_id = '$classId' AND exam_status = 'conducted' OR exam_status = 'Result Prepared' AND exam_type = '$exam_type'")->queryAll();
+		$classNameId = Yii::$app->db->createCommand("SELECT class_name_id FROM std_enrollment_head WHERE std_enroll_head_id = '$classHead'")->queryAll();
+		$classNameID = $classNameId[0]['class_name_id'];
+		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND class_id = '$classNameID' AND exam_status = 'conducted' OR exam_status = 'Result Prepared' AND exam_type = '$exam_type'")->queryAll();
 		if(empty($ExamData)){
 			Yii::$app->session->setFlash('warning',"Exams not conducted Yet..!");
 		} else {
 
 		$ExamName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCategory'")->queryAll();
 
-		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_id, std_enroll_head_name FROM std_enrollment_head WHERE class_name_id = '$classId'")->queryAll();
-		print_r($className);
-		
-		$classheadId = $className[0]['std_enroll_head_id'];
+		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHead'")->queryAll();
 
 		$criteriaId = $ExamData[0]['exam_criteria_id'];
 
 		$examSchedule = Yii::$app->db->createCommand("SELECT s.subject_id, s.full_marks, s.passing_marks,c.exam_status,s.status FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
-			WHERE c.class_id = '$classId'
+			WHERE c.class_id = '$classNameID'
 			AND c.exam_category_id = '$examCategory'
 			AND c.exam_criteria_id = '$criteriaId'
 			 AND c.exam_status = 'conducted'
@@ -54,7 +40,7 @@
 			$students = Yii::$app->db->createCommand("SELECT d.std_enroll_detail_std_id,d.std_roll_no, d.std_enroll_detail_std_name FROM std_enrollment_detail as d
 				INNER JOIN std_enrollment_head as h 
 				ON d.std_enroll_detail_head_id = h.std_enroll_head_id
-				WHERE h.std_enroll_head_id = '$classId';
+				WHERE h.std_enroll_head_id = '$classHead';
 				")->queryAll();
 			$stdCount = count($students);
 
@@ -101,18 +87,17 @@
 									FROM  teacher_subject_assign_head as h
 									INNER JOIN teacher_subject_assign_detail as d 
 									ON h.teacher_subject_assign_head_id = d.teacher_subject_assign_detail_head_id
-									WHERE class_id = '$classheadId' AND  subject_id = '$subId'")->queryAll();
-							print_r($teacherName);
+									WHERE class_id = '$classHead' AND  subject_id = '$subId'")->queryAll();
 									?>
 						
 						<td align="center">
-							<a style="color:black;" target="_blank" href="./emp-info-view?id=<?php //echo $teacherName[0]['teacher_id'];?>">
+							<a style="color:black;" target="_blank" href="./emp-info-view?id=<?php echo $teacherName[0]['teacher_id'];?>">
 								<?php 
 									if ($status == 'not') {
 
-										//echo "<span style='background-color:#D73925;color:white;'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
+										echo "<span style='background-color:#D73925;color:white;'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
 									}else{
-										//echo "<span style='background-color:seagreen;color:white;'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
+										echo "<span style='background-color:seagreen;color:white;'>".$teacherName[0]['teacher_subject_assign_head_name']."</span>";
 									}
 								 ?>
 							</a>
@@ -239,7 +224,7 @@
 								 	?>
 								 </td>
 								<td>
-									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&classID=<?php echo $classId; ?>&classHeadIdID=<?php echo $classId; ?>&stdID=<?php echo $stdId; ?>&examType=<?php echo $exam_type; ?>" class="btn btn-info btn-xs">
+									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&classID=<?php echo $classNameID; ?>&classHeadID=<?php echo $classHead; ?>&stdID=<?php echo $stdId; ?>&examType=<?php echo $exam_type; ?>" class="btn btn-info btn-xs">
 									<i class="glyphicon glyphicon-edit"></i> update
 									</a>
 								</td>
@@ -269,7 +254,7 @@
 			        	?>
 				<input type="hidden" name="resultCounter" value="<?php echo $resultCounter; ?>">
 				<input type="hidden" name="examCriteriaID" value="<?php echo $criteriaId; ?>">
-				<input type="hidden" name="classId" value="<?php echo $classId; ?>">
+				<input type="hidden" name="classHead" value="<?php echo $classHead; ?>">
 				<input type="hidden" name="examCategory" value="<?php echo $examCategory; ?>">
 				<input type="hidden" name="stdCount" value="<?php echo $stdCount; ?>">
 				<div class="row">
@@ -298,7 +283,7 @@
 			Yii::$app->session->setFlash('warning',"Mark sheet incomplete..!");
 		} else {
 			$examCriteriaID = $_POST["examCriteriaID"];
-			$classId 		= $_POST["classId"];
+			$classHead 		= $_POST["classHead"];
 			$examCategory = $_POST["examCategory"];
 			$studentArray = $_POST["studentArray"];
 			$resultArray = $_POST["resultArray"];
