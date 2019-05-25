@@ -151,10 +151,12 @@ return [
                 'emp-exam-attendance' => 'exams-category/emp-exam-attendance',
                 'exam-cateogry-details' => 'exams-category/exam-cateogry-details',
                 'view-marks-weightage' => 'exams-category/view-marks-weightage',
+                'view-marks-sheet' => 'exams-category/view-marks-sheet',
+                'class-sections-marks-lists' => 'exams-category/class-sections-marks-lists',
                 //marks-details
                 'grades' => 'grades/index',
                 'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
-                'view-marks-sheet' => 'marks-details/view-marks-sheet',
+                //'view-marks-sheet' => 'marks-details/view-marks-sheet',
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',

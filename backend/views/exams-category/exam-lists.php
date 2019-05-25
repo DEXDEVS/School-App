@@ -47,7 +47,7 @@
 
 	<!-- back button start -->
 	 <ol class="breadcrumb">
-      <li><a href="exams-category-view?id=<?php echo $examCateogryId; ?>"><i class=""></i> Back</a></li>
+      <li><a class="btn btn-primary btn-xs" href="exams-category-view?id=<?php echo $examCateogryId; ?>"><i class="fa fa-backward"></i> Back</a></li>
     </ol>
 	<!-- back button close -->
 
@@ -157,7 +157,7 @@
 				                          		</td>
 				                          		<td>
 				                          			<div class="dropdown">
-													    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
+													    <button style="background-color:#4997E5;" class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
 													    <span class="caret"></span></button>
 													    <ul class="dropdown-menu">
 													      <li>
@@ -308,9 +308,7 @@
 													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 													      </li>
 													      <li>
-													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./update-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>"><i class="fa fa-edit"></i> 
-															Update Date Sheet
-															</a>
+													      	<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./class-sections-marks-lists?exam_category=<?php echo $examCateogryId;?>&class_id=<?php echo $classId;?>&exam_type=<?php echo $examType;?>"><i class="fa fa-eye"></i> View Marks Sheet</a>
 													      </li>
 													    </ul>
 													  </div>
