@@ -5,7 +5,7 @@
 	<title>Manage Exams</title>
 	<style type="text/css">
 		#sub-hvr:hover{
-			background-color:#ebd6e7;
+			background-color:#001F3F;
 			color:white;
 		}
 	</style>
@@ -15,14 +15,14 @@
 <?php $branch_id = Yii::$app->user->identity->branch_id; ?>
 
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<a href="./" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-step-backward"></i> Back</a>
-			</div>
-		</div><br>
+		<div class="well well-sm" style="border-left:2px solid;border-radius:10px;">
+			<h4 style="font-weight:bolder;"><i class="glyphicon glyphicon-hand-right"></i> Manage Exam</h4>
+		</div>
 		<div class="box box-primary col-md-12">
 			<div class="box-header">
-				<h3>Exam Criteria</h3><hr>
+				<div class="well well-sm" style="text-align:center;border-left:2px solid;border-right:2px solid;margin-top:10px;background-color:#001F3F;color:white;">
+				<h4 style="font-size:25px;font-family:georgia;font-weight:bolder;">Exam Criteria</h4>
+				</div>
 			</div>
 			<div class="box-body">
 				<form method="POST" action="manage-exams">
@@ -30,7 +30,7 @@
 					<div class="row">
 						<div class="col-md-4">	
 							<div class="form-group">
-								<label>Select Exam Category</label>
+								<label><i class="glyphicon glyphicon-th-list" style="color:#4997e5;"></i> Select Exam Category</label>
 								<select name="exam_category" class="form-control" required>
 									<option value="">Select Category</option>
 									<?php 
@@ -46,8 +46,13 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
+<<<<<<< HEAD
+								<label><i class="fa fa-university" style="color:#4997e5;"></i> Select Class</label>
+								<select name="class_head" class="form-control" required>
+=======
 								<label>Select Class</label>
 								<select name="class_head" id="class_id" class="form-control" onchange="getSections()" required>
+>>>>>>> 0a458594b0ec0f8c6859f38e82c580b033892da9
 									<option value="">Select Class</option>
 									<?php 
 
@@ -63,7 +68,7 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Exam Start Date</label>
+								<label><i class="glyphicon glyphicon-calendar" style="color:#4997e5;"></i> Exam Start Date</label>
 								<input type="date" name="exam_start_date" class="form-control" required="">
 							</div>
 						</div>
@@ -71,19 +76,19 @@
 					<div class="row">
 						<div class="col-md-4">	
 							<div class="form-group">
-								<label>Exam End Date</label>
+								<label><i class="glyphicon glyphicon-calendar" style="color:#4997e5;"></i> Exam End Date</label>
 								<input type="date" name="exam_end_date" class="form-control" required="">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Room</label>
+								<label><i class="glyphicon glyphicon-th-large" style="color:#4997e5;"></i> Room</label>
 								<input type="text" name="room" class="form-control" required="">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Exam Type</label>
+								<label><i class="glyphicon glyphicon-th-list" style="color:#4997e5;"></i> Exam Type</label>
 								<select name="exam_type" class="form-control" required>
 									<option value="">Select Exam Type </option>
 									<option value="Regular">Regular</option>
@@ -140,9 +145,11 @@
 		$subjectarray = explode(',', $subject);
 		$subjCount = count($subjectarray); ?>
 <div class="container-fluid">
-<div class="box box-default container-fluid">
+<div class="box box-primary container-fluid">
 	<div class="box-header">
-		<h3>Exam Schedule</h3><hr>
+		<div class="well well-sm" style="text-align:center;border-left:2px solid;border-right:2px solid;margin-top:10px;background-color:#001F3F;color:white;">
+				<h4 style="font-size:25px;font-family:georgia;font-weight:bolder;">Exam Schedule</h4>
+		</div>
 	</div>		
 <div class="box-body" style="background-color:#fafafa;">
 	<form method="post">
@@ -189,9 +196,9 @@
 					<td>
 						
 							<div class="row">
-								<div id="sub-hvr" class="col-md-12" style="border:1px solid;color:#AA5397;border-radius: 8px;">
+								<div id="sub-hvr" class="col-md-12" style="border:1px solid;border-radius: 8px;">
 									<h4 style="text-align: center;">
-									<i class="fa fa-book"></i>
+									<i class="fa fa-book" style="color:#4997e5;"></i>
 									<?php echo $subject;?>
 									</h4>
 								</div>
@@ -199,11 +206,11 @@
 							<div class="row">
 								<div class="col-sm-3">
 									<div class="form-group" >
-										<label>Date</label>
+										<label><i class="glyphicon glyphicon-calendar" style="color:#4997e5;"></i> Date</label>
 										<input type="date" name="date[]" class="form-control" required="">
 									</div>
 									<div class="form-group">
-										<label>Invagilator</label>
+										<label><i class="glyphicon glyphicon-user" style="color:#4997e5;"></i> Invagilator</label>
 										<select name="Invagilator[]" class="form-control" required>
 
 											<?php 
@@ -230,11 +237,11 @@
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Exam Start Time</label>
+										<label><i class="glyphicon glyphicon-time" style="color:#4997e5;"></i> Exam Start Time</label>
 										<input type="time" name="exam_start_time[]" class="form-control" required="">
 									</div>
 									<div class="form-group">
-										<label>Exam End Time</label>
+										<label><i class="glyphicon glyphicon-time" style="color:#4997e5;"></i> Exam End Time</label>
 										<input type="time" name="exam_end_time[]" class="form-control" required="">
 									</div>
 								</div>
