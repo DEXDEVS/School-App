@@ -45,7 +45,6 @@ if(isset($_GET['class_id']))
 		FROM exams_category
 		WHERE exam_category_id = '$examCatId' 
 					")->queryAll();
-		
 		$subjectName = Yii::$app->db->createCommand("SELECT subject_name
 		FROM subjects
 		WHERE subject_id = '$subID' 

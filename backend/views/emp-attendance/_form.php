@@ -10,50 +10,17 @@ use yii\widgets\ActiveForm;
 <div class="emp-attendance-form">
 
     <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
-    
-    <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'empCnic'], 'mask' => '99999-9999999-9']); ?>
-
+    <h1 class="well well-sm bg-navy" align="center" style="color:#001F3F; font-family: serif;">Employee Attendance</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'empCnic','autofocus'=> true], 'mask' => '99999-9999999-9']); ?>
+        </div>
+    </div>
+     
     <?= $form->field($model, 'check_in')->radio(['label'=>'Check In', 'value' => 0, 'checked' => true]) ?>
 
     <?= $form->field($model, 'check_in')->radio(['label'=>'Check Out','value' => 1]) ?>
 
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
-	<?php } ?>
-
     <?php ActiveForm::end(); ?>
     
 </div>
-
-<?php
-$url = \yii\helpers\Url::to("./fetch-cnic");
-
-$script = <<< JS
-$('#empCnic').on('change',function(){
-    var cnic = $('#empCnic').val();
-
-    $.ajax({
-        type:'post',
-        data:{cnic:cnic},
-        url: "$url",
-
-        success: function(result){
-            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
-            if(jsonResult[0] == 0){
-                alert("Invalid Cnic");
-            }
-            if(jsonResult[0] == 1){
-                
-            }
-        }         
-    });
-    
-});
-
-JS;
-$this->registerJs($script);
-?>
-</script>  
-

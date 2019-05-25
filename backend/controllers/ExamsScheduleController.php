@@ -31,7 +31,7 @@ class ExamsScheduleController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','manage-exams','exam-date-sheet'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','manage-exams','exam-date-sheet','fetch-sections'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -57,6 +57,10 @@ class ExamsScheduleController extends Controller
         return $this->render('manage-exams');
     }
 
+     public function actionFetchSections()
+    { 
+        return $this->render('fetch-sections');
+    }
 
     /**
      * Lists all ExamsSchedule models.
