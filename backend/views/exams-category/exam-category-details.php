@@ -14,7 +14,7 @@
 <div class="container-fluid">
 	<!-- back button start -->
 	 <ol class="breadcrumb">
-      <li><a href="exams-category"><i class=""></i> Back</a></li>
+      <li><a class="btn btn-primary btn-xs" href="exams-category"><i class="fa fa-backward"></i> Back</a></li>
     </ol>
 	<!-- back button close -->
 	<div class="row">

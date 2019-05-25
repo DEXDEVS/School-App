@@ -16,9 +16,12 @@
 <div class="container-fluid">
 	<!-- back button start -->
 	 <ol class="breadcrumb">
-      <li><a href="exams-category-view?id=<?php echo $examCateogryId; ?>"><i class=""></i> Back</a></li>
+      <li><a class="btn btn-primary btn-xs" href="exams-category-view?id=<?php echo $examCateogryId; ?>"><i class="fa fa-backward"></i> Back</a></li>
     </ol>
 	<!-- back button close -->
+	<div class="well well-sm" style="border-left:2px solid;border-radius:10px;">
+			<h4 style="font-weight:bolder;"><i class="glyphicon glyphicon-hand-right"></i> Marks Weightage View</h4>
+	</div>
 	<div class="row">
 		<?php
 			for ($i=0; $i <$countClassIds ; $i++) { 

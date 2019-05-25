@@ -97,6 +97,7 @@ class StdRegistrationController extends Controller
         $stdAcademicInfo = new StdAcademicInfo();
         $stdFeeDetails = new StdFeeDetails();
         $conn = \Yii::$app->db;
+        $y = date('y');
         global $prntPassword, $stdPassword;
     
         if ($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post())) {
@@ -123,6 +124,14 @@ class StdRegistrationController extends Controller
                     $model->updated_by = '0'; 
                     $model->updated_at = '0';
                     $model->save();
+
+                    // update std_inquiry_no....
+                    $std_id = StdRegistration::find()->max('std_id');
+                    $std_reg_no = "STD-REG-Y".$y."-0".$std_id;
+                    $std_registration = Yii::$app->db->createCommand()->update('std_personal_info', [
+                        'std_reg_no' => $std_reg_no],
+                        ['std_id' => $std_id]
+                    )->execute();
 
                     $user = new User();
                     $user->branch_id = $branch_id;

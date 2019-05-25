@@ -40,15 +40,15 @@
 	<div class="container-fluid">
 	<!-- back button start -->
 	 <ol class="breadcrumb">
-      <li><a href="./exam-lists?id=<?php echo $examCateogryId;?>"><i class=""></i> Back</a></li>
+      <li><a class="btn btn-primary btn-xs" href="./exam-lists?id=<?php echo $examCateogryId;?>"><i class="fa fa-backward"></i> Back</a></li>
     </ol>
 	<!-- back button close -->
 		<div class="box box-primary">
-			<div class="box-header" style="text-align: center;">
-				<div class="well well-sm" style="text-align:center;border-left:2px solid;border-right:2px solid;margin-top:10px;font-size:20px;font-weight:bolder;">
-				<p>Update Date Sheet</p>
-			</div>
-				<h3 class="well well-sm" style="border-left:1px solid;border-right:2px solid; font-family:georgia;background-color:#001F3F;color:white;">Exams Criteria</h3>
+			<div class="box-header">
+				<div class="well well-sm" style="border-left:2px solid;margin-top:10px;font-size:20px;font-weight:bolder;">
+				<h4><i class="glyphicon glyphicon-hand-right"></i> Update Date Sheet</h4>
+				</div>
+				<h3 class="well well-sm" style="text-align:center; border-left:1px solid;border-right:2px solid; font-family:georgia;background-color:#001F3F;color:white;">Exams Criteria</h3>
 			</div>
 			<div class="box-body">
 				<form method="POST" action="exam-lists?id=<?php echo $examCateogryId ?>">
@@ -56,7 +56,7 @@
 					<div class="row">
 						<div class="col-md-4">	
 							<div class="form-group">
-								<label>Select Exam Category</label>
+								<label><i class="glyphicon glyphicon-th-list" style="color:#4997e5;"></i> Select Exam Category</label>
 								<select name="exam_category" class="form-control">
 									<?php 
 
@@ -76,13 +76,13 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Class Name</label>
+								<label><i class="fa fa-university" style="color:#4997e5;"></i> Class Name</label>
 								<input class="form-control" type="text" value="<?php echo $className[0]['class_name']; ?>" readonly="">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Exam Start Date</label>
+								<label><i class="glyphicon glyphicon-calendar" style="color:#4997e5;"></i> Exam Start Date</label>
 								<input type="date" name="exam_start_date" class="form-control" value="<?php echo $examCriteriaData[0]['exam_start_date'];?>">
 							</div>
 						</div>
@@ -90,19 +90,19 @@
 					<div class="row">
 						<div class="col-md-4">	
 							<div class="form-group">
-								<label>Exam End Date</label>
+								<label><i class="glyphicon glyphicon-calendar" style="color:#4997e5;"></i> Exam End Date</label>
 								<input type="date" name="exam_end_date" class="form-control" value="<?php echo $examCriteriaData[0]['exam_end_date'];?>">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Room</label>
+								<label><i class="glyphicon glyphicon-th-large" style="color:#4997e5;"></i> Room</label>
 								<input type="text" name="room" class="form-control" value="<?php echo $examCriteriaData[0]['exam_room'];?>">
 							</div>
 						</div>
 						<div class="col-md-4">	
 							<div class="form-group">
-								<label>Select Status</label>
+								<label><i class="glyphicon glyphicon-stats" style="color:#4997e5;"></i> Select Status</label>
 								<select name="exam_status" class="form-control">
 									 <option value="<?php echo $examCriteriaData[0]['exam_status'];?>">
 									 	<?php echo $examCriteriaData[0]['exam_status'];?>
@@ -123,7 +123,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							<div class="form-group">
-								<label>Exam Type</label>
+								<label><i class="glyphicon glyphicon-th-list" style="color:#4997e5;"></i> Exam Type</label>
 								<input class="form-control" type="text" name="examType" value="<?php echo $examCriteriaData[0]['exam_type']; ?>" readonly="">
 							</div>
 						</div>
@@ -148,7 +148,7 @@
 							<div class="row container-fluid">
 								<div class="col-md-12">
 									<p id="hover-effect" style="text-align: center;border-bottom:1px solid;padding:10px;border-radius:20px;font-size:20px;">
-									<i class="fa fa-book"></i>
+									<i class="fa fa-book" style="color:#4997e5;"></i>
 									<?php echo $subjectName[0]['subject_name'];?>
 									</p>
 								</div>
@@ -227,7 +227,7 @@
 				 ?>
 				<div class="row">
 				 	<div class="col-md-12">
-				 		<button type="submit" name="update" class="btn btn-info" style="float: right;">Update</button>
+				 		<button type="submit" name="update" class="btn btn-info btn-xs" style="float: right;"><i class="glyphicon glyphicon-edit"></i> Update</button>
 				 	</div>
 				 </div>
 				</form>

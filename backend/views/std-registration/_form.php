@@ -59,14 +59,10 @@ use yii\helpers\Url;
 <body>
 
 <div class="std-registration-form">
-    <?php $form = ActiveForm::begin(['id'=>$model->formName()]); ?>
-    <?php 
+<?php $form = ActiveForm::begin(); ?>
+<?php 
     $branch_id = Yii::$app->user->identity->branch_id;
-    $stdPersonalInfo = StdPersonalInfo::find()->orderBy(['std_id'=> SORT_DESC])->one();
-    $id = $stdPersonalInfo['std_id']+1;
-    $year = date('y');
 ?>
-
 <div class="row">
     <div class="col-lg-12">
         <!-- box start -->
@@ -83,10 +79,6 @@ use yii\helpers\Url;
             <div class="row">
                 <div class="col-md-4">
                     <?= $form->field($model, 'stdInquiryNo')->textInput(['id' => 'inquiryNo']) ?>
-                </div>
-                <div class="col-md-4">
-                    <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i> -->
-                    <?= $form->field($model, 'std_reg_no')->textInput(['maxlength' => true,'value'=> 'STD-Y'.$year.'-'.$id, 'readonly'=> true]) ?>
                 </div>
             </div> 
             <div class="row">
