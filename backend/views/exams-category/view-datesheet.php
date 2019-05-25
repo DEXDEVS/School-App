@@ -7,11 +7,11 @@
 	//getting `examType`
 	$examType = $_GET['examType'];
 	// geeting all info from `exams_criteria` table and `exams_schedule` table
-	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND std_enroll_head_id = '$classId' AND exam_type = '$examType'
+	$examCriteriaData = Yii::$app->db->createCommand("SELECT * FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND class_id = '$classId' AND exam_type = '$examType'
 					")->queryAll();
-	$classId = $examCriteriaData[0]['std_enroll_head_id'];
+	$classId = $examCriteriaData[0]['class_id'];
 	// getting classes name `std_enroll_head_name` from `std_enrollment_head` against `std_enroll_head_id`
-	$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classId'
+	$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'
 					")->queryAll();
 	$count = count($examCriteriaData);
 	// getting exam `category_name` from `exams_cateogry`
@@ -20,42 +20,51 @@
 
  ?>
 <div class="container-fluid">
-	<div class="row">
+	<!-- back button start -->
+	 <ol class="breadcrumb">
+      <li><a class="btn btn-primary btn-xs" href="./exam-lists?id=<?php echo $examCateogryId;?>"><i class="fa fa-backward"></i> Back</a></li>
+      <li style="float:right;">
+      	<button onclick="printContent('datesheet')" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-print"></i> Print</button>
+      </li>
+    </ol>
+	<!-- back button close -->
+	<div class="row" id="datesheet">
 		<div class="col-md-12">
-			<a href="./view?id=<?php echo $examCateogryId;?>" style="float: right;" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-backward"></i> Back</a>
-		</div>
-	</div><br>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel panel-primary">
+			<div class="panel panel-primary" style="border:1px solid;">
 				
 				<div class="panel-body">
-					<div class="row">
-						<div class="col-md-12">
-							<h2 style="text-align: center;font-family: georgia;box-shadow: 1px 1px 1px 1px;">
-							<?php echo $examCategoryName[0]['category_name']; ?> (<?php echo date('Y'); ?>)
-							</h2>
-							<br>
-							<p style="text-align: center;font-weight: bold;font-size: 20px;">Date Sheet</p><br>
+					<div class="row container-fluid">
+						<div class="col-md-3">
+							<center>
+								<img src="uploads/abc.png" height="140px" width="130px">
+							</center>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4" style="border-right:1px solid;text-align: center;">
-							<table class="table">
+						<div class="col-md-9 well well-sm" style="text-align: center;font-family: georgia;">
+							<h2>
+							<?php echo $examCategoryName[0]['category_name']; ?> (<?php echo date('Y'); ?>)
+							<br>
+							<br>
+							<p style="font-size:20px;">Date Sheet</p>
+							</h2>
+						</div>
+					</div><hr>
+					<div class="row	">
+						<div class="col-md-4" style="text-align: center;">
+							<table class="table table-hover table-responsive">
 									<tr>
-										<b>Exam Time</b><br>
+										<b>Exam Date</b><br>
 										<center>
 											<?php 
-											echo date('h:i:A',strtotime($examCriteriaData[0]['exam_start_time']));
+											echo date('d-M-Y',strtotime($examCriteriaData[0]['exam_start_date']));
 											?>
 											<b>TO</b>&nbsp;<?php 
-											echo date('h:i:A',strtotime($examCriteriaData[0]['exam_end_time']));
+											echo date('d-M-Y',strtotime($examCriteriaData[0]['exam_end_date']));
 											?>
 										</center>
 									</tr>
 							</table>
 						</div>
-						<div class="col-md-4" style="border-right:1px solid;text-align: center;">
+						<div class="col-md-4" style="border-left:1px solid; text-align: center;">
 							<table class="table">
 									<tr>
 										<b>Exam Room</b><br>
@@ -65,12 +74,12 @@
 									</tr>
 							</table>
 						</div>
-						<div class="col-md-4" style="text-align: center;">
+						<div class="col-md-4" style="border-left:1px solid;text-align: center;">
 							<table class="table">
 									<tr>
 										<b>Class Name</b>
 										<center>
-											<?php echo $className[0]['std_enroll_head_name']; ?>
+											<?php echo $className[0]['class_name']; ?>
 										</center>
 									</tr>
 							</table>
@@ -82,23 +91,10 @@
 						$criteriaID = $examCriteriaData[$i]['exam_criteria_id'];		
 						$examScheduleData = Yii::$app->db->createCommand("SELECT * FROM exams_schedule WHERE exam_criteria_id = '$criteriaID'
 							")->queryAll();
+
 						$countSubjects = count($examScheduleData);
 
 						?>
-						<div class="row">
-							<div class="col-md-6">
-								<p style="font-weight: bold;"><?php echo $examCategoryName[0]['category_name']." Schedule ".($i+1); ?>  
-							</p>
-							</div>
-							<div class="col-md-6">
-							<p style="float: right;font-weight: bold;">
-								<?php 	
-
-							echo date('d-M-Y',strtotime($examCriteriaData[$i]['exam_start_date']))." To ".
-							date('d-M-Y',strtotime($examCriteriaData[$i]['exam_end_date']));?>
-							</p>
-							</div>
-						</div>
 						<div class="row">
 						<div class="col-md-12">
 							<table class="table table-hover">
@@ -106,6 +102,7 @@
 									<tr style="background-color: #337AB7;color: white;">
 										<th class="text-center">Date</th>
 										<th class="text-center">Day</th>
+										<th class="text-center">Time</th>
 										<th class="text-center">Subject</th>
 									</tr>
 								</thead>
@@ -138,6 +135,14 @@
 											?>	
 											</td>
 										<td>
+											<?php 
+											echo date('h:m A',strtotime($examScheduleData[0]['exam_start_time']));
+											?>
+											<b>TO</b>&nbsp;<?php 
+											echo date('h:m A',strtotime($examScheduleData[0]['exam_end_time']));
+											?>
+										</td>
+										<td>
 											<?php echo $subjectName[0]['subject_name']; ?>	
 										</td>
 									</tr>
@@ -147,10 +152,27 @@
 						</div>
 					</div> <hr>
 					 <?php }?>
-
+					<div class="row" style="padding-bottom:20px; text-align:center;margin-top:70px;">
+						<div class="col-md-6">
+							<h3>Examination Controller</h3><br>
+							___________________________	
+						</div>
+						<div class="col-md-6">
+							<h3>Principal's Signature</h3><br>
+							_________________________
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
+<script>
+function printContent(el){
+	var restorepage = document.body.innerHTML;
+	var printcontent = document.getElementById(el).innerHTML;
+	document.body.innerHTML = printcontent;
+	window.print();
+	document.body.innerHTML = restorepage;
+}
+</script>

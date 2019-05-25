@@ -21,8 +21,8 @@ $empCnic  = $empInfo[0]['emp_cnic'];
 $empPhone = $empInfo[0]['emp_contact_no'];
 $empPhoto = $empInfo[0]['emp_photo'];
 $empEmail = $empInfo[0]['emp_email'];
+$empBarcode = $empInfo[0]['barcode'];
 $empBlood = "A +ve";
-$empDesignationName;
 ?>
 <div class="modal-body employee_card">  
 <div class="row">
@@ -60,7 +60,7 @@ $empDesignationName;
       <b><?php echo $empBlood; ?></b>
     </h5>
 
-	<img src="uploads/download.png" style="position: absolute; top: 445px; right: 230px;">
+	<img src="<?php echo $empBarcode; ?>" style="position: absolute; top: 445px; right: 230px;">
   
   </div>
   </div>

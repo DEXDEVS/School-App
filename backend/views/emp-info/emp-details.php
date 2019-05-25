@@ -68,6 +68,7 @@
     <h1 style="color: #3C8DBC;">
         <i class="fa fa-user"></i> Employee Profile
       </h1>
+      <img src= "<?php echo $empInfo[0]['barcode']; ?>">
     <ol class="breadcrumb">
         <li><a href="./home"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="./emp-info">Back</a></li>

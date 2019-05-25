@@ -50,7 +50,7 @@ $in = 1;
                     'pluginOptions' => [
                         'allowClear' => true,
                         'multiple' => true,
-                        'maximumSelectionLength'=> 2,
+                        //'maximumSelectionLength'=> 2,
                     ],
                 ]);
                 ?>

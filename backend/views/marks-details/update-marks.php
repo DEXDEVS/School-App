@@ -2,14 +2,15 @@
 
 	if(isset($_GET['examCatID']))
 	{
-		$examCatID 	= $_GET['examCatID'];
-		$headID 	= $_GET['headID'];
-		$stdID 		= $_GET['stdID'];
-		$examType 	= $_GET['examType'];
+		$examCatID 		= $_GET['examCatID'];
+		$classID 		= $_GET['classID'];
+		$stdID 			= $_GET['stdID'];
+		$examType 		= $_GET['examType'];
+		$classHeadID 	= $_GET['classHeadID'];
 
 		$CatName= Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCatID'")->queryAll();
 
-		$ClassName = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$headID'")->queryAll();
+		$ClassName = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadID'")->queryAll();
 
 		$StdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$stdID'")->queryAll();?>
 
@@ -55,7 +56,7 @@
 						$marksDetailIdArray = array();
 						$criteria = Yii::$app->db->createCommand("SELECT c.exam_criteria_id 
 						FROM exams_criteria as c 
-						WHERE c.std_enroll_head_id = '$headID '
+						WHERE c.class_id = '$classID '
 						AND c.exam_category_id = '$examCatID'
 						AND c.exam_type = '$examType'
 						")->queryAll();
@@ -96,6 +97,7 @@
 			        	}
 			        	?>
 			        <input type="hidden" name="countMarks" value="<?php echo $countMarks;?>" style="width: 30px">
+			        <input type="hidden" name="classHeadId" value="<?php echo $classHeadID;?>" style="width: 30px">
 					<button style="float: right;s" type="submit" name="update" class="btn btn-success btn-flat btn-xs">
 					<i class="fa fa-sign-in"></i> <b>Update Marks</b>
 					</button>

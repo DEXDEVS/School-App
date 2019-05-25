@@ -105,6 +105,7 @@ class StdRegistrationController extends Controller
                 try{
                     $branch_id = Yii::$app->user->identity->branch_id;
                     $model->branch_id = $branch_id;
+
                     $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                     if(!empty($model->std_photo)){
                         $imageName = $model->std_name.'_photo'; 
