@@ -46,13 +46,8 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-<<<<<<< HEAD
-								<label><i class="fa fa-university" style="color:#4997e5;"></i> Select Class</label>
-								<select name="class_head" class="form-control" required>
-=======
-								<label>Select Class</label>
+								<label><i class="fa fa-university" style="color:#4997e5;"></i>Select Class</label>
 								<select name="class_head" id="class_id" class="form-control" onchange="getSections()" required>
->>>>>>> 0a458594b0ec0f8c6859f38e82c580b033892da9
 									<option value="">Select Class</option>
 									<?php 
 
@@ -82,12 +77,6 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label><i class="glyphicon glyphicon-th-large" style="color:#4997e5;"></i> Room</label>
-								<input type="text" name="room" class="form-control" required="">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
 								<label><i class="glyphicon glyphicon-th-list" style="color:#4997e5;"></i> Exam Type</label>
 								<select name="exam_type" class="form-control" required>
 									<option value="">Select Exam Type </option>
@@ -111,17 +100,25 @@
 	if(isset($_POST['submit']))
 	{
 		$exam_category 		= $_POST["exam_category"];
-		$headId 			= $_POST["class_head"];
+		$classId 			= $_POST["class_head"];
 		$exam_start_date 	= $_POST["exam_start_date"];
 		$exam_end_date 		= $_POST["exam_end_date"];
-		$room 				= $_POST["room"];
 		$exam_type 			= $_POST["exam_type"];
 
-		if($exam_type == "Regular"){
+	if($exam_type == "Regular"){
+		$class_sections = Yii::$app->db->createCommand("SELECT std_enroll_head_id, std_enroll_head_name
+		FROM  std_enrollment_head
+		WHERE class_name_id = '$classId'
+		")->queryAll();
 
+		if(empty($class_sections)){
+			Yii::$app->session->setFlash('warning', "Sections not found.");
+		} else {
+		
+		$countSections = count($class_sections);
 		$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
 		FROM  exams_criteria
-		WHERE class_id 				= '$headId' AND
+		WHERE class_id 				= '$classId' AND
 			  exam_start_date 		= '$exam_start_date' AND
 			  exam_end_date 		= '$exam_end_date'
 		")->queryAll();
@@ -134,13 +131,13 @@
 		INNER JOIN marks_weightage_details as mwd
 		ON mwh.marks_weightage_id = mwd.weightage_head_id
 		WHERE mwh.exam_category_id = '$exam_category'
-		AND mwh.class_id = '$headId'")->queryAll();
+		AND mwh.class_id = '$classId'")->queryAll();
 	if(empty($marks)){
 		Yii::$app->session->setFlash('warning',"Marks waitage for this category is not set.");
 	} else {
 		$subjects = Yii::$app->db->createCommand("SELECT std_subject_name
 		FROM std_subjects
-		WHERE class_id = '$headId'")->queryAll();
+		WHERE class_id = '$classId'")->queryAll();
 		$subject = $subjects[0]['std_subject_name'];
 		$subjectarray = explode(',', $subject);
 		$subjCount = count($subjectarray); ?>
@@ -150,6 +147,22 @@
 		<div class="well well-sm" style="text-align:center;border-left:2px solid;border-right:2px solid;margin-top:10px;background-color:#001F3F;color:white;">
 				<h4 style="font-size:25px;font-family:georgia;font-weight:bolder;">Exam Schedule</h4>
 		</div>
+	</div>
+	<div class="row">
+		<?php for ($i=0; $i < $countSections; $i++) { 
+			$classHeadId[$i] = $class_sections[$i]['std_enroll_head_id'];
+			?>
+			<div class="row container-fluid">
+				<div class="col-md-6">
+					<label>Section</label>
+					<input type="text"value="<?php echo $class_sections[$i]['std_enroll_head_name']; ?>" class="form-control" required="" >
+				</div>
+				<div class="col-md-6">
+					<label>Room</label>
+					<input type="text" name="exam_room[]" class="form-control">
+				</div>
+			</div>
+	<?php	} ?>
 	</div>		
 <div class="box-body" style="background-color:#fafafa;">
 	<form method="post">
@@ -168,7 +181,7 @@
 					INNER JOIN marks_weightage_details as mwd
 					ON mwh.marks_weightage_id = mwd.weightage_head_id
 					WHERE mwh.exam_category_id = '$exam_category'
-					AND mwh.class_id = '$headId'
+					AND mwh.class_id = '$classId'
 					AND mwh.subjects_id = '$subarray[$i]'")->queryAll();
 				
 				$markcount = count($marks);
@@ -289,12 +302,13 @@
 	
 
 	<?php 
-
 	foreach ($subarray as $key => $value) {
 		echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
 	}
 
-	 ?>
+	foreach ($classHeadId as $key => $value) {
+		echo '<input type="hidden" name="classHeadId[]" value="'.$value.'">';
+	} ?>
 	
 	</table>
 	 <div class="row">
@@ -303,12 +317,12 @@
 	 	</div>
 	 </div>
 	<input type="hidden" name="exam_category" value="<?php echo $exam_category;?>">
-	<input type="hidden" name="headId" value="<?php echo $headId;?>">
+	<input type="hidden" name="classId" value="<?php echo $classId;?>">
 	<input type="hidden" name="exam_start_date" value="<?php echo $exam_start_date;?>">
 	<input type="hidden" name="exam_end_date" value="<?php echo $exam_end_date;?>">
-	<input type="hidden" name="room" value="<?php echo $room;?>">
 	<input type="hidden" name="subjCount" value="<?php echo $subjCount;?>">
 	<input type="hidden" name="exam_type" value="<?php echo $exam_type;?>">
+	<input type="hidden" name="countSections" value="<?php echo $countSections;?>">
 	 </form>
 	</div>
 		<?php	
@@ -316,13 +330,14 @@
 		//closing of else for marks weightage
 		}
 		//closing of else for exam schedule date
+		}//closing of else for class_sections
 	} //closing of if(reguler)
 	
 	if($exam_type == "Supply"){
 		$examCriteriaData = Yii::$app->db->createCommand("SELECT exam_criteria_id
 			FROM  exams_criteria
 			WHERE exam_category_id 		= '$exam_category' AND
-				  class_id 				= '$headId' AND
+				  class_id 				= '$classId' AND
 				  exam_start_date 		= '$exam_start_date' AND
 				  exam_end_date 		= '$exam_end_date' AND
 				  exam_type				= 'Supply'
@@ -343,7 +358,7 @@
 				INNER JOIN exams_schedule as s
 				ON c.exam_criteria_id = s.exam_criteria_id
 				WHERE c.exam_category_id = $exam_category
-				AND c.class_id = $headId
+				AND c.class_id = $classId
 				AND c.exam_status = 'Result Announced'
 				AND c.exam_type = 'Regular'")->queryAll();
 
@@ -531,12 +546,12 @@
 	 	</div>
 	 </div>
 	<input type="hidden" name="exam_category" value="<?php echo $exam_category;?>">
-	<input type="hidden" name="headId" value="<?php echo $headId;?>">
+	<input type="hidden" name="classId" value="<?php echo $classId;?>">
 	<input type="hidden" name="exam_start_date" value="<?php echo $exam_start_date;?>">
 	<input type="hidden" name="exam_end_date" value="<?php echo $exam_end_date;?>">
 	<input type="hidden" name="exam_start_time" value="<?php echo $exam_start_time;?>">
 	<input type="hidden" name="exam_end_time" value="<?php echo $exam_end_time;?>">
-	<input type="hidden" name="room" value="<?php echo $room;?>">
+	<input type="hidden" name="room" value="<?php //echo $room;?>">
 	<input type="hidden" name="subjCount" value="<?php echo $countSubject;?>">
 	<input type="hidden" name="exam_type" value="<?php echo $exam_type;?>">
 	 </form>
@@ -561,10 +576,9 @@
 	{
 		// getting exam criteria fields
 		$exam_category 		= $_POST["exam_category"];
-		$headId 			= $_POST["headId"];
+		$classId 			= $_POST["classId"];
 		$exam_start_date 	= $_POST["exam_start_date"];
 		$exam_end_date 		= $_POST["exam_end_date"];
-		$room 				= $_POST["room"];
 		$exam_type			= $_POST["exam_type"];
 		// getting exam schedule fields
 		$subarray 		= $_POST["subarray"];
@@ -575,18 +589,19 @@
 		$subjCount 		= $_POST["subjCount"];
 		$exam_start_time 	= $_POST["exam_start_time"];
 		$exam_end_time 		= $_POST["exam_end_time"];
-
-		//var_dump($exam_category);
+		// getting exam room fields
+		$classHeadId 		= $_POST["classHeadId"];
+		$room 				= $_POST["exam_room"];
+		$countSections		= $_POST["countSections"];
 
 	$transection = Yii::$app->db->beginTransaction();
 	try{
 		$inactive = "Inactive";
 		$examCriteria = Yii::$app->db->createCommand()->insert('exams_criteria',[
     			'exam_category_id' 		=> $exam_category,
-				'class_id' 				=> $headId ,
+				'class_id' 				=> $classId ,
 				'exam_start_date' 		=> $exam_start_date,
 				'exam_end_date'			=> $exam_end_date ,
-				'exam_room' 			=> $room ,
 				'exam_status'			=> $inactive,
 				'exam_type'				=> $exam_type,
 				'created_at'			=> new \yii\db\Expression('NOW()'),
@@ -596,14 +611,13 @@
 			$examCriteriaId = Yii::$app->db->createCommand("SELECT exam_criteria_id
 			FROM  exams_criteria
 			WHERE exam_category_id 		= '$exam_category' AND
-				  class_id 				= '$headId' AND
+				  class_id 				= '$classId' AND
 				  exam_start_date 		= '$exam_start_date' AND
-				  exam_end_date 		= '$exam_end_date' AND
-				  exam_room 			= '$room'
+				  exam_end_date 		= '$exam_end_date'
 			")->queryAll();
 
 			$criteriaId = $examCriteriaId[0]['exam_criteria_id'];
-			var_dump($examCriteriaId);
+			
 		for ($i=0; $i <$subjCount ; $i++) { 
 			$examSchedule = Yii::$app->db->createCommand()->insert('exams_schedule',[
             			'exam_criteria_id' 	=> $criteriaId,
@@ -620,6 +634,18 @@
 					])->execute();
 				
 			} // closing of for loop
+
+			for ($i=0; $i <$countSections ; $i++) { 
+			$examRoom = Yii::$app->db->createCommand()->insert('exams_room',[
+            			'exam_criteria_id' 	=> $criteriaId,
+						'class_head_id' 	=> $classHeadId[$i],
+						'exam_room' 		=> $room[$i],
+						'created_at'		=> new \yii\db\Expression('NOW()'),
+						'created_by'		=> Yii::$app->user->identity->id, 
+					])->execute();
+				
+			} // closing of for loop
+
 			if($examSchedule){
 				$transection->commit();
 				Yii::$app->session->setFlash('success', "Exams Schedule managed successfully...!");
@@ -636,48 +662,3 @@
 ?>
 </body>
 </html>
-
-
-<script type="text/javascript">
-	function getSections(){
-		var classId = $("#class_id").val();
-		alert(classId);
-
-		$.ajax({
-        method:'POST',
-        data:{classId:classId},
-        url: './fetch-sections',
-        success: function(result){
-        	//console.log(result);
-            var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-            //var jsonResult = $.parseJSON(result);
-	        console.log(jsonResult);
-	        //     var student = jsonResult[0];
-	        //     $('#std_name').val(student['std_name']);
-	        //     $('#std_father_name').val(student['std_father_name']);
-	        //     $('#std_contact_no').val(student['std_contact_no']);
-	        //     $('#std_father_contact_no').val(student['std_father_contact_no']);
-	        //     $('#previous_class').val(student['std_previous_class']);
-	        //     $('#previous_class_rollno').val(student['std_roll_no']);
-	        //     $('#obtainedMarks').val(student['std_obtained_marks']);
-	        //     $('#totalMarks').val(student['std_total_marks']);
-	        //     $('#percentage').val(student['std_percentage']);
-	        //     $('#std_permanent_address').val(student['std_address']);
-	        //     $('#std_temporary_address').val(student['std_address']);
-	    },
-
-	         
-	        // $.ajax({
-         // url: 'php/test.php',
-         // method:'POST',
-         // data: parameters,
-         // success: function(msg) {
-         //    $('#test').append(msg);
-         // }
-    // })       
-    	});
-	}
-
-
-</script>
-
