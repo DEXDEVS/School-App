@@ -642,8 +642,8 @@
         url: './fetch-sections',
         success: function(result){
         	//console.log(result);
-	            //var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
-	            var jsonResult = jQuery.parseJSON(result);
+            var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
+            //var jsonResult = $.parseJSON(result);
 	        console.log(jsonResult);
 	        //     var student = jsonResult[0];
 	        //     $('#std_name').val(student['std_name']);

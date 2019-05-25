@@ -108,12 +108,12 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
 $script = <<< JS
 
-    $('#classId').change(function(){
+$('#classId').change(function(){
     var classId = $(this).val();
     $.get('./subjects/get-subjects',{classId : classId},function(data){
         // console.log(data);
         var data =  $.parseJSON(data);
-      //  console.log(data[0].length);
+        //  console.log(data[0].length);
         var subjectName = data[0];
         var subjectIds = data[1];
 
