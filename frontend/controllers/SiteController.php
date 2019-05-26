@@ -97,7 +97,7 @@ class SiteController extends Controller
     }
     public function actionChildren()
     { 
-        return $this->render('Children');
+        return $this->render('children');
     }
 
     public function actionPremiumVersion()

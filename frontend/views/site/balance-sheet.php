@@ -152,7 +152,7 @@
             // ending of foreach...
           ?>
           <tr class="success">
-            <td colspan="2" align="center"><b><i>Total Expense</b></i></td>
+            <td colspan="2" align="center"><b><i>Total Income</b></i></td>
             <td align="center"><b><i><?php echo number_format($totalIncome, 0); ?></i></b></td>
           </tr>
         </tbody>
