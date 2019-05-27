@@ -61,6 +61,7 @@ return [
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
+                'user-profile' => 'site/user-profile',
                 'premium-version' => 'site/premium-version',
                 'income-expense' => 'site/income-expense',
                 'income-expense-sub' => 'site/income-expense-sub',

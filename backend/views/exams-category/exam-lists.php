@@ -3,23 +3,25 @@
 	// getting `exam_category_id` from `exams_criteria`
 	$examCateogryId = $_GET['id'];
 
-	$inactiveSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'inactive'
+	$currentYear = date('Y');
+
+	$inactiveSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Inactive' AND YEAR(exam_start_date) = '$currentYear'
 					")->queryAll();
 	$countinactiveSchedules = count($inactiveSchedules);
 
-	$announcedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'announced'
+	$announcedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Announced' AND YEAR(exam_start_date) = '$currentYear'
 					")->queryAll();
 	$countannouncedSchedules = count($announcedSchedules);
 
-	$conductedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'conducted'
+	$conductedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Conducted' AND YEAR(exam_start_date) = '$currentYear'
 					")->queryAll();
 	$countconductedSchedules = count($conductedSchedules);
 
-	$ResultPrepareSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared'
+	$ResultPrepareSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared' AND YEAR(exam_start_date) = '$currentYear'
 					")->queryAll();
 	$countResultPrepareSchedules = count($ResultPrepareSchedules);
 
-	$ResultAnnouncedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced'
+	$ResultAnnouncedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced' AND YEAR(exam_start_date) = '$currentYear'
 					")->queryAll();
 	$countResultAnnouncedSchedules = count($ResultAnnouncedSchedules);
 
@@ -53,14 +55,14 @@
 
 	<!-- heading div start -->
 	<div class="row">
-			<div class="col-md-12">
-				<div class="well well-sm" style="padding:0px; border-left:2px solid;border-right:2px solid;">
-						<h3 style="text-align: center;font-family: georgia;font-size:30px;">
-							<?php echo $examCategoryName[0]['category_name']; ?>(<?php echo date('Y'); ?>)
-						</h3>
-						<p style="text-align: center;font-weight: bolder;">All Schedules</p>
-				</div>
+		<div class="col-md-12">
+			<div class="well well-sm" style="padding:0px; border-left:2px solid;border-right:2px solid;">
+					<h3 style="text-align: center;font-family: georgia;font-size:30px;">
+						<?php echo $examCategoryName[0]['category_name']; ?>(<?php echo date('Y'); ?>)
+					</h3>
+					<p style="text-align: center;font-weight: bolder;">All Schedules</p>
 			</div>
+		</div>
 	</div>
 	<!-- heading div close -->
 	<div class="row">

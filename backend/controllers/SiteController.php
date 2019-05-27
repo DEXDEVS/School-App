@@ -28,7 +28,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['logout', 'index', 'system-settings', 
                             'system-configuration', 'students', 'employees', 
-                            'communication', 'fee','premium-version', 'income-expense', 'income-expense-sub', 'fee-statistics-main' , 'fee-statistics-sub','passwords'],
+                            'communication', 'fee','premium-version', 'income-expense', 'income-expense-sub', 'fee-statistics-main' , 'fee-statistics-sub','passwords','user-profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -68,6 +68,10 @@ class SiteController extends Controller
      public function actionPasswords()
     {
         return $this->render('passwords');
+    }
+     public function actionUserProfile()
+    {
+        return $this->render('user-profile');
     }
 
     /**
