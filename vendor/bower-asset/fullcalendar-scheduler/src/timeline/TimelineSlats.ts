@@ -34,7 +34,7 @@ export default class TimelineSlats extends Component<TimelineSlatsProps> {
   }
 
   renderDates(tDateProfile: TimelineDateProfile) {
-    let { theme } = this
+    let { theme, view, dateEnv } = this
     let { slotDates, isWeekStarts } = tDateProfile
 
     let html =
@@ -58,6 +58,16 @@ export default class TimelineSlats extends Component<TimelineSlatsProps> {
 
     this.slatColEls = findElements(this.el, 'col')
     this.slatEls = findElements(this.el, 'td')
+
+    for (let i = 0; i < slotDates.length; i++) {
+      view.publiclyTrigger('dayRender', [
+        {
+          date: dateEnv.toDate(slotDates[i]),
+          el: this.slatEls[i],
+          view
+        }
+      ])
+    }
 
     this.outerCoordCache = new PositionCache(
       this.el,
@@ -107,7 +117,7 @@ export default class TimelineSlats extends Component<TimelineSlatsProps> {
       '><div></div></td>'
   }
 
-  updateSize() {
+  updateSize() { // just updates position caches
     this.outerCoordCache.build()
     this.innerCoordCache.build()
   }

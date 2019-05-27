@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-
+$y = date('y');
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -16,7 +16,8 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'std_inquiry_no',
+        'attribute' => 'std_inquiry_no',
+        
     ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',

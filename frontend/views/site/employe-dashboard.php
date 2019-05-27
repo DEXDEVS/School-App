@@ -14,6 +14,8 @@ use yii\helpers\Url;
       $branch_id = Yii::$app->user->identity->branch_id;
       $userType = Yii::$app->user->identity->user_type;
       
+      //echo $userType;
+      
 if ($userType == 'Teacher') { 
 
       $teacherCnic = Yii::$app->user->identity->username; 
@@ -87,7 +89,7 @@ if ($userType == 'Teacher') {
             <div class="icon">
               <i class="glyphicon glyphicon-eye-open" style="font-size: 70px;"></i>
             </div>
-            <a href="./premium-version" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="./view-datesheet" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -371,17 +373,6 @@ if ($userType == 'Teacher') {
         <!-- Notice Panel CLose -->
       </div>
       <!-- Notice Row CLose -->
-
-  <!-- Calendar Start -->
-  <!-- <div class="row container-fluid">
-    <div class="col-md-8 bg-success bg-info well-info" style="color: #001F3F;">
-      <?= \yii2fullcalendar\yii2fullcalendar::widget(array(
-           // 'events'=> $events,
-        ));
-      ?>
-    </div>
-  </div> -->
-  <!-- Calendar Close -->
 
     </section>
     <!-- /.content -->
@@ -1350,8 +1341,7 @@ Modal::end();
  <?php }?>
   <?php
       if ($userType == 'Parent') { 
-          $parentCnic = Yii::$app->user->identity->username;
-          echo $parentCnic; 
+          $parentCnic = Yii::$app->user->identity->username; 
        $parentName = Yii::$app->db->createCommand("SELECT  guardian_name FROM  std_guardian_info WHERE guardian_cnic = '$parentCnic'")->queryAll();
         ?>
         <div class="site-index">

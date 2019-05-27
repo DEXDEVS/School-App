@@ -1,4 +1,3 @@
-
 <?php
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -97,6 +96,7 @@ return [
                 'std-fee-details-update' => 'std-fee-details/update',
                 //emp-info
                 'emp-info' => 'emp-info/index',
+                'emp-info-create' => 'emp-info/create',
                 'emp-info-view' => 'emp-info/view',
                 'emp-info-update' => 'emp-info/update',
                 'emp-reference-update' => 'emp-reference/update',
@@ -105,6 +105,7 @@ return [
                 'emp-download-doc' => 'emp-documents/download-doc',
                 'emp-type' => 'emp-type/index',
                 'emp-designation' => 'emp-designation/index',
+                'print-id-card' => 'emp-info/print-id-card',
                 
                 //fee-transaction-detail
                 'class-account' => 'fee-transaction-detail/class-account',
@@ -147,18 +148,27 @@ return [
                 'update-datesheet' => 'exams-category/update-datesheet',
                 'view-result-cards' => 'exams-category/view-result-cards',
                 'exams-category-view' => 'exams-category/view',
+                'emp-exam-attendance' => 'exams-category/emp-exam-attendance',
+                'exam-cateogry-details' => 'exams-category/exam-cateogry-details',
+                'view-marks-weightage' => 'exams-category/view-marks-weightage',
+                'view-marks-sheet' => 'exams-category/view-marks-sheet',
+                'class-sections-marks-lists' => 'exams-category/class-sections-marks-lists',
                 //marks-details
                 'grades' => 'grades/index',
                 'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
-                'view-marks-sheet' => 'marks-details/view-marks-sheet',
+                //'view-marks-sheet' => 'marks-details/view-marks-sheet',
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
+                'fetch-sections' => 'exams-schedule/fetch-sections',
+                'marks-weightage-head' => 'marks-weightage-head/index',
+                //'marks-weightage-view' => 'marks-weightage-head/view',
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
                 'employess-att-report' => 'emp-attendance/employess-att-report',
                 'final-attendance' => 'emp-attendance/final-attendance',
                 'emp-attendance' => 'emp-attendance/index',
+                'emp-attendance-create' => 'emp-attendance/create',
                 'emp-leave' => 'emp-leave/index',
 
                 // account-transactions
@@ -166,8 +176,15 @@ return [
                 'balance-sheet' => 'account-transactions/balance-sheet',
                 'passwords' => 'site/passwords',
 
+                //timeTable
+                'fetch-subjects' => 'time-table-head/fetch-subjects',
+
+                'time-table-view' => 'time-table-head/time-table-view',
+
             ],
         ],
     ],
     'params' => $params,
 ];
+
+

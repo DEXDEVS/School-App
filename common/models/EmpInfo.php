@@ -65,7 +65,7 @@ class EmpInfo extends \yii\db\ActiveRecord
             [['emp_reg_no', 'emp_marital_status', 'emp_gender', 'group_by'], 'string'],
             [['emp_designation_id', 'emp_type_id', 'emp_branch_id', 'emp_passing_year', 'created_by', 'updated_by'], 'integer'],
             [['emp_salary'], 'number'],
-            [['emp_reg_no','emp_temp_address','created_at', 'updated_at','created_by', 'updated_by','emp_cv', 'degree_scan_copy', 'emp_photo'], 'safe'],
+            [['emp_reg_no','emp_temp_address','created_at', 'updated_at','created_by', 'updated_by','emp_cv', 'degree_scan_copy', 'emp_photo','barcode'], 'safe'],
             [['emp_name', 'emp_father_name', 'emp_qualification', 'emp_institute_name'], 'string', 'max' => 50],
             [['emp_cnic', 'emp_contact_no'], 'string', 'max' => 15],
             [['emp_perm_address', 'emp_temp_address', 'emp_photo', 'degree_scan_copy','emp_cv'], 'string', 'max' => 200],

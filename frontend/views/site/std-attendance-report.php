@@ -17,26 +17,11 @@
         $branchName1 = $branches[0]['branch_name'];
         $branchCode1 = $branches[0]['branch_code'];
     }
-    $month = date('Y-m');
     // Main Branch Queries...
-    $income = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 5 AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-    $totalIncomeMain = $income[0]['date'];
-    // getting total expense of the current month...
-    $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 5 AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-    $totalExpenseMain = $expense[0]['date'];
-    $remainingMain = $totalIncomeMain - $totalExpenseMain;
-    //-----------------------------------------
-    // Sub Branch Queries...
-    $income = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 6 AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-    $totalIncomeSub = $income[0]['date'];
-    // getting total expense of the current month...
-    $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 6 AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-    $totalExpenseSub = $expense[0]['date'];
-    $remainingSub = $totalIncomeSub - $totalExpenseSub;
-    $incomeMain = Array();
-    $expenseMain = Array();
-    $incomeSub = Array();
-    $expenseSub = Array();
+    $stdPresentsArray  = Array();
+    $stdAbsentsArray  = Array();
+    $stdLeavesArray   = Array();
+    $expenseSub  = Array();
     for ($i=1; $i <=12; $i++) { 
         $month = date('Y-').$i;
         if ($month == "2019-10") {
@@ -50,28 +35,37 @@
             $month = date('Y-').'0'.$i;
         }
         // getting std-attendance of present students...
-        $income = Yii::$app->db->createCommand("SELECT SUM(status) FROM std_attendance WHERE branch_id = 5 AND status = 'P' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-        var_dump($income);
+        $stdPresents = Yii::$app->db->createCommand("SELECT COUNT(status) FROM std_attendance WHERE branch_id = 5 AND status = 'P' AND DATE_FORMAT(date ,'%Y-%m') = '$month'")->queryAll();
+        $stdPresentArray[$i] = $stdPresents[0]['COUNT(status)'];
+        // getting std-attendance of absent students...
+        $stdAbsents = Yii::$app->db->createCommand("SELECT COUNT(status) FROM std_attendance WHERE branch_id = 5 AND status = 'A' AND DATE_FORMAT(date ,'%Y-%m') = '$month'")->queryAll();
+        $stdAbsentsArray[$i] = $stdAbsents[0]['COUNT(status)'];
+        // getting std-attendance of absent students...
+        $stdLeaves = Yii::$app->db->createCommand("SELECT COUNT(status) FROM std_attendance WHERE branch_id = 5 AND status = 'L' AND DATE_FORMAT(date ,'%Y-%m') = '$month'")->queryAll();
+        $stdLeavesArray[$i] = $stdLeaves[0]['COUNT(status)'];
+        // $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 5 AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
+        // $expenseMain[$i] = $expense[0]['date'];
+        // // income/expense sub branch...
+        // $incomee = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 6 AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
+        // $incomeSub[$i] = $incomee[0]['date'];
+        // //var_dump($income);
+        // $expensee = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 6 AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
+        // $expenseSub[$i] = $expensee[0]['date'];
 
-        $income = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 5 AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-        $incomeMain[$i] = $income[0]['date'];
-        $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 5 AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-        $expenseMain[$i] = $expense[0]['date'];
-        // income/expense sub branch...
-        $incomee = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 6 AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-        $incomeSub[$i] = $incomee[0]['date'];
-        //var_dump($income);
-        $expensee = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = 6 AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-        $expenseSub[$i] = $expensee[0]['date'];
     }
+    print_r($stdPresents);
+
+    die();
+
     // income main branch....
-    $incomeLength = count($incomeMain);
+    $incomeLength = count($stdPresents);
     for ($i=1; $i <=$incomeLength; $i++) { 
-        if ($incomeMain[$i] == NULL) {
-            $incomeMain[$i] = 0;
+        if ($stdPresentsArray[$i] == NULL) {
+            $stdPresentsArray[$i] = 0;
         }
     }
-    $netIncome = implode(',', $incomeMain);
+    $stdTotalPresents = implode(',', $$stdPresentsArray);
+    ;
     // expense main branch...
     $expenseLength = count($expenseMain);
     for ($i=1; $i <=$expenseLength; $i++) { 

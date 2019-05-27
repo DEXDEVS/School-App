@@ -8,6 +8,9 @@
     // Stduent Personal Info..... 
     $stdPersonalInfo = Yii::$app->db->createCommand("SELECT * FROM std_personal_info WHERE std_id = '$id'")->queryAll();
     $number =  $stdPersonalInfo[0]['std_contact_no'];
+    $barcode =  $stdPersonalInfo[0]['barcode'];
+  echo $barcode;
+
     // Student Photo...
     $photo = $stdPersonalInfo[0]['std_photo'];
     //echo $photo;
@@ -70,6 +73,7 @@
 	        <li><a href="./std-personal-info">Back</a></li>
 	    </ol>
   </section>
+  <img src="<?php echo $barcode; ?>">
     <!-- Content Start -->
   	<section class="content">
 

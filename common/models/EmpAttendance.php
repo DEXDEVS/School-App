@@ -53,6 +53,7 @@ class EmpAttendance extends \yii\db\ActiveRecord
         return [
             'att_id' => 'Att ID',
             'emp_id' => 'Employee Name',
+            'emp_cnic' => 'Employee CNIC',
             'att_date' => 'Date',
             'check_in' => 'Check In',
             'check_out' => 'Check Out',

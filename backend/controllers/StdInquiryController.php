@@ -99,6 +99,7 @@ class StdInquiryController extends Controller
     {
         $request = Yii::$app->request;
         $model = new StdInquiry();  
+        $y = date('y');
 
         if($request->isAjax){
             /*
@@ -118,6 +119,7 @@ class StdInquiryController extends Controller
             }else if($model->load($request->post()) && $model->validate()){
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
+                    
                     $branch_id = Yii::$app->user->identity->branch_id;
                     $model->branch_id = $branch_id;
                     $preClass = $model->std_previous_class[0];
@@ -127,15 +129,22 @@ class StdInquiryController extends Controller
                     $intrestedClass = $model->std_intrested_class[0];
                     $model->std_intrested_class = $intrestedClass;
 
-                    
                     $model->created_by = Yii::$app->user->identity->id; 
                     $model->created_at = new \yii\db\Expression('NOW()');
                     $model->updated_by = '0';
                     $model->updated_at = '0';
                     $model->save();
 
+                    // update std_inquiry_no....
+                    $std_inquiry_id = StdInquiry::find()->max('std_inquiry_id');
+                    $inquiry_no = "STD-Y".$y."-0".$std_inquiry_id;
+                    $std_inquiry = Yii::$app->db->createCommand()->update('std_inquiry', [
+                        'std_inquiry_no' => $inquiry_no],
+                        ['std_inquiry_id' => $std_inquiry_id]
+                    )->execute();
+
                     $transaction->commit();
-                        Yii::$app->session->setFlash('warning', "You have successfully add record...!");
+                        Yii::$app->session->setFlash('success', "You Have Successfully Add New Inquiry...!");
                 } catch (Exception $e) {
                     $transaction->rollBack();
                     Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
