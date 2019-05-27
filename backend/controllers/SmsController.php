@@ -299,7 +299,7 @@ class SmsController extends Controller
         return $this->render('sms');
     }
 
-    public function sendSMS($to, $message){
+    public static function sendSMS($to, $message){
         // Configuration variables
         $type = "xml";
         $id = "Brookfieldclg";
