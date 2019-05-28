@@ -24,6 +24,11 @@
 	// getting exam `category_name` from `exams_cateogry`
 	$examCategoryName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCateogryId'
 					")->queryAll();
+
+	// getting all info from `exams_room` table
+	$examRoom = Yii::$app->db->createCommand("SELECT * FROM exams_room WHERE exam_criteria_id = '$criteriaId'")->queryAll();
+	$countRooms = count($examRoom);
+
  ?>
 	<!DOCTYPE html>
 <html>
@@ -94,12 +99,6 @@
 								<input type="date" name="exam_end_date" class="form-control" value="<?php echo $examCriteriaData[0]['exam_end_date'];?>">
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label><i class="glyphicon glyphicon-th-large" style="color:#4997e5;"></i> Room</label>
-								<input type="text" name="room" class="form-control" value="<?php echo $examCriteriaData[0]['exam_room'];?>">
-							</div>
-						</div>
 						<div class="col-md-4">	
 							<div class="form-group">
 								<label><i class="glyphicon glyphicon-stats" style="color:#4997e5;"></i> Select Status</label>
@@ -110,17 +109,15 @@
 								<?php if($examCriteriaData[0]['exam_status'] != "Inactive"){?>
 										<option value="Inactive">Inactive</option>
 								<?php }
-								if($examCriteriaData[0]['exam_status'] != "announced"){?>
-									 <option value="announced">Announce</option>
+								if($examCriteriaData[0]['exam_status'] != "Announced"){?>
+									 <option value="Announced">Announced</option>
 								<?php } 
-								if($examCriteriaData[0]['exam_status'] != "conducted"){?>?>
-									 <option value="conducted">Conducted</option>
+								if($examCriteriaData[0]['exam_status'] != "Conducted"){?>?>
+									 <option value="Conducted">Conducted</option>
 									<?php 	} ?>
 								</select>
 							</div>
 						</div>
-					</div>
-					<div class="row">
 						<div class="col-md-4">
 							<div class="form-group">
 								<label><i class="glyphicon glyphicon-th-list" style="color:#4997e5;"></i> Exam Type</label>
@@ -130,6 +127,44 @@
 					</div>
 					<div class="box-header" style="text-align: center;">
 						<h3 class="well well-sm" style="border-left:2px solid;border-right:2px solid; font-family:georgia;background-color:#001F3F;color:white;">Exams Schedule</h3>
+					</div>
+					<div class="row">
+						<?php for ($i=0; $i <$countRooms ; $i++) { 
+							$class_id = $examRoom[$i]['class_head_id'];
+							$classHeadName = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$class_id'")->queryAll();
+							$room=$examRoom[$i]['exam_room'];
+
+							$classHeadId[$i] = $class_id;
+						?>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Section</label>
+								<input type="text" value="<?php echo $classHeadName[0]['std_enroll_head_name']; ?>" class="form-control" readonly="" >
+							</div>
+						</div>
+						<div class="col-md-6">	
+							<div class="form-group">
+								<label><i class="glyphicon glyphicon-th-list" style="color:#4997e5;"></i> Room </label>
+
+								<select name="exam_room[]" class="form-control">
+									<?php 
+									 $ExamRoom = Yii::$app->db->createCommand("SELECT room_name FROM rooms WHERE room_id = '$room'")->queryAll();
+									 $ExpectRoom = Yii::$app->db->createCommand("SELECT room_id, room_name FROM rooms WHERE room_id != '$room'")->queryAll();
+
+														 	
+									?>
+										<option value="<?php echo $room; ?>">
+											<?php echo $ExamRoom[0]['room_name']; ?>
+										</option>
+									<?php foreach ($ExpectRoom as $key => $value) { ?>
+										<option value="<?php echo $value['room_id']; ?>">
+											<?php echo $value['room_name']; ?>
+										</option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+					<?php } ?>
 					</div>
 					<?php for ($i=0; $i <$count ; $i++) {
 					 	$subjectId = $examScheduleData[$i]['subject_id'];
@@ -210,10 +245,13 @@
 					<input type="hidden" name="headId" value="<?php echo $classId;?>">
 					<input type="hidden" name="subjCount" value="<?php echo $count;?>">
 					<input type="hidden" name="criteriaId" value="<?php echo $criteriaId;?>">
+					<input type="hidden" name="countRooms" value="<?php echo $countRooms;?>">
 					<?php 
-
 					foreach ($subarray as $key => $value) {
 						echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
+					}
+					foreach ($classHeadId as $key => $value) {
+						echo '<input type="hidden" name="classHeadId[]" value="'.$value.'">';
 					}
 					?>
 					<div class="row">

@@ -80,15 +80,23 @@
 					</div><hr>
 					<div class="row">
 						<?php for ($i=0; $i < $countRooms; $i++) { 
-							$class_id = $examRoom[$i]
+							$class_id = $examRoom[$i]['class_head_id'];
+							$classHeadName = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$class_id'")->queryAll();
+							
+							$exam_room = $examRoom[$i]['exam_room'];
+							$roomName = Yii::$app->db->createCommand("SELECT room_name FROM rooms WHERE room_id = '$exam_room'")->queryAll();
 							?>
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<table class="table">
 								<tr>
-									<b>Section</b>
-									<center>
-										<?php echo $examRoom[0]['class_name']; ?>
-									</center>
+									<td>
+										<b>Section: </b>
+										<?php echo $classHeadName[0]['std_enroll_head_name']; ?>
+									</td>
+									<td>
+										<b>Room: </b>
+										<?php echo $roomName[0]['room_name']; ?>
+									</td>
 								</tr>
 							</table>
 						</div>
