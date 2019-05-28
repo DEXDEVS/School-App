@@ -30,11 +30,11 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'request-password-reset'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details','user-profile'],
+                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details','user-profile','reset-password'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

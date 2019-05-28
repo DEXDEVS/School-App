@@ -1,14 +1,17 @@
 <?php 
-    $userID = Yii::$app->user->id;
-    $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
-    // Student Photo...
-    // var_dump($user);
-   
-    if(empty($user)){
-        $userPhoto = 'backend/web/images/default.png';
-    } else {
-         $userPhoto = $user[0]['user_photo'];
+    if (isset($_GET['id'])) {
+        $userID = $_GET['id'];
+        $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     }
+    else {
+        $userID = Yii::$app->user->id;
+        $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+   
+        if(empty($user)){
+            $userPhoto = 'backend/web/images/default.png';
+        } else {
+             $userPhoto = $user[0]['user_photo'];
+        }
 ?>
 <aside class="main-sidebar">
     <section class="sidebar">
@@ -211,3 +214,4 @@
     </section>
 
 </aside>
+<?php } ?>

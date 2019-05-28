@@ -6,6 +6,10 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
 
 /**
  * Site controller
@@ -22,7 +26,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','request-password-reset'],
                         'allow' => true,
                     ],
                     [
