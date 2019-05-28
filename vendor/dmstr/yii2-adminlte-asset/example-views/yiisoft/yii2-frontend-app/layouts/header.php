@@ -6,7 +6,13 @@ use yii\helpers\Html;
 ?>
 
 <?php 
-    $userID = Yii::$app->user->id;
+    if (isset($_GET['id'])) {
+        $userID = $_GET['id'];
+        $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+    }
+    else{
+       $userID = Yii::$app->user->id; 
+    
     $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     // Student Photo...
 
@@ -295,3 +301,4 @@ use yii\helpers\Html;
         </div>
     </nav>
 </header>
+<?php } ?>

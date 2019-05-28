@@ -18,9 +18,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-
+                
+                <?php  
+                    if (isset($_GET['id'])) {
+                        $userID = $_GET['id'];
+                        $user   = Yii::$app->db->createCommand("SELECT email FROM user WHERE id = $userID")->queryAll(); 
+                        $email  = $user[0]['email'];
+                ?>
+                <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'value' => $email]) ?>    
+                <?php } else { ?>    
+                    <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+                <?php } ?>    
                 <div class="form-group">
                     <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
                 </div>
