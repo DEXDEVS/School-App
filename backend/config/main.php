@@ -61,17 +61,21 @@ return [
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
+                'passwords' => 'site/passwords',
                 'user-profile' => 'site/user-profile',
                 'premium-version' => 'site/premium-version',
                 'income-expense' => 'site/income-expense',
                 'income-expense-sub' => 'site/income-expense-sub',
                 'fee-statistics-main' => 'site/fee-statistics-main',
                 'fee-statistics-sub' => 'site/fee-statistics-sub',
+                //-------------------------------------------
                 //institute
                 'institute' => 'institute/index',
+                //-------------------------------------------
                 //branches
                 'branches' => 'branches/index',
                 'branches-view' => 'branches/view',
+                //-------------------------------------------
                 //system-configuration
                 'departments-view' => 'departments/view',
                 'std-sessions' => 'std-sessions/index',
@@ -81,6 +85,7 @@ return [
                 'std-subjects' => 'std-subjects/index',
                 'fee-type' => 'fee-type/index',
                 'std-fee-pkg' => 'std-fee-pkg/index',
+                //-------------------------------------------
                 //std_inquiry
                 'std-inquiry' => 'std-inquiry/index',
                 'inquiry-report' => 'std-inquiry/inquiry-report',
@@ -95,6 +100,7 @@ return [
                 'std-ice-info-update' => 'std-ice-info/update',
                 'std-academic-info-update' => 'std-academic-info/update',
                 'std-fee-details-update' => 'std-fee-details/update',
+                //-------------------------------------------
                 //emp-info
                 'emp-info' => 'emp-info/index',
                 'emp-info-create' => 'emp-info/create',
@@ -107,8 +113,8 @@ return [
                 'emp-type' => 'emp-type/index',
                 'emp-designation' => 'emp-designation/index',
                 'print-id-card' => 'emp-info/print-id-card',
-                
-                //fee-transaction-detail
+                //-------------------------------------------
+                //fee-transaction
                 'class-account' => 'fee-transaction-detail/class-account',
                 'fee-transaction-detail-fee-voucher' => 'fee-transaction-detail/fee-voucher',
                 'fee-transaction-detail-collect-voucher' => 'fee-transaction-detail/collect-voucher',
@@ -125,14 +131,17 @@ return [
                 'monthly-fee-report' =>'fee-transaction-detail/monthly-fee-report',
                 'monthly-report-head' =>'fee-transaction-detail/monthly-report-head',
                 'monthly-report-detail' => 'fee-transaction-detail/monthly-report-detail',
+                //-------------------------------------------
                 //std-enrollment
                 'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-enrollment-head' => 'std-enrollment-head/index',
                 //'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-promote' => 'std-enrollment-head/std-promote',
+                //-------------------------------------------
                 // teacher-details
                 'teacher-subject-assign-head' => 'teacher-subject-assign-head/index',
                 'teacher-subject-assign-head-view' => 'teacher-subject-assign-head/view',
+                //-------------------------------------------
                 //comunication
                 'emails' => 'emails/index',
                 'emails-create' => 'emails/create',
@@ -142,6 +151,7 @@ return [
                 'custom-sms' => 'custom-sms/index',
                 'msg-of-day' => 'msg-of-day/index',
                 'events' => 'events/index',
+                //-------------------------------------------
                 //exams-category
                 'exams-category' => 'exams-category/index',
                 'exam-lists' => 'exams-category/exam-lists',
@@ -154,6 +164,7 @@ return [
                 'view-marks-weightage' => 'exams-category/view-marks-weightage',
                 'view-marks-sheet' => 'exams-category/view-marks-sheet',
                 'class-sections-marks-lists' => 'exams-category/class-sections-marks-lists',
+                //-------------------------------------------
                 //marks-details
                 'grades' => 'grades/index',
                 'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
@@ -164,6 +175,7 @@ return [
                 'fetch-sections' => 'exams-schedule/fetch-sections',
                 'marks-weightage-head' => 'marks-weightage-head/index',
                 //'marks-weightage-view' => 'marks-weightage-head/view',
+                //-------------------------------------------
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
                 'employess-att-report' => 'emp-attendance/employess-att-report',
@@ -171,15 +183,13 @@ return [
                 'emp-attendance' => 'emp-attendance/index',
                 'emp-attendance-create' => 'emp-attendance/create',
                 'emp-leave' => 'emp-leave/index',
-
+                //-------------------------------------------
                 // account-transactions
                 'account-transactions' => 'account-transactions/index',
                 'balance-sheet' => 'account-transactions/balance-sheet',
-                'passwords' => 'site/passwords',
-
+                //-------------------------------------------
                 //timeTable
                 'fetch-subjects' => 'time-table-head/fetch-subjects',
-
                 'time-table-view' => 'time-table-head/time-table-view',
 
             ],
