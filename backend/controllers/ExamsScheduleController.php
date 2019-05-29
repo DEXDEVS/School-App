@@ -31,7 +31,7 @@ class ExamsScheduleController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','manage-exams','exam-date-sheet','fetch-sections'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','manage-exams','exam-date-sheet','fetch-sections','manage-exam-sections'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -50,6 +50,11 @@ class ExamsScheduleController extends Controller
      public function beforeAction($action) {
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
+    }
+
+     public function actionManageExamSections()
+    { 
+        return $this->render('manage-exam-sections');
     }
 
     public function actionManageExams()

@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<form method="POST" action="manage-exams">
+			<form method="POST" action="manage-exam-sections">
 				 <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
 				<div class="row">
 					<div class="col-md-4">	
@@ -149,34 +149,7 @@ if(isset($_POST['submit'])) {
 				</div>
 				<!-- closing box-header -->
 				<form method="post">
-				<div class="row">
-				<?php $rooms = Yii::$app->db->createCommand("SELECT *
-					FROM rooms")->queryAll();
-					$countRoom = count($rooms);
-					for ($i=0; $i < $countSections; $i++) { 
-						$classHeadId[$i] = $class_sections[$i]['std_enroll_head_id'];
-						?>
-						<div class="row container-fluid">
-							<div class="col-md-6">
-								<label>Section</label>
-								<input type="text"value="<?php echo $class_sections[$i]['std_enroll_head_name']; ?>" class="form-control" readonly="" >
-							</div>
-							<div class="col-md-6">
-								<label>Room</label>
-								<select name="room[]" class="form-control" required>
-									<option value="">Select Room</option>
-									<?php for ($m=0; $m< $countRoom; $m++) { 
-										$roomId = $rooms[$m]['room_id'];
-										?>
-										<option value="<?php echo $roomId; ?>">
-										 	<?php echo $rooms[$m]['room_name']; ?>
-										 </option>
-									<?php } ?>
-								</select>
-							</div>
-						</div>
-			<?php	} ?>
-				</div>		
+					
 				<div class="box-body" style="background-color:#fafafa;">
 					
 					<table class="table table-stripped"> 
@@ -299,10 +272,7 @@ if(isset($_POST['submit'])) {
 						foreach ($subarray as $key => $value) {
 							echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
 						}
-
-						foreach ($classHeadId as $key => $value) {
-							echo '<input type="hidden" name="classHeadId[]" value="'.$value.'">';
-						} ?>
+						 ?>
 						
 					</table>
 						 <div class="row">
@@ -316,7 +286,6 @@ if(isset($_POST['submit'])) {
 						<input type="hidden" name="exam_end_date" value="<?php echo $exam_end_date;?>">
 						<input type="hidden" name="subjCount" value="<?php echo $subjCount;?>">
 						<input type="hidden" name="exam_type" value="<?php echo $exam_type;?>">
-						<input type="hidden" name="countSections" value="<?php echo $countSections;?>">
 					</form>
 				</div>
 				<!-- closing box-body -->
@@ -563,94 +532,6 @@ if(isset($_POST['submit'])) {
 	 
 	</div>
 </div>
-	 <?php 
-	if(isset($_POST['save']))
-	{
-		// getting exam criteria fields
-		$exam_category 		= $_POST["exam_category"];
-		$classId 			= $_POST["classId"];
-		$exam_start_date 	= $_POST["exam_start_date"];
-		$exam_end_date 		= $_POST["exam_end_date"];
-		$exam_type			= $_POST["exam_type"];
-		// getting exam schedule fields
-		$subarray 			= $_POST["subarray"];
-		$date 				= $_POST["date"];
-		$Invagilator 		= $_POST["Invagilator"];
-		$fullmarks 			= $_POST["fullmarks"];
-		$passingmarks 		= $_POST["passingmarks"];
-		$subjCount 			= $_POST["subjCount"];
-		$exam_start_time 	= $_POST["exam_start_time"];
-		$exam_end_time 		= $_POST["exam_end_time"];
-		// getting exam room fields
-		$classHeadId 		= $_POST["classHeadId"];
-		$room 				= $_POST["room"];
-		$countSections		= $_POST["countSections"];
-		
-	$transection = Yii::$app->db->beginTransaction();
-	try{
-		$inactive = "Inactive";
-		$examCriteria = Yii::$app->db->createCommand()->insert('exams_criteria',[
-    			'exam_category_id' 		=> $exam_category,
-				'class_id' 				=> $classId ,
-				'exam_start_date' 		=> $exam_start_date,
-				'exam_end_date'			=> $exam_end_date ,
-				'exam_status'			=> $inactive,
-				'exam_type'				=> $exam_type,
-				'created_at'			=> new \yii\db\Expression('NOW()'),
-				'created_by'			=> Yii::$app->user->identity->id, 
-			])->execute();
-		if ($examCriteria) {
-			$examCriteriaId = Yii::$app->db->createCommand("SELECT exam_criteria_id
-			FROM  exams_criteria
-			WHERE exam_category_id 		= '$exam_category' AND
-				  class_id 				= '$classId' AND
-				  exam_start_date 		= '$exam_start_date' AND
-				  exam_end_date 		= '$exam_end_date'
-			")->queryAll();
-
-			$criteriaId = $examCriteriaId[0]['exam_criteria_id'];
-			
-		for ($i=0; $i <$subjCount ; $i++) { 
-			$examSchedule = Yii::$app->db->createCommand()->insert('exams_schedule',[
-            			'exam_criteria_id' 	=> $criteriaId,
-						'subject_id' 		=> $subarray[$i],
-						'emp_id' 			=> $Invagilator[$i],
-						'date'				=> $date[$i],
-						'exam_start_time'	=> $exam_start_time[$i],
-						'exam_end_time'		=> $exam_end_time[$i],
-						'full_marks'		=> $fullmarks[$i],
-						'passing_marks'		=> $passingmarks[$i],
-						'status'			=> "not",
-						'created_at'		=> new \yii\db\Expression('NOW()'),
-						'created_by'		=> Yii::$app->user->identity->id, 
-					])->execute();
-				
-			} // closing of for loop
-
-			for ($i=0; $i <$countSections ; $i++) { 
-			$examRoom = Yii::$app->db->createCommand()->insert('exams_room',[
-            			'exam_criteria_id' 	=> $criteriaId,
-						'class_head_id' 	=> $classHeadId[$i],
-						'exam_room' 		=> $room[$i],
-						'created_at'		=> new \yii\db\Expression('NOW()'),
-						'created_by'		=> Yii::$app->user->identity->id, 
-					])->execute();
-				
-			} // closing of for loop
-
-			if($examSchedule){
-				$transection->commit();
-				Yii::$app->session->setFlash('success', "Exams Schedule managed successfully...!");
-			}
-		} // closing of exam criteria
-	//closing of try block
-	} catch(Exception $e){
-		$transection->rollback();
-		echo $e;
-		Yii::$app->session->setFlash('warning', "Exam Schedule not managed. Try again!");
-	}
-}
-// closing of isset
-?>
+	
 </body>
 </html>
