@@ -1,28 +1,26 @@
 <?php 
-
-	
 	$examCateogryId = $_GET['id'];
 
 	$currentYear = date('Y');
 
 	//getting scheduled classes
-	$inactiveSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Inactive' AND YEAR(exam_start_date) = '$currentYear' OR YEAR(exam_end_date) = '$currentYear'
+	$inactiveSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE (exam_category_id = $examCateogryId AND exam_status = 'Inactive' AND YEAR(exam_start_date) = $currentYear) OR ( YEAR(exam_end_date) = $currentYear AND exam_category_id = $examCateogryId AND exam_status = 'Inactive' )
 					")->queryAll();
 	$countinactiveSchedules = count($inactiveSchedules);
 
-	$announcedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Announced' AND YEAR(exam_start_date) = '$currentYear' OR YEAR(exam_end_date) = '$currentYear'
+	$announcedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE (exam_category_id = $examCateogryId AND exam_status = 'Announced' AND YEAR(exam_start_date) = $currentYear) OR ( YEAR(exam_end_date) = $currentYear AND exam_category_id = $examCateogryId AND exam_status = 'Announced' )
 					")->queryAll();
 	$countannouncedSchedules = count($announcedSchedules);
 
-	$conductedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Conducted' AND YEAR(exam_start_date) = '$currentYear' OR YEAR(exam_end_date) = '$currentYear'
+	$conductedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE (exam_category_id = $examCateogryId AND exam_status = 'Conducted' AND YEAR(exam_start_date) = $currentYear) OR ( YEAR(exam_end_date) = $currentYear AND exam_category_id = $examCateogryId AND exam_status = 'Conducted' )
 					")->queryAll();
 	$countconductedSchedules = count($conductedSchedules);
 
-	$ResultPrepareSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Prepared' AND YEAR(exam_start_date) = '$currentYear' OR YEAR(exam_end_date) = '$currentYear'
+	$ResultPrepareSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE (exam_category_id = $examCateogryId AND exam_status = 'Result Prepeard' AND YEAR(exam_start_date) = $currentYear) OR ( YEAR(exam_end_date) = $currentYear AND exam_category_id = $examCateogryId AND exam_status = 'Result Prepeard' )
 					")->queryAll();
 	$countResultPrepareSchedules = count($ResultPrepareSchedules);
 
-	$ResultAnnouncedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE exam_category_id = '$examCateogryId' AND exam_status = 'Result Announced' AND YEAR(exam_start_date) = '$currentYear' OR YEAR(exam_end_date) = '$currentYear'
+	$ResultAnnouncedSchedules = Yii::$app->db->createCommand("SELECT class_id, exam_type, YEAR(exam_start_date), YEAR(exam_end_date) FROM exams_criteria WHERE (exam_category_id = $examCateogryId AND exam_status = 'Result Announced' AND YEAR(exam_start_date) = $currentYear) OR ( YEAR(exam_end_date) = $currentYear AND exam_category_id = $examCateogryId AND exam_status = 'Result Announced' )
 					")->queryAll();
 	$countResultAnnouncedSchedules = count($ResultAnnouncedSchedules);
 
@@ -517,27 +515,29 @@
 		$headId 			= $_POST["headId"];
 		$exam_start_date 	= $_POST["exam_start_date"];
 		$exam_end_date 		= $_POST["exam_end_date"];
-		$room 				= $_POST["room"];
 		$exam_status 		= $_POST["exam_status"];
 		$exam_type 			= $_POST["examType"];
 		// getting exam schedule fields
-		$subarray 		= $_POST["subarray"];
-		$date 			= $_POST["date"];
-		$Invagilator 	= $_POST["Invagilator"];
+		$subarray 			= $_POST["subarray"];
+		$date 				= $_POST["date"];
+		$Invagilator 		= $_POST["Invagilator"];
 		$exam_start_time 	= $_POST["exam_start_time"];
 		$exam_end_time 		= $_POST["exam_end_time"];
 		// $fullmarks 		= $_POST["fullmarks"];
 		// $passingmarks 	= $_POST["passingmarks"];
 		$subjCount 		= $_POST["subjCount"];
-
+		// getting exam room fields
+		$classHeadId = $_POST["classHeadId"];
+		$exam_room = $_POST["exam_room"];
+		$countRooms = $_POST["countRooms"];
+		
 	$transection = Yii::$app->db->beginTransaction();
 	try{
-		$examCriteriaUpdate = Yii::$app->db->createCommand()->update('exams_criteria', 				[
+		$examCriteriaUpdate = Yii::$app->db->createCommand()->update('exams_criteria', [
 						'exam_category_id' 		=> $exam_category,
 						'class_id' 	=> $headId ,
 						'exam_start_date' 		=> $exam_start_date,
 						'exam_end_date'			=> $exam_end_date ,
-						'exam_room' 			=> $room ,
 						'exam_status'			=> $exam_status,
 						'exam_type'				=> $exam_type,
 						'updated_at'			=> new \yii\db\Expression('NOW()'),
@@ -547,19 +547,30 @@
                     )->execute();
 		if ($examCriteriaUpdate) {
 			
-		for ($i=0; $i <$subjCount ; $i++) {
-			 $examScheduleUpdate = Yii::$app->db->createCommand()->update('exams_schedule',[
-						'emp_id' 			=> $Invagilator[$i],
-						'date'				=> $date[$i],
-						'exam_start_time'		=> $exam_start_time[$i],
-						'exam_end_time'			=> $exam_end_time[$i],
-						'updated_at'		=> new \yii\db\Expression('NOW()'),
-						'updated_by'		=> Yii::$app->user->identity->id,
-                        ],
-                        ['exam_criteria_id' => $criteriaId , 'subject_id' => $subarray[$i],]
-                    )->execute();
-				
+			for ($i=0; $i <$subjCount ; $i++) {
+				$examScheduleUpdate = Yii::$app->db->createCommand()->update('exams_schedule',[
+							'emp_id' 			=> $Invagilator[$i],
+							'date'				=> $date[$i],
+							'exam_start_time'		=> $exam_start_time[$i],
+							'exam_end_time'			=> $exam_end_time[$i],
+							'updated_at'		=> new \yii\db\Expression('NOW()'),
+							'updated_by'		=> Yii::$app->user->identity->id,
+	                        ],
+	                        ['exam_criteria_id' => $criteriaId , 'subject_id' => $subarray[$i],]
+	                    )->execute();
+					
 			} // closing of for loop
+
+			for ($j=0; $j <$countRooms ; $j++) {
+				$examRoomUpdate = Yii::$app->db->createCommand()->update('exams_room',[
+					'exam_room' 		=> $exam_room[$j],
+					'updated_at'		=> new \yii\db\Expression('NOW()'),
+					'updated_by'		=> Yii::$app->user->identity->id,
+                    ],
+                    ['exam_criteria_id' => $criteriaId, 'class_head_id' => $classHeadId[$j]]
+                    )->execute(); 				
+			} // closing of for loop
+
 			if($examScheduleUpdate){
 				$transection->commit();
 				Yii::$app->session->setFlash('success', "Exams schedule updated successfully...!");
