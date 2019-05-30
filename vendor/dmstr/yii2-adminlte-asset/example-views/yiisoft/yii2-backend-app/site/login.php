@@ -47,13 +47,22 @@ $fieldOptions2 = [
             ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
 
         <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-6">
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
             </div>
+            <div class="col-xs-6">
+                <span style="float: right;">
+                    <?= Html::a(' Reset Password', ['../site/request-password-reset'],
+                        ['title'=> 'Click here to reset password','class'=>'btn btn-warning btn-sm fa fa-key'])
+                    ?>
+                </span>
+            </div>
+        </div>
+        <!-- <div class="row">
             <div class="col-md-12" style="padding-bottom:10px;">
                 <a href="passwords" style="float: right;padding:5px;" class="label label-info">View Users</a>
             </div><br>
-        </div>
+        </div> -->
 
         <div class="row">
             <!-- /.col -->
