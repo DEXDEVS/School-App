@@ -56,13 +56,15 @@ return [
             'showScriptName' => false,
             'rules' => [
                 //site
-                'admin' => 'admin/',
+                'admin/' => 'admin/',
+                'admin/' => 'admin/login',
                 'user' => 'admin/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
                 'passwords' => 'site/passwords',
                 'user-profile' => 'site/user-profile',
+                'update-profile' => 'site/update-profile',
                 'premium-version' => 'site/premium-version',
                 'income-expense' => 'site/income-expense',
                 'income-expense-sub' => 'site/income-expense-sub',

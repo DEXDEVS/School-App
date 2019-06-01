@@ -15,9 +15,7 @@
 		<h4 style="font-weight:bolder;"><i class="glyphicon glyphicon-hand-right"></i> User Profile</h4>
 	</div>
 	<div class="box box-primary col-md-12">
-		<!-- <div class="box-header">
-		
-		</div> -->
+		<!-- <div class="box-header"></div> -->
 		<div class="box-body">
 			<table class="table table-hover table-responsive table-striped table-bordered">
 				<thead>
@@ -40,7 +38,7 @@
 						<td class="text-center"><?php echo $user[0]['email']; ?></td>
 						<td class="text-center"><?php echo $branchName[0]['branch_name']; ?></td>
 						<td class="text-center">
-							<?= Html::a(' Update',['update-profile','id'=>$id],['class'=>'btn btn-primary btn-sm fa fa-edit']) ?>
+							<?= Html::a(' Update',['update-profile'],['class'=>'btn btn-primary btn-sm fa fa-edit']) ?>
 							<?= Html::a(' Reset Password',['../site/request-password-reset','id'=>$id],['class'=>'btn btn-warning btn-sm fa fa-key']) ?>
 						</td>
 					</tr>
