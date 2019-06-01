@@ -26,13 +26,13 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error','request-password-reset'],
+                        'actions' => ['login', 'error'],
                         'allow' => true,
                     ],
                     [
                         'actions' => ['logout', 'index', 'system-settings', 
                             'system-configuration', 'students', 'employees', 
-                            'communication', 'fee','premium-version', 'income-expense', 'income-expense-sub', 'fee-statistics-main' , 'fee-statistics-sub','passwords','user-profile'],
+                            'communication', 'fee','premium-version', 'income-expense', 'income-expense-sub', 'fee-statistics-main' , 'fee-statistics-sub','passwords','user-profile', 'request-password-reset'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
