@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<form method="POST" action="manage-exam-sections">
+			<form method="POST" action="manage-exams">
 				 <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
 				<div class="row">
 					<div class="col-md-4">	
@@ -148,7 +148,7 @@ if(isset($_POST['submit'])) {
 					</div>
 				</div>
 				<!-- closing box-header -->
-				<form method="post">
+				<form method="post" action="manage-exam-sections">
 					
 				<div class="box-body" style="background-color:#fafafa;">
 					
@@ -202,28 +202,7 @@ if(isset($_POST['submit'])) {
 												<label><i class="glyphicon glyphicon-calendar" style="color:#4997e5;"></i> Date</label>
 												<input type="date" name="date[]" class="form-control" required="">
 											</div>
-											<div class="form-group">
-												<label><i class="glyphicon glyphicon-user" style="color:#4997e5;"></i> Invagilator</label>
-												<select name="Invagilator[]" class="form-control" required>
-											<?php 	$teacher = Yii::$app->db->createCommand("
-													SELECT emp_id,emp_name
-													FROM emp_info WHERE group_by ='Faculty'
-													")->queryAll();
-													$countteacher = count($teacher); ?>
-
-													<option value="">Select invagilator</option>
-													<?php 
-													for ($j=0; $j <$countteacher ; $j++) { ?>
-													<option value="<?php
-															echo $teacher[$j]['emp_id'];
-													?>">
-													<?php
-															echo $teacher[$j]['emp_name'];
-													?>
-													</option>
-													<?php } ?>
-												</select>
-											</div>
+											
 										</div>
 										<div class="col-md-2">
 											<div class="form-group">
