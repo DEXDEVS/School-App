@@ -100,6 +100,7 @@ return [
                 'std-personal-info-std-photo' => 'std-personal-info/std-photo',
                 'std-guardian-info-update' => 'std-guardian-info/update',
                 'std-ice-info-update' => 'std-ice-info/update',
+                'std-academic-info' => 'std-academic-info/index',
                 'std-academic-info-update' => 'std-academic-info/update',
                 'std-fee-details-update' => 'std-fee-details/update',
                 //-------------------------------------------
