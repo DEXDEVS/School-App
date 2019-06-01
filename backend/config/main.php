@@ -165,7 +165,7 @@ return [
                 'exam-cateogry-details' => 'exams-category/exam-cateogry-details',
                 'view-marks-weightage' => 'exams-category/view-marks-weightage',
                 'view-marks-sheet' => 'exams-category/view-marks-sheet',
-                'class-sections-marks-lists' => 'exams-category/class-sections-marks-lists',
+                'view-sections' => 'exams-category/view-sections',
                 //-------------------------------------------
                 //marks-details
                 'grades' => 'grades/index',
