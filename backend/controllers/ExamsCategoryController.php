@@ -31,7 +31,7 @@ class ExamsCategoryController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','exam-lists','view-datesheet','update-datesheet','view-result-cards','emp-exam-attendance','exam-category-details','view-marks-weightage','view-marks-sheet','class-sections-marks-lists'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','exam-lists','view-datesheet','update-datesheet','view-result-cards','emp-exam-attendance','exam-category-details','view-marks-weightage','view-marks-sheet','view-sections'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,9 +46,9 @@ class ExamsCategoryController extends Controller
             ],
         ];
     }
-     public function actionClassSectionsMarksLists()
+     public function actionViewSections()
     {   
-        return $this->render('class-sections-marks-lists');
+        return $this->render('view-sections');
     }
      public function actionViewMarksSheet()
     {   

@@ -162,6 +162,9 @@
 														    <span class="caret"></span></button>
 														    <ul class="dropdown-menu">
 														      	<li>
+														      		<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-sections?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>&startYear=<?php echo $startYear;?>&endYear=<?php echo $endYear;?>"><i class="fa fa-eye"></i> View Sections</a>
+														      	</li>
+														      	<li>
 														      		<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>&startYear=<?php echo $startYear;?>&endYear=<?php echo $endYear;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 														      	</li>
 														      	<li>
@@ -520,17 +523,11 @@
 		// getting exam schedule fields
 		$subarray 			= $_POST["subarray"];
 		$date 				= $_POST["date"];
-		$Invagilator 		= $_POST["Invagilator"];
 		$exam_start_time 	= $_POST["exam_start_time"];
 		$exam_end_time 		= $_POST["exam_end_time"];
 		// $fullmarks 		= $_POST["fullmarks"];
 		// $passingmarks 	= $_POST["passingmarks"];
-		$subjCount 		= $_POST["subjCount"];
-		// getting exam room fields
-		$classHeadId = $_POST["classHeadId"];
-		$exam_room = $_POST["exam_room"];
-		$countRooms = $_POST["countRooms"];
-		
+		$subjCount 		= $_POST["subjCount"];		
 	$transection = Yii::$app->db->beginTransaction();
 	try{
 		$examCriteriaUpdate = Yii::$app->db->createCommand()->update('exams_criteria', [
@@ -549,7 +546,6 @@
 			
 			for ($i=0; $i <$subjCount ; $i++) {
 				$examScheduleUpdate = Yii::$app->db->createCommand()->update('exams_schedule',[
-							'emp_id' 			=> $Invagilator[$i],
 							'date'				=> $date[$i],
 							'exam_start_time'		=> $exam_start_time[$i],
 							'exam_end_time'			=> $exam_end_time[$i],
@@ -560,17 +556,6 @@
 	                    )->execute();
 					
 			} // closing of for loop
-
-			for ($j=0; $j <$countRooms ; $j++) {
-				$examRoomUpdate = Yii::$app->db->createCommand()->update('exams_room',[
-					'exam_room' 		=> $exam_room[$j],
-					'updated_at'		=> new \yii\db\Expression('NOW()'),
-					'updated_by'		=> Yii::$app->user->identity->id,
-                    ],
-                    ['exam_criteria_id' => $criteriaId, 'class_head_id' => $classHeadId[$j]]
-                    )->execute(); 				
-			} // closing of for loop
-
 			if($examScheduleUpdate){
 				$transection->commit();
 				Yii::$app->session->setFlash('success', "Exams schedule updated successfully...!");

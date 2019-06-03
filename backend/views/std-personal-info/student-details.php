@@ -76,7 +76,37 @@
   <img src="<?php echo $barcode; ?>">
     <!-- Content Start -->
   	<section class="content">
-
+    <?php 
+      if (isset($_GET['sms'])) {
+        $number = $_GET['to'];
+        $num = str_replace('-', '', $number);
+        $to = str_replace('+', '', $num);
+        $message = $_GET['message'];
+        // sms ....
+        $type = "xml";
+        $id = "Brookfieldclg";
+        $pass = "college42";
+        $lang = "English";
+        $mask = "Brookfield";
+        // Data for text message
+        $message = urlencode($message);
+        // Prepare data for POST request
+        $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
+        // Send the POST request with cURL
+        $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch); //This is the result from SMS4CONNECT
+        curl_close($ch);
+        
+        if ($result) { ?>
+            <div id="alert" class="alert alert-success">
+              <?php echo $result; ?>
+            </div>
+        <?php }
+      }
+    ?>
       <?php 
         // display success message
         if (Yii::$app->session->hasFlash('success')) { ?>
@@ -214,7 +244,7 @@
                                       <span id="remaining" class="pull-right">160 characters remaining </span>
                                     <span id="messages" style="text-align: center;">/ Count SMS(0)</span>
                                     <input type="hidden" value="" id="count"><br>
-                                    <input type="text" value="" id="sms" style="border: none; color: green; font-weight: bold;">
+                                    <input type="text" value="" id="sms" style="border: none; color: green; font-weight: bold;" class="form-control">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                                   </p>
                                 </div>
@@ -308,9 +338,47 @@
                     <div class="col-md-5">
                       <p style="font-size: 20px; color: #3C8DBC;"><i class="fa fa-info-circle" style="font-size: 20px;"></i> Guardian Information</p>
                     </div>
-                    <div class="col-md-2 col-md-offset-5">
+                    <div class="col-md-3 col-md-offset-4">
                       <?=Html::a(' Edit',['./std-guardian-info-update','id'=>$stdGuardianId,'ids'=>$id],['class'=>'fa fa-edit btn btn-primary btn-sm','title'=>'Edit', 'data-toggle'=>'tooltip']) ?>
-                    </div>
+                    
+                    <button type="button" class="btn btn-info btn-sm fa fa-comments" data-toggle="modal" data-target="#modal-parent">
+                          Send SMS
+                        </button>
+                        <div class="modal fade" id="modal-parent">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">SMS</h4>
+                              </div>
+                              <form method="get" action="">
+                                <div class="modal-body">  
+                                  <label>Reciever Name</label>
+                                  <input type="hidden" name="to" value="<?php echo $stdGuardianInfo[0]['guardian_contact_no_1']; ?>" class="form-control">
+                                  <input type="text" name="std_name" value="<?php echo $stdGuardianInfo[0]['guardian_name']; ?>" class="form-control" readonly=""><br>
+                                  <label>SMS Content</label>
+                                    <textarea name="message" rows="5" class="form-control" id="messagee"></textarea>
+                                    <p>
+                                    <span><b>NOTE:</b> 160 characters = 1 SMS</span>
+                                      <span id="remainingg" class="pull-right">160 characters remaining </span>
+                                    <span id="messagess" style="text-align: center;">/ Count SMS(0)</span>
+                                    <input type="hidden" value="" id="countt" class="form-control"><br>
+                                    <input type="text" value="" id="smss" style="border: none; color: green; font-weight: bold;" class="form-control">
+                                    <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                  </p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-danger btn-sm pull-left" data-dismiss="modal">Close</button>
+                                  <button type="submit" name="sms" class="btn btn-primary btn-sm fa fa-comments-o"> Send SMS</button>
+                                </div>
+                              </form>
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div>
+                      </div>
                   </div><hr>
                   <!-- guardian info start -->
                     <div class="row">
@@ -579,33 +647,31 @@ $(document).ready(function(){
         //var sms = parseInt(countSMS * numbers);
         $('#sms').val("Your Consumed SMS: (" + countSMS+ ")");
     });
+    // for parent sms modal...
+    var $remaining = $('#remainingg'),
+    $messagess = $remaining.next();
+    var numbers = '<?php //echo $countNumbers; ?>';
+    $('#messagee').keyup(function(){
+        var chars = this.value.length,
+        messagess = Math.ceil(chars / 160),
+        remaining = messagess * 160 - (chars % (messagess * 160) || messagess * 160);
+        $messagess.text('/ Count SMS (' + messagess + ')');
+        $messagess.css('color', 'red');
+        $remaining.text(remaining + ' characters remaining');
+      
+        $('#countt').val(messagess);
+      var countSMS = $('#countt').val();
+        //var sms = parseInt(countSMS * numbers);
+        $('#smss').val("Your Consumed SMS: (" + countSMS+ ")");
+    });
 });
 </script>
-
-<?php 
-  if (isset($_GET['sms'])) {
-    $to = $_GET['to'];
-    $message = $_GET['message'];
-    // sms ....
-    $type = "xml";
-    $id = "Brookfieldclg";
-    $pass = "college42";
-    $lang = "English";
-    $mask = "Brookfield";
-    // Data for text message
-    $message = urlencode($message);
-    // Prepare data for POST request
-    $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
-    // Send the POST request with cURL
-    $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = curl_exec($ch); //This is the result from SMS4CONNECT
-    curl_close($ch);
-    
-    if ($result) {
-        Yii::$app->session->setFlash('success', "SMS sent successfully...").$result;
-    }
-  }
-?>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+// Remove Flash Alert....
+$( document ).ready(function(){
+    $('#alert').fadeIn(function(){
+       $('#alert').delay(5000).fadeOut(); 
+    });
+});
+</script>

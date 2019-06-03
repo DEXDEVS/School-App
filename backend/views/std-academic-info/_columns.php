@@ -24,15 +24,15 @@ return [
         'attribute'=>'class_name_id',
         'value'=>'className.class_name'
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'subject_combination',
-        'value'=>'subject_combination'
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'previous_class',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'subject_combination',
+    //     'value'=>'subject_combination'
+    // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'previous_class',
+    // ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'passing_year',

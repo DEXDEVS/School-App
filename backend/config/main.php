@@ -56,13 +56,15 @@ return [
             'showScriptName' => false,
             'rules' => [
                 //site
-                'admin' => 'admin/',
+                'admin/' => 'admin/',
+                'admin/' => 'admin/login',
                 'user' => 'admin/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
                 'passwords' => 'site/passwords',
                 'user-profile' => 'site/user-profile',
+                'update-profile' => 'site/update-profile',
                 'premium-version' => 'site/premium-version',
                 'income-expense' => 'site/income-expense',
                 'income-expense-sub' => 'site/income-expense-sub',
@@ -98,6 +100,7 @@ return [
                 'std-personal-info-std-photo' => 'std-personal-info/std-photo',
                 'std-guardian-info-update' => 'std-guardian-info/update',
                 'std-ice-info-update' => 'std-ice-info/update',
+                'std-academic-info' => 'std-academic-info/index',
                 'std-academic-info-update' => 'std-academic-info/update',
                 'std-fee-details-update' => 'std-fee-details/update',
                 //-------------------------------------------
@@ -163,7 +166,7 @@ return [
                 'exam-cateogry-details' => 'exams-category/exam-cateogry-details',
                 'view-marks-weightage' => 'exams-category/view-marks-weightage',
                 'view-marks-sheet' => 'exams-category/view-marks-sheet',
-                'class-sections-marks-lists' => 'exams-category/class-sections-marks-lists',
+                'view-sections' => 'exams-category/view-sections',
                 //-------------------------------------------
                 //marks-details
                 'grades' => 'grades/index',
@@ -172,6 +175,7 @@ return [
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
+                'manage-exam-sections' => 'exams-schedule/manage-exam-sections',
                 'fetch-sections' => 'exams-schedule/fetch-sections',
                 'marks-weightage-head' => 'marks-weightage-head/index',
                 //'marks-weightage-view' => 'marks-weightage-head/view',

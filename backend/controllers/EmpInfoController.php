@@ -34,7 +34,7 @@ class EmpInfoController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-details', 'print-id-card'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-details', 'print-id-card' ,'bulk-sms'],
                         'allow' => true,
                         'roles' => ['@','view'],
                     ],
@@ -45,6 +45,7 @@ class EmpInfoController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
+                    'bulk-sms' => ['post'],
                 ],
             ],
         ];
@@ -495,6 +496,53 @@ class EmpInfoController extends Controller
             return $this->redirect(['index']);
         }
        
+    }
+
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
+    public function actionBulkSms()
+    {      
+        $request = Yii::$app->request;
+        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        $array = array();
+        foreach ( $pks as $pk ) {
+            
+            $empNumbers = Yii::$app->db->createCommand("SELECT emp_contact_no FROM emp_info WHERE emp_id = '$pk'")->queryAll();
+            $number = $empNumbers[0]['emp_contact_no'];
+            $numb = str_replace('-', '', $number);
+            $num = str_replace('+', '', $numb);
+
+            $array[] = $num;
+        }
+
+        $to = implode(',', $array);
+
+        if (isset($_POST['message'])) {
+            $message = $_POST['message'];
+        
+            $type = "xml";
+            $id = "Brookfieldclg";
+            $pass = "college42";
+            $lang = "English";
+            $mask = "Brookfield";
+            $message = urlencode($message);
+            // Prepare data for POST request
+            $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
+            // Send the POST request with cURL
+            $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec($ch); //This is the result from SMS4CONNECT
+            curl_close($ch);     
+
+            Yii::$app->session->setFlash('success', $result);
+
+        }
+        return $this->redirect(['./emp-info']);
     }
 
     /**

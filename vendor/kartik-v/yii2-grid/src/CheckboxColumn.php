@@ -42,7 +42,7 @@ class CheckboxColumn extends YiiCheckboxColumn
     public $rowHighlight = true;
 
     /**
-     * @var string highlight CSS class to be applied for highlighting the row. Defaults to [[GridView::TYPE_DANGER]].
+     * @var string highlight CSS class to be applied for highlighting the row. Defaults to [[GridView::TYPE_SUCCESS]].
      */
     public $rowSelectedClass;
 
@@ -69,7 +69,7 @@ class CheckboxColumn extends YiiCheckboxColumn
             'width' => '50px'
         ]);
         if (!isset($this->rowSelectedClass)) {
-            $this->rowSelectedClass = $this->grid->getCssClass(GridView::BS_TABLE_DANGER);
+            $this->rowSelectedClass = $this->grid->getCssClass(GridView::BS_TABLE_SUCCESS);
         }
         $id = $this->grid->options['id'];
         $view = $this->grid->getView();
