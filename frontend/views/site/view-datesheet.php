@@ -156,9 +156,12 @@
              	$criteriaId = $dateSheetCheck[0]['exam_criteria_id'];
 
 
-             	$examRoom = Yii::$app->db->createCommand("SELECT room_id, room_name
-             	FROM exams_room WHERE exam_criteria_id = '$criteriaId' AND class_head_id = $headId ")->queryAll();
-print_r($examRoom);
+             	$examRoom = Yii::$app->db->createCommand("SELECT r.room_name
+             	FROM exams_room as e
+             	INNER JOIN rooms as r
+             	ON e.exam_room = r.room_id
+             	WHERE e.exam_criteria_id = '$criteriaId' AND e.class_head_id = $headId ")->queryAll();
+
              	$categoryName = Yii::$app->db->createCommand("SELECT category_name
              	FROM exams_category WHERE exam_category_id = '$catId' ")->queryAll();
 				 ?>
@@ -214,7 +217,7 @@ print_r($examRoom);
 								?>
 							</td>
 							<td><?php echo  $subjectsName[0]['subject_name']; ?></td>
-							<td><?php// echo  $dateSheet[0]['exam_room']; ?></td>
+							<td><?php echo  $examRoom[0]['room_name']; ?></td>
 						</tr>
 						<?php } //closing of foreach ?>
 					</tbody>
