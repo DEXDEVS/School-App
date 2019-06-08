@@ -122,50 +122,6 @@ use yii\helpers\Html;
                         <li class="footer"><a href="#">See All Messages</a></li>
                     </ul>
                 </li>
-                <li class="dropdown notifications-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                        <?php 
-                            //branch Id
-                            $branch_id=Yii::$app->user->identity->branch_id;
-                              //SQL query to fetch the no of pending leaves
-                            $emp_leave = Yii::$app->db->createCommand("SELECT * FROM emp_leave WHERE status='Pending' AND branch_id='$branch_id'")->queryAll();
-                            $no_of_leaves=count($emp_leave);
-                            if ($no_of_leaves>0) { ?>
-                                <span class="label label-warning"><b><?php echo $no_of_leaves; ?></b></span>
-                        <?php }
-                        ?>
-                        
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header">You have <?php echo $no_of_leaves; ?> notifications</li>
-                        <li>
-                            <!-- inner menu: contains the actual data -->
-                            <ul class="menu">
-                                <li>
-                                    <?php
-                                        if ($no_of_leaves>0) { ?>
-                                            <a href="./emp-leave">
-                                                <i class="fa fa-users text-aqua"></i><b><?php echo $no_of_leaves; ?></b>  employe leaves are pending 
-                                            </a>
-                                    <?php } // ending of if... ?>
-                                </li>
-                                <?php 
-                                    foreach ($emp_leave as $key => $value) {
-                                        $emp_id=$value["emp_id"];
-                                        $emp_name = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info WHERE emp_id=$emp_id")->queryAll();        
-                                ?>
-                                <li>
-                                    <a href="./emp-leave">
-                                        <i class="fa fa-user text-yellow"></i><?php echo $emp_name[0]["emp_name"]." ".$value["leave_type"]; ?> 
-                                    </a>
-                                </li>
-                               <?php } // ending of foreach... ?>
-                            </ul>
-                        </li>
-                        <!-- <li class="footer"><a href="#">View all</a></li> -->
-                    </ul>
-                </li>
 
                 <!-- Tasks: style can be found in dropdown.less -->
                 <li class="tasks-menu invisible">
@@ -214,6 +170,53 @@ use yii\helpers\Html;
                     </ul>
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
+
+                <!-- Notifications Starts -->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <?php 
+                            //branch Id
+                            $branch_id=Yii::$app->user->identity->branch_id;
+                              //SQL query to fetch the no of pending leaves
+                            $emp_leave = Yii::$app->db->createCommand("SELECT * FROM emp_leave WHERE status='Pending' AND branch_id='$branch_id'")->queryAll();
+                            $no_of_leaves=count($emp_leave);
+                            if ($no_of_leaves>0) { ?>
+                                <span class="label label-warning"><b><?php echo $no_of_leaves; ?></b></span>
+                        <?php }
+                        ?>
+                        
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have <?php echo $no_of_leaves; ?> notifications</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <?php
+                                        if ($no_of_leaves>0) { ?>
+                                            <a href="./emp-leave">
+                                                <i class="fa fa-users text-aqua"></i><b><?php echo $no_of_leaves; ?></b>  employe leaves are pending 
+                                            </a>
+                                    <?php } // ending of if... ?>
+                                </li>
+                                <?php 
+                                    foreach ($emp_leave as $key => $value) {
+                                        $emp_id=$value["emp_id"];
+                                        $emp_name = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info WHERE emp_id=$emp_id")->queryAll();        
+                                ?>
+                                <li>
+                                    <a href="./emp-leave">
+                                        <i class="fa fa-user text-yellow"></i><?php echo $emp_name[0]["emp_name"]." ".$value["leave_type"]; ?> 
+                                    </a>
+                                </li>
+                               <?php } // ending of foreach... ?>
+                            </ul>
+                        </li>
+                        <!-- <li class="footer"><a href="#">View all</a></li> -->
+                    </ul>
+                </li>
+                <!-- Notifications close -->
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
