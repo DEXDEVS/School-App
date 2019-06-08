@@ -56,8 +56,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 //site
-                'admin/' => 'admin/',
-                'admin/' => 'admin/login',
+                'admin' => 'admin',
                 'user' => 'admin/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/login',
