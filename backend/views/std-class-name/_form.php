@@ -20,18 +20,22 @@ use yii\helpers\ArrayHelper;
             )?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'class_name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'class_type')->dropDownList([ 'School' => 'School', 'College' => 'College','University' => 'University', 'Academy' => 'Academy', 'Madrisa' => 'Madrisa'], ['prompt' => 'Select class type']) ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'class_name_description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'class_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'status')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ], ['prompt' => '']) ?>
+            <?= $form->field($model, 'class_name_description')->textInput(['maxlength' => true]) ?>
         </div>  
     </div>
- 
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'status')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ], ['prompt' => '']) ?>
+        </div>
+    </div>
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
