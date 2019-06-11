@@ -51,6 +51,10 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_email',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'std_photo',

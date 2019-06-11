@@ -56,13 +56,14 @@ return [
             'showScriptName' => false,
             'rules' => [
                 //site
-                'admin' => 'admin/',
+                'admin' => 'admin',
                 'user' => 'admin/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
                 'passwords' => 'site/passwords',
                 'user-profile' => 'site/user-profile',
+                'update-profile' => 'site/update-profile',
                 'premium-version' => 'site/premium-version',
                 'income-expense' => 'site/income-expense',
                 'income-expense-sub' => 'site/income-expense-sub',
@@ -98,6 +99,7 @@ return [
                 'std-personal-info-std-photo' => 'std-personal-info/std-photo',
                 'std-guardian-info-update' => 'std-guardian-info/update',
                 'std-ice-info-update' => 'std-ice-info/update',
+                'std-academic-info' => 'std-academic-info/index',
                 'std-academic-info-update' => 'std-academic-info/update',
                 'std-fee-details-update' => 'std-fee-details/update',
                 //-------------------------------------------

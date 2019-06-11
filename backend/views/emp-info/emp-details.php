@@ -76,6 +76,37 @@
   </section>
   <!-- main content start  -->
 	<section class="content">
+    <?php 
+      if (isset($_GET['sms'])) {
+        $number = $_GET['to'];
+        $num = str_replace('-', '', $number);
+        $to = str_replace('+', '', $num);
+        $message = $_GET['message'];
+        // sms ....
+        $type = "xml";
+        $id = "Brookfieldclg";
+        $pass = "college42";
+        $lang = "English";
+        $mask = "Brookfield";
+        // Data for text message
+        $message = urlencode($message);
+        // Prepare data for POST request
+        $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
+        // Send the POST request with cURL
+        $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch); //This is the result from SMS4CONNECT
+        curl_close($ch);
+        
+        if ($result) { ?>
+            <div id="alert" class="alert alert-success">
+              <?php echo $result; ?>
+            </div>
+        <?php }
+      }
+    ?>
     <div class="row">
       <div class="col-md-3">
         <!-- Profile Image Start -->
@@ -191,7 +222,7 @@
                                       <span id="remaining" class="pull-right">160 characters remaining </span>
                                     <span id="messages" style="text-align: center;">/ Count SMS(0)</span>
                                     <input type="hidden" value="" id="count"><br>
-                                    <input type="text" value="" id="sms" style="border: none; color: green; font-weight: bold;">
+                                    <input type="text" value="" id="sms" style="border: none; color: green; font-weight: bold;" class="form-control">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                                   </p>
                                 </div>
@@ -386,34 +417,6 @@
 </div>	
 </body>
 </html>
-
-<?php 
-  if (isset($_GET['sms'])) {
-    $to = $_GET['to'];
-    $message = $_GET['message'];
-    // sms ....
-    $type = "xml";
-    $id = "Brookfieldclg";
-    $pass = "college42";
-    $lang = "English";
-    $mask = "Brookfield";
-    // Data for text message
-    $message = urlencode($message);
-    // Prepare data for POST request
-    $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
-    // Send the POST request with cURL
-    $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = curl_exec($ch); //This is the result from SMS4CONNECT
-    curl_close($ch);
-    
-    if ($result) {
-        Yii::$app->session->setFlash('success', "SMS sent successfully...");
-    }
-  }
-?>
 <script>
 // textarea sms counter....
 $(document).ready(function(){
@@ -432,6 +435,15 @@ $(document).ready(function(){
       var countSMS = $('#count').val();
         //var sms = parseInt(countSMS * numbers);
         $('#sms').val("Your Consumed SMS: (" + countSMS+ ")");
+    });
+});
+</script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+// Remove Flash Alert....
+$( document ).ready(function(){
+    $('#alert').fadeIn(function(){
+       $('#alert').delay(5000).fadeOut(); 
     });
 });
 </script>

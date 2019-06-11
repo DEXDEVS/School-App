@@ -57,9 +57,9 @@ $fieldOptions2 = [
             </div>
             <div class="col-xs-6">
                 <span style="float: right;">
-                <?= Html::a(' Reset Password', ['site/request-password-reset'],
-                    ['title'=> 'Click here to reset password','class'=>'btn btn-warning btn-sm fa fa-key'])
-                ?>
+                    <?= Html::a(' Reset Password', ['site/request-password-reset'],
+                        ['title'=> 'Click here to reset password','class'=>'btn btn-warning btn-sm fa fa-key'])
+                    ?>
                 </span>
             </div>
         </div>
