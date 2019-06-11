@@ -164,6 +164,12 @@ transition: all 0.4s ease-in-out;
     </style>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-9">
+            <a href="./home"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
+        </div>
+    </div><br>
     <?php
 
         $branch_id = Yii::$app->user->identity->branch_id;
@@ -191,17 +197,9 @@ transition: all 0.4s ease-in-out;
         
             ?>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 col-md-offset-9">
-            <a href="./home"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
-        </div>
-    </div><br>
-    <div class="box box-default" style=" border-color:#605CA8;" >
-        <div class="box-header">
+        <!-- <div class="box-header">
            <h2 class="text-center" style="color:#605CA8; font-family: georgia;"><img src="backend/web/uploads/teacher.jpg" height="40px" width="40px"> List of Classes</h2><hr  style=" border-color:#c8c6f2;" > 
-        </div>
-        <div class="box-body">
+        </div> -->
             
            <div class="col-md-6">
                 <div class="box box-danger collapsed-box" style=" border-color:#605CA8;">
@@ -248,7 +246,6 @@ transition: all 0.4s ease-in-out;
                     </div>
                     <!-- /.box-body -->
                 </div>
-              <!-- /.box -->
             </div>
   <?php 
 

@@ -30,6 +30,9 @@
 					</a><br>
 					<a href="./exam-lists?id=<?php echo $examCateogryId; ?>">
 						<button class="btn btn-primary btn-block">View Schedules</button>
+					</a><br>
+					<a href="./emp-exam-attendance?id=<?php echo $examCateogryId; ?>">
+						<button class="btn btn-primary btn-block">Invigilators Attendance</button>
 					</a>
 				</div>
 			</div>

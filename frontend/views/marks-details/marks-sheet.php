@@ -141,7 +141,7 @@ if(isset($_GET['class_id']))
 											<?php echo $students[$j]['std_enroll_detail_std_name']; ?>
 										</td>
 										<td>
-											<input type="checkbox" name="marks<?php echo $j+1;?>" onclick=" remove(<?php echo $j; ?>)" value="A" id="radio">Abs <br>
+											<input type="checkbox" name="marks<?php echo $j+1;?>" onclick=" remove(<?php echo $j+1; ?>)" value="A" id="check<?php echo $j+1; ?>">Abs <br>
 											<input type="text" name="marks<?php echo $j+1;?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13 || event.charCode == 65 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57" id="marks<?php echo $j+1;?>">
 										</td>
 										<?php 
@@ -188,9 +188,19 @@ if(isset($_GET['class_id']))
 <script type="text/javascript">
 	function remove(i)
 	{
-		var value = i+1;		
-		var marks = parseInt($('#marks'+value).val());
-        $('#marks'+value).val('');
-        $('#marks'+value).prop("disabled", true);
+		
+        if ($('#check'+i).prop('checked')) {
+        	//alert("checked");				
+	 			$('#marks'+i). prop("disabled", true);
+	 			$("#marks"+i).val("Absent");
+	 			j=i+1;
+	 			$("#marks"+j).focus();
+	 		}
+	 		else{
+	 			//alert("unchecked");
+	 			$('#marks'+i). prop("disabled", false);
+	 			$("#marks"+i).val("");
+	 			$("#marks"+i).focus();
+	 		}
 	}
 </script>

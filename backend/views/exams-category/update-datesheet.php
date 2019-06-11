@@ -223,6 +223,8 @@
 	// getting classes name `class_name` from `std_class_name` against `class_name_id`
 	$className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name WHERE class_name_id = '$classId'
 					")->queryAll();
+	$headName = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$headID'
+					")->queryAll();
 	
 	// getting exam `category_name` from `exams_cateogry`
 	$examCategoryName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCateogryId'
@@ -255,12 +257,12 @@
 		<div class="box box-primary">
 			<div class="box-header">
 				<div class="well well-sm" style="border-left:2px solid;margin-top:10px;font-size:20px;font-weight:bolder;">
-					<h4><i class="glyphicon glyphicon-hand-right"></i> Update Date Sheet</h4>
+					<h4><i class="glyphicon glyphicon-hand-right"></i> Update Date Sheet : ( <?php echo "<b>".$headName[0]['std_enroll_head_name']."</b>"; ?> )</h4>
 				</div>
 				<h3 class="well well-sm" style="text-align:center; border-left:1px solid;border-right:2px solid; font-family:georgia;background-color:#001F3F;color:white;">Exams Criteria</h3>
 			</div>
 			<div class="box-body">
-				<form method="POST" action="exam-lists?id=<?php echo $examCateogryId ?>">
+				<form method="POST" action="./view-sections?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>&startYear=<?php echo $startYear;?>&endYear=<?php echo $endYear;?>">
 					<input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
 					<div class="row">
 						<div class="col-md-4">	
@@ -315,13 +317,17 @@
 						SELECT subject_name FROM subjects WHERE subject_id = '$subjectId'
 							")->queryAll();
 					 	$subarray[$i] = $subjectId;
-					 	$scheduleID = $examScheduleData[$i]['exam_schedule_id'];
+					 	$scheduleID[$i] = $examScheduleData[$i]['exam_schedule_id'];
 					 	$scheduleData = Yii::$app->db->createCommand("
 						SELECT exam_room,emp_id
 						FROM exams_room
-						WHERE exam_schedule_id = '$scheduleID'
+						WHERE exam_schedule_id = '$scheduleID[$i]'
 						AND class_head_id = '$headID'
 							")->queryAll();
+					 	$roomID = $scheduleData[0]['exam_room'];
+						$roomName = Yii::$app->db->createCommand("SELECT room_name FROM rooms WHERE room_id = '$roomID'")->queryAll();
+						$invigilatorID = $scheduleData[0]['emp_id'];
+						$invigilatorName = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info WHERE emp_id = '$invigilatorID'")->queryAll();
 						?>
 					<table class="table table-stripped well well-sm"> 
 						<tr>
@@ -364,13 +370,39 @@
 											<div class="col-md-4">
 												<div class="form-group">
 													<label><i class="glyphicon glyphicon-th" style="color:#4997e5;"></i> Room</label>
-													<input type="date" name="room[]" class="form-control" value="<?php echo $examScheduleData[$i]['date']; ?>" >
+													<select name="room[]" class="form-control">
+														<option value="<?php echo $roomID; ?>">
+															<?php echo $roomName[0]['room_name']; ?>
+														</option>
+														<?php 
+														$roomData = Yii::$app->db->createCommand("SELECT room_id,room_name FROM rooms WHERE room_id != '$roomID'")->queryAll();
+														foreach ($roomData as $key => $value) {
+														
+														 ?>
+														 <option value="<?php echo $value['room_id'] ; ?>">
+														 	<?php echo $value['room_name'] ; ?>
+														 </option>
+														<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label><i class="glyphicon glyphicon-user" style="color:#4997e5;"></i> Invigilator</label>
-													<input type="time" name="exam_start_time[]" class="form-control" value="<?php echo $examScheduleData[$i]['exam_start_time']; ?>" >
+													<select name="invigilator[]" class="form-control">
+														<option value="<?php echo $invigilatorID; ?>">
+															<?php echo $invigilatorName[0]['emp_name']; ?>
+														</option>
+														<?php 
+														$invigilatorData = Yii::$app->db->createCommand("SELECT emp_name,emp_id FROM emp_info WHERE emp_id != '$invigilatorID'")->queryAll();
+														foreach ($invigilatorData as $key => $value) {
+														
+														 ?>
+														 <option value="<?php echo $value['emp_id'] ; ?>">
+														 	<?php echo $value['emp_name'] ; ?>
+														 </option>
+														<?php } ?>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -380,12 +412,11 @@
 						</tr>
 					</table>
 					<?php } //end of for loop?>
-					<input type="hidden" name="headId" value="<?php echo $classId;?>">
+					<input type="hidden" name="headId" value="<?php echo $headID;?>">
 					<input type="hidden" name="subjCount" value="<?php echo $count;?>">
-					<input type="hidden" name="criteriaId" value="<?php echo $criteriaId;?>">
 					<?php 
-					foreach ($subarray as $key => $value) {
-						echo '<input type="hidden" name="subarray[]" value="'.$value.'">';
+					foreach ($scheduleID as $key => $value) {
+						echo '<input type="hidden" name="scheduleID[]" value="'.$value.'">';
 					}
 					?>
 					<div class="row">

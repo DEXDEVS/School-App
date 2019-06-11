@@ -86,3 +86,48 @@
 </div>
 </body>
 </html>
+<?php 
+
+	if(isset($_POST["update"]))
+	{
+		$headId 		= $_POST["headId"];
+		$subjCount 		= $_POST["subjCount"];
+		$scheduleID 	= $_POST["scheduleID"];
+		$invigilator    = $_POST["invigilator"];
+		$room    		= $_POST["room"];
+		
+		$transection = Yii::$app->db->beginTransaction(); // begin transaction
+		try {
+			for ($k=0; $k <$subjCount ; $k++) {
+				$examRoom = Yii::$app->db->createCommand()->update('exams_room',[
+							'exam_room'			=> $room[$k],
+							'emp_id'			=> $invigilator[$k],
+							'updated_at'		=> new \yii\db\Expression('NOW()'),
+							'updated_by'		=> Yii::$app->user->identity->id,
+	                        ],
+	                        ['exam_schedule_id' => $scheduleID[$k] , 'class_head_id' => $headId,]
+	                    )->execute();
+					
+			} // closing of for loop
+				if($examRoom){
+					$transection->commit();
+					Yii::$app->session->setFlash('success', "Date Sheet updated successfully...!");
+				} // checking update query
+		} // closing of try block
+		catch (Exception $e) {
+			$transection->rollback();
+			echo $e;
+			Yii::$app->session->setFlash('warning', "Date Sheet not updated. Try again!");
+		} // closing of catch block
+	} // closing of isset
+
+
+
+
+
+
+
+
+
+
+ ?>
