@@ -34,6 +34,13 @@ class EmpDesignation extends \yii\db\ActiveRecord
         return 'emp_designation';
     }
 
+    public $updateDesignation_id;
+    public $updateEmp_type_id;
+    public $updateGroup_by;
+    public $updateEmp_salary;
+    public $updateDesignation_status;
+    public $updateStatus;
+
     /**
      * {@inheritdoc}
      */
@@ -44,7 +51,7 @@ class EmpDesignation extends \yii\db\ActiveRecord
             [['emp_id', 'designation_id', 'emp_type_id', 'created_by', 'updated_by'], 'integer'],
             [['group_by', 'designation_status', 'status'], 'string'],
             [['emp_salary'], 'number'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by', 'designation_status', 'status'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by', 'designation_status', 'status','updateStatus','updateDesignation_status','updateEmp_salary','updateGroup_by','updateEmp_type_id','updateDesignation_id'], 'safe'],
             [['emp_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['emp_id' => 'emp_id']],
             [['designation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Designation::className(), 'targetAttribute' => ['designation_id' => 'designation_id']],
             [['emp_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpType::className(), 'targetAttribute' => ['emp_type_id' => 'emp_type_id']],
@@ -65,6 +72,15 @@ class EmpDesignation extends \yii\db\ActiveRecord
             'emp_salary' => 'Emp Salary',
             'designation_status' => 'Designation Status',
             'status' => 'Status',
+
+            'updateDesignation_id' => 'Employee Designation',
+            'updateEmp_type_id' => 'Employee Type',
+            'updateGroup_by' => 'Group By',
+            'updateEmp_salary' => 'Employee Salary',
+            'updateDesignation_status' => 'Designation Status',
+            'status' => 'Status',
+
+
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

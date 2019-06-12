@@ -165,12 +165,29 @@ class EmpDesignationController extends Controller
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post())){
+            }else if($model->load($request->post()) && $model->validate()){
                         $model->updated_by = Yii::$app->user->identity->id;
                         $model->updated_at = new \yii\db\Expression('NOW()');
                         $model->created_by = $model->created_by;
                         $model->created_at = $model->created_at;
                         $model->save();
+
+                    if($model->updateDesignation_id != NULL || $model->updateEmp_type_id != NULL || $model->updateGroup_by != NULL || $model->updateEmp_salary != NULL || $model->updateDesignation_status != NULL || $model->updateStatus != NULL){
+                        $insert = Yii::$app->db->createCommand()->insert('emp_designation',[
+                            'emp_id' => $model->emp_id,
+                            'designation_id' => $model->updateDesignation_id,
+                            'emp_type_id' => $model->updateEmp_type_id,
+                            'group_by'=> $model->updateGroup_by,
+                            'emp_salary'=> $model->updateEmp_salary,
+                            'designation_status' => $model->updateDesignation_status,
+                            'status' => $model->updateStatus,
+                            'created_at' =>  new \yii\db\Expression('NOW()'),
+                            'created_by'=>  Yii::$app->user->identity->id, 
+                        ])->execute();
+                    }
+
+
+
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "EmpDesignation #".$id,
