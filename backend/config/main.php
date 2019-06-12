@@ -57,10 +57,10 @@ return [
             'rules' => [
                 //site
                 'admin' => 'admin',
-                'user' => 'admin/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
+                'user' => 'admin/user/index',
                 'passwords' => 'site/passwords',
                 'user-profile' => 'site/user-profile',
                 'update-profile' => 'site/update-profile',
