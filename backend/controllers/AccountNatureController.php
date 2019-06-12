@@ -3,19 +3,18 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\AccountRegister;
-use common\models\AccountRegisterSearch;
+use common\models\AccountNature;
+use common\models\AccountNatureSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 
 /**
- * AccountRegisterController implements the CRUD actions for AccountRegister model.
+ * AccountNatureController implements the CRUD actions for AccountNature model.
  */
-class AccountRegisterController extends Controller
+class AccountNatureController extends Controller
 {
     /**
      * @inheritdoc
@@ -23,20 +22,6 @@ class AccountRegisterController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -48,12 +33,12 @@ class AccountRegisterController extends Controller
     }
 
     /**
-     * Lists all AccountRegister models.
+     * Lists all AccountNature models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new AccountRegisterSearch();
+        $searchModel = new AccountNatureSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -64,7 +49,7 @@ class AccountRegisterController extends Controller
 
 
     /**
-     * Displays a single AccountRegister model.
+     * Displays a single AccountNature model.
      * @param integer $id
      * @return mixed
      */
@@ -74,7 +59,7 @@ class AccountRegisterController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "AccountRegister #".$id,
+                    'title'=> "AccountNature #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -89,7 +74,7 @@ class AccountRegisterController extends Controller
     }
 
     /**
-     * Creates a new AccountRegister model.
+     * Creates a new AccountNature model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -97,7 +82,7 @@ class AccountRegisterController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new AccountRegister();  
+        $model = new AccountNature();  
 
         if($request->isAjax){
             /*
@@ -106,7 +91,7 @@ class AccountRegisterController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new AccountRegister",
+                    'title'=> "Create new AccountNature",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -115,40 +100,43 @@ class AccountRegisterController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-                $natureID = $model->account_nature_id;
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $model->created_by = Yii::$app->user->identity->id; 
+                    $model->created_at = new \yii\db\Expression('NOW()');
+                    $model->updated_by = '0';
+                    $model->updated_at = '0';
+                    $model->save();
+                    
+                    $natureID = $model->account_nature_id;
+                    //$std_inquiry_id = AccountNature::find()->max('std_inquiry_id');
+                    if ($natureID>9) {
+                        $natureNo  = $natureID."-000";
+                    } else{
+                        $natureNo  = "0".$natureID."-000";
+                    }
+                    $accountNatureID = Yii::$app->db->createCommand()->update('account_nature', [
+                        'account_no'  => $natureNo],
+                        ['account_nature_id' => $natureID]
+                    )->execute();
 
-                $accountNum = Yii::$app->db->createCommand("SELECT account_no FROM account_nature WHERE account_nature_id = '$natureID'")->queryAll();
-                // if ($accountNum) {
-                //     # code...
-                // }
-                $accountNo = $accountNum[0]['account_no'];
-
-                echo $accountNo;
-                //$std_inquiry_id = AccountNature::find()->max('std_inquiry_id');
-                
-                $natureNo  = $accountNo+1;
-                
-                echo $natureNo;
-
-                $model->account_no = $natureNo;
-
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0';
-                $model->updated_at = '0'; 
-                $model->save();
-
+                    $transaction->commit();
+                        Yii::$app->session->setFlash('success', "You Have Successfully Added New Account Nature...!");
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new AccountRegister",
-                    'content'=>'<span class="text-success">Create AccountRegister success</span>',
+                    'title'=> "Create new AccountNature",
+                    'content'=>'<span class="text-success">Create AccountNature success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new AccountRegister",
+                    'title'=> "Create new AccountNature",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -162,7 +150,7 @@ class AccountRegisterController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->account_register_id]);
+                return $this->redirect(['view', 'id' => $model->account_nature_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -173,7 +161,7 @@ class AccountRegisterController extends Controller
     }
 
     /**
-     * Updates an existing AccountRegister model.
+     * Updates an existing AccountNature model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -191,22 +179,17 @@ class AccountRegisterController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update AccountRegister #".$id,
+                    'title'=> "Update AccountNature #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post())){
-                        $model->updated_by = Yii::$app->user->identity->id;
-                        $model->updated_at = new \yii\db\Expression('NOW()');
-                        $model->created_by = $model->created_by;
-                        $model->created_at = $model->created_at;
-                        $model->save();
+            }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "AccountRegister #".$id,
+                    'title'=> "AccountNature #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -215,7 +198,7 @@ class AccountRegisterController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update AccountRegister #".$id,
+                    'title'=> "Update AccountNature #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -228,7 +211,7 @@ class AccountRegisterController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->account_register_id]);
+                return $this->redirect(['view', 'id' => $model->account_nature_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -238,7 +221,7 @@ class AccountRegisterController extends Controller
     }
 
     /**
-     * Delete an existing AccountRegister model.
+     * Delete an existing AccountNature model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -266,7 +249,7 @@ class AccountRegisterController extends Controller
     }
 
      /**
-     * Delete multiple existing AccountRegister model.
+     * Delete multiple existing AccountNature model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -297,15 +280,15 @@ class AccountRegisterController extends Controller
     }
 
     /**
-     * Finds the AccountRegister model based on its primary key value.
+     * Finds the AccountNature model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return AccountRegister the loaded model
+     * @return AccountNature the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = AccountRegister::findOne($id)) !== null) {
+        if (($model = AccountNature::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

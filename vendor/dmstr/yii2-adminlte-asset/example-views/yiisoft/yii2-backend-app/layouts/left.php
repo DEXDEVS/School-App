@@ -208,6 +208,7 @@
                         'icon' => 'credit-card',
                         'url' => '#',
                         'items' => [
+                            ['label' => 'Account Nature', 'icon' => 'caret-right', 'url' => "./account-nature"],
                             ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
                             ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
                             ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./balance-sheet"],],

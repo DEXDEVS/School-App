@@ -1,10 +1,9 @@
-<body onload="window.print();" onafterprint="returnBack()">
-<!-- onload="window.print();" -->
 <?php  
   // Get `emp_id` from `emp_info` table
   $id = $_GET['id'];
   // Employee Personal Info..... 
   $empInfo = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_id = '$id'")->queryAll();
+  $instituteInfo = Yii::$app->db->createCommand("SELECT institute_name, institute_logo FROM institute")->queryAll();
   // Get `emp_designation_id` from `emp_info` table
   $empDesignationId = $empInfo[0]['emp_designation_id'];
   // Employee `desigantion_name` from `emp_designation` table against `$empDesignationId`
@@ -23,8 +22,107 @@ $empPhoto = $empInfo[0]['emp_photo'];
 $empEmail = $empInfo[0]['emp_email'];
 $empBarcode = $empInfo[0]['barcode'];
 $empBlood = "A +ve";
+$instituteName = $instituteInfo[0]['institute_name'];
+$instituteLogo = $instituteInfo[0]['institute_logo'];
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ID Card</title>
+  <style>
+    table#background { 
+      /*background: url("images/employee_card.png") no-repeat; */
+      background-size: 100%;
+      background-color: blue;
+    }
+    @media print{
+      .background_image{
+        background: url('images/employee_card.png') no-repeat !important;  
+        background-size: 100% !important; 
+        height: 900px !important; 
+        width: 100% !important;
+      }
+      .contentTable{
+        background: url('<?php echo $empPhoto; ?>') no-repeat !important;
+        background-size: 100% !important; 
+        height: 120px !important; 
+        width: 250px !important;
+      }
+      h3{
+        position: absolute;
+        top: 100px;
+        left: 150px;
+        color: #FFF;
+      }
+    }
+    .background_image{
+      background: url('images/employee_card.png') no-repeat;  
+      background-size: 100%; 
+      height: 900px; 
+      width: 100%;
+    }
+    .contentTable{
+      position: absolute;
+      top: 360px;
+      left: 150px;
+      background: url('<?php echo $instituteLogo; ?>') no-repeat;
+      background-size: 100%; 
+      height: 120px; 
+      width: 250px;
+      opacity: 0.5;
+    }
+    th, td {
+      padding: 5px;
+    }
+    h3{
+      position: absolute;
+      top: 100px;
+      left: 150px;
+      color: #FFF;
+    }
+</style>
+</head>
+<body onafterprint="returnBack()">
+<!-- onload="window.print();" -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="background_image">
+      <h3><?php echo $instituteName; ?></h3>
+      <table class="contentTable" height="120px" width="250px">
+        <tr>
+          <th colspan="2" class="text-center">
+            <h4>Anas Shafqat</h4>
+          </th>
+        </tr>
+        <tr>
+          <th>ID:</th>
+          <td>EMP-001</td>
+        </tr>
+        <tr>
+          <th>Designation:</th>
+          <td>Teacher</td>
+        </tr>
+        <tr>
+          <th>CNIC:</th>
+          <td>31303-0437738-9</td>
+        </tr>
+        <tr>
+          <th>Phone No.</th>
+          <td>+923317375027</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  </div>
+
+</div>
+
+
 <div class="modal-body employee_card">  
+
 <div class="row">
   <div class="col-md-12">
   <div id="id-card">  
@@ -32,7 +130,7 @@ $empBlood = "A +ve";
     <!-- employee photo -->
     <img src="<?php echo $empPhoto; ?>" width="163px" height="163px" style="position: absolute; top: 183px; left: 197px; border-radius: 100px;">
     <!-- employee name -->
-	<h3 style="font-family: verdana; position: absolute; top: 335px; left: 180px; color: #110037">
+  <h3 style="font-family: verdana; position: absolute; top: 335px; left: 180px; color: #110037">
       <?php echo $empName; ?>
     </h3>
     <!-- employee father name -->
@@ -60,13 +158,15 @@ $empBlood = "A +ve";
       <b><?php echo $empBlood; ?></b>
     </h5>
 
-	<img src="<?php echo $empBarcode; ?>" style="position: absolute; top: 445px; right: 230px;">
+  <img src="<?php echo $empBarcode; ?>" style="position: absolute; top: 445px; right: 230px;">
   
   </div>
   </div>
 </div>
 </div>
+
 </body>
+</html>
 <script>
 function returnBack() {
   window.location='emp-info-view?id=<?php echo $id; ?>';

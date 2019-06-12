@@ -137,9 +137,9 @@ class StdInquiryController extends Controller
 
                     // update std_inquiry_no....
                     $std_inquiry_id = StdInquiry::find()->max('std_inquiry_id');
-                    $inquiry_no = "STD-Y".$y."-0".$std_inquiry_id;
+                    $inquiry_no  = "STD-Y".$y."-0".$std_inquiry_id;
                     $std_inquiry = Yii::$app->db->createCommand()->update('std_inquiry', [
-                        'std_inquiry_no' => $inquiry_no],
+                        'std_inquiry_no'  => $inquiry_no],
                         ['std_inquiry_id' => $std_inquiry_id]
                     )->execute();
 
