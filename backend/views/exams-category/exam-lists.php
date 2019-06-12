@@ -229,6 +229,9 @@
 															    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
 															    <span class="caret"></span></button>
 															    <ul class="dropdown-menu">
+															    	<li>
+														      		<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-sections?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>&startYear=<?php echo $startYear;?>&endYear=<?php echo $endYear;?>"><i class="fa fa-eye"></i> View Sections</a>
+														      	</li>
 															      	<li>
 															      		<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>&startYear=<?php echo $startYear;?>&endYear=<?php echo $endYear;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 															      	</li>
@@ -295,6 +298,9 @@
 															    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Choose Action
 															    <span class="caret"></span></button>
 															    <ul class="dropdown-menu">
+															    	<li>
+														      		<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-sections?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>&startYear=<?php echo $startYear;?>&endYear=<?php echo $endYear;?>"><i class="fa fa-eye"></i> View Sections</a>
+														      	</li>
 															      	<li>
 															      		<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-datesheet?examcatID=<?php echo $examCateogryId;?>&classID=<?php echo $classId;?>&examType=<?php echo $examType;?>&startYear=<?php echo $startYear;?>&endYear=<?php echo $endYear;?>"><i class="fa fa-eye"></i> View Date Sheet</a>
 															      	</li>

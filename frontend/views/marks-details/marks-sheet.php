@@ -118,6 +118,35 @@ if(isset($_GET['class_id']))
 					</div><hr>
 					<div class="row">
 						<div class="col-md-12">
+<<<<<<< HEAD
+							<form method="POST" action="./activity-view?sub_id=<?php echo $subID; ?>&class_id=<?php echo $classID; ?>&emp_id=<?php echo $empID; ?>">
+							<table class="table table-hover">
+								<thead>
+									<tr style="background-color: #337AB7;color: white;">
+										<th class="text-center">Sr#</th>
+										<th class="text-center">Roll no.</th>
+										<th class="text-center">Student</th>
+										<th class="text-center">Marks <?php echo $examDataCond[0]['full_marks']."/".$examDataCond[0]['passing_marks'] ?></th>
+									</tr>
+								</thead>								<tbody>
+									<?php 
+									for ($j=0; $j <$countStudents ; $j++) { 			
+									?>
+									<tr align="center">
+										<td>
+											<?php echo $j+1; ?>	
+										</td>
+										<td>
+											<?php echo $students[$j]['std_roll_no']; ?>	
+										</td>
+										<td>
+											<?php echo $students[$j]['std_enroll_detail_std_name']; ?>
+										</td>
+										<td>
+											<input type="checkbox" name="marks<?php echo $j+1;?>" onclick=" remove(<?php echo $j+1; ?>)" value="A" id="check<?php echo $j+1; ?>">Abs <br>
+											<input type="text" name="marks<?php echo $j+1;?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13 || event.charCode == 65 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57" id="marks<?php echo $j+1;?>">
+										</td>
+=======
 							<form method="POST" action="./activity-view?sub_id=<?php echo $subID; ?>	&class_id=<?php echo $classID; ?>&emp_id=<?php echo $empID; ?>">
 								<table class="table table-hover">
 									<thead>
@@ -129,6 +158,7 @@ if(isset($_GET['class_id']))
 										</tr>
 									</thead>								
 									<tbody>
+>>>>>>> a05e3ac640801b9220c9419fa649ab8d7011f5c7
 										<?php 
 										for ($j=0; $j <$countStudents ; $j++) { 			
 										?>
@@ -185,9 +215,19 @@ if(isset($_GET['class_id']))
 <script type="text/javascript">
 	function remove(i)
 	{
-		var value = i+1;		
-		var marks = parseInt($('#marks'+value).val());
-        $('#marks'+value).val('');
-        $('#marks'+value).prop("disabled", true);
+		
+        if ($('#check'+i).prop('checked')) {
+        	//alert("checked");				
+	 			$('#marks'+i). prop("disabled", true);
+	 			$("#marks"+i).val("Absent");
+	 			j=i+1;
+	 			$("#marks"+j).focus();
+	 		}
+	 		else{
+	 			//alert("unchecked");
+	 			$('#marks'+i). prop("disabled", false);
+	 			$("#marks"+i).val("");
+	 			$("#marks"+i).focus();
+	 		}
 	}
 </script>

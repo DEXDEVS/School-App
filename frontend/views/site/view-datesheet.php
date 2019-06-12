@@ -25,20 +25,23 @@
     	INNER JOIN teacher_subject_assign_head as h
     	ON d.teacher_subject_assign_detail_head_id = h.teacher_subject_assign_head_id WHERE h.teacher_id = '$empId'")->queryAll();
     $countClassIds = count($classId);
-   	
-    $Invagilation = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.class_id,s.exam_start_time,s.exam_end_time,s.date
-        FROM exams_criteria as c
-        INNER JOIN exams_schedule as s
-        ON c.exam_criteria_id = s.exam_criteria_id
-        WHERE c.exam_status = 'announced' AND s.emp_id = '$empId' ")->queryAll();
+
+    $examRoom = Yii::$app->db->createCommand("SELECT c.exam_category_id,c.class_id,s.exam_start_time,s.exam_end_time,s.date,r.*
+					FROM ((exams_room as r
+					INNER JOIN exams_schedule as s
+					ON s.exam_schedule_id = r.exam_schedule_id)
+					INNER JOIN exams_criteria as c
+					ON c.exam_criteria_id = s.exam_criteria_id)
+					WHERE r.emp_id = '$empId' AND
+					 c.exam_status = 'announced'")->queryAll();
     
-    if(empty($Invagilation)){
+    if(empty($examRoom)){
     	Yii::$app->session->setFlash('warning',"No Exams announced yet..!");
     } else {
-    	$countInvagilation = count($Invagilation);
+    	$countexamRoom = count($examRoom);
  ?>
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-12">
 		<div class="box box-success">
 			<div class="box-header">
 				<h3 style="text-align: center;font-family: georgia;font-size:30px;">Invigilation<br><small>Schedule</small>
@@ -46,29 +49,52 @@
 			</div><hr>
 			<div class="box-body">
 				<?php 
-				for ($i=0; $i <$countInvagilation ; $i++) { 
-					$catIDD = $Invagilation[$i]['exam_category_id'];
-					$catName = Yii::$app->db->createCommand("SELECT category_name
-             		FROM exams_category WHERE exam_category_id = '$catIDD' ")->queryAll();
-
-             		$classIDD = $Invagilation[$i]['class_id'];
-             		$className = Yii::$app->db->createCommand("SELECT class_name
-             		FROM std_class_name WHERE class_name_id = '$classIDD' ")->queryAll();
-
+				$catIDD = $examRoom[0]['exam_category_id'];
+					
+				$catName = Yii::$app->db->createCommand("SELECT category_name
+         		FROM exams_category WHERE exam_category_id = '$catIDD' ")->queryAll();
 				 ?>
 				<table class="table table-hover">
-					<tr style="background-color:#00A65A;color:white;">
-						<th colspan="2" ><?php echo $catName[0]['category_name']; ?></th>
+					<thead>
+						<tr style="background-color:#00A65A;color:white;">
+						<th colspan="7"class="text-center" ><?php echo $catName[0]['category_name']; ?>
+							
+						</th>
 					</tr>
 					<tr style="background-color: #D0F0C0;">
+						<th>Sr.#</th>
 						<th>Class</th>
-						<td><?php echo $className[0]['class_name']; ?></td>
-					</tr>
-					<tr>
 						<th>Date</th>
+						<th>Day</th>
+						<th>Start Time</th>
+						<th>End Time</th>
+						<th>Room</th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php 
+					for ($i=0; $i <$countexamRoom ; $i++) { 
+		             	$exam_category_id = $examRoom[$i]['exam_category_id'];
+		             	$class_id 		  = $examRoom[$i]['class_id'];
+
+	             		$className = Yii::$app->db->createCommand("SELECT class_name
+	             		FROM std_class_name WHERE class_name_id = '$class_id' ")->queryAll();
+
+	             		$room_id = $examRoom[$i]['exam_room'];
+
+	             		$examName = Yii::$app->db->createCommand("SELECT room_name
+	             		FROM rooms WHERE room_id = '$room_id'")->queryAll();
+				 	?>
+					<tr>
+						<td>
+							<?php echo $i+1; ?>
+						</td>
+						<td>
+							<?php echo $className[0]['class_name']; ?>
+						</td>
 						<td>
 						<?php 
-						$date = $Invagilation[$i]['date'];
+						$date = $examRoom[$i]['date'];
 						$dateformat = date("d-m-Y", strtotime($date));
 
 						//Print out the day that our date fell on.
@@ -76,12 +102,9 @@
 						?>
 							
 						</td>
-					</tr>
-					<tr>
-						<th>Day</th>
 						<td>
 							<?php 
-								$date = $Invagilation[$i]['date'];
+								$date = $examRoom[$i]['date'];
 								//Get the day of the week using PHP's date function.
 								$dayOfWeek = date("l", strtotime($date));
 
@@ -89,38 +112,33 @@
 								echo $dayOfWeek;
 							?>
 						</td>
-					</tr>
-					<tr>
-						<th>Start Time</th>
 						<td>
 						<?php 
-						$starttime = $Invagilation[$i]['exam_start_time'];
+						$starttime = $examRoom[$i]['exam_start_time'];
 						$startTime = date("h:i A", strtotime($starttime));
 						echo $startTime;
 						?>
 						</td>
-					</tr>
-					<tr>
-						<th>End Time</th>
 						<td>
 						<?php 
-						$endtime = $Invagilation[$i]['exam_end_time'];
+						$endtime = $examRoom[$i]['exam_end_time'];
 						$endTime = date("h:i A", strtotime($endtime));
 						echo $endTime;
 						?>
 						</td>
+						<td>
+							<?php echo $examName[0]['room_name']; ?>
+						</td>
 					</tr>
-					<tr>
-						<th>Room</th>
-						<td><?php //echo $Invagilation[$i]['exam_room']; ?></td>
-					</tr>
+				 	<?php } ?>
+					</tbody>
 				</table>
-				<?php } ?>
-				<hr>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-8">
+</div>
+<div class="row">
+	<div class="col-md-12">
 		<div class="box box-success">
 			<div class="box-header">
 				<h3 style="text-align: center;font-family: georgia;font-size:30px;">Date Sheet<br><small>Schedule</small>
@@ -130,11 +148,11 @@
 		<?php 
 			for ($i=0; $i <$countClassIds ; $i++) {
             $headId = $classId[$i]['class_id'];
-            
-            $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name
+            $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id
                 FROM std_enrollment_head as seh
                 INNER JOIN teacher_subject_assign_detail as tsad
                 ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$headId' AND seh.branch_id = '$branch_id' ")->queryAll();
+            $headID = $CLASSName[0]['std_enroll_head_id'];
 
             $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
             FROM teacher_subject_assign_detail as tsad
@@ -155,6 +173,8 @@
              	$catId = $dateSheetCheck[0]['exam_category_id'];
              	$criteriaId = $dateSheetCheck[0]['exam_criteria_id'];
 
+<<<<<<< HEAD
+=======
 
              	$examRoom = Yii::$app->db->createCommand("SELECT r.room_name
              	FROM exams_room as e
@@ -162,6 +182,7 @@
              	ON e.exam_room = r.room_id
              	WHERE e.exam_criteria_id = '$criteriaId' AND e.class_head_id = $headId ")->queryAll();
 
+>>>>>>> a05e3ac640801b9220c9419fa649ab8d7011f5c7
              	$categoryName = Yii::$app->db->createCommand("SELECT category_name
              	FROM exams_category WHERE exam_category_id = '$catId' ")->queryAll();
 				 ?>
@@ -183,15 +204,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+					<?php 
 						foreach ($subjectsIDs as $key => $subIds) {
 							$subID = $subIds['subject_id'];
 						 $subjectsName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$subID'")->queryAll();
-						 $dateSheet = Yii::$app->db->createCommand("SELECT c.exam_category_id,s.date
+						$dateSheet = Yii::$app->db->createCommand("SELECT c.exam_category_id,s.date
 			                FROM exams_criteria as c
 			                INNER JOIN exams_schedule as s
 			                ON c.exam_criteria_id = s.exam_criteria_id
 			                WHERE c.exam_status = 'announced' AND c.class_id = '$classNameId' AND s.subject_id = '$subID' ")->queryAll();
+						$examRoomsIds = Yii::$app->db->createCommand("SELECT r.exam_room
+			                FROM exams_room as r
+			                INNER JOIN exams_schedule as s
+			                ON r.exam_schedule_id = s.exam_schedule_id
+			                WHERE r.class_head_id = '$headID'
+			                AND s.subject_id = '$subID' ")->queryAll();
+						$roomID = $examRoomsIds[0]['exam_room'];
+						$roomNames = Yii::$app->db->createCommand("SELECT room_name FROM rooms WHERE room_id = '$roomID'")->queryAll();
+
 						 
 						 ?>
 						<tr>
@@ -217,7 +247,11 @@
 								?>
 							</td>
 							<td><?php echo  $subjectsName[0]['subject_name']; ?></td>
+<<<<<<< HEAD
+							<td><?php echo  $roomNames[0]['room_name']; ?></td>
+=======
 							<td><?php echo  $examRoom[0]['room_name']; ?></td>
+>>>>>>> a05e3ac640801b9220c9419fa649ab8d7011f5c7
 						</tr>
 						<?php } //closing of foreach ?>
 					</tbody>
