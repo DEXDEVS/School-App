@@ -156,7 +156,7 @@ if(isset($_GET['class_id']))
 											<div class="col-md-3">
 												<td>
 													<?php $countWeightage = count($marksWeightageDetails); ?>
-													<input type="checkbox" name="marks<?php echo $j+1;?>" onclick=" remove(<?php echo $j+1 ?>,<?php echo $countWeightage; ?>)" value="A" id="check<?php echo $j+1; ?>">Abs
+													<input type="checkbox" name="marks<?php echo $j+1;?>" onclick=" remove(<?php echo $j+1 ?>,<?php echo $countWeightage; ?>)" value="A" id="ch<?php echo $j+1; ?>">Abs
 												</td>
 											</div>
 											<div class="col-md-4">
@@ -172,7 +172,7 @@ if(isset($_GET['class_id']))
 											?> 
 											<div class="col-md-2">
 												<label><?php echo $weightageName[0]['weightage_type_name']; ?></label>	
-												<input class="form-control" type="text" name="marks<?php echo $i+1;?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13 || event.charCode == 65 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57" id="marks<?php echo $j+1;?>">
+												<input class="form-control" type="text" name="marks<?php echo $i+1;?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13 || event.charCode == 65 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57" id="marks<?php echo $j+1;?><?php echo $i+1;?>">
 											</div>	
 										<?php } //closing of for loop
 											} //closing of for loop
@@ -226,23 +226,30 @@ if(isset($_GET['class_id']))
 <script type="text/javascript">
 	function remove(i,j)
 	{
-		alert(i);
-		alert(j);
 		
-        if ($('#check'+i).prop('checked')) {
-        	for (var a = 0; a <= j; a++) {
-        		//alert("checked");				
-	 			$('#marks'+a). prop("disabled", true);
-	 			$("#marks"+a).val("Absent");
-	 			j=a+1;
-	 			$("#marks"+j).focus();	
-        	}	
-	 	}
-	 		else{
-	 			//alert("unchecked");
-	 			$('#marks'+i). prop("disabled", false);
-	 			$("#marks"+i).val("");
-	 			$("#marks"+i).focus();
-	 		}
-	}
+			//alert(i);
+			//alert(j);
+
+			 if ($('#ch'+i).prop('checked')) {
+			 	//alert("checked");
+			 	for(k=1;k<=j;k++){
+	 	 		$('#marks'+i+k). prop("disabled", true);
+	 	 		$("#marks"+i+k).val("Absent");
+	 	 		}
+	 	 		y=i+1;
+	 	 		x=1;
+	 	 		$("#marks"+y+x).focus();
+	 	 	}
+	 	 	else{
+	 	 		//alert("unchecked");
+	 	 		for(k=1;k<=j;k++){
+	 	 		$('#marks'+i+k). prop("disabled", false);
+	 	 		$("#marks"+i+k).val("");
+	 	 		}
+	 	 		k=1;
+	 	 		$("#marks"+i+k).focus();
+ 			}
+		}
+	
+
 </script>
