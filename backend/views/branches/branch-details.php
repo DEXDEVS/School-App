@@ -27,12 +27,11 @@
 	$classes = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE branch_id = '$id' AND  delete_status = 1")->queryAll();
 	$countclasses = count($classes);  
   // employee query...
-	$employees = Yii::$app->db->createCommand("SELECT emp_id FROM emp_info as e INNER JOIN emp_designation as ed ON e.emp_designation_id = ed.emp_designation_id WHERE e.emp_branch_id  = '$id' AND e.delete_status = 1 AND ed.emp_designation != 'Principal'")->queryAll();
-  $teacher = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_branch_id  = '$id' AND  emp_designation_id = 4 AND delete_status = 1")->queryAll();
+	$employees = Yii::$app->db->createCommand("SELECT e.emp_id FROM emp_info as e WHERE e.emp_branch_id  = '$id' AND e.delete_status = 1 ")->queryAll();
+
   // Employee Designation...
-  $empDesignation = Yii::$app->db->createCommand("SELECT * FROM emp_designation WHERE  delete_status = 1")->queryAll();
-  $empDesignationCount = count($empDesignation);  
-  //var_dump($empDesignationCount);
+  $empDesignation = Yii::$app->db->createCommand("SELECT * FROM designation")->queryAll();
+ 
 	$employeeCount = count($employees);
 
 	?>
@@ -389,23 +388,22 @@
                           <tbody>  
                             <tr>
                               <?php foreach ($empDesignation as $key => $value) {
-                                $emp = Yii::$app->db->createCommand("SELECT emp.emp_designation_id 
-                                FROM emp_info as emp 
-                                INNER JOIN emp_designation as emInfo 
-                                ON emInfo.emp_designation_id = emp.emp_designation_id 
-                                WHERE emp.emp_branch_id = '$id' AND emInfo.emp_designation_id = $key+1")->queryAll();
+                                $designation = $value['designation_id'];
+                                $emp = Yii::$app->db->createCommand("SELECT ed.designation_id 
+                                FROM ((emp_designation as ed INNER JOIN designation as d
+                                ON d.designation_id = ed.designation_id ) INNER JOIN emp_info as e ON e.emp_id = ed.emp_id) WHERE e.emp_branch_id = '$id' AND d.designation_id = $designation")->queryAll();
                                 $empCount = count($emp);
                               ?>
                                 <?php 
-                                    if ($value['emp_designation']=='Principal') {
+                                    if ($value['designation']=='Principal') {
                                       echo '';
                                     } else{ ?>
-                                <td class="text-center"><?php echo $key; ?></td>      
+                                <td class="text-center"><?php echo $key+1; ?></td>      
                                 <td>  
-                                  <?php echo $value['emp_designation']; ?>
+                                  <?php echo $value['designation']; ?>
                                 </td>
                                 <td align="center">
-                                  <span class="label-warning" style="border-radius: 50%; padding: 3px 7px">
+                                  <span class="label-success" style="border-radius: 50%; padding: 3px 7px">
                                     <?php echo $empCount ?>
                                   </span>
                                 </td>

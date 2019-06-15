@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\EmpInfo;
 use common\models\EmpReference;
+use common\models\EmpDesignation;
 use common\models\EmpInfoSearch;
 use common\models\User;
 use yii\web\Controller;
@@ -113,6 +114,7 @@ class EmpInfoController extends Controller
     {
         $request = Yii::$app->request;
         $model = new EmpInfo();  
+        $empDesignation = new EmpDesignation();
         $empRefModel = new EmpReference();
 
         if($request->isAjax){
@@ -125,13 +127,14 @@ class EmpInfoController extends Controller
                     'title'=> "Create new EmpInfo",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'empDesignation' => $empDesignation,
                         'empRefModel' => $empRefModel,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->validate() && $empRefModel->load($request->post()) ){
+            }else if($model->load($request->post()) && $empDesignation->load($request->post()) && $empRefModel->load($request->post()) ){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         var_dump($model->emp_name);
@@ -163,11 +166,22 @@ class EmpInfoController extends Controller
                         } else {
                            $model->emp_cv = '0'; 
                         }
+                        $branch_id = Yii::$app->user->identity->branch_id;
+                        $model->emp_branch_id = $branch_id;
+                        $model->emp_status = 'Active';
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
                         $model->updated_by = '0';
                         $model->updated_at = '0';
                         $model->save();
+
+                        $empDesignation->emp_id = $model->emp_id;
+                        $empDesignation->status = 'Active';
+                        $empDesignation->created_by = Yii::$app->user->identity->id; 
+                        $empDesignation->created_at = new \yii\db\Expression('NOW()');
+                        $empDesignation->updated_by = '0';
+                        $empDesignation->updated_at = '0';
+                        $empDesignation->save();
 
                         $empRefModel->emp_id = $model->emp_id;
                         $empRefModel->save();
@@ -178,7 +192,7 @@ class EmpInfoController extends Controller
                         $user->username = $model->emp_cnic;
                         $user->email = $model->emp_email;
                         $user->user_photo = $model->emp_photo;
-                        if($model->group_by == 'Faculty'){
+                        if($empDesignation->group_by == 'Faculty'){
                             $user->user_type = 'Teacher';
                         } else {
                             $user->user_type = 'Employee';
@@ -215,6 +229,7 @@ class EmpInfoController extends Controller
                     'title'=> "Create new EmpInfo",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'empDesignation' => $empDesignation,
                         'empRefModel' => $empRefModel,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
@@ -226,7 +241,7 @@ class EmpInfoController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $empRefModel->load($request->post())) {
+            if ($model->load($request->post()) && $empDesignation->load($request->post()) && $empRefModel->load($request->post())) {
                 $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
@@ -256,11 +271,22 @@ class EmpInfoController extends Controller
                         } else {
                            $model->emp_cv = '0'; 
                         }
+                        $branch_id = Yii::$app->user->identity->branch_id;
+                        $model->emp_branch_id = $branch_id;
+                        $model->emp_status = 'Active';
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
                         $model->updated_by = '0';
                         $model->updated_at = '0';
                         $model->save();
+
+                        $empDesignation->emp_id = $model->emp_id;
+                        $empDesignation->status = 'Active';
+                        $empDesignation->created_by = Yii::$app->user->identity->id; 
+                        $empDesignation->created_at = new \yii\db\Expression('NOW()');
+                        $empDesignation->updated_by = '0';
+                        $empDesignation->updated_at = '0';
+                        $empDesignation->save();
 
                         $empRefModel->emp_id = $model->emp_id;
                         $empRefModel->save();
@@ -271,7 +297,7 @@ class EmpInfoController extends Controller
                         $user->username = $model->emp_cnic;
                         $user->email = $model->emp_email;
                         $user->user_photo = $model->emp_photo;
-                        if($model->group_by == 'Faculty'){
+                        if($empDesignation->group_by == 'Faculty'){
                             $user->user_type = 'Teacher';
                         } else {
                             $user->user_type = 'Employee';
@@ -299,6 +325,7 @@ class EmpInfoController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'empDesignation' => $empDesignation,
                     'empRefModel' => $empRefModel,
                 ]);
             }
@@ -498,6 +525,7 @@ class EmpInfoController extends Controller
        
     }
 
+
     public function beforeAction($action) {
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
@@ -509,12 +537,10 @@ class EmpInfoController extends Controller
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         $array = array();
         foreach ( $pks as $pk ) {
-            
             $empNumbers = Yii::$app->db->createCommand("SELECT emp_contact_no FROM emp_info WHERE emp_id = '$pk'")->queryAll();
             $number = $empNumbers[0]['emp_contact_no'];
             $numb = str_replace('-', '', $number);
             $num = str_replace('+', '', $numb);
-
             $array[] = $num;
         }
 

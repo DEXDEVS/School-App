@@ -88,32 +88,10 @@ use common\models\Branches;
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 97px; top: 6px"></i>
-            <?= $form->field($model, 'emp_designation_id')->dropDownList(
-                    ArrayHelper::map(EmpDesignation::find()->where(['delete_status'=>1])->all(),'emp_designation_id','emp_designation'), ['prompt'=>'Select Designation']
-                )?>
-        </div>
-        <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 50px; top: 6px"></i>
-            <?= $form->field($model, 'emp_type_id')->dropDownList(
-                    ArrayHelper::map(EmpType::find()->where(['delete_status'=>1])->all(),'emp_type_id','emp_type'), ['prompt'=>'Select Type']
-                )?>
-        </div>
-        <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 80px; top: 6px"></i>
-            <?= $form->field($model, 'group_by')->dropDownList([ 'Faculty' => 'Faculty', 'Non-Faculty' => 'Non-Faculty', ], ['prompt' => 'Select Group']) ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 107px; top: 6px"></i>
             <?= $form->field($model, 'emp_branch_id')->dropDownList(
                     ArrayHelper::map(Branches::find()->where(['delete_status'=>1])->all(),'branch_id','branch_name'), ['prompt'=>'Select Branch']
                 )?>
-        </div>
-        <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 58px; top: 6px"></i>
-            <?= $form->field($model, 'emp_salary')->textInput() ?>
         </div>
         <div class="col-md-4">
            <?= $form->field($model,'reference')->dropDownList([ 'Yes' => 'Yes', 'No' => 'No', ], 
