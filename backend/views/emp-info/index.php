@@ -16,8 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 ?>
-<<<<<<< HEAD
-=======
 <style type="text/css">
     .panel-heading{
         background-color:#001F3F;
@@ -27,7 +25,6 @@ CrudAsset::register($this);
         color: black; 
     }
 </style>
->>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
 <div class="emp-info-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -39,11 +36,7 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-<<<<<<< HEAD
-                    ['role'=>'modal-remote','title'=> 'Create new Emp Infos','class'=>'btn btn-default']).
-=======
                     ['role'=>'','title'=> 'Create new Emp Infos','class'=>'btn btn-success']).
->>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.

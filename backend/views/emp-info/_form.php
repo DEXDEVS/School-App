@@ -1,60 +1,18 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\EmpInfo;
+use common\models\Designation;
+use common\models\EmpType;
+use common\models\Branches;
+use common\models\Departments;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\EmpInfo */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<<<<<<< HEAD
 
-<div class="emp-info-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'emp_branch_id')->textInput() ?>
-
-    <?= $form->field($model, 'emp_reg_no')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_father_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_cnic')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_contact_no')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_perm_address')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_temp_address')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_marital_status')->dropDownList([ 'Single' => 'Single', 'Married' => 'Married', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'emp_photo')->fileInput() ?>
-
-    <?= $form->field($model, 'emp_dept_id')->textInput() ?>
-
-    <?= $form->field($model, 'emp_salary_type')->dropDownList([ 'Salaried' => 'Salaried', 'Per Lecture' => 'Per Lecture', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'emp_email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_qualification')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'emp_passing_year')->textInput() ?>
-
-    <?= $form->field($model, 'emp_institute_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'degree_scan_copy')->fileInput() ?>
-
-    <?= $form->field($model, 'emp_cv')->fileInput()?>
-
-    <?= $form->field($model, 'emp_status')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ], ['prompt' => '']) ?>
-
-
-  
-=======
 <html>
 <head>
     <title></title>
@@ -140,16 +98,24 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => 'Select Gender']) ?>
         </div>
     </div> 
-    <div class="col-md-12">
-        <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
-        <div id="barcodeTarget" class="barcodeTarget"></div>
-        <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
-    </div>
-    <div class="row">        
-        <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">
+          <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
+          <div id="barcodeTarget" class="barcodeTarget"></div>
+          <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
+      </div>
+      <div class="col-md-4">
             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 56px; top: 6px"></i> -->
             <?= $form->field($model, 'emp_photo')->fileInput() ?>
         </div>
+        <div class="col-md-4">
+            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 56px; top: 6px"></i> -->
+            <?= $form->field($model, 'emp_fb_ID')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    
+    <div class="row">        
+        
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 160px; top: 6px"></i>
             <?= $form->field($model, 'emp_perm_address')->textInput(['maxlength' => true]) ?>
@@ -191,31 +157,37 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 105px; top: 6px"></i>
-            <?= $form->field($model, 'emp_designation_id')->dropDownList(
-                    ArrayHelper::map(EmpDesignation::find()->where(['delete_status'=>1])->all(),'emp_designation_id','emp_designation'), ['prompt'=>'Select Designation']
+            <?= $form->field($model, 'emp_dept_id')->dropDownList(
+                ArrayHelper::map(Departments::find()->all(),'department_id','department_name'), ['prompt'=>'Select Department']
+            )?>
+        </div>
+        <div class="col-md-4">
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 117px; top: 6px"></i>
+           <?= $form->field($model, 'emp_salary_type')->dropDownList([ 'Salaried' => 'Salaried', 'Per Lecture' => 'Per Lecture', ], ['prompt' => '']) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 105px; top: 6px"></i>
+            <?= $form->field($empDesignation, 'designation_id')->dropDownList(
+                    ArrayHelper::map(Designation::find()->where(['delete_status'=>1])->all(),'designation_id','designation'), ['prompt'=>'Select Designation']
                 )?>
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 52px; top: 6px"></i>
-            <?= $form->field($model, 'emp_type_id')->dropDownList(
+            <?= $form->field($empDesignation, 'emp_type_id')->dropDownList(
                     ArrayHelper::map(EmpType::find()->where(['delete_status'=>1])->all(),'emp_type_id','emp_type'), ['prompt'=>'Select Type']
                 )?>
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 85px; top: 6px"></i>
-            <?= $form->field($model, 'group_by')->dropDownList([ 'Faculty' => 'Faculty', 'Non-Faculty' => 'Non-Faculty', ], ['prompt' => 'Select Group']) ?>
+            <?= $form->field($empDesignation, 'group_by')->dropDownList([ 'Faculty' => 'Faculty', 'Non-Faculty' => 'Non-Faculty', ], ['prompt' => 'Select Group']) ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 117px; top: 6px"></i>
-            <?= $form->field($model, 'emp_branch_id')->dropDownList(
-                    ArrayHelper::map(Branches::find()->where(['delete_status'=>1])->all(),'branch_id','branch_name'), ['prompt'=>'Select Branch']
-                )?>
-        </div>
-        <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 64px; top: 6px"></i>
-            <?= $form->field($model, 'emp_salary')->textInput() ?>
+            <?= $form->field($empDesignation, 'emp_salary')->textInput() ?>
         </div>
         <div class="col-md-4">
            <?= $form->field($model,'reference')->dropDownList([ 'Yes' => 'Yes', 'No' => 'No', ], 
@@ -248,7 +220,6 @@ use yii\widgets\ActiveForm;
         </div>
     </div>  
     
->>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -258,8 +229,7 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     
 </div>
-<<<<<<< HEAD
-=======
+
 </body>
 </html>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -349,5 +319,4 @@ $('#reference').on('change',function(){
 
 JS;
 $this->registerJs($script);
-?> 
->>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
+?>
