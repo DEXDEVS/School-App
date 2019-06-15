@@ -52,7 +52,7 @@ class MarksWeightageDetails extends \yii\db\ActiveRecord
         return [
             'weightage_detail_id' => 'Weightage Detail ID',
             'weightage_head_id' => 'Weightage Head ID',
-            'weightage_type_id' => 'Weightage Type ID',
+            'weightage_type_id' => 'Weightage Type',
             'marks' => 'Marks',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

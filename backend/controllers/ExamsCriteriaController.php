@@ -51,6 +51,7 @@ class ExamsCriteriaController extends Controller
      * Lists all ExamsCriteria models.
      * @return mixed
      */
+    
     public function actionIndex()
     {    
         $searchModel = new ExamsCriteriaSearch();

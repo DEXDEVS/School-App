@@ -30,11 +30,11 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'request-password-reset','reset-password'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details'],
+                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details','reset-password','user-profile','update-profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -95,55 +95,67 @@ class SiteController extends Controller
     { 
         return $this->render('dates');
     }
+
     public function actionChildren()
     { 
-        return $this->render('Children');
+        return $this->render('children');
     }
 
     public function actionPremiumVersion()
     { 
         return $this->render('premium-version');
     }
+
     public function actionActivityView()
     { 
         return $this->render('activity-view');
     }
+
     public function actionStdProfile()
     { 
         return $this->render('std-profile');
     }
+
     public function actionStdFee()
     { 
         return $this->render('std-fee');
     }
+
     public function actionFeeDetails()
     { 
         return $this->render('fee-details');
     }
+
      public function actionStdFeeDetails()
     { 
         return $this->render('std-fee-details');
     }
+
     public function actionStdExams()
     { 
         return $this->render('std-exams');
     }
+
     public function actionStdExamSchedule()
     { 
         return $this->render('std-exam-schedule');
     }
+
     public function actionStdExamResult()
     { 
         return $this->render('std-exam-result');
     }
+
     public function actionEmployeDashboard()
     {
         return $this->render('employe-dashboard');
     }
+
     public function actionStudentsView()
     {
         return $this->render('students-view');
     }
+
      public function actionStudentsList()
     {
         return $this->render('students-list');
@@ -167,6 +179,16 @@ class SiteController extends Controller
     public function actionListOfClasses()
     { 
         return $this->render('list-of-classes');
+    }
+
+    public function actionUserProfile()
+    { 
+        return $this->render('user-profile');
+    }
+
+    public function actionUpdateProfile()
+    { 
+        return $this->render('update-profile');
     }
 
     /**

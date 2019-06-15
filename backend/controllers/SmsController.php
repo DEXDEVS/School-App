@@ -299,7 +299,7 @@ class SmsController extends Controller
         return $this->render('sms');
     }
 
-    public function sendSMS($to, $message){
+    public static function sendSMS($to, $message){
         // Configuration variables
         $type = "xml";
         $id = "Brookfieldclg";
@@ -319,7 +319,7 @@ class SmsController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch); //This is the result from SMS4CONNECT
         curl_close($ch);
-        Yii::$app->session->setFlash('success', "SMS sent successfully...!".$result);     
+        Yii::$app->session->setFlash('success', $result);     
     }
 
 }

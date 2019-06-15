@@ -52,10 +52,10 @@ class MarksWeightageHead extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'marks_weightage_id' => 'Marks Weightage ID',
-            'exam_category_id' => 'Exam Category ID',
-            'class_id' => 'Class ID',
-            'subjects_id' => 'Subjects ID',
+            'marks_weightage_id' => 'Marks Weightage',
+            'exam_category_id' => 'Exam Category',
+            'class_id' => 'Class Name',
+            'subjects_id' => 'Subjects Name',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

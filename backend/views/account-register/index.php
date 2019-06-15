@@ -16,12 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 ?>
-<style type="text/css">
-    .panel-heading{
-        background-color: #001F3F;
-        color: white;
-    }
-</style>
 <div class="account-register-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -33,9 +27,9 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Account Registers','class'=>'btn btn-success']).
+                    ['role'=>'modal-remote','title'=> 'Create new Account Registers','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
+                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.
                     '{export}'
                 ],
@@ -44,7 +38,7 @@ CrudAsset::register($this);
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
-                'type' => '', 
+                'type' => 'primary', 
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Account Registers listing',
                 // 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 // 'after'=>BulkButtonWidget::widget([

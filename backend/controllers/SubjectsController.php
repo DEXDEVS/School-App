@@ -34,7 +34,7 @@ class SubjectsController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','get-subjects'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','get-subjects','fetch-subjects'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -49,12 +49,28 @@ class SubjectsController extends Controller
             ],
         ];
     }
-
+    //fetch subjects for marks weightage
     public function actionGetSubjects($classId){
        
         $subjectCombination = StdSubjects::find()->select('std_subject_name')->where(['class_id' =>$classId])->all();
         $subjectComb = $subjectCombination[0]['std_subject_name'];
         $subjectName = explode(',', $subjectComb);
+
+        foreach ($subjectName as $key => $value) {
+            $subjectId = Yii::$app->db->createCommand("SELECT subject_id FROM subjects WHERE subject_name = '$value'")->queryAll();
+            $subjectIds[$key] = $subjectId[0]['subject_id'];
+        }   
+        $obj = (object) array($subjectName,$subjectIds);
+        echo Json::encode($obj); 
+    }
+    //fetch subjects for timetable
+    public function actionFetchSubjects($class_id){
+       $class_name_id = StdEnrollmentHead::find()->select('class_name_id')->where(['std_enroll_head_id' =>$class_id])->all();
+       $classNameId = $class_name_id[0]['class_name_id'];
+
+        $subjectCombination = StdSubjects::find()->select('std_subject_name')->where(['class_id' =>$classNameId])->all();
+
+        $subjectName = explode(',', $subjectCombination[0]['std_subject_name']);
 
         foreach ($subjectName as $key => $value) {
             $subjectId = Yii::$app->db->createCommand("SELECT subject_id FROM subjects WHERE subject_name = '$value'")->queryAll();

@@ -548,8 +548,8 @@ export default class ResourceTimelineView extends View {
     }
   }
 
-  computeInitialDateScroll() {
-    return this.timeAxis.computeInitialDateScroll()
+  computeDateScroll(timeMs: number) {
+    return this.timeAxis.computeDateScroll(timeMs)
   }
 
   queryDateScroll() {
@@ -613,6 +613,12 @@ export default class ResourceTimelineView extends View {
 
   // Hit System
   // ------------------------------------------------------------------------------------------
+
+
+  buildPositionCaches() {
+    this.timeAxis.slats.updateSize()
+    this.rowPositions.build()
+  }
 
 
   queryHit(positionLeft: number, positionTop: number): Hit {

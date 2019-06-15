@@ -40,9 +40,6 @@ use yii\helpers\Html;
 
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li>
-                    <p style="color: #FFF; margin: 18px 50px;  font-family: serif;"><i><b>For Technical Support Feel Free to Contact Us 24/7 on (0300-6999824)</b></i></p>
-                </li>
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu invisible">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -125,48 +122,7 @@ use yii\helpers\Html;
                         <li class="footer"><a href="#">See All Messages</a></li>
                     </ul>
                 </li>
-                <li class="dropdown notifications-menu invisible">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">10</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header">You have 10 notifications</li>
-                        <li>
-                            <!-- inner menu: contains the actual data -->
-                            <ul class="menu">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-warning text-yellow"></i> Very long description here that may
-                                        not fit into the page and may cause design problems
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-red"></i> 5 new members joined
-                                    </a>
-                                </li>
 
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-user text-red"></i> You changed your username
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="footer"><a href="#">View all</a></li>
-                    </ul>
-                </li>
                 <!-- Tasks: style can be found in dropdown.less -->
                 <li class="tasks-menu invisible">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -215,6 +171,53 @@ use yii\helpers\Html;
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
 
+                <!-- Notifications Starts -->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <?php 
+                            //branch Id
+                            $branch_id=Yii::$app->user->identity->branch_id;
+                              //SQL query to fetch the no of pending leaves
+                            $emp_leave = Yii::$app->db->createCommand("SELECT * FROM emp_leave WHERE status='Pending' AND branch_id='$branch_id'")->queryAll();
+                            $no_of_leaves=count($emp_leave);
+                            if ($no_of_leaves>0) { ?>
+                                <span class="label label-warning"><b><?php echo $no_of_leaves; ?></b></span>
+                        <?php }
+                        ?>
+                        
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have <?php echo $no_of_leaves; ?> notifications</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <?php
+                                        if ($no_of_leaves>0) { ?>
+                                            <a href="./emp-leave">
+                                                <i class="fa fa-users text-aqua"></i><b><?php echo $no_of_leaves; ?></b>  employe leaves are pending 
+                                            </a>
+                                    <?php } // ending of if... ?>
+                                </li>
+                                <?php 
+                                    foreach ($emp_leave as $key => $value) {
+                                        $emp_id=$value["emp_id"];
+                                        $emp_name = Yii::$app->db->createCommand("SELECT emp_name FROM emp_info WHERE emp_id=$emp_id")->queryAll();        
+                                ?>
+                                <li>
+                                    <a href="./emp-leave">
+                                        <i class="fa fa-user text-yellow"></i><?php echo $emp_name[0]["emp_name"]." ".$value["leave_type"]; ?> 
+                                    </a>
+                                </li>
+                               <?php } // ending of foreach... ?>
+                            </ul>
+                        </li>
+                        <!-- <li class="footer"><a href="#">View all</a></li> -->
+                    </ul>
+                </li>
+                <!-- Notifications close -->
+
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?php echo '../frontend/web/'.$userPhoto; ?>" class="user-image" alt="User Image"/>
@@ -254,7 +257,7 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-primary btn-flat btn-sm">Profile</a>
+                                <a href="./user-profile" class="btn btn-primary btn-flat btn-sm">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(

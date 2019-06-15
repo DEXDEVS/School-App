@@ -1,14 +1,20 @@
 <?php 
-    $userID = Yii::$app->user->id;
-    $user = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
-    // Student Photo...
-    // var_dump($user);
-   
-    if(empty($user)){
-        $userPhoto = 'backend/web/images/default.png';
-    } else {
-         $userPhoto = $user[0]['user_photo'];
+    if (isset($_GET['id'])) {
+        $userID = $_GET['id'];
+        $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     }
+    else if (empty(Yii::$app->user->identity->id)){
+            //echo "DEXDEVS";
+        } 
+        else {
+            $userID = Yii::$app->user->id; 
+            $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+    
+        if (empty($user)){
+            $userPhoto = 'backend/web/images/default.png';
+        } else {
+             $userPhoto = $user[0]['user_photo'];
+        }
 ?>
 <aside class="main-sidebar">
     <section class="sidebar">
@@ -16,7 +22,13 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
+                <?php 
+                    if (Yii::$app->user->identity->user_type == 'Executive') { ?>
+                        <img src="<?php echo $userPhoto; ?>" class="img-circle" alt="User Image"/>
+                <?php }
+                    else { ?>
+                        <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
+                <?php } ?>
             </div>
             <div class="pull-left info">
                 <p>
@@ -205,3 +217,4 @@
     </section>
 
 </aside>
+<?php } ?>

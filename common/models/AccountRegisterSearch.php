@@ -19,7 +19,7 @@ class AccountRegisterSearch extends AccountRegister
     {
         return [
             [['account_register_id', 'account_nature_id', 'created_by', 'updated_by'], 'integer'],
-            [['account_name', 'account_description', 'created_at', 'updated_at'], 'safe'],
+            [['account_no', 'account_name', 'account_description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -64,7 +64,8 @@ class AccountRegisterSearch extends AccountRegister
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'account_name', $this->account_name])
+        $query->andFilterWhere(['like', 'account_no', $this->account_no])
+            ->andFilterWhere(['like', 'account_name', $this->account_name])
             ->andFilterWhere(['like', 'account_description', $this->account_description]);
 
         return $dataProvider;

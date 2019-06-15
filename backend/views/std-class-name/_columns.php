@@ -21,6 +21,10 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'class_type',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'class_name',
     ],
     [

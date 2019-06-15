@@ -31,7 +31,7 @@ class EmpAttendanceController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-att-report','employess-att-report','final-attendance'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-att-report','employess-att-report','final-attendance','fetch-cnic'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -45,6 +45,11 @@ class EmpAttendanceController extends Controller
                 ],
             ],
         ];
+    }
+    
+     public function actionFetchCnic()
+    { 
+        return $this->render('fetch-cnic');
     }
       public function beforeAction($action) {
         $this->enableCsrfValidation = false;
@@ -140,39 +145,39 @@ class EmpAttendanceController extends Controller
                     if($check_in == 0){
 
                         $emp_att = Yii::$app->db->createCommand("SELECT emp_id FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '$date' AND branch_id = '$branch_id' ")->queryAll();
-
+                        
                         if(!empty($emp_att)){
                             Yii::$app->session->setFlash('warning',"You have already checked in..!");
                         } else {
                             $model->branch_id = $branch_id;
                             $model->emp_id = $empId;
                             $model->att_date = $date;
-                            $model->check_in = Yii::$app->formatter->asDatetime('now', 'H:i:s');
+                            $model->check_in = new \yii\db\Expression('NOW()');
                             $model->attendance = "P";
                             $model->created_by = Yii::$app->user->identity->id; 
                             $model->created_at = new \yii\db\Expression('NOW()');
                             $model->updated_by = '0';
                             $model->updated_at = '0';
-                            //$model->save();
+                            $model->save();
                         }
                     }
+
                     if($check_in == 1){
                         $emp_att = Yii::$app->db->createCommand("SELECT check_in FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '$date'  AND branch_id = '$branch_id' ")->queryAll();
 
-                        
-                        // if(empty($emp_att)){
-                        //     Yii::$app->session->setFlash('warning',"You are not checked in yet..!");
-                        // } else {
-                        //     $att = Yii::$app->db->createCommand()->update('emp_attendance', [
-                        //         'check_out'=> Yii::$app->formatter->asDatetime('now', 'H:i:s'),
-                        //         'updated_at'    => new \yii\db\Expression('NOW()'),
-                        //         'updated_by'    => Yii::$app->user->identity->id,
-                        //         ],
+                        if(empty($emp_att)){
+                            Yii::$app->session->setFlash('warning',"You are not checked in yet..!");
+                        } else {
+                            $att = Yii::$app->db->createCommand()->update('emp_attendance', [
+                                'check_out'=> new \yii\db\Expression('NOW()'),
+                                'updated_at'    => new \yii\db\Expression('NOW()'),
+                                'updated_by'    => Yii::$app->user->identity->id,
+                                ],
 
-                        //         ['emp_id' => $emp_id, 'att_date' => "$date", 'branch_id' => $branch_id]
+                                ['emp_id' => $emp_id, 'att_date' => "$date", 'branch_id' => $branch_id]
 
-                        //     )->execute();
-                        // }
+                            )->execute();
+                        }
                     }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
@@ -180,7 +185,6 @@ class EmpAttendanceController extends Controller
                     'content'=>'<span class="text-success">Create EmpAttendance success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
                 ];         
             }else{           
                 return [
@@ -197,15 +201,87 @@ class EmpAttendanceController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->att_id]);
+            if($model->load($request->post())) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $branch_id = Yii::$app->user->identity->branch_id;
+                    $cnic = $model->emp_cnic;
+                    $check_in = $model->check_in;
+                    $emp_id = Yii::$app->db->createCommand("SELECT emp_id, emp_name FROM emp_info WHERE emp_cnic = '$cnic'")->queryAll();
+
+                    if(empty($emp_id)){
+                        return $this->redirect(['emp-attendance/create', Yii::$app->session->setFlash('warning',"Sorry! Employee against CNIC: ".$cnic." is not exist...")]);
+                    } else {
+                        $date = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+                        $empId = $emp_id[0]['emp_id'];
+                        $empName = $emp_id[0]['emp_name'];
+
+                        if($check_in == 0){
+
+                            $emp_att = Yii::$app->db->createCommand("SELECT emp_id FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '$date' AND branch_id = '$branch_id' ")->queryAll();
+                            
+                            if(!empty($emp_att)){
+                                return $this->redirect(['emp-attendance/create', Yii::$app->session->setFlash('warning', "Employee: ".$empName." | CNIC: ".$cnic." is Already Checked in...")]);
+                            } else {
+                                $model->branch_id = $branch_id;
+                                $model->emp_id = $empId;
+                                $model->att_date = $date;
+                                $model->check_in = new \yii\db\Expression('NOW()');
+                                $model->attendance = "P";
+                                $model->created_by = Yii::$app->user->identity->id; 
+                                $model->created_at = new \yii\db\Expression('NOW()');
+                                $model->updated_by = '0';
+                                $model->updated_at = '0';
+                                $model->save();
+
+                                $transaction->commit();
+                                return $this->redirect(['emp-attendance/create', Yii::$app->session->setFlash('success', "Employee: ".$empName." | CNIC: ".$cnic." Successfully Checked in...")]);
+                            } // closing of if(!empty($emp_att))
+                        } // closing of if($check_in == 0)
+                    } // closing of if(empty($emp_id))
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }
+
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if($check_in == 1){
+                        $emp_att = Yii::$app->db->createCommand("SELECT check_in FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '$date'  AND branch_id = '$branch_id' ")->queryAll();
+
+                        if(empty($emp_att)){
+                            return $this->redirect(['emp-attendance/create', Yii::$app->session->setFlash('warning', "Employee: ".$empName." | CNIC: ".$cnic." is not Checked in yet...")]);
+                        } else {
+                             $emp_checkOut = Yii::$app->db->createCommand("SELECT check_out FROM emp_attendance WHERE emp_id = '$empId' AND att_date = '$date'  AND branch_id = '$branch_id' ")->queryAll();
+                            if(!empty($emp_checkOut)){
+                                return $this->redirect(['emp-attendance/create', Yii::$app->session->setFlash('warning', "Employee: ".$empName." | CNIC: ".$cnic." is Already Checked out...")]);
+                            } else {
+                                $att = Yii::$app->db->createCommand()->update('emp_attendance', [
+                                    'check_out'=> new \yii\db\Expression('NOW()'),
+                                    'updated_at'    => new \yii\db\Expression('NOW()'),
+                                    'updated_by'    => Yii::$app->user->identity->id,
+                                    ],
+
+                                    ['emp_id' => $emp_id, 'att_date' => "$date", 'branch_id' => $branch_id]
+
+                                )->execute();
+                                if($att){
+                                    $transaction->commit();
+                                }
+                                return $this->redirect(['emp-attendance/create', Yii::$app->session->setFlash('success', "Employee: ".$empName." | CNIC: ".$cnic." Successfully Checked out...")]);
+                            } // closing of if(!empty($emp_checkOut))
+                        } // closing of if(empty($emp_att))  
+                    } // closing of if($check_in == 1)
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                }    
             } else {
                 return $this->render('create', [
                     'model' => $model,
                 ]);
             }
-        }
-       
+        }   
     }
 
     /**

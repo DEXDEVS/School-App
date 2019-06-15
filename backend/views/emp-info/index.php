@@ -16,6 +16,18 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 ?>
+<<<<<<< HEAD
+=======
+<style type="text/css">
+    .panel-heading{
+        background-color:#001F3F;
+        color:white;
+    }
+    h1{ 
+        color: black; 
+    }
+</style>
+>>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
 <div class="emp-info-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
@@ -27,7 +39,11 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
+<<<<<<< HEAD
                     ['role'=>'modal-remote','title'=> 'Create new Emp Infos','class'=>'btn btn-default']).
+=======
+                    ['role'=>'','title'=> 'Create new Emp Infos','class'=>'btn btn-success']).
+>>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.
@@ -42,18 +58,28 @@ CrudAsset::register($this);
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Emp Infos listing',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
-                            'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
-                                ["bulk-delete"] ,
-                                [
-                                    "class"=>"btn btn-danger btn-xs",
-                                    'role'=>'modal-remote-bulk',
-                                    'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                                    'data-request-method'=>'post',
-                                    'data-confirm-title'=>'Are you sure?',
-                                    'data-confirm-message'=>'Are you sure want to delete this item'
-                                ]),
-                        ]).                        
-                        '<div class="clearfix"></div>',
+                    // 'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
+                    //     ["bulk-delete"] ,
+                    //     [
+                    //         "class"=>"btn btn-danger btn-xs",
+                    //         'role'=>'modal-remote-bulk',
+                    //         'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                    //         'data-request-method'=>'post',
+                    //         'data-confirm-title'=>'Are you sure?',
+                    //         'data-confirm-message'=>'Are you sure want to delete this item'
+                    //     ]),
+                    'buttons'=>Html::a('<i class="fa fa-comments-o"></i>&nbsp; Send SMS',
+                        ["bulk-sms"] ,
+                        [
+                            "class"=>"btn btn-success btn-xs btn-flat",
+                            'role'=>'modal-remote-bulk',
+                            'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                            'data-request-method'=> 'post',
+                            'data-confirm-title'=> 'SMS',
+                            'data-confirm-message'=>'<textarea name="message" class="form-control" rows="5" placeholder="Type message here"></textarea>'
+                        ]),
+                ]).                        
+                '<div class="clearfix"></div>',
             ]
         ])?>
     </div>

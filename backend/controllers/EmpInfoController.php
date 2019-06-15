@@ -35,7 +35,11 @@ class EmpInfoController extends Controller
                         'allow' => true,
                     ],
                     [
+<<<<<<< HEAD
                         'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-details', 'bulk-sms'],
+=======
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','emp-details', 'print-id-card' ,'bulk-sms'],
+>>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
                         'allow' => true,
                         'roles' => ['@','view'],
                     ],
@@ -46,6 +50,7 @@ class EmpInfoController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
+                    'bulk-sms' => ['post'],
                 ],
             ],
         ];
@@ -97,6 +102,11 @@ class EmpInfoController extends Controller
        return $this->render('emp-details'); 
     }
 
+    public function actionPrintIdCard($id)
+    {
+       return $this->render('print-id-card'); 
+    }
+
    
     /**
      * Creates a new EmpInfo model.
@@ -131,6 +141,8 @@ class EmpInfoController extends Controller
             }else if($model->load($request->post()) && $empDesignation->load($request->post()) && $empRefModel->load($request->post()) ){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
+                        var_dump($model->emp_name);
+                        die();
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
                         if(!empty($model->emp_photo)){
                             $imageName = $model->emp_name.'_emp_photo'; 
@@ -231,11 +243,80 @@ class EmpInfoController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->emp_id]);
+            if ($model->load($request->post()) && $empRefModel->load($request->post())) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
+                        if(!empty($model->emp_photo)){
+                            $imageName = $model->emp_name.'_emp_photo'; 
+                            $model->emp_photo->saveAs('uploads/'.$imageName.'.'.$model->emp_photo->extension);
+                            //save the path in the db column
+                            $model->emp_photo = 'uploads/'.$imageName.'.'.$model->emp_photo->extension;
+                        } else {
+                           $model->emp_photo = '0'; 
+                        }
+                        $model->degree_scan_copy = UploadedFile::getInstance($model,'degree_scan_copy');
+                        if(!empty($model->degree_scan_copy)){
+                            $imageName = $model->emp_name.'_degree_scan_copy'; 
+                            $model->degree_scan_copy->saveAs('uploads/'.$imageName.'.'.$model->degree_scan_copy->extension);
+                            //save the path in the db column
+                            $model->degree_scan_copy = 'uploads/'.$imageName.'.'.$model->degree_scan_copy->extension;
+                        } else {
+                           $model->degree_scan_copy = '0'; 
+                        }
+                        $model->emp_cv = UploadedFile::getInstance($model,'emp_cv');
+                        if(!empty($model->emp_cv)){
+                            $imageName = $model->emp_name.'_emp_cv'; 
+                            $model->emp_cv->saveAs('uploads/'.$imageName.'.'.$model->emp_cv->extension);
+                            //save the path in the db column
+                            $model->emp_cv = 'uploads/'.$imageName.'.'.$model->emp_cv->extension;
+                        } else {
+                           $model->emp_cv = '0'; 
+                        }
+                        $model->created_by = Yii::$app->user->identity->id; 
+                        $model->created_at = new \yii\db\Expression('NOW()');
+                        $model->updated_by = '0';
+                        $model->updated_at = '0';
+                        $model->save();
+
+                        $empRefModel->emp_id = $model->emp_id;
+                        $empRefModel->save();
+
+                        $user = new User();
+                        $empPassword = rand(1000, 10000);
+                        $user->branch_id = $model->emp_branch_id;
+                        $user->username = $model->emp_cnic;
+                        $user->email = $model->emp_email;
+                        $user->user_photo = $model->emp_photo;
+                        if($model->group_by == 'Faculty'){
+                            $user->user_type = 'Teacher';
+                        } else {
+                            $user->user_type = 'Employee';
+                        }
+                        $user->setPassword($empPassword);
+                        $user->generateAuthKey();
+                        $user->save();
+                        $transaction->commit();
+
+                        // SMS....
+                        $contact = $model->emp_contact_no;
+                        $num = str_replace('-', '', $contact);
+                        $to = str_replace('+', '', $num);
+                        $message = "AOA! \nCongratulations! You have become a part of Brookfield Family. \n\nYour Login credentials (username :".$model->emp_cnic.", Password: ".$empPassword.") ";
+                        $sms = SmsController::sendSMS($to, $message);
+                        return $this->redirect(['index']);
+
+                        Yii::$app->session->setFlash('success', "You have successfully add employee...!");
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                    }
+
+                //return $this->redirect(['view', 'id' => $model->emp_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'empRefModel' => $empRefModel,
                 ]);
             }
         }
@@ -434,17 +515,35 @@ class EmpInfoController extends Controller
        
     }
 
+<<<<<<< HEAD
      public function actionBulkSms()
+=======
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
+    public function actionBulkSms()
+>>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
     {      
         $request = Yii::$app->request;
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         $array = array();
         foreach ( $pks as $pk ) {
+<<<<<<< HEAD
             $inquiryStdNo = Yii::$app->db->createCommand("SELECT emp_contact_no FROM emp_info WHERE emp_id = '$pk'")->queryAll();
             $number = $inquiryStdNo[0]['emp_contact_no'];
             $numb = str_replace('-', '', $number);
             $num = str_replace('+', '', $numb);
                     
+=======
+            
+            $empNumbers = Yii::$app->db->createCommand("SELECT emp_contact_no FROM emp_info WHERE emp_id = '$pk'")->queryAll();
+            $number = $empNumbers[0]['emp_contact_no'];
+            $numb = str_replace('-', '', $number);
+            $num = str_replace('+', '', $numb);
+
+>>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
             $array[] = $num;
         }
 
@@ -454,6 +553,7 @@ class EmpInfoController extends Controller
             $message = $_POST['message'];
         
             $type = "xml";
+<<<<<<< HEAD
             $id = "trailaccount";
             $pass = "trailaccount";
             $lang = "English";
@@ -466,11 +566,28 @@ class EmpInfoController extends Controller
             $ch = curl_init('https://sms.lrt.com.pk/api/sms-single-or-bulk-api.php?');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $link);
+=======
+            $id = "Brookfieldclg";
+            $pass = "college42";
+            $lang = "English";
+            $mask = "Brookfield";
+            $message = urlencode($message);
+            // Prepare data for POST request
+            $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
+            // Send the POST request with cURL
+            $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+>>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch); //This is the result from SMS4CONNECT
             curl_close($ch);     
 
             Yii::$app->session->setFlash('success', $result);
+<<<<<<< HEAD
+=======
+
+>>>>>>> dcd5cf70403927dd661e311e5e3237e7776e06b6
         }
         return $this->redirect(['./emp-info']);
     }

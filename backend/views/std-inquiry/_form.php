@@ -12,9 +12,9 @@ use common\models\StdClassName;
 /* @var $model common\models\StdInquiry */
 /* @var $form yii\widgets\ActiveForm */
  
-$stdInquiry = StdInquiry::find()->orderBy(['std_inquiry_id'=> SORT_DESC])->one();
-$id = $stdInquiry['std_inquiry_id']+1;
-$year = date('y');
+// $stdInquiry = StdInquiry::find()->orderBy(['std_inquiry_id'=> SORT_DESC])->one();
+// $id = $stdInquiry['std_inquiry_id']+1;
+//$year = date('y');
 
 ?>
 
@@ -22,9 +22,7 @@ $year = date('y');
     <?php $form = ActiveForm::begin(); ?>
     <h3 style="color: #337AB7; margin-top: -10px"><small> ( Fields with <span style="color: red;">red stars </span>are required )</small> </h3>
     <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'std_inquiry_no')->textInput(['maxlength' => true,'value'=> 'STD-Y'.$year.'-0'.$id, 'readonly'=> true]) ?>
-        </div>
+        
         <div class="col-md-4">
             <?php   $sDate = date('Y'); 
                     $eDate = $sDate + 1;
@@ -50,15 +48,15 @@ $year = date('y');
     </div>
     <div class="row">    
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 95px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 105px; top: 18px"></i>
              <?= $form->field($model, 'std_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 85px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 108px; top: 18px"></i>
              <?= $form->field($model, 'std_father_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 50px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 57px; top: 18px"></i>
              <?= $form->field($model, 'gender')->dropDownList
                 ([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => 'Select Gender']) ?>
         </div>
@@ -66,11 +64,11 @@ $year = date('y');
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 131px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 142px; top: 18px"></i>
             <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999']) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 122px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 133px; top: 18px"></i>
             <?= $form->field($model, 'std_father_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999']) ?>
         </div>
         <div class="input-group input-flat">
@@ -96,7 +94,7 @@ $year = date('y');
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 101px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 110px; top: 18px"></i>
             <?= $form->field($model, 'std_previous_class')->widget(Select2::classname(), [
                     'data' => ArrayHelper::map(StdClassName::find()->all(),'class_name','class_name'),
                     'language' => 'en',
@@ -110,17 +108,17 @@ $year = date('y');
             ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 52px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 125px; top: 18px"></i>
             <?= $form->field($model, 'std_roll_no')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 109px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 119px; top: 18px"></i>
             <?= $form->field($model, 'std_obtained_marks')->textInput(['id' => 'obtainedMarks']) ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 181px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 90px; top: 18px"></i>
             <?= $form->field($model, 'std_total_marks')->textInput(['id' => 'totalMarks']) ?>
         </div>
         <div class="col-md-4">
@@ -143,7 +141,7 @@ $year = date('y');
     </div>
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 57px; top: 18px"></i>
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: relative; left: 122px; top: 18px"></i>
             <?= $form->field($model, 'std_address')->textInput(['maxlength' => true]) ?>
         </div>
         

@@ -6,15 +6,27 @@ use yii\helpers\Html;
 ?>
 
 <?php 
-    $userID = Yii::$app->user->id;
-    $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
-    // Student Photo...
-
-    if(empty($user)){
-        $userPhoto = 'backend/web/images/default.png';
-    } else {
-         $userPhoto = $user[0]['user_photo'];
+    if (isset($_GET['id'])) {
+        $userID = $_GET['id'];
+        $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+        // if(empty($user)){
+        //     $userPhoto = 'backend/web/images/default.png';
+        // } else {
+        //      $userPhoto = $user[0]['user_photo'];
+        // }
     }
+    else if (empty(Yii::$app->user->identity->id)){
+            //echo "DEXDEVS";
+        } 
+        else {
+            $userID = Yii::$app->user->id; 
+            $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+    
+        if (empty($user)){
+            $userPhoto = 'backend/web/images/default.png';
+        } else {
+             $userPhoto = $user[0]['user_photo'];
+        }
 ?>
 <header class="main-header">
 
@@ -210,7 +222,14 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="user-image" alt="User Image"/>
+                        <?php  
+                            if (Yii::$app->user->identity->username == 'Executive') { ?>
+                                <img src="<?php echo $userPhoto; ?>" class="user-image" alt="User Image"/>
+                        <?php }
+                            else { ?>
+                                <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="user-image" alt="User Image"/>
+                        <?php } ?>
+                        
                         <span class="hidden-xs">
                             <?php 
                             //var_dump($userPhoto);
@@ -237,7 +256,13 @@ use yii\helpers\Html;
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header" style="height: 200px">
-                            <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
+                            <?php  
+                            if (Yii::$app->user->identity->username == 'Executive') { ?>
+                                <img src="<?php echo $userPhoto; ?>" class="img-circle" alt="User Image"/>
+                            <?php }
+                                else { ?>
+                                    <img src="<?php echo 'backend/web/'.$userPhoto; ?>" class="img-circle" alt="User Image"/>
+                            <?php } ?>
                             <p>
                                 <label for="">Contact Info</label><br>
                                 <!-- email -->
@@ -247,7 +272,7 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-primary btn-flat btn-sm">Profile</a>
+                                <a href="./user-profile" class="btn btn-primary btn-flat btn-sm">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <?php if(Yii::$app->user->identity->user_type == 'Superadmin' OR
@@ -282,3 +307,4 @@ use yii\helpers\Html;
         </div>
     </nav>
 </header>
+<?php } ?>

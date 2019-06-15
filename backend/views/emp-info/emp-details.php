@@ -1,27 +1,29 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style media="print" type="text/css">
-  @media print{
-    .employee_card {
-      margin: 0 auto;
-      background-color: #fff !important;
-    }
-    img{
-      position: static;
-    }
-    .employee_card img{
-      border-radius: 50%; 
-      position: absolute; 
-      top: 90px; 
-      left: 105px;
-    }
-  }
-</style>
 <style type="text/css">
   #photo{
     border-radius: 50%; 
     position: absolute; 
     top: 90px; 
     left: 105px;
+  }
+  .emp_id_card{
+    position: absolute;
+    top: 0px;
+    z-index: -1;
+  }
+  @media print {
+    header, nav, footer{
+      display: none;
+    }
+    .row{
+      display: none;
+    }
+    .btn{
+      display: none;
+    }
+    .employee_card{
+      display: show !important;
+    }
   }
 </style>
 <?php 
@@ -67,6 +69,7 @@
     <h1 style="color: #3C8DBC;">
         <i class="fa fa-user"></i> Employee Profile
       </h1>
+      <img src= "<?php echo $empInfo[0]['barcode']; ?>">
     <ol class="breadcrumb">
         <li><a href="./home"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="./emp-info">Back</a></li>
@@ -74,6 +77,37 @@
   </section>
   <!-- main content start  -->
 	<section class="content">
+    <?php 
+      if (isset($_GET['sms'])) {
+        $number = $_GET['to'];
+        $num = str_replace('-', '', $number);
+        $to = str_replace('+', '', $num);
+        $message = $_GET['message'];
+        // sms ....
+        $type = "xml";
+        $id = "Brookfieldclg";
+        $pass = "college42";
+        $lang = "English";
+        $mask = "Brookfield";
+        // Data for text message
+        $message = urlencode($message);
+        // Prepare data for POST request
+        $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
+        // Send the POST request with cURL
+        $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch); //This is the result from SMS4CONNECT
+        curl_close($ch);
+        
+        if ($result) { ?>
+            <div id="alert" class="alert alert-success">
+              <?php echo $result; ?>
+            </div>
+        <?php }
+      }
+    ?>
     <div class="row">
       <div class="col-md-3">
         <!-- Profile Image Start -->
@@ -161,7 +195,7 @@
                     <?=Html::a(' Edit',['update','id'=>$id],['class'=>'btn btn-primary btn-sm fa fa-edit','role'=>'modal-remote']) ?>
                     <button type="button" class="btn btn-info btn-sm fa fa-comments" data-toggle="modal" data-target="#modal-default"> Send SMS</button>
                      <a href="./emails-create?id=<?php echo $id;?>" class="btn btn-warning btn-sm fa fa-envelope-o" style='color: white;'> Send Email </a>
-                    <button type="button" class="btn btn-default btn-sm bg-navy fa fa-id-card-o" data-toggle="modal" data-target="#modal-id-card"> ID Card</button>
+                    <?=Html::a(' Print ID Card',['print-id-card','id'=>$id],['class'=>'btn btn-default bg-navy btn-sm fa fa-id-card-o']) ?>
                     <div class="modal fade" id="modal-default">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -182,7 +216,7 @@
                                       <span id="remaining" class="pull-right">160 characters remaining </span>
                                     <span id="messages" style="text-align: center;">/ Count SMS(0)</span>
                                     <input type="hidden" value="" id="count"><br>
-                                    <input type="text" value="" id="sms" style="border: none; color: green; font-weight: bold;">
+                                    <input type="text" value="" id="sms" style="border: none; color: green; font-weight: bold;" class="form-control">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                                   </p>
                                 </div>
@@ -375,109 +409,8 @@
   </section>
   <!-- main content close -->
 </div>	
-<!-- ID Card Modal start -->
-  <div class="modal fade" id="modal-id-card">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Employee ID Card</h4>
-        </div>
-        <?php 
-          $empID    = $empInfo[0]['emp_reg_no'];
-          $empName  = $empInfo[0]['emp_name'];
-          $empfName = $empInfo[0]['emp_father_name'];
-          $empCnic  = $empInfo[0]['emp_cnic'];
-          $empPhone = $empInfo[0]['emp_contact_no'];
-          $empPhoto = $empInfo[0]['emp_photo'];
-          $empEmail = $empInfo[0]['emp_email'];
-          $empBlood = "A +ve";
-          $empDesignationName;
-        ?>
-          <div class="modal-body employee_card">  
-            <div class="row">
-              <div class="col-md-12">
-              <div id="id-card">  
-                <img src="images/employee_card.png" width="100%" class="img-responsive">
-                <!-- employee photo -->
-                <img src="<?php echo $empPhoto; ?>" width="80px" height="80px" id="photo">
-                <!-- employee name -->
-                <h4 style="font-family: verdana; position: absolute; top: 170px; left: 100px; color: #110037">
-                  <?php echo $empName; ?>
-                </h4>
-                <!-- employee father name -->
-                <!-- <h5 style="font-family: verdana; position: absolute; top: 182px; left:120px; color: #110037">
-                  <?php echo $empfName; ?>
-                </h5> -->
-                <!-- employee ID -->
-                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 203px; left: 100px; color: #110037">
-                  <b><?php echo $empID; ?></b>
-                </h6>
-                <!-- employee designation -->
-                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 218px; left: 130px; color: #110037">
-                  <b><?php echo $empDesignationName; ?></b>
-                </h6>
-                <!-- employee cnic -->
-                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 233px; left: 110px; color: #110037">
-                  <b><?php echo $empCnic; ?></b>
-                </h6>
-                <!-- employee phone -->
-                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 248px; left: 115px; color: #110037">
-                  <b><?php echo $empPhone; ?></b>
-                </h6>
-                <!-- employee phone -->
-                <h6 style="font-family: verdana; font-size: 10px; position: absolute; top: 261px; left: 110px; color: #110037">
-                  <b><?php echo $empBlood; ?></b>
-                </h6>
-                <!-- website address -->
-                <p style="font-family: verdana; position: absolute; right: 160px; bottom: 137px; font-size: 6px; color: #110037">www.abclearning.edu.pk</p>
-                <!-- employee email -->
-                <p style="font-family: verdana; position: absolute; right: 160px; bottom: 137px; font-size: 6px; color: #110037">www.abclearning.edu.pk</p>
-              </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-sm pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary btn-sm fa fa-print" onclick="printContent('id-card')"> Print</button>
-          </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- ID Card Modal CLose -->
 </body>
 </html>
-
-<?php 
-  if (isset($_GET['sms'])) {
-    $to = $_GET['to'];
-    $message = $_GET['message'];
-    // sms ....
-    $type = "xml";
-    $id = "Brookfieldclg";
-    $pass = "college42";
-    $lang = "English";
-    $mask = "Brookfield";
-    // Data for text message
-    $message = urlencode($message);
-    // Prepare data for POST request
-    $data = "id=".$id."&pass=".$pass."&msg=".$message."&to=".$to."&lang=".$lang."&mask=".$mask."&type=".$type;
-    // Send the POST request with cURL
-    $ch = curl_init('http://www.sms4connect.com/api/sendsms.php/sendsms/url');
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = curl_exec($ch); //This is the result from SMS4CONNECT
-    curl_close($ch);
-    
-    if ($result) {
-        Yii::$app->session->setFlash('success', "SMS sent successfully...");
-    }
-  }
-?>
 <script>
 // textarea sms counter....
 $(document).ready(function(){
@@ -498,12 +431,13 @@ $(document).ready(function(){
         $('#sms').val("Your Consumed SMS: (" + countSMS+ ")");
     });
 });
-// Print Employee ID Card....
-function printContent(el){
-  var restorepage = document.body.innerHTML;
-  var printcontent = document.getElementById(el).innerHTML;
-  document.body.innerHTML = printcontent;
-  window.print();
-  document.body.innerHTML = restorepage;
-}
+</script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+// Remove Flash Alert....
+$( document ).ready(function(){
+    $('#alert').fadeIn(function(){
+       $('#alert').delay(5000).fadeOut(); 
+    });
+});
 </script>
