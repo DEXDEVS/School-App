@@ -15,6 +15,7 @@ use yii\widgets\DetailView;
             'visitor_contact_no',
             'visitor_photo',
             'visitor_cnic',
+            'date_time',
             'visit_purpose',
             'created_by',
             'updated_by',

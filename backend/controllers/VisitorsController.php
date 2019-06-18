@@ -8,6 +8,7 @@ use common\models\VisitorsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\web\UploadedFile;
@@ -23,6 +24,20 @@ class VisitorsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-visitors'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -37,6 +52,12 @@ class VisitorsController extends Controller
      * Lists all Visitors models.
      * @return mixed
      */
+
+     public function actionFetchVisitors()
+    {   
+        return $this->render('fetch-visitors');
+    }
+
     public function actionIndex()
     {    
         $searchModel = new VisitorsSearch();
@@ -100,7 +121,7 @@ class VisitorsController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post())){
+            }else if($model->load($request->post())&& $model->validate()){
 
                 $model->visitor_photo = UploadedFile::getInstance($model,'visitor_photo');
                     if(!empty($model->visitor_photo)){

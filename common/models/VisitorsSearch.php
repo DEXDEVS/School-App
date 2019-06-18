@@ -19,7 +19,7 @@ class VisitorsSearch extends Visitors
     {
         return [
             [['visitor_id', 'created_by', 'updated_by'], 'integer'],
-            [['visitor_name', 'visitor_contact_no', 'visitor_photo', 'visitor_cnic', 'visit_purpose', 'created_at', 'updated_at'], 'safe'],
+            [['visitor_name', 'visitor_contact_no', 'visitor_photo', 'visitor_cnic', 'date_time', 'visit_purpose', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -57,6 +57,7 @@ class VisitorsSearch extends Visitors
 
         $query->andFilterWhere([
             'visitor_id' => $this->visitor_id,
+            'date_time' => $this->date_time,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,

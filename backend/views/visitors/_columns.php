@@ -22,9 +22,17 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'visitor_contact_no',
     ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'visitor_photo',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'visitor_cnic',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'date_time',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

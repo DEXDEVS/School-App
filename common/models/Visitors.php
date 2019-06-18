@@ -12,6 +12,7 @@ use Yii;
  * @property string $visitor_contact_no
  * @property string $visitor_photo
  * @property string $visitor_cnic
+ * @property string $date_time
  * @property string $visit_purpose
  * @property int $created_by
  * @property int $updated_by
@@ -34,14 +35,13 @@ class Visitors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['visitor_name', 'visitor_contact_no', 'visitor_cnic', 'visit_purpose', 'created_by', 'updated_by'], 'required'],
+            [['visitor_name', 'visitor_contact_no','visitor_cnic', 'date_time', 'visit_purpose'], 'required'],
+            [[ 'visitor_photo', 'date_time', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at', 'visitor_photo'], 'safe'],
             [['visitor_name'], 'string', 'max' => 30],
-            [['visitor_contact_no', 'visitor_cnic'], 'string', 'max' => 15],
+            [['visitor_contact_no', 'visitor_cnic'], 'string', 'max' => 30],
             [['visitor_photo'], 'string', 'max' => 200],
             [['visit_purpose'], 'string', 'max' => 100],
-            [['visitor_photo'], 'image', 'extensions' => 'jpg'],
         ];
     }
 
@@ -56,6 +56,7 @@ class Visitors extends \yii\db\ActiveRecord
             'visitor_contact_no' => 'Visitor Contact No',
             'visitor_photo' => 'Visitor Photo',
             'visitor_cnic' => 'Visitor Cnic',
+            'date_time' => 'Date Time',
             'visit_purpose' => 'Visit Purpose',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',

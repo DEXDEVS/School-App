@@ -59,7 +59,7 @@ use yii\helpers\Url;
 <body>
 
 <div class="std-registration-form">
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['id' => $model->formName()]); ?>
 <?php 
     $branch_id = Yii::$app->user->identity->branch_id;
 ?>
@@ -439,7 +439,8 @@ $script = <<< JS
 $('form#{$model->formName()}').on('beforeSubmit',function(e){
     var canvas = document.getElementById("canvasTarget");
     var dataURL = canvas.toDataURL("image/png");
-    var d = document.getElementById('barcode_ID').value = dataURL;   
+    var d = document.getElementById('barcode_ID').value = dataURL; 
+    alert(d);  
 }); 
 
 // getting std-personal-info- by std inquiry no...
