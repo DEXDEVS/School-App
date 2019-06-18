@@ -74,7 +74,7 @@ class StdFeePkgController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "StdFeePkg #".$id,
+                    'title'=> "Fee Package #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -106,7 +106,7 @@ class StdFeePkgController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new StdFeePkg",
+                    'title'=> "Create new Fee Package",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -182,7 +182,7 @@ class StdFeePkgController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update StdFeePkg #".$id,
+                    'title'=> "Update Fee Package #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

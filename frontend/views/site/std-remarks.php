@@ -28,15 +28,15 @@ if(isset($_GET['class_id']))
 	} else {
 
 		$examCriteriaId = $examDataCond[0]['exam_criteria_id'];
-		// $examDataResult = Yii::$app->db->createCommand("SELECT c.exam_category_id,s.full_marks,s.passing_marks
-		// FROM exams_criteria as c
-		// INNER JOIN exams_schedule as s 
-		// ON c.exam_criteria_id = s.exam_criteria_id
-		// WHERE c.class_id = '$classNameId'
-		// AND c.exam_criteria_id = '$examCriteriaId'
-		// AND s.subject_id = '$subID' 
-		// AND s.status = 'result prepared'
-		// 			")->queryAll();
+		$examDataResult = Yii::$app->db->createCommand("SELECT c.exam_category_id,s.full_marks,s.passing_marks
+		FROM exams_criteria as c
+		INNER JOIN exams_schedule as s 
+		ON c.exam_criteria_id = s.exam_criteria_id
+		WHERE c.class_id = '$classNameId'
+		AND c.exam_criteria_id = '$examCriteriaId'
+		AND s.subject_id = '$subID' 
+		AND s.status = 'result prepared'
+					")->queryAll();
 		$marksData = Yii::$app->db->createCommand("SELECT * 
 			FROM marks_head as h
 		INNER JOIN marks_details as d
@@ -86,6 +86,11 @@ if(isset($_GET['class_id']))
 	<body>
 		<div class="container-fluid">
 			<div class="row">
+		        <div class="col-md-3 col-md-offset-9">
+		            <a href="./list-of-classes"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
+		        </div>
+    		</div><br>
+			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-primary">
 						<div class="panel-body">
@@ -95,12 +100,12 @@ if(isset($_GET['class_id']))
 									<?php echo $examCatName[0]['category_name']; ?> (<?php echo date('Y'); ?>)
 									</h2>
 									<br>
-									<p style="text-align: center;font-weight: bold;font-size: 20px;">Marks Sheet:
+									<p style="text-align: center;font-weight: bold;font-size: 20px;">Remarks Sheet:
 										<b></b>(<?php echo $examDataCond[0]['exam_type']; ?>)</p><br>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-4" style="border-right:1px solid;text-align: center;">
+								<div class="col-md-6" style="border-right:1px solid;text-align: center;">
 									<table class="table">
 											<tr>
 												<b>Class Name</b>
@@ -110,17 +115,17 @@ if(isset($_GET['class_id']))
 											</tr>
 									</table>
 								</div>
-								<div class="col-md-4" style="border-right:1px solid;text-align: center;">
+								<!-- <div class="col-md-4" style="border-right:1px solid;text-align: center;">
 									<table class="table">
 											<tr>
 												<b>Subject</b><br>
 												<center>
-													<?php echo $subjectName[0]['subject_name']; ?>
+													<?php// echo $subjectName[0]['subject_name']; ?>
 												</center>
 											</tr>
 									</table>
-								</div>
-								<div class="col-md-4" style="text-align: center;">
+								</div> -->
+								<div class="col-md-6" style="text-align: center;">
 									<table class="table">
 											<tr>
 												<b>Teacher Name</b>

@@ -4,6 +4,7 @@
 	{
 		$examCatID 		= $_GET['examCatID'];
 		$classID 		= $_GET['classID'];
+		$classHeadID 		= $_GET['classHeadID'];
 		$stdID 			= $_GET['stdID'];
 		$examType 		= $_GET['examType'];
 		$classHeadID 	= $_GET['classHeadID'];
@@ -12,7 +13,9 @@
 
 		$ClassName = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHeadID'")->queryAll();
 
-		$StdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$stdID'")->queryAll();?>
+		$StdName = Yii::$app->db->createCommand("SELECT std_name FROM std_personal_info WHERE std_id = '$stdID'")->queryAll();
+
+?>
 
 <div class="container-fluid">
 	<div class="row">
@@ -63,12 +66,15 @@
 						
 						$criteriaId = $criteria[0]['exam_criteria_id'];
 
-						$marks = Yii::$app->db->createCommand("SELECT d.marks_detail_id, d.subject_id, d.obtained_marks FROM marks_details as d 
-							INNER JOIN marks_head as h 
-							ON d.marks_head_id = h.marks_head_id
-							WHERE h.exam_criteria_id = '$criteriaId'
-							AND h.std_id = '$stdID'
-						")->queryAll();
+						// $marks = Yii::$app->db->createCommand("SELECT mdw.obtained_marks
+						// 		FROM ((marks_head as mh 
+						// 		INNER JOIN marks_details as md
+						// 		ON mh.marks_head_id = md.marks_head_id)
+						// 		INNER JOIN marks_details_weightage as mdw
+						// 		ON md.marks_detail_id = mdw.marks_details_id)
+						// 		WHERE mh.class_head_id = '$headId'
+						// 		AND md.subject_id = '$subId'")->queryAll();
+						
 					if(empty($marks)){
 						Yii::$app->session->setFlash('warning',"Nothing to update..!");
 					} else {

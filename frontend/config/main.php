@@ -55,6 +55,7 @@ return [
                 'home' => 'site/index',
                 'user-profile' => 'site/user-profile',
                 'list-of-classes' => 'site/list-of-classes',
+                'std-remarks' => 'site/std-remarks',
                 'activity-view' => 'site/activity-view',
                 'employe-dashboard'=>'site/employe-dashboard',
                 'employee-portfolio'=>'site/employee-portfolio',

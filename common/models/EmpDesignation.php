@@ -64,12 +64,12 @@ class EmpDesignation extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'emp_designation_id' => 'Emp Designation ID',
-            'emp_id' => 'Emp ID',
+            'emp_designation_id' => 'Designation ID',
+            'emp_id' => 'ID',
             'designation_id' => 'Designation ID',
-            'emp_type_id' => 'Emp Type ID',
+            'emp_type_id' => 'Type',
             'group_by' => 'Group By',
-            'emp_salary' => 'Emp Salary',
+            'emp_salary' => 'Salary',
             'designation_status' => 'Designation Status',
             'status' => 'Status',
 

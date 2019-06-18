@@ -65,7 +65,7 @@
                         'icon' => 'graduation-cap',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
+                            // ['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
                             ['label' => 'Enrollment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
                             ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
@@ -374,7 +374,7 @@
                                 'url' => '#',
                                 'items' => [
                                     ['label' => 'Employee Type', 'icon' => 'chevron-right', 'url' => './emp-type',],
-                                    ['label' => 'Employee Designation', 'icon' => 'chevron-right', 'url' => './emp-designation',],
+                                    ['label' => 'Employee Designation', 'icon' => 'chevron-right', 'url' => './designation',],
                                 ],
                             ],
                             [

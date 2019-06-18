@@ -14,20 +14,25 @@
 	$instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute WHERE institute_id = 2")->queryAll();
   // sessions query....
 	$sessions = Yii::$app->db->createCommand("SELECT * FROM std_sessions WHERE session_branch_id = $id AND delete_status = 1")->queryAll();
-  if(empty($sessions)){
+	if (empty($sessions)) {
+		echo "";
+	}else{
+		$sessionid = $sessions[0]['session_id'];
+		$countSessions = count($sessions);
+		$sections = Yii::$app->db->createCommand("SELECT * FROM std_sections
+  INNER join std_sessions
+  ON std_sections.session_id = std_sessions.session_id
+  WHERE std_sessions.session_id = $sessionid AND std_sessions.delete_status = 1")->queryAll();
+		if (empty($sections)) {
+			echo "";
+		}else{
+			$sectionId = $sections[0]['section_id'];
+			$countSections = count($sections);
+		}
+	}
+	
+  // sections query....
 
-  } else {
-    $sessionid = $sessions[0]['session_id'];
-    $countSessions = count($sessions);
-    // sections query....
-    $sections = Yii::$app->db->createCommand("SELECT * FROM std_sections
-    INNER join std_sessions
-    ON std_sections.session_id = std_sessions.session_id
-    WHERE std_sessions.session_id = $sessionid AND std_sessions.delete_status = 1")->queryAll();
-    $sectionId = $sections[0]['section_id'];
-    $countSections = count($sections);
-  }
-  
   // classes query...
 	$classes = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE branch_id = '$id' AND  delete_status = 1")->queryAll();
 	$countclasses = count($classes);  
@@ -66,7 +71,7 @@
 
                 <ul class="list-group list-group-unbordered">
                   <li class="list-group-item">
-                    <b>Principal:</b><br>
+                    <b>Campus Head:</b><br>
                       <a>
                         <?php echo $branches[0]['branch_head_name'];?>
                       </a>
@@ -110,7 +115,13 @@
                 	<a href="#sessions" data-toggle="tab" style="color: #3C8DBC;">
                     <i class="fa fa-scribd"></i> Sessions 
                     <span class="label label-success" style="border-radius: 50%;">
-                      <?php echo $countSessions;?>
+                      <?php 
+                      if (empty($countSessions)) {
+                      	echo "N/A";
+                      }else{
+                      	echo $countSessions;
+                      }
+                      ?>
                     </span>
                   </a>
                 </li>
@@ -128,7 +139,13 @@
                 	<a href="#sections" data-toggle="tab" style="color: #3C8DBC;">
                     <i class="glyphicon glyphicon-link"></i> Sections 
                     <span class="label label-primary" style="border-radius: 50%;">
-                      <?php echo $countSections;?>
+                      <?php 
+                      if (empty($countSections)) {
+                      	echo "N/A";
+                      }else{
+                      	echo $countSections;
+                      }
+                      ?>
                     </span>
                   </a>
                 </li>
@@ -279,9 +296,14 @@
                               $countIntake = 0;
                               $countStudent = 0;
                               $countRemainingIntake = 0;
+                              if (empty($sections)) {
+                              	echo "";
+                              }else{
+                              	
                               foreach ($sections as $key => $val){ 
                               $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.section_id = $key+1")->queryAll();
                                 $studentCount = count($students);
+                              }
                             ?>  
                             <tr>
                               <td class="text-center"><b><?php echo $key+1; ?></b></td>
