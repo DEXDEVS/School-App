@@ -274,86 +274,151 @@ transition: all 0.4s ease-in-out;
 
 // for inserting marks from mark-sheet.php
 if(isset($_POST['saveMarks'])){
-	$countStudents 	= $_POST['countStudents'];
-	$categoryId 	= $_POST['categoryId'];
+	//marks_head
 	$examCriteriaId = $_POST['examCriteriaId'];
 	$classHeadId 	= $_POST['classHeadId'];
-	$subjectId 		= $_POST['subId'];
 	$stdId 			= $_POST['stdId'];
+	//marks_details
+	$subjectId 		= $_POST['subId'];
+	//marks_details_weightage
+	$weightageTypeId = $_POST['weightageTypeId'];
+	$obtMarks = $_POST['marks'];
+	//------------------------------
 	$classNameId	= $_POST['classNameId'];
-
+	$categoryId 	= $_POST['categoryId'];
+	$countStudents 	= $_POST['countStudents'];
+	$countWeightage 	= $_POST['countWeightage'];
+	// populate absent fields
 	for($i=0; $i<$countStudents;$i++){
-		$q=$i+1;
-		$marks = "marks".$q;
-
-		if(empty($_POST["$marks"])){
-			$obtMarks[$i] = 'A';
-		} else {
-			$obtMarks[$i] = $_POST["$marks"];
+		if($obtMarks[$i][0] == 'A'){
+			for ($j=0; $j <$countWeightage ; $j++) { 
+				$obtMarks[$i][$j] = 'A';
+			}
 		}
 	}
 	
 	$transection = Yii::$app->db->beginTransaction();
 	try{
-		for ($j=0; $j < $countStudents; $j++) { 
+		for ($i=0; $i < $countStudents; $i++) { 
 			$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
-					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_enroll_head_id = '$classHeadId' AND std_id = '$stdId[$j]'")->queryAll();
+					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND class_head_id = '$classHeadId' AND std_id = '$stdId[$i]'")->queryAll();
 
 			if(empty($marksHeadId)){
-			$marksHead = Yii::$app->db->createCommand()->insert('marks_head',[
-    			'exam_criteria_id' 		=> $examCriteriaId,
-    			'std_enroll_head_id'	=> $classHeadId,
-				'std_id' 				=> $stdId[$j],
-				'created_at'		    => new \yii\db\Expression('NOW()'),
-				'created_by'			=> Yii::$app->user->identity->id, 
-			])->execute();
+				$marksHead = Yii::$app->db->createCommand()->insert('marks_head',[
+	    			'exam_criteria_id' 		=> $examCriteriaId,
+	    			'class_head_id'			=> $classHeadId,
+					'std_id' 				=> $stdId[$i],
+					'created_at'		    => new \yii\db\Expression('NOW()'),
+					'created_by'			=> Yii::$app->user->identity->id, 
+				])->execute();
+
 				if($marksHead){
 					$marksHeadId = Yii::$app->db->createCommand("SELECT marks_head_id 
-					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND std_id = '$stdId[$j]'")->queryAll();
+					FROM marks_head WHERE exam_criteria_id = '$examCriteriaId' AND class_head_id = '$classHeadId' AND std_id = '$stdId[$i]'")->queryAll();
 					$marksHeadid = $marksHeadId[0]['marks_head_id'];
+				
 					$marksDetails = Yii::$app->db->createCommand()->insert('marks_details',[
 	            			'marks_head_id' 	=> $marksHeadid,
 							'subject_id' 		=> $subjectId,
-							'obtained_marks'	=> $obtMarks[$j],
 							'created_at'		=> new \yii\db\Expression('NOW()'),
 							'created_by'		=> Yii::$app->user->identity->id, 
 						])->execute();
-				}
+
+					if($marksDetails){
+						$marksDetailId = Yii::$app->db->createCommand("SELECT marks_detail_id 
+						FROM marks_details WHERE marks_head_id = '$marksHeadid' AND subject_id = '$subjectId'")->queryAll();
+						$marksDetailid = $marksDetailId[0]['marks_detail_id'];
+
+						for ($j=0; $j <$countWeightage ; $j++) { 
+							$marksDetailsWeightage = Yii::$app->db->createCommand()->insert('marks_details_weightage',[
+		            			'marks_details_id' 	=> $marksDetailid,
+								'weightage_type_id' => $weightageTypeId[$j],
+								'obtained_marks'	=> $obtMarks[$i][$j],
+								'created_at'		=> new \yii\db\Expression('NOW()'),
+								'created_by'		=> Yii::$app->user->identity->id, 
+							])->execute();
+						} //end of j loop
+					} //end of $marksDetails
+				} //end of $marksHead
 			} else {
 
 				$marksHeadid = $marksHeadId[0]['marks_head_id'];
-				$marksDetails = Yii::$app->db->createCommand()->insert('marks_details',[
+				$marksDetail = Yii::$app->db->createCommand("SELECT marks_detail_id 
+					FROM marks_details WHERE marks_head_id = '$marksHeadid' AND subject_id = '$subjectId'")->queryAll();
+
+				if(empty($marksDetail)){
+					$marksDetails = Yii::$app->db->createCommand()->insert('marks_details',[
 	            			'marks_head_id' 	=> $marksHeadid,
 							'subject_id' 		=> $subjectId,
-							'obtained_marks'	=> $obtMarks[$j],
 							'created_at'		=> new \yii\db\Expression('NOW()'),
 							'created_by'		=> Yii::$app->user->identity->id, 
 						])->execute();
-			}
-			if($marksDetails){
-				$examScheduleId = Yii::$app->db->createCommand("SELECT s.exam_schedule_id FROM exams_schedule as s
-				INNER JOIN exams_criteria as c 
-				ON s.exam_criteria_id = c.exam_criteria_id
-				WHERE c.class_id = '$classNameId'
-				AND c.exam_category_id = '$categoryId'
-				AND s.subject_id = '$subjectId'
-				AND c.exam_status = 'conducted'
+
+					if($marksDetails){
+						$marksDetailId = Yii::$app->db->createCommand("SELECT marks_detail_id 
+						FROM marks_details WHERE marks_head_id = '$marksHeadid' AND subject_id = '$subjectId'")->queryAll();
+						$marksDetailid = $marksDetailId[0]['marks_detail_id'];
+
+						for ($j=0; $j <$countWeightage ; $j++) { 
+							$marksDetailsWeightage = Yii::$app->db->createCommand()->insert('marks_details_weightage',[
+		            			'marks_details_id' 	=> $marksDetailid,
+								'weightage_type_id' => $weightageTypeId[$j],
+								'obtained_marks'	=> $obtMarks[$i][$j],
+								'created_at'		=> new \yii\db\Expression('NOW()'),
+								'created_by'		=> Yii::$app->user->identity->id, 
+							])->execute();
+						} //end of j loop
+					} //end of $marksDetails
+				} // end of empty($marksDetail)
+			} // end of else
+
+			if($marksDetailsWeightage){
+				$classHeadIds = Yii::$app->db->createCommand("SELECT std_enroll_head_id FROM std_enrollment_head
+				WHERE class_name_id = '$classNameId'
 				")->queryAll();
-				$scheduleId = $examScheduleId[0]['exam_schedule_id'];
-				$examSchedule = Yii::$app->db->createCommand()->update('exams_schedule',[
-                            'status' => 'result prepared'],
-                            ['exam_schedule_id' => $scheduleId] 
-                            )->execute();
-			}
-		//closing of if
-			
-		} // closing of for loop countStudent
+				$countHeads = count($classHeadIds);
+				$count=0;
+				for ($k=0; $k < $countHeads; $k++) { 
+					$headId = $classHeadIds[$k]['std_enroll_head_id'];
+
+					$marksData = Yii::$app->db->createCommand("SELECT * 
+						FROM marks_head as h
+					INNER JOIN marks_details as d
+					ON h.marks_head_id = d.marks_head_id
+					WHERE h.class_head_id = '$headId'
+					AND d.subject_id = '$subjectId'
+					")->queryAll();
+
+					if(!empty($marksData)){
+						$count++;
+					}
+				}
+
+				if($count == $countHeads){
+					$examScheduleId = Yii::$app->db->createCommand("SELECT s.exam_schedule_id FROM exams_schedule as s
+					INNER JOIN exams_criteria as c 
+					ON s.exam_criteria_id = c.exam_criteria_id
+					WHERE c.class_id = '$classNameId'
+					AND c.exam_category_id = '$categoryId'
+					AND s.subject_id = '$subjectId'
+					AND c.exam_status = 'conducted'
+					")->queryAll();
+
+
+					$scheduleId = $examScheduleId[0]['exam_schedule_id'];
+					$examSchedule = Yii::$app->db->createCommand()->update('exams_schedule',[
+	                            'status' => 'result prepared'],
+	                            ['exam_schedule_id' => $scheduleId] 
+	                            )->execute();
+				} //closing of if
+			} //closing of $marksDetailsWeightage	
+		} // closing of loop countStudent
 		if($marksDetails){
-				$transection->commit();
-				Yii::$app->session->setFlash('success', "Mark Sheet managed sccessfully...!");
-			}
-	//closing of try block
-	} catch(Exception $e){
+			$transection->commit();
+			Yii::$app->session->setFlash('success', "Mark Sheet managed sccessfully...!");
+		}
+	} //closing of try block
+	catch(Exception $e){
 		$transection->rollback();
 		echo $e;
 		Yii::$app->session->setFlash('warning', "Mark Sheet not managed. Try again!");

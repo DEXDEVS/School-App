@@ -194,6 +194,9 @@ return [
                 //timeTable
                 'fetch-subjects' => 'time-table-head/fetch-subjects',
                 'time-table-view' => 'time-table-head/time-table-view',
+                //-------------------------------------------
+                //Visitors
+                'fetch-visitors'=>'visitors/fetch-visitors',
 
             ],
         ],

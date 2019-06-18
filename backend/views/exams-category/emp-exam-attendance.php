@@ -25,26 +25,26 @@
 					<!-- <p style="font-weight:bold;text-align: center;"><u>Date Sheets</u></p> -->
 				</div><hr>
 				<div class="row container-fluid">
-				        <div class="col-md-12">
-	                		<form method="POST">
-	                			<div class="row">
-	                				<div class="col-md-12">
-	                					<div class="form-group">
-			                				<label>Select Date</label>
-			                				<input type="date" name="date" class="form-control">
-	                					</div>
-	                				</div>
+			        <div class="col-md-12">
+                		<form method="POST">
+                			<div class="row">
+                				<div class="col-md-12">
+                					<div class="form-group">
+		                				<label>Select Date</label>
+		                				<input type="date" name="date" class="form-control">
+                					</div>
+                				</div>
 
-	                				<input type="hidden" name="examCatId" value="<?php echo $examCatID;?>">
+                				<input type="hidden" name="examCatId" value="<?php echo $examCatID;?>">
+                			</div>
+                			<div class="row">
+                				<div class="col-md-12">
+	                				<button class="btn btn-info" type="submit" name="search" > Search </button>
 	                			</div>
-	                			<div class="row">
-	                				<div class="col-md-12">
-		                				<button class="btn btn-info" type="submit" name="search" > Search </button>
-		                			</div>
-	                			</div>	
-	                		</form>
-				        </div>
-				    </div><hr>	
+                			</div>	
+                		</form>
+			        </div>
+			    </div><hr>	
 			</div>
 		</div>
 		<div class="col-md-9">					
@@ -64,6 +64,7 @@
 						WHERE c.exam_status = 'Announced'
 						AND c.exam_category_id = '$examCatId'
 						AND s.date = '$date'")->queryAll();
+
 						$countInvigilatorData = count($invigilatorData);
 						print_r($invigilatorData);
             	 	?>
@@ -84,10 +85,10 @@
             	 				</thead>
             	 				<tbody>
             	 					<?php 
-            	 					// $criteriaArray = array();
-            	 					// $headIDArray = array();
-            	 					// $subjectArray = array();
-            	 					// $empArray = array();
+            	 					$criteriaArray = array();
+            	 					$headIDArray = array();
+            	 					$subjectArray = array();
+            	 					$empArray = array();
             	 					for ($i=0; $i <$countInvigilatorData ; $i++) {
 
             	 						$headID = $invigilatorData[$i]['class_head_id'];
