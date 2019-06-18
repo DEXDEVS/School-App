@@ -34,7 +34,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details','reset-password','user-profile','update-profile'],
+                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details','reset-password','user-profile','update-profile','std-remarks'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -189,6 +189,10 @@ class SiteController extends Controller
     public function actionUpdateProfile()
     { 
         return $this->render('update-profile');
+    }
+      public function actionStdRemarks()
+    { 
+        return $this->render('std-remarks');
     }
 
     /**

@@ -71,7 +71,7 @@
 											</a>
 										</li>
 								      	<li>
-								      		<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./class-sections-marks-lists?exam_category=<?php //echo $examCateogryId;?>&class_id=<?php //echo $classId;?>&exam_type=<?php //echo $examType;?>&startYear=<?php //echo $startYear;?>&endYear=<?php //echo $endYear;?>"><i class="fa fa-eye"></i> View Marks Sheet</a>
+								      		<a style="border-bottom-left-radius:20px;border-top-right-radius:20px;" href="./view-marks-sheet?exam_category=<?php echo $exam_category;?>&class_id=<?php echo $class_id;?>&headID=<?php echo $headId;?>&exam_type=<?php echo $exam_type;?>&startYear=<?php echo $startYear;?>&endYear=<?php echo $endYear;?>"><i class="fa fa-eye"></i> View Marks Sheet</a>
 								      	</li>
 								    </ul>
 								</div>

@@ -187,10 +187,11 @@ transition: all 0.4s ease-in-out;
    
         for ($i=0; $i <$countClassIds ; $i++) {
          $id = $classId[$i]['class_id'];
-         $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id
+         $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id, seh.class_name_id
             FROM std_enrollment_head as seh
             INNER JOIN teacher_subject_assign_detail as tsad
             ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
+
         $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
         FROM teacher_subject_assign_detail as tsad
         WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$headId'")->queryAll();
@@ -231,18 +232,29 @@ transition: all 0.4s ease-in-out;
                                <i class="fa fa-book" style="background-color:#605CA8; border:1px solid; padding:5px ;border-radius:50px;font-size:25px; color:white;"> 
                                 
                                </i><br>
-                               <?php echo $subjectsNames[0]['subject_name']; ?>  
+                               <?php echo $subjectsNames[0]['subject_name']; ?>   
                             </a>
                         </td>
                         
                     <?php   
                         //end of foreach
-
-                        } 
-
-                                
-                        ?>
-                    	
+                        } ?>
+                    	<td>
+                            <?php 
+                            $classNameId = $CLASSName[0]['class_name_id'];
+                            $examDataCond = Yii::$app->db->createCommand("SELECT c.*
+                                FROM exams_criteria as c
+                                INNER JOIN exams_schedule as s 
+                                ON c.exam_criteria_id = s.exam_criteria_id
+                                WHERE c.class_id = '$classNameId'  
+                                AND c.exam_status = 'conducted' 
+                                AND c.exam_type = 'Regular'
+                                            ")->queryAll(); 
+                            if(!empty($examDataCond)){ ?>
+                                <a href="std-remarks?class_id=<?php echo $id;?>&emp_id=<?php echo $empId;?>&sub_id=<?php echo $SubID;?>" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add Remarks</a>
+                            <?php } ?>
+                            
+                        </td>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -264,7 +276,7 @@ transition: all 0.4s ease-in-out;
             <b>
                 <?php echo $CLASSName[0]['std_enroll_head_name']; ?>
             </b><br>
-          <?php echo $subjectsNames[0]['subject_name']; ?>  
+          <?php echo $subjectsNames[0]['subject_name']; ?> 
         </h4>
       </div>
       <form method="" action="">
