@@ -14,15 +14,20 @@
 	$instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute WHERE institute_id = 2")->queryAll();
   // sessions query....
 	$sessions = Yii::$app->db->createCommand("SELECT * FROM std_sessions WHERE session_branch_id = $id AND delete_status = 1")->queryAll();
-	$sessionid = $sessions[0]['session_id'];
-	$countSessions = count($sessions);
-  // sections query....
-	$sections = Yii::$app->db->createCommand("SELECT * FROM std_sections
-  INNER join std_sessions
-  ON std_sections.session_id = std_sessions.session_id
-  WHERE std_sessions.session_id = $sessionid AND std_sessions.delete_status = 1")->queryAll();
-	$sectionId = $sections[0]['section_id'];
-	$countSections = count($sections);
+  if(empty($sessions)){
+
+  } else {
+    $sessionid = $sessions[0]['session_id'];
+    $countSessions = count($sessions);
+    // sections query....
+    $sections = Yii::$app->db->createCommand("SELECT * FROM std_sections
+    INNER join std_sessions
+    ON std_sections.session_id = std_sessions.session_id
+    WHERE std_sessions.session_id = $sessionid AND std_sessions.delete_status = 1")->queryAll();
+    $sectionId = $sections[0]['section_id'];
+    $countSections = count($sections);
+  }
+  
   // classes query...
 	$classes = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE branch_id = '$id' AND  delete_status = 1")->queryAll();
 	$countclasses = count($classes);  

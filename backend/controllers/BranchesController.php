@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\web\ForbiddenHttpException; 
 
 /**
  * BranchesController implements the CRUD actions for Branches model.
@@ -114,7 +115,7 @@ class BranchesController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post())){
+            }else if($model->load($request->post()) && $model->validate()){
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
                     $model->created_by = Yii::$app->user->identity->id; 
@@ -246,25 +247,30 @@ class BranchesController extends Controller
      */
     public function actionDelete($id)
     {
-        $request = Yii::$app->request;
-    //  $this->findModel($id)->delete();
-        $model = Branches::findOne($id);
-        $model->delete_status = 0;
-        $model->updated_by = Yii::$app->user->identity->id;
-        $model->updated_at = new \yii\db\Expression('NOW()');
-        $model->update();
+        if( Yii::$app->user->can('delete branch')){
+            $request = Yii::$app->request;
+        //  $this->findModel($id)->delete();
+            $model = Branches::findOne($id);
+            $model->delete_status = 0;
+            $model->updated_by = Yii::$app->user->identity->id;
+            $model->updated_at = new \yii\db\Expression('NOW()');
+            $model->update();
 
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            if($request->isAjax){
+                /*
+                *   Process for ajax request
+                */
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            }else{
+                /*
+                *   Process for non-ajax request
+                */
+                return $this->redirect(['index']);
+            }
         }else{
-            /*
-            *   Process for non-ajax request
-            */
-            return $this->redirect(['index']);
+            throw new ForbiddenHttpException(403, 'You are not authorized to perform this action');
+            Yii::$app->session->setFlash('warning','Your are not allowed to perform this action');
         }
     }
 

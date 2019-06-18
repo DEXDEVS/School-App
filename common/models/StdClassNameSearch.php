@@ -41,35 +41,69 @@ class StdClassNameSearch extends StdClassName
      */
     public function search($params)
     {
-        $query = StdClassName::find();
+        if(Yii::$app->user->identity->user_type == 'Superadmin'){
+            $query = StdClassName::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
 
-        $this->load($params);
+            $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+            $query->joinWith('branch');
+            $query->andFilterWhere([
+                'class_name_id' => $this->class_name_id,
+                //'branch_id' => $this->branch_id,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'created_by' => $this->created_by,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'class_name', $this->class_name])
+                ->andFilterWhere(['like', 'class_name_description', $this->class_name_description])
+                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'class_type', $this->class_type])
+                ->andFilterWhere(['like', 'branches.branch_name', $this->branch_id]);
+
+            return $dataProvider;
+        } else {
+            $branch_id = Yii::$app->user->identity->branch_id;
+            $query = StdClassName::find()->where(['delete_status' => 1 ,'branch_id'=> $branch_id]);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            $this->load($params);
+
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+            // $query->joinWith('branch');
+            $query->andFilterWhere([
+                'class_name_id' => $this->class_name_id,
+                //'branch_id' => $this->branch_id,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'created_by' => $this->created_by,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'class_name', $this->class_name])
+                ->andFilterWhere(['like', 'class_name_description', $this->class_name_description])
+                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'class_type', $this->class_type])
+                ->andFilterWhere(['like', 'branches.branch_name', $this->branch_id]);
+
             return $dataProvider;
         }
-        $query->joinWith('branch');
-        $query->andFilterWhere([
-            'class_name_id' => $this->class_name_id,
-            //'branch_id' => $this->branch_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-        ]);
-
-        $query->andFilterWhere(['like', 'class_name', $this->class_name])
-            ->andFilterWhere(['like', 'class_name_description', $this->class_name_description])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'class_type', $this->class_type])
-            ->andFilterWhere(['like', 'branches.branch_name', $this->branch_id]);
-
-        return $dataProvider;
     }
 }
