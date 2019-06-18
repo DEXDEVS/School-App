@@ -14,11 +14,11 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'emp_id',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_branch_id',
-        'value' => 'empBranch.branch_name',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'emp_branch_id',
+    //     'value' => 'empBranch.branch_name',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'emp_reg_no',

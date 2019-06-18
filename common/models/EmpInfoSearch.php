@@ -41,49 +41,97 @@ class EmpInfoSearch extends EmpInfo
      */
     public function search($params)
     {
-        $query = EmpInfo::find();
+        if(Yii::$app->user->identity->user_type == 'Superadmin'){
+            $query = EmpInfo::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
 
-        $this->load($params);
+            $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+
+            $query->andFilterWhere([
+                'emp_id' => $this->emp_id,
+                'emp_branch_id' => $this->emp_branch_id,
+                'emp_dept_id' => $this->emp_dept_id,
+                'emp_passing_year' => $this->emp_passing_year,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'created_by' => $this->created_by,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'emp_reg_no', $this->emp_reg_no])
+                ->andFilterWhere(['like', 'emp_name', $this->emp_name])
+                ->andFilterWhere(['like', 'emp_father_name', $this->emp_father_name])
+                ->andFilterWhere(['like', 'emp_cnic', $this->emp_cnic])
+                ->andFilterWhere(['like', 'emp_contact_no', $this->emp_contact_no])
+                ->andFilterWhere(['like', 'emp_perm_address', $this->emp_perm_address])
+                ->andFilterWhere(['like', 'emp_temp_address', $this->emp_temp_address])
+                ->andFilterWhere(['like', 'emp_marital_status', $this->emp_marital_status])
+                ->andFilterWhere(['like', 'emp_gender', $this->emp_gender])
+                ->andFilterWhere(['like', 'emp_photo', $this->emp_photo])
+                ->andFilterWhere(['like', 'emp_salary_type', $this->emp_salary_type])
+                ->andFilterWhere(['like', 'emp_email', $this->emp_email])
+                ->andFilterWhere(['like', 'emp_qualification', $this->emp_qualification])
+                ->andFilterWhere(['like', 'emp_institute_name', $this->emp_institute_name])
+                ->andFilterWhere(['like', 'degree_scan_copy', $this->degree_scan_copy])
+                ->andFilterWhere(['like', 'emp_cv', $this->emp_cv])
+                ->andFilterWhere(['like', 'emp_status', $this->emp_status]);
+
+            return $dataProvider;
+        } else {
+            $branch_id = Yii::$app->user->identity->branch_id;
+            $query = EmpInfo::find()->where(['delete_status' => 1 , 'emp_branch_id'=> $branch_id]);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            $this->load($params);
+
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+
+            $query->andFilterWhere([
+                'emp_id' => $this->emp_id,
+                'emp_branch_id' => $this->emp_branch_id,
+                'emp_dept_id' => $this->emp_dept_id,
+                'emp_passing_year' => $this->emp_passing_year,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'created_by' => $this->created_by,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'emp_reg_no', $this->emp_reg_no])
+                ->andFilterWhere(['like', 'emp_name', $this->emp_name])
+                ->andFilterWhere(['like', 'emp_father_name', $this->emp_father_name])
+                ->andFilterWhere(['like', 'emp_cnic', $this->emp_cnic])
+                ->andFilterWhere(['like', 'emp_contact_no', $this->emp_contact_no])
+                ->andFilterWhere(['like', 'emp_perm_address', $this->emp_perm_address])
+                ->andFilterWhere(['like', 'emp_temp_address', $this->emp_temp_address])
+                ->andFilterWhere(['like', 'emp_marital_status', $this->emp_marital_status])
+                ->andFilterWhere(['like', 'emp_gender', $this->emp_gender])
+                ->andFilterWhere(['like', 'emp_photo', $this->emp_photo])
+                ->andFilterWhere(['like', 'emp_salary_type', $this->emp_salary_type])
+                ->andFilterWhere(['like', 'emp_email', $this->emp_email])
+                ->andFilterWhere(['like', 'emp_qualification', $this->emp_qualification])
+                ->andFilterWhere(['like', 'emp_institute_name', $this->emp_institute_name])
+                ->andFilterWhere(['like', 'degree_scan_copy', $this->degree_scan_copy])
+                ->andFilterWhere(['like', 'emp_cv', $this->emp_cv])
+                ->andFilterWhere(['like', 'emp_status', $this->emp_status]);
+
             return $dataProvider;
         }
-
-        $query->andFilterWhere([
-            'emp_id' => $this->emp_id,
-            'emp_branch_id' => $this->emp_branch_id,
-            'emp_dept_id' => $this->emp_dept_id,
-            'emp_passing_year' => $this->emp_passing_year,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-        ]);
-
-        $query->andFilterWhere(['like', 'emp_reg_no', $this->emp_reg_no])
-            ->andFilterWhere(['like', 'emp_name', $this->emp_name])
-            ->andFilterWhere(['like', 'emp_father_name', $this->emp_father_name])
-            ->andFilterWhere(['like', 'emp_cnic', $this->emp_cnic])
-            ->andFilterWhere(['like', 'emp_contact_no', $this->emp_contact_no])
-            ->andFilterWhere(['like', 'emp_perm_address', $this->emp_perm_address])
-            ->andFilterWhere(['like', 'emp_temp_address', $this->emp_temp_address])
-            ->andFilterWhere(['like', 'emp_marital_status', $this->emp_marital_status])
-            ->andFilterWhere(['like', 'emp_gender', $this->emp_gender])
-            ->andFilterWhere(['like', 'emp_photo', $this->emp_photo])
-            ->andFilterWhere(['like', 'emp_salary_type', $this->emp_salary_type])
-            ->andFilterWhere(['like', 'emp_email', $this->emp_email])
-            ->andFilterWhere(['like', 'emp_qualification', $this->emp_qualification])
-            ->andFilterWhere(['like', 'emp_institute_name', $this->emp_institute_name])
-            ->andFilterWhere(['like', 'degree_scan_copy', $this->degree_scan_copy])
-            ->andFilterWhere(['like', 'emp_cv', $this->emp_cv])
-            ->andFilterWhere(['like', 'emp_status', $this->emp_status]);
-
-        return $dataProvider;
     }
 }

@@ -71,7 +71,7 @@
 
                 <ul class="list-group list-group-unbordered">
                   <li class="list-group-item">
-                    <b>Principal:</b><br>
+                    <b>Campus Head:</b><br>
                       <a>
                         <?php echo $branches[0]['branch_head_name'];?>
                       </a>
