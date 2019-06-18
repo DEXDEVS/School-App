@@ -196,7 +196,7 @@
 
                             ['label' => 'Payroll System', 'icon' => 'caret-right', 'url' => './premium-version',],
                             ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => './premium-version',],
-                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => './emp-designation',],
                             ['label' => 'Announce Jobs', 'icon' => 'caret-right', 'url' => './premium-version',],
                         ],
                     ],
@@ -303,6 +303,11 @@
                     ],
                     // ------------------------------------------------
                     // Data Visualization  close...
+                    // ------------------------------------------------
+                    // Visitor Management start...
+                    ['label' => 'Visitor Record', 'icon' => 'book', 'url' => ["./visitors"],],
+                    // ------------------------------------------------
+                    // Visitor Management  close...
                     // ------------------------------------------------
                     // Library Management start...
                     ['label' => 'Library Management', 'icon' => 'book', 'url' => ["./premium-version"],],

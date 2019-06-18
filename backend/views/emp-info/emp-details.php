@@ -34,15 +34,16 @@
   // Employee Personal Info..... 
   $empInfo = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_id = '$id'")->queryAll();
   // Get `emp_designation_id` from `emp_info` table
-  $empDesignationId = $empInfo[0]['emp_designation_id'];
-  // Get `emp_dept_id` from `emp_info` table
-  $empdept = Yii::$app->db->createCommand("SELECT dept_id FROM emp_departments WHERE emp_id = '$id'")->queryAll();
-  $count = count($empdept);
+  $empDesignation = Yii::$app->db->createCommand("SELECT * FROM emp_designation WHERE emp_id = '$id'")->queryAll();
+  $empDesignationId = $empDesignation[0]['designation_id'];
   // Employee `desigantion_name` from `emp_designation` table against `$empDesignationId`
-  $emp_designation = Yii::$app->db->createCommand("SELECT * FROM emp_designation WHERE emp_designation_id = '$empDesignationId'")->queryAll();
-  $empDesignationName = $emp_designation[0]['emp_designation'];
+  $emp_designation = Yii::$app->db->createCommand("SELECT designation FROM designation WHERE designation_id = '$empDesignationId'")->queryAll();
+  $empDesignationName = $emp_designation[0]['designation'];
+  // Get `emp_dept_id` from `emp_info` table
+  $empDeptId = $empInfo[0]['emp_dept_id'];
+  $empDeptName = Yii::$app->db->createCommand("SELECT department_name, department_id FROM departments WHERE department_id = '$empDeptId'")->queryAll();
   // Get `emp_type_id` from `emp_info` table
-  $empTypeId = $empInfo[0]['emp_type_id'];
+  $empTypeId = $empDesignation[0]['emp_type_id'];
   // `emp_type` from `emp_type` table against `$empTypeId`
   $emp_type = Yii::$app->db->createCommand("SELECT * FROM emp_type WHERE emp_type_id = '$empTypeId'")->queryAll();
   $empType = $emp_type[0]['emp_type'];
@@ -119,18 +120,11 @@
             <p class="text-muted text-center"><!-- Software Engineer --></p>
             <ul class="list-group list-group-unbordered">
               <b>Departments</b>
-               <?php 
-                for ($i=0; $i <$count ; $i++) {
-                   $deptId = $empdept[$i]['dept_id'];
-                   // Get `deprtment_name` from `departments` againts `emp_department_id`
-                    $empDeptName = Yii::$app->db->createCommand("SELECT department_name,department_id FROM departments WHERE department_id = '$deptId'")->queryAll();
-                  ?>
                 <li class="list-group-item" style="height:40px">
                    <a href="./departments-view?id=<?php echo $empDeptName[0]['department_id']; ?>" class="">
                     <?php echo $empDeptName[0]['department_name']; ?>
                   </a>
                 </li>
-              <?php } ?> 
               <li class="list-group-item">
                 <b>Designation</b> <a class="pull-right">
                   <?php echo $empDesignationName; ?>
@@ -143,7 +137,7 @@
               </li>
               <li class="list-group-item">
                 <b>Member</b> <a class="pull-right">
-                  <?php echo $empInfo[0]['group_by']; ?>
+                  <?php echo $empDesignation[0]['group_by']; ?>
                 </a>
               </li>
               <li class="list-group-item">
@@ -266,7 +260,7 @@
                               } 
                             ?>
                           </th>
-                          <td><?php echo $empInfo[0]['emp_salary'] ?></td>
+                          <td><?php echo $empDesignation[0]['emp_salary'] ?></td>
                         </tr>
                         <tr>
                           <th>Permanent Address:</th>
