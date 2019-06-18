@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use common\models\StdSessions;
-use common\models\StdSubjects;
+use common\models\StdClassName;
 use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
@@ -24,10 +24,15 @@ use kartik\select2\Select2;
                 )?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'section_name')->textInput(['maxlength' => true]) ?>
-            </div>
+                <?= $form->field($model, 'class_id')->dropDownList(
+                    ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1 , 'branch_id'=>$branch_id])->all(),'class_name_id','class_name')
+                )?>
+            </div> 
         </div>
         <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'section_name')->textInput(['maxlength' => true]) ?>
+            </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'section_description')->textInput(['maxlength' => true]) ?>
             </div>

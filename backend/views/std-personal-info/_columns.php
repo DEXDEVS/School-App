@@ -18,11 +18,11 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_name',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'branch_id',
-        'value'=>'branch.branch_name',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'branch_id',
+    //     'value'=>'branch.branch_name',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_father_name',
@@ -50,6 +50,10 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_email',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

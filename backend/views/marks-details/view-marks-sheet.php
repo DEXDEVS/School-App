@@ -15,7 +15,7 @@
 				<h3>Marks Sheet Criteria</h3><hr
 			</div>
 			<div class="box-body">
-				<form method="POST">
+				<form method="POST" >
 					 <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>"> 
 					<div class="row">
 						<div class="col-md-4">	
@@ -80,18 +80,23 @@
 		$classHead = $_POST['class_head'];
 		$exam_type = $_POST['exam_type'];
 
-		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND std_enroll_head_id = '$classHead' AND exam_status = 'conducted' OR exam_status = 'Result Prepared' AND exam_type = '$exam_type'")->queryAll();
+		$classNameId = Yii::$app->db->createCommand("SELECT class_name_id FROM std_enrollment_head WHERE std_enroll_head_id = '$classHead'")->queryAll();
+		$classNameID = $classNameId[0]['class_name_id'];
+		$ExamData = Yii::$app->db->createCommand("SELECT exam_criteria_id FROM exams_criteria WHERE exam_category_id = '$examCategory' AND class_id = '$classNameID' AND exam_status = 'conducted' OR exam_status = 'Result Prepared' AND exam_type = '$exam_type'")->queryAll();
 		if(empty($ExamData)){
 			Yii::$app->session->setFlash('warning',"Exams not conducted Yet..!");
 		} else {
 
 		$ExamName = Yii::$app->db->createCommand("SELECT category_name FROM exams_category WHERE exam_category_id = '$examCategory'")->queryAll();
+
 		$className = Yii::$app->db->createCommand("SELECT std_enroll_head_name FROM std_enrollment_head WHERE std_enroll_head_id = '$classHead'")->queryAll();
+
 		$criteriaId = $ExamData[0]['exam_criteria_id'];
+
 		$examSchedule = Yii::$app->db->createCommand("SELECT s.subject_id, s.full_marks, s.passing_marks,c.exam_status,s.status FROM exams_schedule as s
 			INNER JOIN exams_criteria as c 
 			ON s.exam_criteria_id = c.exam_criteria_id
-			WHERE c.std_enroll_head_id = '$classHead'
+			WHERE c.class_id = '$classNameID'
 			AND c.exam_category_id = '$examCategory'
 			AND c.exam_criteria_id = '$criteriaId'
 			 AND c.exam_status = 'conducted'
@@ -154,7 +159,6 @@
 									INNER JOIN teacher_subject_assign_detail as d 
 									ON h.teacher_subject_assign_head_id = d.teacher_subject_assign_detail_head_id
 									WHERE class_id = '$classHead' AND  subject_id = '$subId'")->queryAll();
-
 									?>
 						
 						<td align="center">
@@ -291,7 +295,7 @@
 								 	?>
 								 </td>
 								<td>
-									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&headID=<?php echo $classHead; ?>&stdID=<?php echo $stdId; ?>&examType=<?php echo $exam_type; ?>" class="btn btn-info btn-xs">
+									<a href="./update-marks?examCatID=<?php echo $examCategory;?>&classID=<?php echo $classNameID; ?>&classHeadID=<?php echo $classHead; ?>&stdID=<?php echo $stdId; ?>&examType=<?php echo $exam_type; ?>" class="btn btn-info btn-xs">
 									<i class="glyphicon glyphicon-edit"></i> update
 									</a>
 								</td>
@@ -414,13 +418,13 @@ if(isset($_POST['update'])){
 	try{
 		for($k=0; $k<$countMarks; $k++){
 			$marksdetailUpdate = Yii::$app->db->createCommand()->update('marks_details', [
-							'subject_id' 		=> $subjectArray[$k],
-							'obtained_marks' 	=> $obt_marks[$k] ,
-							'updated_at'			=> new \yii\db\Expression('NOW()'),
-							'updated_by'			=> Yii::$app->user->identity->id,
-	                        ],
-	                        ['marks_detail_id' => $marksDetailIdArray[$k]]
-	                    )->execute();
+					'subject_id' 		=> $subjectArray[$k],
+					'obtained_marks' 	=> $obt_marks[$k] ,
+					'updated_at'		=> new \yii\db\Expression('NOW()'),
+					'updated_by'		=> Yii::$app->user->identity->id,
+                    ],
+                    ['marks_detail_id' => $marksDetailIdArray[$k]]
+                )->execute();
 		}
 		if($marksdetailUpdate){
 				$transection->commit();

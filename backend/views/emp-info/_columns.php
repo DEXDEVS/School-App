@@ -14,10 +14,14 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'emp_id',
     // ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'emp_branch_id',
+    //     'value' => 'empBranch.branch_name',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_branch_id',
-        'value'=>'empBranch.branch_name',
+        'attribute'=>'emp_reg_no',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -25,21 +29,16 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_designation_id',
-        'value'=>'empDesignation.emp_designation',
+        'attribute'=>'emp_father_name',
     ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'emp_father_name',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_cnic',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_cnic',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_contact_no',
-    ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_contact_no',
+    // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_perm_address',
@@ -54,22 +53,24 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_fb_ID',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_gender',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_photo',
     // ],
-    
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'emp_type_id',
+        // 'attribute'=>'emp_dept_id',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'group_by',
+        // 'attribute'=>'emp_salary_type',
     // ],
-    
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_email',
@@ -96,7 +97,7 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'emp_salary',
+        // 'attribute'=>'emp_status',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -113,6 +114,10 @@ return [
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'updated_by',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'delete_status',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',

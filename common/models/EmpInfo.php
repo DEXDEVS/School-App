@@ -3,13 +3,13 @@
 namespace common\models;
 
 use Yii;
-use yii\helpers\Url;
 
 /**
  * This is the model class for table "emp_info".
  *
- * @property integer $emp_id
- * @property string emp_reg_no
+ * @property int $emp_id
+ * @property int $emp_branch_id
+ * @property string $emp_reg_no
  * @property string $emp_name
  * @property string $emp_father_name
  * @property string $emp_cnic
@@ -17,96 +17,98 @@ use yii\helpers\Url;
  * @property string $emp_perm_address
  * @property string $emp_temp_address
  * @property string $emp_marital_status
+ * @property string $emp_fb_ID
  * @property string $emp_gender
  * @property string $emp_photo
- * @property integer $emp_designation_id
- * @property integer $emp_type_id
- * @property string $group_by
- * @property integer $emp_branch_id
+ * @property int $emp_dept_id
+ * @property string $emp_salary_type
  * @property string $emp_email
  * @property string $emp_qualification
- * @property integer $emp_passing_year
+ * @property int $emp_passing_year
  * @property string $emp_institute_name
  * @property string $degree_scan_copy
  * @property string $emp_cv
- * @property double $emp_salary
+ * @property string $emp_status
  * @property string $created_at
  * @property string $updated_at
- * @property integer $created_by
- * @property integer $updated_by
+ * @property int $created_by
+ * @property int $updated_by
  *
- * @property EmpDesignation $empDesignation
+ * @property EmpAttendance[] $empAttendances
+ * @property EmpDepartments[] $empDepartments
+ * @property EmpDesignation[] $empDesignations
+ * @property EmpDocuments[] $empDocuments
  * @property Branches $empBranch
- * @property EmpType $empType
- * @property EmpRefrance[] $empRefrances
+ * @property Departments $empDept
+ * @property EmpLeave[] $empLeaves
+ * @property EmpReference[] $empReferences
+ * @property ExamsSchedule[] $examsSchedules
  * @property StdAttendance[] $stdAttendances
  * @property TeacherSubjectAssignHead[] $teacherSubjectAssignHeads
  */
 class EmpInfo extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
-    public $reference; 
-
     public static function tableName()
     {
         return 'emp_info';
     }
 
+    public $reference; 
+
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_perm_address', 'emp_marital_status', 'emp_gender', 'emp_designation_id', 'emp_type_id', 'group_by', 'emp_branch_id', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name', 'emp_salary'], 'required'],
-            [['emp_reg_no', 'emp_marital_status', 'emp_gender', 'group_by'], 'string'],
-            [['emp_designation_id', 'emp_type_id', 'emp_branch_id', 'emp_passing_year', 'created_by', 'updated_by'], 'integer'],
-            [['emp_salary'], 'number'],
-            [['emp_reg_no','emp_temp_address','created_at', 'updated_at','created_by', 'updated_by','emp_cv', 'degree_scan_copy', 'emp_photo'], 'safe'],
-            [['emp_name', 'emp_father_name', 'emp_qualification', 'emp_institute_name'], 'string', 'max' => 50],
+            [['emp_branch_id', 'emp_reg_no', 'emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_perm_address', 'emp_temp_address', 'emp_marital_status', 'emp_gender', 'emp_dept_id', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name'], 'required'],
+            [['emp_branch_id', 'emp_dept_id', 'emp_passing_year', 'created_by', 'updated_by'], 'integer'],
+            [['emp_marital_status', 'emp_gender', 'emp_status'], 'string'],
+            [['created_at', 'updated_at', 'emp_status', 'created_by', 'updated_by', 'degree_scan_copy', 'emp_cv', 'emp_photo', 'emp_salary_type','barcode','emp_fb_ID'], 'safe'],
+            [['emp_reg_no', 'emp_name', 'emp_father_name', 'emp_qualification', 'emp_institute_name','emp_fb_ID'], 'string', 'max' => 50],
             [['emp_cnic', 'emp_contact_no'], 'string', 'max' => 15],
-            [['emp_perm_address', 'emp_temp_address', 'emp_photo', 'degree_scan_copy','emp_cv'], 'string', 'max' => 200],
+            [['emp_perm_address', 'emp_temp_address', 'emp_photo', 'degree_scan_copy', 'emp_cv'], 'string', 'max' => 200],
             [['emp_email'], 'string', 'max' => 84],
-            [['emp_designation_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpDesignation::className(), 'targetAttribute' => ['emp_designation_id' => 'emp_designation_id']],
             [['emp_branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['emp_branch_id' => 'branch_id']],
-            [['emp_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpType::className(), 'targetAttribute' => ['emp_type_id' => 'emp_type_id']],
-            [['emp_photo', 'degree_scan_copy','emp_cv'], 'image', 'extensions' => 'jpg'],
+            [['emp_dept_id'], 'exist', 'skipOnError' => true, 'targetClass' => Departments::className(), 'targetAttribute' => ['emp_dept_id' => 'department_id']],
+            [['emp_photo', 'degree_scan_copy','emp_cv'], 'file', 'extensions' => 'jpg'],
             [['emp_email'],'email'],
             [['reference'],'string', 'max' => 84],
+
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
-            'emp_id' => 'Emp ID',
-            'emp_reg_no' => 'Employee Registration #',
-            'emp_name' => 'Employee Name',
+            'emp_id' => 'Employee ID',
+            'emp_branch_id' => 'Branch ID',
+            'emp_reg_no' => 'Reg No',
+            'emp_name' => 'Name',
             'emp_father_name' => 'Father Name',
-            'emp_cnic' => 'Employee CNIC#',
-            'emp_contact_no' => 'Employee Contact No',
-            'emp_perm_address' => 'Permenent Address',
+            'emp_cnic' => 'Cnic',
+            'emp_contact_no' => 'Contact No',
+            'emp_perm_address' => 'Permanent Address',
             'emp_temp_address' => 'Temporary Address',
             'emp_marital_status' => 'Marital Status',
+            'emp_fb_ID' => 'Fb ID',
             'emp_gender' => 'Gender',
             'emp_photo' => 'Photo',
-            'emp_designation_id' => 'Designation',
-            'emp_type_id' => 'Type',
-            'group_by' => 'Group By',
-            'emp_branch_id' => 'Branch Name',
+            'emp_dept_id' => 'Dept ID',
+            'emp_salary_type' => 'Salary Type',
             'emp_email' => 'Email',
             'emp_qualification' => 'Qualification',
             'emp_passing_year' => 'Passing Year',
             'emp_institute_name' => 'Institute Name',
-            'degree_scan_copy' => 'Last Degree Scan Copy',
-            'emp_cv' => 'CV Scan copy',
-            'emp_salary' => 'Salary',
+            'degree_scan_copy' => 'Degree Scan Copy',
+            'emp_cv' => 'Cv',
+            'emp_status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
@@ -117,9 +119,33 @@ class EmpInfo extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEmpDesignation()
+    public function getEmpAttendances()
     {
-        return $this->hasOne(EmpDesignation::className(), ['emp_designation_id' => 'emp_designation_id']);
+        return $this->hasMany(EmpAttendance::className(), ['emp_id' => 'emp_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmpDepartments()
+    {
+        return $this->hasMany(EmpDepartments::className(), ['emp_id' => 'emp_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmpDesignations()
+    {
+        return $this->hasMany(EmpDesignation::className(), ['emp_id' => 'emp_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmpDocuments()
+    {
+        return $this->hasMany(EmpDocuments::className(), ['emp_info_id' => 'emp_id']);
     }
 
     /**
@@ -133,17 +159,33 @@ class EmpInfo extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEmpType()
+    public function getEmpDept()
     {
-        return $this->hasOne(EmpType::className(), ['emp_type_id' => 'emp_type_id']);
+        return $this->hasOne(Departments::className(), ['department_id' => 'emp_dept_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEmpRefrances()
+    public function getEmpLeaves()
     {
-        return $this->hasMany(EmpRefrance::className(), ['emp_id' => 'emp_id']);
+        return $this->hasMany(EmpLeave::className(), ['emp_id' => 'emp_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmpReferences()
+    {
+        return $this->hasMany(EmpReference::className(), ['emp_id' => 'emp_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExamsSchedules()
+    {
+        return $this->hasMany(ExamsSchedule::className(), ['emp_id' => 'emp_id']);
     }
 
     /**
@@ -162,7 +204,8 @@ class EmpInfo extends \yii\db\ActiveRecord
         return $this->hasMany(TeacherSubjectAssignHead::className(), ['teacher_id' => 'emp_id']);
     }
 
-    public function getPhotoInfo(){
+
+public function getPhotoInfo(){
         $path = Url::to('@web/uploads/');
         $url = Url::to('@web/uploads/');
         $filename = $this->emp_name.'_emp_photo'.'.jpg';

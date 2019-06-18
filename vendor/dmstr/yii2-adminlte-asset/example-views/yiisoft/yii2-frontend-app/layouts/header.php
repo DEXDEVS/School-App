@@ -6,15 +6,27 @@ use yii\helpers\Html;
 ?>
 
 <?php 
-    $userID = Yii::$app->user->id;
-    $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
-    // Student Photo...
-
-    if(empty($user)){
-        $userPhoto = 'backend/web/images/default.png';
-    } else {
-         $userPhoto = $user[0]['user_photo'];
+    if (isset($_GET['id'])) {
+        $userID = $_GET['id'];
+        $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+        // if(empty($user)){
+        //     $userPhoto = 'backend/web/images/default.png';
+        // } else {
+        //      $userPhoto = $user[0]['user_photo'];
+        // }
     }
+    else if (empty(Yii::$app->user->identity->id)){
+            //echo "DEXDEVS";
+        } 
+        else {
+            $userID = Yii::$app->user->id; 
+            $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
+    
+        if (empty($user)){
+            $userPhoto = 'backend/web/images/default.png';
+        } else {
+             $userPhoto = $user[0]['user_photo'];
+        }
 ?>
 <header class="main-header">
 
@@ -260,7 +272,7 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-primary btn-flat btn-sm">Profile</a>
+                                <a href="./user-profile" class="btn btn-primary btn-flat btn-sm">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <?php if(Yii::$app->user->identity->user_type == 'Superadmin' OR
@@ -295,3 +307,4 @@ use yii\helpers\Html;
         </div>
     </nav>
 </header>
+<?php } ?>

@@ -29,8 +29,6 @@ use Yii;
  * @property string $updated_at
  * @property int $created_by
  * @property int $updated_by
- 
- *
  * @property FeeTransactionHead[] $feeTransactionHeads
  * @property StdAcademicInfo[] $stdAcademicInfos
  * @property StdAttendance[] $stdAttendances
@@ -57,7 +55,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     {
         return [
             [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'required'],
-            [['branch_id','std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address'], 'safe'],
+            [['branch_id','std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],

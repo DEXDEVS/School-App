@@ -164,11 +164,17 @@ transition: all 0.4s ease-in-out;
     </style>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-9">
+            <a href="./home"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
+        </div>
+    </div><br>
     <?php
 
         $branch_id = Yii::$app->user->identity->branch_id;
-        $empEmail = Yii::$app->user->identity->email;
-        $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_email = '$empEmail'")->queryAll();
+        $empCnic = Yii::$app->user->identity->username;
+        $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_cnic = '$empCnic'")->queryAll();
         $empId = $empId[0]['emp_id'];
         $teacherId = Yii::$app->db->createCommand("SELECT teacher_subject_assign_head_id FROM teacher_subject_assign_head WHERE teacher_id = '$empId'")->queryAll();
         if(empty($teacherId)){
@@ -181,27 +187,20 @@ transition: all 0.4s ease-in-out;
    
         for ($i=0; $i <$countClassIds ; $i++) {
          $id = $classId[$i]['class_id'];
-         $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id
+         $CLASSName = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,seh.std_enroll_head_id, seh.class_name_id
             FROM std_enrollment_head as seh
             INNER JOIN teacher_subject_assign_detail as tsad
             ON seh.std_enroll_head_id = tsad.class_id WHERE seh.std_enroll_head_id = '$id' AND seh.branch_id = '$branch_id' ")->queryAll();
+
         $subjectsIDs = Yii::$app->db->createCommand("SELECT tsad.subject_id
         FROM teacher_subject_assign_detail as tsad
         WHERE tsad.class_id = '$id' AND tsad.teacher_subject_assign_detail_head_id = '$headId'")->queryAll();
         
             ?>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 col-md-offset-9">
-            <a href="./home"  style="float: right;background-color: #605CA8;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
-        </div>
-    </div><br>
-    <div class="box box-default" style=" border-color:#605CA8;" >
-        <div class="box-header">
+        <!-- <div class="box-header">
            <h2 class="text-center" style="color:#605CA8; font-family: georgia;"><img src="backend/web/uploads/teacher.jpg" height="40px" width="40px"> List of Classes</h2><hr  style=" border-color:#c8c6f2;" > 
-        </div>
-        <div class="box-body">
+        </div> -->
             
            <div class="col-md-6">
                 <div class="box box-danger collapsed-box" style=" border-color:#605CA8;">
@@ -233,22 +232,32 @@ transition: all 0.4s ease-in-out;
                                <i class="fa fa-book" style="background-color:#605CA8; border:1px solid; padding:5px ;border-radius:50px;font-size:25px; color:white;"> 
                                 
                                </i><br>
-                               <?php echo $subjectsNames[0]['subject_name']; ?>  
+                               <?php echo $subjectsNames[0]['subject_name']; ?>   
                             </a>
                         </td>
                         
                     <?php   
                         //end of foreach
-
-                        } 
-
-                                
-                        ?>
-                    	
+                        } ?>
+                    	<td>
+                            <?php 
+                            $classNameId = $CLASSName[0]['class_name_id'];
+                            $examDataCond = Yii::$app->db->createCommand("SELECT c.*
+                                FROM exams_criteria as c
+                                INNER JOIN exams_schedule as s 
+                                ON c.exam_criteria_id = s.exam_criteria_id
+                                WHERE c.class_id = '$classNameId'  
+                                AND c.exam_status = 'conducted' 
+                                AND c.exam_type = 'Regular'
+                                            ")->queryAll(); 
+                            if(!empty($examDataCond)){ ?>
+                                <a href="std-remarks?class_id=<?php echo $id;?>&emp_id=<?php echo $empId;?>&sub_id=<?php echo $SubID;?>" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add Remarks</a>
+                            <?php } ?>
+                            
+                        </td>
                     </div>
                     <!-- /.box-body -->
                 </div>
-              <!-- /.box -->
             </div>
   <?php 
 
@@ -267,7 +276,7 @@ transition: all 0.4s ease-in-out;
             <b>
                 <?php echo $CLASSName[0]['std_enroll_head_name']; ?>
             </b><br>
-          <?php echo $subjectsNames[0]['subject_name']; ?>  
+          <?php echo $subjectsNames[0]['subject_name']; ?> 
         </h4>
       </div>
       <form method="" action="">

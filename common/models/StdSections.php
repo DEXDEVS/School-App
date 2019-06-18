@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "std_sections".
  *
  * @property int $section_id
+ * @property int $class_id
  * @property int $branch_id
  * @property int $session_id
  * @property string $section_name
@@ -21,10 +22,10 @@ use Yii;
  *
  * @property FeeTransactionHead[] $feeTransactionHeads
  * @property StdAttendance[] $stdAttendances
- * @property StdClass[] $stdClasses
  * @property StdEnrollmentHead[] $stdEnrollmentHeads
+ * @property Branches $branch
  * @property StdSessions $session
- * @property StdSubjects $sectionSubjects
+ * @property StdClassName $class
  */
 class StdSections extends \yii\db\ActiveRecord
 {
@@ -42,13 +43,14 @@ class StdSections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['session_id', 'section_name', 'section_description', 'section_intake'], 'required'],
-            [['session_id', 'section_intake', 'created_by', 'updated_by', 'delete_status'], 'integer'],
-            [['branch_id', 'created_at', 'updated_at'], 'safe'],
+            [['class_id', 'branch_id', 'session_id', 'section_name', 'section_description', 'section_intake', 'created_by', 'updated_by'], 'required'],
+            [['class_id', 'branch_id', 'session_id', 'section_intake', 'created_by', 'updated_by', 'delete_status'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
             [['section_name'], 'string', 'max' => 50],
             [['section_description'], 'string', 'max' => 100],
+            [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],
             [['session_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdSessions::className(), 'targetAttribute' => ['session_id' => 'session_id']],
-             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['branch_id' => 'branch_id']],
+            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdClassName::className(), 'targetAttribute' => ['class_id' => 'class_name_id']],
         ];
     }
 
@@ -59,8 +61,9 @@ class StdSections extends \yii\db\ActiveRecord
     {
         return [
             'section_id' => 'Section ID',
+            'class_id' => 'Class Name',
             'branch_id' => 'Branch Name',
-            'session_id' => 'Session',
+            'session_id' => 'Session Name',
             'section_name' => 'Section Name',
             'section_description' => 'Section Description',
             'section_intake' => 'Section Intake',
@@ -91,17 +94,17 @@ class StdSections extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStdClasses()
+    public function getStdEnrollmentHeads()
     {
-        return $this->hasMany(StdClass::className(), ['section_id' => 'section_id']);
+        return $this->hasMany(StdEnrollmentHead::className(), ['section_id' => 'section_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStdEnrollmentHeads()
+    public function getBranch()
     {
-        return $this->hasMany(StdEnrollmentHead::className(), ['section_id' => 'section_id']);
+        return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
     }
 
     /**
@@ -115,9 +118,8 @@ class StdSections extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBranch()
+    public function getClass()
     {
-        return $this->hasOne(Branches::className(), ['branch_id' => 'branch_id']);
+        return $this->hasOne(StdClassName::className(), ['class_name_id' => 'class_id']);
     }
-
 }

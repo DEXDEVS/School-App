@@ -16,7 +16,34 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'emp_designation',
+        'attribute'=>'emp_id',
+        'value'=>'emp.emp_name',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'designation_id',
+        'value'=>'designation.designation',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'emp_type_id',
+        'value'=>'empType.emp_type',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'group_by',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'emp_salary',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'designation_status',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'status',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -27,12 +54,12 @@ return [
         // 'attribute'=>'updated_at',
     // ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'created_by',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'created_by',
     // ],
     // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'updated_by',
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'updated_by',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',

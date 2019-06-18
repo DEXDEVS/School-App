@@ -40,7 +40,7 @@ class StdPersonalInfoController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form','get-student'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-fee','student-details','std-photo','form','get-student', 'bulk-sms'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -51,6 +51,7 @@ class StdPersonalInfoController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
+                    'bulk-sms' => ['post'],
                 ],
             ],
         ];
@@ -147,6 +148,8 @@ class StdPersonalInfoController extends Controller
             }else if($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post()) && $stdFeeInstallments->load($request->post())){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
+                        var_dump($model->barcode);
+                        die();
                         $model->std_photo = UploadedFile::getInstance($model,'std_photo');
                         if(!empty($model->std_photo)){
                             $imageName = $model->std_name.'_photo'; 
@@ -372,6 +375,34 @@ class StdPersonalInfoController extends Controller
             */
             return $this->redirect(['index']);
         }
+    }
+
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
+    public function actionBulkSms()
+    {      
+        $request = Yii::$app->request;
+        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        $array = array();
+        foreach ( $pks as $pk ) {
+            $inquiryStdNo = Yii::$app->db->createCommand("SELECT std_contact_no FROM std_personal_info WHERE std_id = '$pk'")->queryAll();
+            $number = $inquiryStdNo[0]['std_contact_no'];
+            $numb = str_replace('-', '', $number);
+            $num = str_replace('+', '', $numb);
+                    
+            $array[] = $num;
+        }
+
+        $to = implode(',', $array);
+
+        if (isset($_POST['message'])) {
+            $message = $_POST['message'];
+            $sms = SmsController::sendSMS($to, $message);
+        }
+        return $this->redirect(['./std-personal-info']);
     }
 
     public function actionFetchFee()

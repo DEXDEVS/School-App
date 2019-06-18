@@ -197,55 +197,55 @@
                             if($feeType[$m] == 3){
                                 if(!empty($classAccountDetail)){ ?>
                                     <td>
-                                        <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="absent_fine[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 70px; border: none;">
                                     </td>
                             <?php } else { ?>
                                     <td>
-                                        <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" value="0" name="absent_fine[]"  onChange="absentFine(<?php echo $id; ?>)" style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="absentFine_<?php echo $id; ?>" value="0" name="absent_fine[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 70px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 4){
                                 if(!empty($classAccountDetail)){ ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="activity_fee[]"  onChange="activityFee(<?php echo $id; ?>)"  style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="activity_fee[]"  onChange="totalAmount(<?php echo $id; ?>)"  style="width: 70px; border: none;">
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" value="0" name="activity_fee[]"  onChange="activityFee(<?php echo $id; ?>)"  style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="activityFee_<?php echo $id; ?>" value="0" name="activity_fee[]"  onChange="totalAmount(<?php echo $id; ?>)"  style="width: 70px; border: none;">
                                     </td> 
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 5){
                                 if(!empty($classAccountDetail)){ ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="stationary_expense[]"  onChange="stationaryExpense(<?php echo $id; ?>)" style="width: 100px; border: none;">
+                                        <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="stationary_expense[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 100px; border: none;">
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" value="0" name="stationary_expense[]"  onChange="stationaryExpense(<?php echo $id; ?>)" style="width: 100px; border: none;">
+                                        <input class="form-control text-center" type="number" id="stationaryExpense_<?php echo $id; ?>" value="0" name="stationary_expense[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 100px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 6){
                                 if(!empty($classAccountDetail)){ ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="board_uni_fee[]"  onChange="boardUniFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                        <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="board_uni_fee[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" value="0" name="board_uni_fee[]"  onChange="boardUniFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                        <input class="form-control text-center" type="number" id="boardUniFee_<?php echo $id; ?>" value="0" name="board_uni_fee[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 7){
                                 if(!empty($classAccountDetail)){ ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="exam_fee[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" value="0" name="exam_fee[]"  onChange="examinationFee(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" value="0" name="exam_fee[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
@@ -307,43 +307,49 @@
 </div> 
 
 <script>
-    var totalAmount;
     var sum;
-    function arrears(i) {
+    function totalAmount(i){
+        var absentFine = activityFee = boardUniFee = examFee = stationaryExpense = 0;
+        var admissionFee = parseInt($('#admissionFee_'+i).val());
+        var tuitionFee = parseInt($('#tuitionFee_'+i).val());
+
+        if($('#absentFine_'+i).val() != '') {
+            absentFine = parseInt($('#absentFine_'+i).val());
+        }
+        else {
+            $('#absentFine_'+i).val(0);
+        }
+
+        if($('#activityFee_'+i).val() != '') {
+            activityFee = parseInt($('#activityFee_'+i).val());
+        }
+        else {
+            $('#activityFee_'+i).val(0);
+        }
+
+        if($('#boardUniFee_'+i).val() != '') {
+            boardUniFee = parseInt($('#boardUniFee_'+i).val());
+        }
+        else {
+            $('#boardUniFee_'+i).val(0);
+        }
+
+        if($('#examFee_'+i).val() != '') {
+            examFee = parseInt($('#examFee_'+i).val());
+        }
+        else {
+            $('#examFee_'+i).val(0);
+        }
+
+        if($('#stationaryExpense_'+i).val() != '') {
+            stationaryExpense = parseInt($('#stationaryExpense_'+i).val());
+        }
+        else {
+            $('#stationaryExpense_'+i).val(0);
+        }
+        
         var arrears = parseInt($('#arrears_'+i).val());
-        totalAmount = parseInt($('#totalAmount_'+i).val());
-        sum = totalAmount + arrears;
-        $('#totalAmount_'+i).val(sum);
-    }
-    function absentFine(i) {
-        var absentFine = parseInt($('#absentFine_'+i).val());
-        totalAmount = parseInt($('#totalAmount_'+i).val());
-        sum = totalAmount + absentFine;
-        console.log(sum);
-        $('#totalAmount_'+i).val(sum);
-    }
-    function stationaryExpense(i) {
-        var stationaryExpense = parseInt($('#stationaryExpense_'+i).val());
-        totalAmount = parseInt($('#totalAmount_'+i).val());
-        sum = totalAmount + stationaryExpense;
-        $('#totalAmount_'+i).val(sum);
-    }
-    function activityFee(i) {
-        var activityFee = parseInt($('#activityFee_'+i).val());
-        totalAmount = parseInt($('#totalAmount_'+i).val());
-        sum = totalAmount + activityFee;
-        $('#totalAmount_'+i).val(sum);
-    }
-    function boardUniFee(i) {
-        var boardUniFee = parseInt($('#boardUniFee_'+i).val());
-        totalAmount = parseInt($('#totalAmount_'+i).val());
-        sum = totalAmount + boardUniFee;
-        $('#totalAmount_'+i).val(sum);
-    }
-    function examinationFee(i) {
-        var transportFee = parseInt($('#examFee_'+i).val());
-        totalAmount = parseInt($('#totalAmount_'+i).val());
-        sum = totalAmount + transportFee;
+        sum = admissionFee + tuitionFee + absentFine + activityFee + boardUniFee + examFee + stationaryExpense + arrears;
         $('#totalAmount_'+i).val(sum);
     }
 </script>

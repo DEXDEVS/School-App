@@ -1,4 +1,3 @@
-
 <?php
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -57,21 +56,27 @@ return [
             'showScriptName' => false,
             'rules' => [
                 //site
-                'admin' => 'admin/',
-                'user' => 'admin/user/index',
+                'admin' => 'admin',
                 'login' => 'site/login',
                 'logout' => 'site/login',
                 'home' => 'site/index',
+                'user' => 'admin/user/index',
+                'passwords' => 'site/passwords',
+                'user-profile' => 'site/user-profile',
+                'update-profile' => 'site/update-profile',
                 'premium-version' => 'site/premium-version',
                 'income-expense' => 'site/income-expense',
                 'income-expense-sub' => 'site/income-expense-sub',
                 'fee-statistics-main' => 'site/fee-statistics-main',
                 'fee-statistics-sub' => 'site/fee-statistics-sub',
+                //-------------------------------------------
                 //institute
                 'institute' => 'institute/index',
+                //-------------------------------------------
                 //branches
                 'branches' => 'branches/index',
                 'branches-view' => 'branches/view',
+                //-------------------------------------------
                 //system-configuration
                 'departments-view' => 'departments/view',
                 'std-sessions' => 'std-sessions/index',
@@ -81,6 +86,7 @@ return [
                 'std-subjects' => 'std-subjects/index',
                 'fee-type' => 'fee-type/index',
                 'std-fee-pkg' => 'std-fee-pkg/index',
+                //-------------------------------------------
                 //std_inquiry
                 'std-inquiry' => 'std-inquiry/index',
                 'inquiry-report' => 'std-inquiry/inquiry-report',
@@ -93,10 +99,13 @@ return [
                 'std-personal-info-std-photo' => 'std-personal-info/std-photo',
                 'std-guardian-info-update' => 'std-guardian-info/update',
                 'std-ice-info-update' => 'std-ice-info/update',
+                'std-academic-info' => 'std-academic-info/index',
                 'std-academic-info-update' => 'std-academic-info/update',
                 'std-fee-details-update' => 'std-fee-details/update',
+                //-------------------------------------------
                 //emp-info
                 'emp-info' => 'emp-info/index',
+                'emp-info-create' => 'emp-info/create',
                 'emp-info-view' => 'emp-info/view',
                 'emp-info-update' => 'emp-info/update',
                 'emp-reference-update' => 'emp-reference/update',
@@ -106,8 +115,8 @@ return [
                 'emp-type' => 'emp-type/index',
                 'emp-designation' => 'emp-designation/index',
                 'print-id-card' => 'emp-info/print-id-card',
-                
-                //fee-transaction-detail
+                //-------------------------------------------
+                //fee-transaction
                 'class-account' => 'fee-transaction-detail/class-account',
                 'fee-transaction-detail-fee-voucher' => 'fee-transaction-detail/fee-voucher',
                 'fee-transaction-detail-collect-voucher' => 'fee-transaction-detail/collect-voucher',
@@ -124,14 +133,17 @@ return [
                 'monthly-fee-report' =>'fee-transaction-detail/monthly-fee-report',
                 'monthly-report-head' =>'fee-transaction-detail/monthly-report-head',
                 'monthly-report-detail' => 'fee-transaction-detail/monthly-report-detail',
+                //-------------------------------------------
                 //std-enrollment
                 'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-enrollment-head' => 'std-enrollment-head/index',
                 //'std-enrollment-head-view' => 'std-enrollment-head/view',
                 'std-promote' => 'std-enrollment-head/std-promote',
+                //-------------------------------------------
                 // teacher-details
                 'teacher-subject-assign-head' => 'teacher-subject-assign-head/index',
                 'teacher-subject-assign-head-view' => 'teacher-subject-assign-head/view',
+                //-------------------------------------------
                 //comunication
                 'emails' => 'emails/index',
                 'emails-create' => 'emails/create',
@@ -141,6 +153,7 @@ return [
                 'custom-sms' => 'custom-sms/index',
                 'msg-of-day' => 'msg-of-day/index',
                 'events' => 'events/index',
+                //-------------------------------------------
                 //exams-category
                 'exams-category' => 'exams-category/index',
                 'exam-lists' => 'exams-category/exam-lists',
@@ -148,27 +161,47 @@ return [
                 'update-datesheet' => 'exams-category/update-datesheet',
                 'view-result-cards' => 'exams-category/view-result-cards',
                 'exams-category-view' => 'exams-category/view',
+                'emp-exam-attendance' => 'exams-category/emp-exam-attendance',
+                'exam-cateogry-details' => 'exams-category/exam-cateogry-details',
+                'view-marks-weightage' => 'exams-category/view-marks-weightage',
+                'view-marks-sheet' => 'exams-category/view-marks-sheet',
+                'view-sections' => 'exams-category/view-sections',
+                //-------------------------------------------
                 //marks-details
                 'grades' => 'grades/index',
                 'manage-marks-sheet' => 'marks-details/manage-marks-sheet',
-                'view-marks-sheet' => 'marks-details/view-marks-sheet',
+                //'view-marks-sheet' => 'marks-details/view-marks-sheet',
                 'update-marks' => 'marks-details/update-marks',
                 'marks-weitage' => 'marks-weitage/index',
                 'manage-exams' => 'exams-schedule/manage-exams',
+                'manage-exam-sections' => 'exams-schedule/manage-exam-sections',
+                'fetch-sections' => 'exams-schedule/fetch-sections',
+                'marks-weightage-head' => 'marks-weightage-head/index',
+                //'marks-weightage-view' => 'marks-weightage-head/view',
+                //-------------------------------------------
                 // emp attendance report
                 'emp-att-report' => 'emp-attendance/emp-att-report',
                 'employess-att-report' => 'emp-attendance/employess-att-report',
                 'final-attendance' => 'emp-attendance/final-attendance',
                 'emp-attendance' => 'emp-attendance/index',
+                'emp-attendance-create' => 'emp-attendance/create',
                 'emp-leave' => 'emp-leave/index',
-
+                //-------------------------------------------
                 // account-transactions
                 'account-transactions' => 'account-transactions/index',
                 'balance-sheet' => 'account-transactions/balance-sheet',
-                'passwords' => 'site/passwords',
+                //-------------------------------------------
+                //timeTable
+                'fetch-subjects' => 'time-table-head/fetch-subjects',
+                'time-table-view' => 'time-table-head/time-table-view',
+                //-------------------------------------------
+                //Visitors
+                'fetch-visitors'=>'visitors/fetch-visitors',
 
             ],
         ],
     ],
     'params' => $params,
 ];
+
+

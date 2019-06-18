@@ -14,25 +14,34 @@
 	$instituteInfo = Yii::$app->db->createCommand("SELECT * FROM institute WHERE institute_id = 2")->queryAll();
   // sessions query....
 	$sessions = Yii::$app->db->createCommand("SELECT * FROM std_sessions WHERE session_branch_id = $id AND delete_status = 1")->queryAll();
-	$sessionid = $sessions[0]['session_id'];
-	$countSessions = count($sessions);
-  // sections query....
-	$sections = Yii::$app->db->createCommand("SELECT * FROM std_sections
+	if (empty($sessions)) {
+		echo "";
+	}else{
+		$sessionid = $sessions[0]['session_id'];
+		$countSessions = count($sessions);
+		$sections = Yii::$app->db->createCommand("SELECT * FROM std_sections
   INNER join std_sessions
   ON std_sections.session_id = std_sessions.session_id
   WHERE std_sessions.session_id = $sessionid AND std_sessions.delete_status = 1")->queryAll();
-	$sectionId = $sections[0]['section_id'];
-	$countSections = count($sections);
+		if (empty($sections)) {
+			echo "";
+		}else{
+			$sectionId = $sections[0]['section_id'];
+			$countSections = count($sections);
+		}
+	}
+	
+  // sections query....
+
   // classes query...
 	$classes = Yii::$app->db->createCommand("SELECT * FROM std_class_name WHERE branch_id = '$id' AND  delete_status = 1")->queryAll();
 	$countclasses = count($classes);  
   // employee query...
-	$employees = Yii::$app->db->createCommand("SELECT emp_id FROM emp_info as e INNER JOIN emp_designation as ed ON e.emp_designation_id = ed.emp_designation_id WHERE e.emp_branch_id  = '$id' AND e.delete_status = 1 AND ed.emp_designation != 'Principal'")->queryAll();
-  $teacher = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_branch_id  = '$id' AND  emp_designation_id = 4 AND delete_status = 1")->queryAll();
+	$employees = Yii::$app->db->createCommand("SELECT e.emp_id FROM emp_info as e WHERE e.emp_branch_id  = '$id' AND e.delete_status = 1 ")->queryAll();
+
   // Employee Designation...
-  $empDesignation = Yii::$app->db->createCommand("SELECT * FROM emp_designation WHERE  delete_status = 1")->queryAll();
-  $empDesignationCount = count($empDesignation);  
-  //var_dump($empDesignationCount);
+  $empDesignation = Yii::$app->db->createCommand("SELECT * FROM designation")->queryAll();
+ 
 	$employeeCount = count($employees);
 
 	?>
@@ -62,7 +71,7 @@
 
                 <ul class="list-group list-group-unbordered">
                   <li class="list-group-item">
-                    <b>Principal:</b><br>
+                    <b>Campus Head:</b><br>
                       <a>
                         <?php echo $branches[0]['branch_head_name'];?>
                       </a>
@@ -106,7 +115,13 @@
                 	<a href="#sessions" data-toggle="tab" style="color: #3C8DBC;">
                     <i class="fa fa-scribd"></i> Sessions 
                     <span class="label label-success" style="border-radius: 50%;">
-                      <?php echo $countSessions;?>
+                      <?php 
+                      if (empty($countSessions)) {
+                      	echo "N/A";
+                      }else{
+                      	echo $countSessions;
+                      }
+                      ?>
                     </span>
                   </a>
                 </li>
@@ -124,7 +139,13 @@
                 	<a href="#sections" data-toggle="tab" style="color: #3C8DBC;">
                     <i class="glyphicon glyphicon-link"></i> Sections 
                     <span class="label label-primary" style="border-radius: 50%;">
-                      <?php echo $countSections;?>
+                      <?php 
+                      if (empty($countSections)) {
+                      	echo "N/A";
+                      }else{
+                      	echo $countSections;
+                      }
+                      ?>
                     </span>
                   </a>
                 </li>
@@ -275,9 +296,14 @@
                               $countIntake = 0;
                               $countStudent = 0;
                               $countRemainingIntake = 0;
+                              if (empty($sections)) {
+                              	echo "";
+                              }else{
+                              	
                               foreach ($sections as $key => $val){ 
                               $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.section_id = $key+1")->queryAll();
                                 $studentCount = count($students);
+                              }
                             ?>  
                             <tr>
                               <td class="text-center"><b><?php echo $key+1; ?></b></td>
@@ -389,23 +415,22 @@
                           <tbody>  
                             <tr>
                               <?php foreach ($empDesignation as $key => $value) {
-                                $emp = Yii::$app->db->createCommand("SELECT emp.emp_designation_id 
-                                FROM emp_info as emp 
-                                INNER JOIN emp_designation as emInfo 
-                                ON emInfo.emp_designation_id = emp.emp_designation_id 
-                                WHERE emp.emp_branch_id = '$id' AND emInfo.emp_designation_id = $key+1")->queryAll();
+                                $designation = $value['designation_id'];
+                                $emp = Yii::$app->db->createCommand("SELECT ed.designation_id 
+                                FROM ((emp_designation as ed INNER JOIN designation as d
+                                ON d.designation_id = ed.designation_id ) INNER JOIN emp_info as e ON e.emp_id = ed.emp_id) WHERE e.emp_branch_id = '$id' AND d.designation_id = $designation")->queryAll();
                                 $empCount = count($emp);
                               ?>
                                 <?php 
-                                    if ($value['emp_designation']=='Principal') {
+                                    if ($value['designation']=='Principal') {
                                       echo '';
                                     } else{ ?>
-                                <td class="text-center"><?php echo $key; ?></td>      
+                                <td class="text-center"><?php echo $key+1; ?></td>      
                                 <td>  
-                                  <?php echo $value['emp_designation']; ?>
+                                  <?php echo $value['designation']; ?>
                                 </td>
                                 <td align="center">
-                                  <span class="label-warning" style="border-radius: 50%; padding: 3px 7px">
+                                  <span class="label-success" style="border-radius: 50%; padding: 3px 7px">
                                     <?php echo $empCount ?>
                                   </span>
                                 </td>

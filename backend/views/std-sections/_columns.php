@@ -26,6 +26,11 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'class_id',
+        'value'=>'class.class_name',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'section_name',
     ],
     [

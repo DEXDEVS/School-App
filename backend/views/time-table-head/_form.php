@@ -68,7 +68,7 @@ $branch_id = Yii::$app->user->identity->branch_id;
                     <div class="panel-heading">
                         <h3 class="panel-title pull-left">Subject</h3>
                         <div class="pull-right">
-                            <button type="button" class="add-item btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i></button>
+                            <button type="button" class="add-item btn btn-success btn-xs" id="add"><i class="glyphicon glyphicon-plus"></i></button>
                             <button type="button" class="remove-item btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></button>
                         </div>
                         <div class="clearfix"></div>
@@ -82,7 +82,7 @@ $branch_id = Yii::$app->user->identity->branch_id;
                             <div class="col-sm-6">
                                  <?= $form->field($timeTableDetail, "[{$i}]subject_id")->dropDownList(
                                     ArrayHelper::map(Subjects::find()->all(),'subject_id','subject_name'),
-                                        ['prompt'=>'Select Subject', 'id'=>'subjectId']
+                                        ['prompt'=>'Select Subject', 'id'=>'[{$i}]subjectId']
                                 )?>
                             </div>
                             <div class="col-sm-6">
@@ -146,6 +146,27 @@ $('#classId').on('change',function(){
         var subjectName = data[0];
         var subjectIds = data[1];
         
+        $('#subjectId').empty();
+        $('#subjectId').append("<option>"+"Select Subject"+"</option>");
+        var options = '';
+            for(var i=0; i<subjectName.length; i++) {
+                options += '<option value="'+subjectIds[i]+'">'+subjectName[i]+'</option>';
+            }
+        // Append to the html
+        $('#subjectId').append(options);
+    });   
+});
+
+$('#add').on('click',function(){
+    var class_id = $('#classId').val();
+   
+    $.get('./subjects/fetch-subjects',{class_id : class_id},function(data){
+        // console.log(data);
+        var data =  $.parseJSON(data);
+        var subjectName = data[0];
+        var subjectIds = data[1];
+        alert(subjectName);
+        alert(subjectIds);
         $('#subjectId').empty();
         $('#subjectId').append("<option>"+"Select Subject"+"</option>");
         var options = '';

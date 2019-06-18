@@ -89,7 +89,7 @@ if ($userType == 'Teacher') {
             <div class="icon">
               <i class="glyphicon glyphicon-eye-open" style="font-size: 70px;"></i>
             </div>
-            <a href="./premium-version" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="./view-datesheet" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

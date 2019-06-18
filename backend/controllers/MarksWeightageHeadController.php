@@ -33,7 +33,7 @@ class MarksWeightageHeadController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-subjects','marks-weightage-detail-view'],
+                        'actions' => ['logout', 'index', 'create', 'view', 'update', 'delete', 'bulk-delete','fetch-subjects','marks-weightage-view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -70,8 +70,23 @@ class MarksWeightageHeadController extends Controller
     }
 
      public function actionView($id)
-    {
-       return $this->render('marks-weightage-detail-view'); 
+    { 
+        $request = Yii::$app->request;
+        if($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                    'title'=> "View Employee Attendance",
+                    'content'=>$this->renderAjax('view', [
+                        'model' => $this->findModel($id),
+                    ]),
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];    
+        }else{
+            return $this->render('marks-weightage-view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -140,14 +155,14 @@ class MarksWeightageHeadController extends Controller
                             }
                             if ($flag) {
                                 $transaction->commit();
-                                return $this->redirect(['index']);
+                                //return $this->redirect(['index']);
                             }
                         } catch (Exception $e) {
                             $transaction->rollBack();
                             echo $e;
                         }
                   
-}
+                    }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new MarksWeightageHead",

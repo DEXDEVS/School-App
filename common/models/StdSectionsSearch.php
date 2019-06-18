@@ -18,8 +18,8 @@ class StdSectionsSearch extends StdSections
     public function rules()
     {
         return [
-            [['section_id', 'branch_id', 'session_id', 'section_intake', 'section_description','created_by', 'updated_by'], 'integer'],
-            [['section_name', 'created_at', 'updated_at'], 'safe'],
+            [['section_id', 'class_id', 'branch_id', 'session_id', 'section_intake', 'created_by', 'updated_by'], 'integer'],
+            [['section_name', 'section_description', 'created_at', 'updated_at', 'delete_status'], 'safe'],
         ];
     }
 
@@ -41,40 +41,7 @@ class StdSectionsSearch extends StdSections
      */
     public function search($params)
     {
-        if(Yii::$app->user->identity->user_type == 'Superadmin'){
-            $query = StdSections::find();
-
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-            ]);
-
-            $this->load($params);
-
-            if (!$this->validate()) {
-                // uncomment the following line if you do not want to return any records when validation fails
-                // $query->where('0=1');
-                return $dataProvider;
-            }
-            $query->joinWith('session');
-            $query->andFilterWhere([
-                'section_id' => $this->section_id,
-                'branch_id' => $this->branch_id,
-                'section_intake' => $this->section_intake,
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-                'created_by' => $this->created_by,
-                'updated_by' => $this->updated_by,
-            ]);
-
-            $query->andFilterWhere(['like', 'section_name', $this->section_name])
-                ->andFilterWhere(['like', 'section_description', $this->section_description])
-                ->andFilterWhere(['like', 'std_sessions.session_name', $this->session_id]);
-
-            return $dataProvider;
-
-        } else {
-            $branch_id = Yii::$app->user->identity->branch_id;
-            $query = StdSections::find()->innerJoinWith('session')->where(['session_branch_id' => $branch_id]);
+        $query = StdSections::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -90,7 +57,9 @@ class StdSectionsSearch extends StdSections
 
         $query->andFilterWhere([
             'section_id' => $this->section_id,
+            'class_id' => $this->class_id,
             'branch_id' => $this->branch_id,
+            'session_id' => $this->session_id,
             'section_intake' => $this->section_intake,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -100,9 +69,8 @@ class StdSectionsSearch extends StdSections
 
         $query->andFilterWhere(['like', 'section_name', $this->section_name])
             ->andFilterWhere(['like', 'section_description', $this->section_description])
-            ->andFilterWhere(['like', 'std_sessions.session_name', $this->session_id]);
+            ->andFilterWhere(['like', 'delete_status', $this->delete_status]);
 
         return $dataProvider;
     }
-}
 }

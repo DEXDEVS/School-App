@@ -65,7 +65,7 @@
                         'icon' => 'graduation-cap',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
+                            // ['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
                             ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
                             ['label' => 'Enrollment', 'icon' => 'caret-right', 'url' => ["/std-enrollment-head"],],
                             ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
@@ -145,6 +145,7 @@
                             // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
                             // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
                             ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
+                            ['label' => 'Invigilator Attendance', 'icon' => 'caret-right', 'url' => ["./emp-exam-attendance"],],
                             ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
                             ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
                             ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
@@ -166,21 +167,28 @@
                             ['label' => 'Employee Registration', 'icon' => 'caret-right', 'url' => './emp-info',],
                             ['label' => 'Assign Teacher', 'icon' => 'caret-right', 'url' => './teacher-subject-assign-head',],
                             [
-                                'label' => 'Attendance & Leave',
-                                'icon' => 'caret-right',
+                                'label' => 'Attendance Management',
+                                'icon' => 'cancel',
                                 'url' => '#',
                                 'items' => [
                                     ['label' => 'Manage Attendance', 'icon' => 'chevron-right', 'url' => './emp-attendance',],
                                      ['label' => 'Final Attendance', 'icon' => 'chevron-right', 'url' => './final-attendance',],
                                     [
                                     'label' => 'Attendance Report',
-                                    'icon' => 'caret-right',
+                                    'icon' => 'list',
                                     'url' => '#',
                                     'items' => [
                                             ['label' => 'Single Employee', 'icon' => 'chevron-right', 'url' => './emp-att-report',],
                                             ['label' => 'All Employees', 'icon' => 'chevron-right', 'url' => './employess-att-report',],
                                         ],
-                                    ],
+                                    ],  
+                                ],
+                            ],
+                            [
+                                'label' => 'Leave Management',
+                                'icon' => 'cancel',
+                                'url' => '#',
+                                'items' => [
                                     ['label' => 'Manage Leave', 'icon' => 'chevron-right', 'url' => './emp-leave',],
                                     ['label' => 'Leave Report', 'icon' => 'chevron-right', 'url' => './premium-version',],
                                 ],
@@ -188,7 +196,7 @@
 
                             ['label' => 'Payroll System', 'icon' => 'caret-right', 'url' => './premium-version',],
                             ['label' => 'ID Cards', 'icon' => 'caret-right', 'url' => './premium-version',],
-                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => './premium-version',],
+                            ['label' => 'Promotion/Demotion', 'icon' => 'caret-right', 'url' => './emp-designation',],
                             ['label' => 'Announce Jobs', 'icon' => 'caret-right', 'url' => './premium-version',],
                         ],
                     ],
@@ -200,6 +208,7 @@
                         'icon' => 'credit-card',
                         'url' => '#',
                         'items' => [
+                            ['label' => 'Account Nature', 'icon' => 'caret-right', 'url' => "./account-nature"],
                             ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
                             ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
                             ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./balance-sheet"],],
@@ -295,6 +304,11 @@
                     // ------------------------------------------------
                     // Data Visualization  close...
                     // ------------------------------------------------
+                    // Visitor Management start...
+                    ['label' => 'Visitor Record', 'icon' => 'book', 'url' => ["./visitors"],],
+                    // ------------------------------------------------
+                    // Visitor Management  close...
+                    // ------------------------------------------------
                     // Library Management start...
                     ['label' => 'Library Management', 'icon' => 'book', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
@@ -342,8 +356,9 @@
                             ['label' => 'Branches', 'icon' => 'caret-right', 'url' => ["/branches"],],
                             //['label' => 'Departments', 'icon' => 'caret-right', 'url' => ["/departments"],],
                             ['label' => 'Sessions', 'icon' => 'caret-right', 'url' => ["/std-sessions"],],
-                            ['label' => 'Sections', 'icon' => 'caret-right', 'url' => ["/std-sections"],],
                             ['label' => 'Classes', 'icon' => 'caret-right', 'url' => ["/std-class-name"],],
+                            ['label' => 'Sections', 'icon' => 'caret-right', 'url' => ["/std-sections"],],
+                            
                             [
                                 'label' => 'Subjects',
                                 'icon' => 'caret-right',
@@ -359,7 +374,7 @@
                                 'url' => '#',
                                 'items' => [
                                     ['label' => 'Employee Type', 'icon' => 'chevron-right', 'url' => './emp-type',],
-                                    ['label' => 'Employee Designation', 'icon' => 'chevron-right', 'url' => './emp-designation',],
+                                    ['label' => 'Employee Designation', 'icon' => 'chevron-right', 'url' => './designation',],
                                 ],
                             ],
                             [

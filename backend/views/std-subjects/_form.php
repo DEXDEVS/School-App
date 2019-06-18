@@ -16,8 +16,9 @@ use kartik\select2\Select2;
 <div class="std-subjects-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php  $branch_id = Yii::$app->user->identity->branch_id; ?>
 
-    <?= $form->field($model, 'class_id')->dropDownList(ArrayHelper::map(StdClassName::find()->all(),'class_name_id','class_name'),
+    <?= $form->field($model, 'class_id')->dropDownList(ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1, 'branch_id'=>$branch_id])->all(),'class_name_id','class_name'),
     	['prompt'=>'Select Class']
 	)?>
 

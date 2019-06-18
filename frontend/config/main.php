@@ -48,10 +48,31 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                //site
                 'login' => 'site/login',
                 //'logout' => 'site/login',
                 'signup' => 'site/signup',
                 'home' => 'site/index',
+                'user-profile' => 'site/user-profile',
+                'list-of-classes' => 'site/list-of-classes',
+                'std-remarks' => 'site/std-remarks',
+                'activity-view' => 'site/activity-view',
+                'employe-dashboard'=>'site/employe-dashboard',
+                'employee-portfolio'=>'site/employee-portfolio',
+                'students-view'=>'site/students-view',
+                'students-list'=>'site/students-list',
+                'view-classes'=>'site/view-classes',
+                'view-datesheet'=>'site/view-datesheet',
+                'std-profile'=>'site/std-profile',
+                'std-fee'=>'site/std-fee',
+                'std-fee-details'=>'site/std-fee-details',
+                'std-exams'=>'site/std-exams',
+                'std-exam-schedule'=>'site/std-exam-schedule',
+                'std-exam-result'=>'site/std-exam-result',
+                'children'=>'site/children',
+                'premium-version'=>'site/premium-version',
+                'fee-details'=>'site/fee-details',
+                'dates'=>'site/dates',
                 //-------------------------------------------
                 // executive-portal route
                 'executive-portal' => 'site/executive-portal',
@@ -60,15 +81,7 @@ return [
                 'std-attendance-report' => 'site/std-attendance-report',
                 'emp-attendance-report' => 'site/emp-attendance-report',
                 //-------------------------------------------
-                'list-of-classes' => 'site/list-of-classes',
-                'activity-view' => 'site/activity-view',
-                'employe-dashboard'=>'site/employe-dashboard',
-                'employee-portfolio'=>'site/employee-portfolio',
-                'students-view'=>'site/students-view',
-                'students-list'=>'site/students-list',
-                'view-classes'=>'site/view-classes',
-                'view-datesheet'=>'site/view-datesheet',
-                
+                //std-attendance
                 'attendance' => 'std-attendance',
                 'student-attendance' => 'std-attendance/attendance',
                 'class-attendance' => 'std-attendance/view-class-attendance',
@@ -81,19 +94,13 @@ return [
                 'daterangewise-student-attendance' => 'std-attendance/daterangewise-student-attendance',
                 'monthly-attendance-view' => 'std-attendance/monthly-attendance-view',
                 'take-attendance-by-incharge' => 'std-attendance/take-attendance-by-incharge',
+                //-------------------------------------------
+                //marks-details
                 'marks-sheet'=>'marks-details/marks-sheet',
                 'view-marks-list'=>'marks-details/view-marks-list',
+                //-------------------------------------------
+                //emp-leave
                 'emp-leave'=>'emp-leave/index',
-                'std-profile'=>'site/std-profile',
-                'std-fee'=>'site/std-fee',
-                'std-fee-details'=>'site/std-fee-details',
-                'std-exams'=>'site/std-exams',
-                'std-exam-schedule'=>'site/std-exam-schedule',
-                'std-exam-result'=>'site/std-exam-result',
-                'children'=>'site/children',
-                'premium-version'=>'site/premium-version',
-                'fee-details'=>'site/fee-details',
-                'dates'=>'site/dates',
                 'fetch-days-count'=>'emp-leave/fetch-days-count',
             ],
         ],
