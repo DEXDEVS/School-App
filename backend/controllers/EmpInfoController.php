@@ -426,9 +426,9 @@ class EmpInfoController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post())) {
-            $transaction = \Yii::$app->db->beginTransaction();
-                try {
-                $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
+                $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
                         if(!empty($model->emp_photo)){
                             $imageName = $model->emp_name.'_emp_photo'; 
                             $model->emp_photo->saveAs('uploads/'.$imageName.'.'.$model->emp_photo->extension);
@@ -446,18 +446,28 @@ class EmpInfoController extends Controller
                         } else {
                            $model->degree_scan_copy = $emp_info[0]['degree_scan_copy'];  
                         }
+                        $model->emp_cv = UploadedFile::getInstance($model,'emp_cv');
+                        if(!empty($model->emp_cv)){
+                            $imageName = $model->emp_name.'_emp_cv'; 
+                            $model->emp_cv->saveAs('uploads/'.$imageName.'.'.$model->emp_cv->extension);
+                            //save the path in the db column
+                            $model->emp_cv = 'uploads/'.$imageName.'.'.$model->emp_cv->extension;
+                        } else {
+                           $model->emp_cv = $emp_info[0]['emp_cv'];  
+                        }
                         $model->updated_by = Yii::$app->user->identity->id;
                         $model->updated_at = new \yii\db\Expression('NOW()');
                         $model->created_by = $model->created_by;
                         $model->created_at = $model->created_at;
                         $model->save();
-                return $this->redirect(['view', 'id' => $model->emp_id]);
-                $transaction->commit();
-                Yii::$app->session->setFlash('warning', "You have successfully update employee Info...!");
-            } catch (Exception $e) {
-                $transaction->rollBack();
-                Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
-            }
+
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('warning', "You have successfully update employee Info...!");
+                        return $this->redirect(['view', 'id' => $model->emp_id]);
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                    }
             } else {
                 return $this->render('update', [
                     'model' => $model,

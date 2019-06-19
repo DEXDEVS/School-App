@@ -166,6 +166,10 @@ class StdSubjectsController extends Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                    $array = $model->subId;
+                    $subject = implode(",", $array);
+                    $model->std_subject_name = $subject;
+                    $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "StdSubjects #".$id,

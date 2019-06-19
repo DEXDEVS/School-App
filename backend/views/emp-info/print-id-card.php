@@ -5,10 +5,11 @@
   $empInfo = Yii::$app->db->createCommand("SELECT * FROM emp_info WHERE emp_id = '$id'")->queryAll();
   $instituteInfo = Yii::$app->db->createCommand("SELECT institute_name, institute_logo FROM institute")->queryAll();
   // Get `emp_designation_id` from `emp_info` table
-  $empDesignationId = $empInfo[0]['emp_designation_id'];
+  $empDesignation = Yii::$app->db->createCommand("SELECT designation_id FROM emp_designation WHERE emp_id = '$id'")->queryAll();
+  $empDesignationId = $empDesignation[0]['designation_id'];
   // Employee `desigantion_name` from `emp_designation` table against `$empDesignationId`
-  $emp_designation = Yii::$app->db->createCommand("SELECT * FROM emp_designation WHERE emp_designation_id = '$empDesignationId'")->queryAll();
-  $empDesignationName = $emp_designation[0]['emp_designation'];
+  $emp_designation = Yii::$app->db->createCommand("SELECT * FROM designation WHERE designation_id = '$empDesignationId'")->queryAll();
+  $empDesignationName = $emp_designation[0]['designation'];
 ?>
 
 <!-- ID Card Modal start -->
