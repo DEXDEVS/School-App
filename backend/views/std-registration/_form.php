@@ -440,7 +440,6 @@ $('form#{$model->formName()}').on('beforeSubmit',function(e){
     var canvas = document.getElementById("canvasTarget");
     var dataURL = canvas.toDataURL("image/png");
     var d = document.getElementById('barcode_ID').value = dataURL; 
-    alert(d);  
 }); 
 
 // getting std-personal-info- by std inquiry no...
@@ -453,7 +452,6 @@ $('#inquiryNo').on('change',function(){
         url: "$url",
         success: function(result){
             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+2));
-            console.log(jsonResult);
             var student = jsonResult[0];
             $('#std_name').val(student['std_name']);
             $('#std_father_name').val(student['std_father_name']);
