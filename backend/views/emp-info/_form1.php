@@ -40,7 +40,7 @@ use common\models\Branches;
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 66px; top: 6px"></i>
-            <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => 'Select Gender']) ?>
+            <?= $form->field($model, 'emp_gender')->dropDownList([ 'M' => 'Male', 'F' => 'Female', ], ['prompt' => 'Select Gender']) ?>
         </div>
     </div>
     <div class="row">        

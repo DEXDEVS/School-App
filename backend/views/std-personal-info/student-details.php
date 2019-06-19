@@ -141,19 +141,24 @@
                     }
                      ?></a>
                   </li>
-                  <li class="list-group-item" style="height: 75px;">
-                    <b>Class:</b><br>
-                    <a><?php echo $className[0]['class_name'] ?></a>
+                  <li class="list-group-item">
+                    <b>Class:</b>
+                    <a class="pull-right"><?php echo $className[0]['class_name'] ?></a>
                   </li>
                   <li class="list-group-item">
-                    <b>Email</b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_email'] ?></a>
+                    <b>Contact #:</b> 
+                      <a class="pull-right">
+                        <?php echo $stdPersonalInfo[0]['std_contact_no']; ?>
+                      </a>
                   </li>
                   <li class="list-group-item">
-                    <b>Contact #:</b> <a class="pull-right"><?php echo $stdPersonalInfo[0]['std_contact_no']; ?></a>
+                    <b>Email</b><br> 
+                    <a class="t">
+                      <?php echo $stdPersonalInfo[0]['std_email'] ?>
+                    </a>
                   </li>
                   <li class="list-group-item">
                     <b>Status:</b> <a class="pull-right">
-                      
                       <?php 
                         if ($stdPersonalInfo[0]['status'] == "Active") {?>
                         <span class="label label-success"> 

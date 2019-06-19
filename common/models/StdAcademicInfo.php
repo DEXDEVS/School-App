@@ -45,7 +45,7 @@ class StdAcademicInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['std_id', 'class_name_id','std_enroll_status'], 'required'],
+            [['std_id', 'class_name_id','std_enroll_status'], 'safe'],
             [['std_id', 'class_name_id', 'subject_combination', 'previous_class_rollno', 'total_marks', 'obtained_marks', 'created_by', 'updated_by','passing_year'], 'integer'],
             [['grades'], 'string', 'max' => 10],
             [['created_at', 'updated_at','created_by', 'updated_by', 'subject_combination', 'previous_class_rollno', 'total_marks', 'obtained_marks', 'grades', 'previous_class', 'passing_year','Institute'], 'safe'],

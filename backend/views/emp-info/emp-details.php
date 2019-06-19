@@ -118,14 +118,16 @@
             </h3>
             <p class="text-muted text-center"><!-- Software Engineer --></p>
             <ul class="list-group list-group-unbordered">
-              <b>Departments</b>
-                <li class="list-group-item" style="height:40px">
-                   <a href="./departments-view?id=<?php echo $empDeptName[0]['department_id']; ?>" class="">
-                    <?php echo $empDeptName[0]['department_name']; ?>
-                  </a>
-                </li>
               <li class="list-group-item">
-                <b>Designation</b> <a class="pull-right">
+                <b>Departments</b><br>
+                 <a href="./departments-view?id=<?php echo $empDeptName[0]['department_id']; ?>" class="">
+                  <?php echo $empDeptName[0]['department_name']; ?>
+                </a>
+              </li>
+              
+              <li class="list-group-item">
+                <b>Designation</b><br>
+                 <a href="#">
                   <?php echo $empDesignationName; ?>
                 </a>
               </li>
@@ -194,7 +196,7 @@
                     <?=Html::a(' Edit',['update','id'=>$id],['class'=>'btn btn-primary btn-sm fa fa-edit','role'=>'modal-remote']) ?>
                     <button type="button" class="btn btn-info btn-sm fa fa-comments" data-toggle="modal" data-target="#modal-default"> Send SMS</button>
                      <a href="./emails-create?id=<?php echo $id;?>" class="btn btn-warning btn-sm fa fa-envelope-o" style='color: white;'> Send Email </a>
-                    <?=Html::a(' Print ID Card',['print-id-card','id'=>$id],['class'=>'btn btn-default bg-navy btn-sm fa fa-id-card-o']) ?>
+                    <!-- <?=Html::a(' Print ID Card',['print-id-card','id'=>$id],['class'=>'btn btn-default bg-navy btn-sm fa fa-id-card-o']) ?> -->
                     <div class="modal fade" id="modal-default">
                           <div class="modal-dialog">
                             <div class="modal-content">

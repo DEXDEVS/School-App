@@ -55,10 +55,10 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_fb_ID',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'emp_gender',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'emp_gender',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_photo',
