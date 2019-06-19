@@ -7,6 +7,7 @@ use common\models\Designation;
 use common\models\EmpType;
 use common\models\Branches;
 use common\models\Departments;
+use dosamigos\datetimepicker\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\EmpInfo */
@@ -86,7 +87,20 @@ use common\models\Departments;
     </div>    
     <div class="row">
         <div class="col-md-4">
-            <?= $form->field($model, 'emp_date_of_birth')->textInput(['maxlength' => true]) ?>
+            <label>DOB</label>
+            <?= DateTimePicker::widget([
+                'model' => $model,
+                'attribute' => 'emp_date_of_birth',
+                'language' => 'en',
+                'size' => 'ms',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd',
+                    'startDate' => date('2000-01-01'),
+                    'endDate' => date(''),
+                    'todayBtn' => true
+                ]
+            ]);?>
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 172px; top: 6px"></i>
