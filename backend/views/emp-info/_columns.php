@@ -93,6 +93,16 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_date_of_birth',
+    // ],// [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_religion',
+    // ],// [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'emp_domicile',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'emp_cv',
     // ],
     // [

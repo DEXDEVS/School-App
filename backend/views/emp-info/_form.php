@@ -81,47 +81,45 @@ use common\models\Departments;
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 140px; top: 6px"></i>
-            <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'empCnic', 'onchange' => 'generateBarcode();'],  'mask' => '99999-9999999-9']) ?>
+            <?= $form->field($model, 'emp_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
         </div>
     </div>    
     <div class="row">
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 172px; top: 6px"></i>
-            <?= $form->field($model, 'emp_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
+            <?= $form->field($model, 'emp_date_of_birth')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 60px; top: 6px"></i> 
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 172px; top: 6px"></i>
             <?= $form->field($model, 'emp_email')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 72px; top: 6px"></i>
-            <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => 'Select Gender']) ?>
+             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 60px; top: 6px"></i> 
+              <?= $form->field($model, 'emp_gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', ], ['prompt' => 'Select Gender']) ?>
         </div>
     </div> 
     <div class="row">
-      <div class="col-md-12">
-          <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
-          <div id="barcodeTarget" class="barcodeTarget"></div>
-          <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
-      </div>
-      <div class="col-md-4">
-            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 56px; top: 6px"></i> -->
-            <?= $form->field($model, 'emp_photo')->fileInput() ?>
+        <div class="col-md-4">
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 72px; top: 6px"></i>
+            <?= $form->field($model, 'emp_cnic')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'empCnic', 'onchange' => 'generateBarcode();'],  'mask' => '99999-9999999-9']) ?>
         </div>
         <div class="col-md-4">
-            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 56px; top: 6px"></i> -->
-            <?= $form->field($model, 'emp_fb_ID')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
+            <div id="barcodeTarget" class="barcodeTarget"></div>
+            <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'emp_photo')->fileInput() ?>
         </div>
     </div>
-    
     <div class="row">        
-        
+        <div class="col-md-4">
+            <?= $form->field($model, 'emp_fb_ID')->textInput(['maxlength' => true]) ?>
+        </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 160px; top: 6px"></i>
             <?= $form->field($model, 'emp_perm_address')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 148px; top: 6px"></i> -->
             <?= $form->field($model, 'emp_temp_address')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
@@ -132,19 +130,28 @@ use common\models\Departments;
         </div>
         <div class="col-md-4">
             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 102px; top: 6px"></i> -->
+            <?= $form->field($model, 'emp_religion')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 104px; top: 6px"></i> -->
+            <?= $form->field($model, 'emp_domicile')->textInput() ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 102px; top: 6px"></i> -->
             <?= $form->field($model, 'emp_qualification')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 104px; top: 6px"></i> -->
             <?= $form->field($model, 'emp_passing_year')->textInput() ?>
         </div>
-    </div>
-    <div class="row">
-        
         <div class="col-md-4">
             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 113px; top: 6px"></i> -->
             <?= $form->field($model, 'emp_institute_name')->textInput(['maxlength' => true]) ?>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 173px; top: 6px"></i> -->
             <?= $form->field($model, 'degree_scan_copy')->fileInput() ?>
@@ -163,20 +170,8 @@ use common\models\Departments;
         </div>
         <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 117px; top: 6px"></i>
-           <?= $form->field($model, 'emp_salary_type')->dropDownList([ 'Salaried' => 'Salaried', 'Per Lecture' => 'Per Lecture', ], ['prompt' => '']) ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 105px; top: 6px"></i>
             <?= $form->field($empDesignation, 'designation_id')->dropDownList(
                     ArrayHelper::map(Designation::find()->where(['delete_status'=>1])->all(),'designation_id','designation'), ['prompt'=>'Select Designation']
-                )?>
-        </div>
-        <div class="col-md-4">
-            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 52px; top: 6px"></i>
-            <?= $form->field($empDesignation, 'emp_type_id')->dropDownList(
-                    ArrayHelper::map(EmpType::find()->where(['delete_status'=>1])->all(),'emp_type_id','emp_type'), ['prompt'=>'Select Type']
                 )?>
         </div>
         <div class="col-md-4">
@@ -186,12 +181,24 @@ use common\models\Departments;
     </div>
     <div class="row">
         <div class="col-md-4">
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 105px; top: 6px"></i>
+            <?= $form->field($empDesignation, 'emp_type_id')->dropDownList(
+                    ArrayHelper::map(EmpType::find()->where(['delete_status'=>1])->all(),'emp_type_id','emp_type'), ['prompt'=>'Select Type']
+              )?>
+        </div>
+        <div class="col-md-4">
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 52px; top: 6px"></i>
+            <?= $form->field($model, 'emp_salary_type')->dropDownList([ 'Salaried' => 'Salaried', 'Per Lecture' => 'Per Lecture', ], ['prompt' => '']) ?>
+        </div> 
+        <div class="col-md-4">
             <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 64px; top: 6px"></i>
             <?= $form->field($empDesignation, 'emp_salary')->textInput() ?>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
            <?= $form->field($model,'reference')->dropDownList([ 'Yes' => 'Yes', 'No' => 'No', ], 
-           ['prompt' => 'Select Group', 'id' => 'reference']) ?> 
+           ['prompt' => 'Select (if any)', 'id' => 'reference']) ?> 
         </div>
     </div>
 
@@ -208,13 +215,11 @@ use common\models\Departments;
                 <?= $form->field($empRefModel, 'ref_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', ]) ?>
             </div>
             <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 75px; top: 6px"></i>
                 <?= $form->field($empRefModel, 'ref_cnic')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '99999-9999999-9', ]) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 123px; top: 6px"></i>
                 <?= $form->field($empRefModel, 'ref_designation')->textInput(['maxlength' => true]) ?>
             </div>
         </div>

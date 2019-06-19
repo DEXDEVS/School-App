@@ -14,6 +14,7 @@ use Yii;
  * @property string $emp_father_name
  * @property string $emp_cnic
  * @property string $emp_contact_no
+ * @property string $emp_date_of_birth
  * @property string $emp_perm_address
  * @property string $emp_temp_address
  * @property string $emp_marital_status
@@ -27,7 +28,9 @@ use Yii;
  * @property int $emp_passing_year
  * @property string $emp_institute_name
  * @property string $degree_scan_copy
- * @property string $emp_cv
+ * @property string $emp_cv 
+ * @property string $emp_religion
+ * @property string $emp_domicile
  * @property string $emp_status
  * @property string $created_at
  * @property string $updated_at
@@ -64,12 +67,14 @@ class EmpInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['emp_branch_id', 'emp_reg_no', 'emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_perm_address', 'emp_temp_address', 'emp_marital_status', 'emp_gender', 'emp_dept_id', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name'], 'required'],
+            [['emp_branch_id', 'emp_reg_no', 'emp_name', 'emp_father_name', 'emp_cnic', 'emp_contact_no', 'emp_perm_address', 'emp_marital_status', 'emp_gender', 'emp_dept_id', 'emp_email', 'emp_qualification', 'emp_passing_year', 'emp_institute_name'], 'required'],
             [['emp_branch_id', 'emp_dept_id', 'emp_passing_year', 'created_by', 'updated_by'], 'integer'],
             [['emp_marital_status', 'emp_gender', 'emp_status'], 'string'],
-            [['created_at', 'updated_at', 'emp_status', 'created_by', 'updated_by', 'degree_scan_copy', 'emp_cv', 'emp_photo', 'emp_salary_type','barcode','emp_fb_ID'], 'safe'],
+            [['created_at', 'updated_at', 'emp_status', 'created_by', 'updated_by', 'degree_scan_copy', 'emp_cv', 'emp_photo', 'emp_salary_type','barcode','emp_fb_ID','emp_date_of_birth',
+               'emp_religion','emp_domicile', 'emp_temp_address'], 'safe'],
             [['emp_reg_no', 'emp_name', 'emp_father_name', 'emp_qualification', 'emp_institute_name','emp_fb_ID'], 'string', 'max' => 50],
-            [['emp_cnic', 'emp_contact_no'], 'string', 'max' => 15],
+            [['emp_cnic', 'emp_contact_no','emp_religion'], 'string', 'max' => 15],
+            [['emp_domicile'], 'string', 'max' => 30],
             [['emp_perm_address', 'emp_temp_address', 'emp_photo', 'degree_scan_copy', 'emp_cv'], 'string', 'max' => 200],
             [['emp_email'], 'string', 'max' => 84],
             [['emp_branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::className(), 'targetAttribute' => ['emp_branch_id' => 'branch_id']],
@@ -88,26 +93,29 @@ class EmpInfo extends \yii\db\ActiveRecord
     {
         return [
             'emp_id' => 'Employee ID',
-            'emp_branch_id' => 'Branch ID',
+            'emp_branch_id' => 'Branch Name',
             'emp_reg_no' => 'Reg No',
             'emp_name' => 'Name',
             'emp_father_name' => 'Father Name',
-            'emp_cnic' => 'Cnic',
+            'emp_cnic' => 'CNIC',
             'emp_contact_no' => 'Contact No',
             'emp_perm_address' => 'Permanent Address',
             'emp_temp_address' => 'Temporary Address',
             'emp_marital_status' => 'Marital Status',
-            'emp_fb_ID' => 'Fb ID',
+            'emp_fb_ID' => 'Facebook ID',
             'emp_gender' => 'Gender',
             'emp_photo' => 'Photo',
-            'emp_dept_id' => 'Dept ID',
+            'emp_dept_id' => 'Department Name',
             'emp_salary_type' => 'Salary Type',
             'emp_email' => 'Email',
             'emp_qualification' => 'Qualification',
             'emp_passing_year' => 'Passing Year',
             'emp_institute_name' => 'Institute Name',
             'degree_scan_copy' => 'Degree Scan Copy',
-            'emp_cv' => 'Cv',
+            'emp_cv' => 'CV',
+            'emp_date_of_birth'=> 'DOB',
+            'emp_religion' => 'Religion',
+            'emp_domicile' => 'Domicile',
             'emp_status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

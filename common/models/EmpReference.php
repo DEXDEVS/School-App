@@ -48,10 +48,10 @@ class EmpReference extends \yii\db\ActiveRecord
         return [
             'emp_ref_id' => 'Emp Ref ID',
             'emp_id' => 'Emp Name',
-            'ref_name' => 'Ref Name',
-            'ref_contact_no' => 'Ref Contact No',
-            'ref_cnic' => 'Ref Cnic',
-            'ref_designation' => 'Ref Designation',
+            'ref_name' => 'Name',
+            'ref_contact_no' => 'Contact No',
+            'ref_cnic' => 'CNIC',
+            'ref_designation' => 'Designation',
         ];
     }
 
