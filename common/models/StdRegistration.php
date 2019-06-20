@@ -53,6 +53,7 @@ class StdRegistration extends \yii\db\ActiveRecord
     }
 
     public $stdInquiryNo;
+    public $age;
 
     /**
      * {@inheritdoc}

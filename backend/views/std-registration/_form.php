@@ -96,7 +96,7 @@ use yii\helpers\Url;
                 </div>     
             </div>
             <div class="row"> 
-                <div class="col-md-4">
+                <div class="col-md-4" id="inputDate">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 95px; top: 6px"></i>
                     <label>Student DOB</label>
                     <?= DateTimePicker::widget([
@@ -107,11 +107,15 @@ use yii\helpers\Url;
                         'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
-                            'startDate' => date('2000-01-01'),
+                            'startDate' => date('1990-01-01'),
                             'endDate' => date(''),
                             'todayBtn' => true
-                        ]
+                        ],
+                        'options' => ['id' => 'date']
                     ]);?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'age')->textInput(['id'=>'setAge', 'readonly'=>true]) ?>
                 </div>
                 <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 80px; top: 6px"></i>
@@ -573,7 +577,83 @@ $('#classId').on('change',function(){
     }); 
 });
 
+$('#date').on('change',function(){
+    var date = $('#date').val();
+    
+    var now = new Date();
+  var today = new Date(now.getYear(),now.getMonth(),now.getDate());
 
+  var yearNow = now.getYear();
+  var monthNow = now.getMonth();
+  var dateNow = now.getDate();
+
+  var dob = new Date(date);
+
+  var yearDob = dob.getYear();
+  var monthDob = dob.getMonth();
+  var dateDob = dob.getDate();
+  var age = {};
+  var ageString = "";
+  var yearString = "";
+  var monthString = "";
+  var dayString = "";
+
+
+  yearAge = yearNow - yearDob;
+
+  if (monthNow >= monthDob)
+    var monthAge = monthNow - monthDob;
+  else {
+    yearAge--;
+    var monthAge = 12 + monthNow -monthDob;
+  }
+
+  if (dateNow >= dateDob)
+    var dateAge = dateNow - dateDob;
+  else {
+    monthAge--;
+    var dateAge = 31 + dateNow - dateDob;
+
+    if (monthAge < 0) {
+      monthAge = 11;
+      yearAge--;
+    }
+  }
+
+  age = {
+      years: yearAge,
+      months: monthAge,
+      days: dateAge
+      };
+
+  if ( age.years > 1 ) yearString = " years";
+  else yearString = " year";
+  if ( age.months> 1 ) monthString = " months";
+  else monthString = " month";
+  if ( age.days > 1 ) dayString = " days";
+  else dayString = " day";
+
+
+  if ( (age.years > 0) && (age.months > 0) && (age.days > 0) )
+    ageString = age.years + yearString + ", " + age.months + monthString + ", and " + age.days + dayString + " old.";
+  else if ( (age.years == 0) && (age.months == 0) && (age.days > 0) )
+    ageString = "Only " + age.days + dayString + " old!";
+  else if ( (age.years > 0) && (age.months == 0) && (age.days == 0) )
+    ageString = age.years + yearString + " old. Happy Birthday!!";
+  else if ( (age.years > 0) && (age.months > 0) && (age.days == 0) )
+    ageString = age.years + yearString + " and " + age.months + monthString + " old.";
+  else if ( (age.years == 0) && (age.months > 0) && (age.days > 0) )
+    ageString = age.months + monthString + " and " + age.days + dayString + " old.";
+  else if ( (age.years > 0) && (age.months == 0) && (age.days > 0) )
+    ageString = age.years + yearString + " and " + age.days + dayString + " old.";
+  else if ( (age.years == 0) && (age.months > 0) && (age.days == 0) )
+    ageString = age.months + monthString + " old.";
+  else ageString = "Oops! Could not calculate age!";
+    
+$('#setAge').val(ageString);
+    //alert(ageString);
+
+    });
 JS;
 $this->registerJs($script);
 ?>

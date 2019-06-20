@@ -291,6 +291,16 @@
                               <th>Date of Birth:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_DOB'] ?></td>
                             </tr>
+                             <tr>
+                              <th>Age:</th>
+                              <td>
+                                <?php 
+                                  $bday = new DateTime($stdPersonalInfo[0]['std_DOB']); // Your date of birth
+                                  $today = new Datetime(date('m.d.y'));
+                                  $diff = $today->diff($bday);
+                                  echo $diff->y." Years ".$diff->m." Months ".$diff->d." Days ";
+                              ?></td>
+                            </tr>
                             <tr>
                               <th>Temporary Address:</th>
                             </tr>
