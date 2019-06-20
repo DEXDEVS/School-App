@@ -46,10 +46,9 @@ class StdAcademicInfo extends \yii\db\ActiveRecord
     {
         return [
             [['class_name_id'], 'required'],
-            [['std_id', 'class_name_id','std_enroll_status'], 'safe'],
             [['std_id', 'class_name_id', 'subject_combination', 'previous_class_rollno', 'total_marks', 'obtained_marks', 'created_by', 'updated_by','passing_year'], 'integer'],
             [['grades'], 'string', 'max' => 10],
-            [['created_at', 'updated_at','created_by', 'updated_by', 'subject_combination', 'previous_class_rollno', 'total_marks', 'obtained_marks', 'grades', 'previous_class', 'passing_year','Institute'], 'safe'],
+            [['created_at', 'updated_at','created_by', 'updated_by', 'subject_combination', 'previous_class_rollno', 'total_marks', 'obtained_marks', 'grades', 'previous_class', 'passing_year','Institute','std_id','std_enroll_status'], 'safe'],
             [['previous_class', 'Institute', 'percentage'], 'string', 'max' => 50],
             [['std_enroll_status'], 'string', 'max' => 6],
             [['std_id'], 'exist', 'skipOnError' => true, 'targetClass' => StdPersonalInfo::className(), 'targetAttribute' => ['std_id' => 'std_id']],

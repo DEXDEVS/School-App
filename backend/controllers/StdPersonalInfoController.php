@@ -271,14 +271,14 @@ class StdPersonalInfoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "<b>Update Student Personal Info: </b>".$model->std_name,
+                    'title'=> "<b>Update Student Personal Info: </b>".$model->std_id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Close',['class'=>'btn btn-danger pull-left','data-dismiss'=>"modal"]).
                                 Html::button('Save',['class'=>'btn btn-info','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post())){
+            }else if($model->load($request->post()) && $model->validate()){
                 $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         $stdPersonalInfo = Yii::$app->db->createCommand("SELECT std_photo FROM std_personal_info where std_id = $id")->queryAll();
