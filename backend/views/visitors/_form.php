@@ -75,13 +75,13 @@ $('#visitor_cnic').on('change',function(){
         success: function(result){
 
             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+2));
-            if( !$.isArray(jsonResult) ||  !jsonResult.length ){
-                alert("Record not Found.!");
-            } else {
-                var visitor = jsonResult[0];
-                $('#visitor_name').val(visitor['visitor_name']);
-                $('#visitor_contact_no').val(visitor['visitor_contact_no']);
-            }
+            // if( !$.isArray(jsonResult) ||  !jsonResult.length ){
+            //     alert("Record not Found.!");
+            // } else {
+            //     var visitor = jsonResult[0];
+            //     $('#visitor_name').val(visitor['visitor_name']);
+            //     $('#visitor_contact_no').val(visitor['visitor_contact_no']);
+            // }
            // console.log(jsonResult);
         }         
     }); 

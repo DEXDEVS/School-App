@@ -43,6 +43,7 @@ class StdFeeDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['admission_fee','feeSession'], 'required'],
             [['std_id', 'admission_fee', 'net_addmission_fee', 'tuition_fee'], 'safe'],
             [['std_id', 'created_by', 'updated_by','concession_id'], 'integer'],
             [['admission_fee', 'addmission_fee_discount', 'net_addmission_fee', 'tuition_fee'], 'number'],

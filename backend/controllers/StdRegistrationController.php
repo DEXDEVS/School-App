@@ -100,7 +100,7 @@ class StdRegistrationController extends Controller
         $y = date('y');
         global $prntPassword, $stdPassword;
     
-        if ($model->load($request->post()) && $stdGuardianInfo->load($request->post()) && $stdIceInfo->load($request->post()) && $stdAcademicInfo->load($request->post()) && $stdFeeDetails->load($request->post())) {
+        if ($model->load($request->post()) && $model->validate() && $stdGuardianInfo->load($request->post()) && $stdGuardianInfo->validate() && $stdIceInfo->load($request->post()) && $stdIceInfo->validate() && $stdAcademicInfo->load($request->post()) && $stdAcademicInfo->validate() && $stdFeeDetails->load($request->post()) && $stdFeeDetails->validate()) {
                 $transection = $conn->beginTransaction();
                 try{
                     $branch_id = Yii::$app->user->identity->branch_id;
