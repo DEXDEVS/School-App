@@ -640,8 +640,6 @@
   </div>
 </div>
 </section>
-</div>
-</div>
 
 <script>
 // textarea sms counter....

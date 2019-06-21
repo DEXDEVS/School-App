@@ -15,12 +15,17 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_id',
         'format' => 'raw',
+        'width' => '20px',
+        'headerOptions' => [
+            // this should be on a CSS file as class instead of a inline style attribute...
+            'style' => 'text-align: center !important;vertical-align: middle !important'
+        ],
         'value'=> function ($model) { return Html::a($model->std_id, [ './std-personal-info-view', 'id' => $model->std_id ], ['target' => '_blank']); },
         'contentOptions' => function ($model, $key, $index, $column) {
-        return ['style' => 'background-color:' 
+        return ['class' => 'text-center','style' => 'background-color:' 
             . (!empty($model->std_id) && $model->std_id / $model->std_id < 2
-                ? '#b3e6b3' : 'blue')];
-    },
+                ? '#c1efba' : 'black')];
+        },
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
