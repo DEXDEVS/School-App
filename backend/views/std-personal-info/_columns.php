@@ -1,22 +1,32 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
     ],
-    [
-        'class' => 'kartik\grid\SerialColumn',
-        'width' => '30px',
-    ],
+    // [
+    //     'class' => 'kartik\grid\SerialColumn',
+    //     'width' => '30px',
+    // ],
         [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_id',
+        'format' => 'raw',
+        'value'=> function ($model) { return Html::a($model->std_id, [ './std-personal-info-view', 'id' => $model->std_id ], ['target' => '_blank']); },
+        'contentOptions' => function ($model, $key, $index, $column) {
+        return ['style' => 'background-color:' 
+            . (!empty($model->std_id) && $model->std_id / $model->std_id < 2
+                ? '#b3e6b3' : 'blue')];
+    },
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'std_name',
+        'format' => 'raw',
+        'value'=> function ($model) { return Html::a($model->std_name, [ './std-personal-info-view', 'id' => $model->std_id ], ['target' => '_blank']); },
     ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
