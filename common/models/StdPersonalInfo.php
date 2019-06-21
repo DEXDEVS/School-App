@@ -76,7 +76,7 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'std_id' => 'ID',
+            'std_id' => 'Student ID',
             'std_reg_no' => 'Registration No',
             'std_name' => 'Student Name',
             'branch_id' => 'Branch Name',
