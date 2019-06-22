@@ -56,7 +56,7 @@ class StdSessionsSearch extends StdSessions
                 return $dataProvider;
             }
 
-            // $query->joinWith('sessionBranch');
+            $query->joinWith('sessionBranch');
             // $query->andFilterWhere([
             //     'session_id' => $this->session_id,
             //     'session_start_date' => $this->session_start_date,
@@ -74,7 +74,7 @@ class StdSessionsSearch extends StdSessions
             return $dataProvider;
         } else {
             $branch_id = Yii::$app->user->identity->branch_id;
-            $query = StdSessions::find()->where(['session_branch_id' => $branch_id]);
+            $query = StdSessions::find()->innerJoinWith('sessionBranch')->where(['session_branch_id' => $branch_id]);
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);

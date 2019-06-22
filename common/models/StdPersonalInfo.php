@@ -23,6 +23,8 @@ use Yii;
  * @property string $std_religion
  * @property string $std_nationality
  * @property string $std_tehseel
+ * @property string $std_cast
+ * @property string $admission_date
  * @property string $status
  * @property string $academic_status
  * @property string $created_at
@@ -55,8 +57,8 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
     {
         return [
             [['std_name'], 'required'],
-            [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status'], 'safe'],
-            [['branch_id','std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode'], 'safe'],
+            [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_email', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status','admission_date'], 'safe'],
+            [['branch_id','std_DOB', 'created_at', 'updated_at','created_by', 'updated_by', 'std_temporary_address', 'barcode','std_cast','std_password'], 'safe'],
             [['std_gender', 'status', 'academic_status'], 'string'],
             [['created_by', 'updated_by'], 'integer'],
             [['std_reg_no', 'std_name', 'std_father_name', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel'], 'string', 'max' => 50],
@@ -93,6 +95,8 @@ class StdPersonalInfo extends \yii\db\ActiveRecord
             'std_religion' => 'Religion',
             'std_nationality' => 'Nationality',
             'std_tehseel' => 'Tehseel',
+            'admission_date' => 'Admission Date',
+            'std_cast' => 'Cast',
             'status' => 'Status',
             'academic_status' => 'Academic Status',
             'created_at' => 'Created At',

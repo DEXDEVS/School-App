@@ -18,7 +18,7 @@ class StdRegistrationSearch extends StdRegistration
     {
         return [
             [['branch_id','std_id', 'created_by', 'updated_by'], 'integer'],
-            [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status', 'created_at', 'updated_at'], 'safe'],
+            [['std_reg_no', 'std_name', 'std_father_name', 'std_contact_no', 'std_DOB', 'std_gender', 'std_permanent_address', 'std_temporary_address', 'std_email', 'std_photo', 'std_b_form', 'std_district', 'std_religion', 'std_nationality', 'std_tehseel', 'status', 'academic_status', 'created_at', 'updated_at','admission_date','std_cast'], 'safe'],
         ];
     }
 
@@ -61,6 +61,7 @@ class StdRegistrationSearch extends StdRegistration
             'std_id' => $this->std_id,
             'branch_id' => $this->branch_id,
             'std_DOB' => $this->std_DOB,
+            'admission_date' => $this->admission_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -81,6 +82,7 @@ class StdRegistrationSearch extends StdRegistration
             ->andFilterWhere(['like', 'std_religion', $this->std_religion])
             ->andFilterWhere(['like', 'std_nationality', $this->std_nationality])
             ->andFilterWhere(['like', 'std_tehseel', $this->std_tehseel])
+            ->andFilterWhere(['like', 'std_cast', $this->std_cast])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'academic_status', $this->academic_status]);
 

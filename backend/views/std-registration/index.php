@@ -42,6 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //'std_religion',
             //'std_nationality',
             //'std_tehseel',
+            // 'admission_date',
+            // 'std_cast',
             //'status',
             //'academic_status',
             //'created_at',

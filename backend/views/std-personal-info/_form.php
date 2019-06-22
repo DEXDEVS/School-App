@@ -36,8 +36,24 @@ use yii\helpers\Url;
                 <?= $form->field($model, 'stdInquiryNo')->textInput(['id' => 'inquiryNo']) ?>
             </div>
             <div class="col-md-4">
-                <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i> -->
                 <?= $form->field($model, 'std_reg_no')->textInput(['maxlength' => true,'value'=> 'STD-Y'.$year.'-'.$id, 'readonly'=> true]) ?>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 113px; top: 6px"></i>
+                <label>Admission Date</label>
+                <?= DateTimePicker::widget([
+                    'model' => $model,
+                    'attribute' => 'admission_date',
+                    'language' => 'en',
+                    'size' => 'ms',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd HH:ii:ss',
+                        'startDate' => date('1960-01-01'),
+                        'endDate' => date(''),
+                        'todayBtn' => true
+                    ]
+                ]);?>
             </div>
         </div> 
         <div class="row">

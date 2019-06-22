@@ -80,6 +80,23 @@ use yii\helpers\Url;
                 <div class="col-md-4">
                     <?= $form->field($model, 'stdInquiryNo')->textInput(['id' => 'inquiryNo']) ?>
                 </div>
+                <div class="col-md-4">
+                    <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 113px; top: 6px"></i>
+                    <label>Admission Date</label>
+                    <?= DateTimePicker::widget([
+                        'model' => $model,
+                        'attribute' => 'admission_date',
+                        'language' => 'en',
+                        'size' => 'ms',
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd HH:ii:ss',
+                            'startDate' => date('1960-01-01'),
+                            'endDate' => date(''),
+                            'todayBtn' => true
+                        ]
+                    ]);?>
+            </div>
             </div> 
             <div class="row">
                 <div class="col-md-4">
@@ -122,10 +139,22 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'std_gender')->dropDownList
                     ([ 'M' => 'Male', 'F' => 'Female', ], ['prompt' => '','id' => 'std_gender']) ?>
                 </div>
+                
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i> -->
                     <?= $form->field($model, 'std_email')->textInput(['maxlength' => true]) ?>
                 </div>
+                <div class="col-md-4">
+                    <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 131px; top: 6px"></i> -->
+                    <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'stdBform', 'onchange' => 'generateBarcode();'], 'mask' => '99999-9999999-9']) ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
+                    <div id="barcodeTarget" class="barcodeTarget"></div>
+                    <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
+                </div> 
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -133,20 +162,14 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'std_photo')->fileInput() ?>
                 </div>
                 <div class="col-md-4">
-                    <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 131px; top: 6px"></i> -->
-                    <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, ['options' => ['id' => 'stdBform', 'onchange' => 'generateBarcode();'], 'mask' => '99999-9999999-9']) ?>
+                    <?= $form->field($model, 'std_cast')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 84px; top: 6px"></i>
                     <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
-            <div class="col-md-12">
-                <?= $form->field($model, 'barcode')->hiddenInput(['id' => 'barcode_ID']) ?>
-                <div id="barcodeTarget" class="barcodeTarget"></div>
-                <canvas id="canvasTarget" width="210" height="90" style="border: none; margin: 0px;"></canvas>
-                
-            </div> 
+            
             <div class="row">  
                 <div class="col-md-4">
                     <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 85px; top: 6px"></i>

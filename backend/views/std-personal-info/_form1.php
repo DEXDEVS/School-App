@@ -17,7 +17,10 @@ use yii\web\UploadedFile;
     <?php $form = ActiveForm::begin(); ?>
 
     <!-- personal info -->
-    <div class="row">
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($model, 'admission_date')->textInput(['maxlength' => true,'id' => 'std_name', 'readonly'=> true]) ?>
+            </div>
             <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i>
                 <?= $form->field($model, 'std_name')->textInput(['maxlength' => true,'id' => 'std_name', 'required'=> true]) ?>
@@ -25,13 +28,13 @@ use yii\web\UploadedFile;
             <div class="col-md-4">
                  <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 167px; top: 6px"></i>
                 <?= $form->field($model, 'std_father_name')->textInput(['maxlength' => true,'id' => 'std_father_name']) ?>
-            </div>  
+            </div>      
+        </div>
+        <div class="row">
             <div class="col-md-4">
                <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 156px; top: 6px"></i> -->
                 <?= $form->field($model, 'std_contact_no')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '+99-999-9999999', 'id' => 'std_contact_no']) ?>
-            </div>     
-        </div>
-        <div class="row"> 
+            </div>  
             <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 113px; top: 6px"></i>
                 <label>Stdudent DOB</label>
@@ -54,12 +57,12 @@ use yii\web\UploadedFile;
                 <?= $form->field($model, 'std_gender')->dropDownList
                 ([ 'M' => 'Male', 'F' => 'Female', ], ['prompt' => '','id' => 'std_gender']) ?>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i> -->
                 <?= $form->field($model, 'std_email')->textInput(['maxlength' => true]) ?>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-4">
                 <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 121px; top: 6px"></i> -->
                 <?= $form->field($model, 'std_photo')->fileInput() ?>
@@ -68,13 +71,23 @@ use yii\web\UploadedFile;
                 <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 131px; top: 6px"></i> -->
                 <?= $form->field($model, 'std_b_form')->widget(yii\widgets\MaskedInput::class, [ 'mask' => '99999-9999999-9', ]) ?>
             </div>
+        </div>
+        <div class="row">  
+            <div class="col-md-4">
+                <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 120px; top: 6px"></i> -->
+                <?= $form->field($model, 'std_email')->textInput(['maxlength' => true]) ?>
+            </div>  
             <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 131px; top: 6px"></i>
-                <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'std_cast')->textInput(['maxlength' => true]) ?>
             </div>
         </div> 
 
         <div class="row">  
+            <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 131px; top: 6px"></i>
+                <?= $form->field($model, 'std_district')->textInput(['maxlength' => true]) ?>
+            </div>
             <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 133px; top: 6px"></i>
                 <?= $form->field($model, 'std_tehseel')->textInput(['maxlength' => true]) ?>
@@ -82,26 +95,26 @@ use yii\web\UploadedFile;
             <div class="col-md-4">
                 <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 153px; top: 6px"></i>
                 <?= $form->field($model, 'std_nationality')->textInput(['maxlength' => true]) ?>
-            </div>  
-            <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 137px; top: 6px"></i>
-                <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
             </div>   
         </div>
         <div class="row">
+            <div class="col-md-4">
+                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 137px; top: 6px"></i>
+                <?= $form->field($model, 'std_religion')->textInput(['maxlength' => true]) ?>
+            </div>  
             <div class="col-md-4">
                 <?= $form->field($model, 'status')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ], ['prompt' => 'Select Status']) ?>
             </div>
             <div class="col-md-4">
             <?= $form->field($model, 'academic_status')->dropDownList([ 'Active' => 'Active', 'Promote' => 'Promote', 'Left' => 'Left', 'Struck off' => 'Struck off'], ['prompt' => 'Select Academic Status']) ?>
             </div>
-            <div class="col-md-4">
-                <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 214px; top: 6px"></i>
-                <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true, 'id' => 'std_permanent_address']) ?>
-            </div>
         </div>
     </div>
     <div class="row">
+        <div class="col-md-4">
+            <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 214px; top: 6px"></i>
+            <?= $form->field($model, 'std_permanent_address')->textInput(['maxlength' => true, 'id' => 'std_permanent_address']) ?>
+        </div>
         <div class="col-md-4">
             <!-- <i class="fa fa-star" style="font-size: 8px; color: red; position: absolute; left: 213px; top: 6px"></i> -->
             <?= $form->field($model, 'std_temporary_address')->textInput(['maxlength' => true, 'id' => 'std_temporary_address']) ?>

@@ -96,6 +96,14 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'admission_date',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'std_cast',
+    // ],
+    // [
+        // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
     // ],
     // [

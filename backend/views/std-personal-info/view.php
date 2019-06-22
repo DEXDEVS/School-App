@@ -40,6 +40,8 @@ $options = ['data-lightbox'=>'profile image','data-title'=>$photoInfo['alt']];
             'std_religion',
             'std_nationality',
             'std_tehseel',
+            'admission_date',
+            'std_cast',
             'created_at',
             'updated_at',
             'created_by',

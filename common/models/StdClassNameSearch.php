@@ -74,7 +74,7 @@ class StdClassNameSearch extends StdClassName
             return $dataProvider;
         } else {
             $branch_id = Yii::$app->user->identity->branch_id;
-            $query = StdClassName::find()->where(['delete_status' => 1 ,'branch_id'=> $branch_id]);
+            $query = StdClassName::find()->innerJoinWith('branch')->where(['branch_id'=> $branch_id]);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
