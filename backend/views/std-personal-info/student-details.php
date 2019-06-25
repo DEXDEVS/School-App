@@ -131,6 +131,10 @@
                 <p class="text-muted text-center"><!-- Software Engineer --></p>
                 <ul class="list-group list-group-unbordered">
                   <li class="list-group-item">
+                    <b>Admission Date:</b> 
+                    <a class="pull-right"><?php echo $stdPersonalInfo[0]['admission_date'] ?></a>
+                  </li>
+                  <li class="list-group-item">
                     <b>Roll #:</b> <a class="pull-right"><?php 
                     if (empty($stdRollNo[0]['std_roll_no'])) {
                       echo "N/A";
@@ -316,6 +320,10 @@
                             <tr>
                               <th>CNIC:</th>
                               <td><?php echo $stdPersonalInfo[0]['std_b_form'] ?></td>
+                            </tr>
+                            <tr>
+                              <th>Cast:</th>
+                              <td><?php echo $stdPersonalInfo[0]['std_cast'] ?></td>
                             </tr>
                             <tr>
                               <th>District:</th>

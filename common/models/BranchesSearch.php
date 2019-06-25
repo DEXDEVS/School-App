@@ -42,7 +42,7 @@ class BranchesSearch extends Branches
     public function search($params)
     {
         if(Yii::$app->user->identity->user_type == 'Superadmin'){
-            $query = Branches::find()->where(['delete_status' => 1]);
+            $query = Branches::find();
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
@@ -56,11 +56,10 @@ class BranchesSearch extends Branches
                 return $dataProvider;
             }
 
-             $query->with('institute');
+             $query->joinWith('institute');
      
             $query->andFilterWhere([
                 'branch_id' => $this->branch_id,
-                'institute.institute_name' => $this->institute_id,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
                 'created_by' => $this->created_by,
@@ -82,7 +81,7 @@ class BranchesSearch extends Branches
             return $dataProvider;
         } else {
             $branch_id = Yii::$app->user->identity->branch_id;
-            $query = Branches::find()->where(['delete_status' => 1 , 'branch_id'=> $branch_id]);
+            $query = Branches::find()->where(['branches.delete_status' => 1 , 'branches.branch_id'=> $branch_id]);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
@@ -96,11 +95,10 @@ class BranchesSearch extends Branches
                 return $dataProvider;
             }
 
-             $query->with('institute');
+            $query->joinWith('institute');
      
             $query->andFilterWhere([
                 'branch_id' => $this->branch_id,
-                'institute.institute_name' => $this->institute_id,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
                 'created_by' => $this->created_by,

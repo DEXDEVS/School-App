@@ -20,12 +20,6 @@ $in = 1;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($stdEnrollmentHead, 'class_name_id')->dropDownList(
-                    ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1,'branch_id'=> $branch_id])->all(),'class_name_id','class_name'),
-                    ['prompt'=>'','id'=>'classId']
-                )?>
-            </div>
-            <div class="col-md-6">
                 <?= $form->field($stdEnrollmentHead, 'session_id')->dropDownList(
                     ArrayHelper::map(StdSessions::find()->where(['delete_status'=>1,'session_branch_id'=> $branch_id])->all(),'session_id','session_name'),
                     [
@@ -33,6 +27,13 @@ $in = 1;
                         'id' => 'sessionId',
                     ]);?>
             </div>
+            <div class="col-md-6">
+                <?= $form->field($stdEnrollmentHead, 'class_name_id')->dropDownList(
+                    ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1,'branch_id'=> $branch_id])->all(),'class_name_id','class_name'),
+                    ['prompt'=>'','id'=>'classId']
+                )?>
+            </div>
+            
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -72,9 +73,11 @@ $in = 1;
 $script = <<< JS
 var intake;
 //here you write all your javascript stuff
-$('#sessionId').change(function(){
-    var sessionId = $(this).val();
-    $.get('./std-sections/get-section',{sessionId : sessionId},function(data){
+$('#classId').change(function(){
+    var classId = $(this).val();
+    var sessionId = $('#sessionId').val();
+
+    $.get('./std-sections/get-section',{classId : classId, sessionId : sessionId},function(data){
         var data =  $.parseJSON(data)
         $('#sectionId').empty();
         $('#sectionId').append("<option>"+"Select Section"+"</option>");
@@ -89,7 +92,6 @@ $('#sessionId').change(function(){
 $('#classId').change(function(){
     var classId = $(this).val();
     $.get('./std-personal-info/get-student',{classId : classId},function(data){
-        console.log(data);
         var data =  $.parseJSON(data);
         $('#stdent').empty();
         var options = '';
