@@ -18,8 +18,8 @@ class TimeTableHeadSearch extends TimeTableHead
     public function rules()
     {
         return [
-            [['time_table_h_id', 'class_id', 'created_by', 'updated_by'], 'integer'],
-            [['days', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['time_table_h_id', 'created_by', 'updated_by'], 'integer'],
+            [['class_id', 'days', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -54,10 +54,10 @@ class TimeTableHeadSearch extends TimeTableHead
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('class');
         $query->andFilterWhere([
             'time_table_h_id' => $this->time_table_h_id,
-            'class_id' => $this->class_id,
+            //'class_id' => $this->class_id,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
@@ -65,7 +65,8 @@ class TimeTableHeadSearch extends TimeTableHead
         ]);
 
         $query->andFilterWhere(['like', 'days', $this->days])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'std_enrollment_head.std_enroll_head_name', $this->class_id]);
 
         return $dataProvider;
     }

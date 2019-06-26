@@ -18,8 +18,8 @@ class EmpLeaveSearch extends EmpLeave
     public function rules()
     {
         return [
-            [['app_id', 'emp_id', 'no_of_days', 'created_by', 'updated_by'], 'integer'],
-            [['leave_type', 'starting_date', 'ending_date', 'applying_date', 'leave_purpose', 'status', 'remarks', 'created_at', 'updated_at'], 'safe'],
+            [['app_id', 'no_of_days', 'created_by', 'updated_by'], 'integer'],
+            [['emp_id', 'leave_type', 'starting_date', 'ending_date', 'applying_date', 'leave_purpose', 'status', 'remarks', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class EmpLeaveSearch extends EmpLeave
      */
     public function search($params)
     {
-        if(Yii::$app->user->identity->user_type == 'dexdevs'){
+        if(Yii::$app->user->identity->user_type == 'dexdevs' || Yii::$app->user->identity->user_type == 'Superadmin' ){
             $branch_id = Yii::$app->user->identity->branch_id;
 
             $query = EmpLeave::find()->where(['branch_id'=>$branch_id, 'status'=>'Pending']);
@@ -57,10 +57,10 @@ class EmpLeaveSearch extends EmpLeave
                 // $query->where('0=1');
                 return $dataProvider;
             }
-
+            $query->joinWith('emp');
             $query->andFilterWhere([
                 'app_id' => $this->app_id,
-                'emp_id' => $this->emp_id,
+                // 'emp_id' => $this->emp_id,
                 'starting_date' => $this->starting_date,
                 'ending_date' => $this->ending_date,
                 'applying_date' => $this->applying_date,
@@ -74,7 +74,8 @@ class EmpLeaveSearch extends EmpLeave
             $query->andFilterWhere(['like', 'leave_type', $this->leave_type])
                 ->andFilterWhere(['like', 'leave_purpose', $this->leave_purpose])
                 ->andFilterWhere(['like', 'status', $this->status])
-                ->andFilterWhere(['like', 'remarks', $this->remarks]);
+                ->andFilterWhere(['like', 'remarks', $this->remarks])
+                ->andFilterWhere(['like', 'emp_info.emp_name', $this->emp_id]);
 
             return $dataProvider;
         } else {
@@ -95,10 +96,10 @@ class EmpLeaveSearch extends EmpLeave
                 // $query->where('0=1');
                 return $dataProvider;
             }
-
+            $query->joinWith('emp');
             $query->andFilterWhere([
                 'app_id' => $this->app_id,
-                'emp_id' => $this->emp_id,
+                //'emp_id' => $this->emp_id,
                 'starting_date' => $this->starting_date,
                 'ending_date' => $this->ending_date,
                 'applying_date' => $this->applying_date,
@@ -112,7 +113,8 @@ class EmpLeaveSearch extends EmpLeave
             $query->andFilterWhere(['like', 'leave_type', $this->leave_type])
                 ->andFilterWhere(['like', 'leave_purpose', $this->leave_purpose])
                 ->andFilterWhere(['like', 'status', $this->status])
-                ->andFilterWhere(['like', 'remarks', $this->remarks]);
+                ->andFilterWhere(['like', 'remarks', $this->remarks])
+                ->andFilterWhere(['like', 'emp_info.emp_name', $this->emp_id]);
 
             return $dataProvider;
         }

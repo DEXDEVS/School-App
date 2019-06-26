@@ -115,6 +115,7 @@ return [
                 'emp-type' => 'emp-type/index',
                 'emp-designation' => 'emp-designation/index',
                 'print-id-card' => 'emp-info/print-id-card',
+                'designation' => 'designation/index',
                 //-------------------------------------------
                 //fee-transaction
                 'class-account' => 'fee-transaction-detail/class-account',
@@ -194,9 +195,11 @@ return [
                 //timeTable
                 'fetch-subjects' => 'time-table-head/fetch-subjects',
                 'time-table-view' => 'time-table-head/time-table-view',
+                'time-table-head' => 'time-table-head/index',
                 //-------------------------------------------
                 //Visitors
                 'fetch-visitors'=>'visitors/fetch-visitors',
+                'visitors' => 'visitors/index',
 
             ],
         ],

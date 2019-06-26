@@ -72,7 +72,7 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
             return $dataProvider;
         } else {
             $branch_id = Yii::$app->user->identity->branch_id;
-            $query = StdEnrollmentHead::find()->where(['branch_id'=> $branch_id]);
+            $query = StdEnrollmentHead::find()->where(['branches.branch_id'=> $branch_id]);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
@@ -85,10 +85,9 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
                 // $query->where('0=1');
                 return $dataProvider;
             }
-
+            $query->joinWith('branch');
             $query->andFilterWhere([
                 'std_enroll_head_id' => $this->std_enroll_head_id,
-                'branch_id' =>$this->branch_id,
                 'class_name_id' => $this->class_name_id,
                 'session_id' => $this->session_id,
                 'section_id' => $this->section_id,
@@ -98,7 +97,8 @@ class StdEnrollmentHeadSearch extends StdEnrollmentHead
                 'updated_by' => $this->updated_by,
             ]);
 
-            $query->andFilterWhere(['like', 'std_enroll_head_name', $this->std_enroll_head_name]);
+            $query->andFilterWhere(['like', 'std_enroll_head_name', $this->std_enroll_head_name])
+            ->andFilterWhere(['like', 'branches.branch_name', $this->branch_id]);
 
             return $dataProvider;
         }
