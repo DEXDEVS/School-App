@@ -133,28 +133,28 @@
                     // Fee Module close...
                     // ------------------------------------------------
                     // Exams module start here
-                    [
-                        'label' => 'Examination',
-                        'icon' => 'book',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
-                            ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
-                            ['label' => 'Marks Weightage Type', 'icon' => 'caret-right', 'url' => ["/marks-weightage-type"],],
-                            ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weightage-head"],],
-                            // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
-                            // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
-                            ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
-                            ['label' => 'Invigilator Attendance', 'icon' => 'caret-right', 'url' => ["./emp-exam-attendance"],],
-                            ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
-                            ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Quiz System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Examination Controller', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            // ['label' => 'Result cards', 'icon' => 'caret-right', 'url' => ["/view-result-cards "],],
+                    // [
+                    //     'label' => 'Examination',
+                    //     'icon' => 'book',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'Grades', 'icon' => 'caret-right', 'url' => ["/grades"],],
+                    //         ['label' => 'Exams Category', 'icon' => 'caret-right', 'url' => ["/exams-category"],],
+                    //         ['label' => 'Marks Weightage Type', 'icon' => 'caret-right', 'url' => ["/marks-weightage-type"],],
+                    //         ['label' => 'Marks Weightage', 'icon' => 'caret-right', 'url' => ["/marks-weightage-head"],],
+                    //         // ['label' => 'Exams Criteria', 'icon' => 'caret-right', 'url' => ["/exams-criteria"],],
+                    //         // ['label' => 'Exams Schedule', 'icon' => 'caret-right', 'url' => ["/exams-schedule"],],
+                    //         ['label' => 'Manage Exams', 'icon' => 'caret-right', 'url' => ["/exams-schedule/manage-exams"],],
+                    //         ['label' => 'Invigilator Attendance', 'icon' => 'caret-right', 'url' => ["./emp-exam-attendance"],],
+                    //         ['label' => 'View Marks Sheet', 'icon' => 'caret-right', 'url' => ["/view-marks-sheet "],],
+                    //         ['label' => 'Roll # Slip', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Result Card', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Quiz System', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Examination Controller', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         // ['label' => 'Result cards', 'icon' => 'caret-right', 'url' => ["/view-result-cards "],],
                             
-                        ],
-                    ],
+                    //     ],
+                    // ],
                     // ------------------------------------------------
                     // Exams module close ...
                     // ------------------------------------------------
@@ -203,144 +203,144 @@
                     // ------------------------------------------------
                     // Employee Module close...
                     // Account Module start...
-                    [
-                        'label' => 'Accounting System',
-                        'icon' => 'credit-card',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Account Nature', 'icon' => 'caret-right', 'url' => "./account-nature"],
-                            ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
-                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
-                            ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./balance-sheet"],],
-                            ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                            ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    // [
+                    //     'label' => 'Accounting System',
+                    //     'icon' => 'credit-card',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'Account Nature', 'icon' => 'caret-right', 'url' => "./account-nature"],
+                    //         ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
+                    //         ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
+                    //         ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./balance-sheet"],],
+                    //         ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    //         ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
 
-                            ['label' => 'Transaction Logs', 'icon' => 'caret-right', 'url' => ["./premium-version"],]
+                    //         ['label' => 'Transaction Logs', 'icon' => 'caret-right', 'url' => ["./premium-version"],]
 
-                        ],
-                    ],
-                    // ------------------------------------------------
-                    // Account Module close...
-                    // ------------------------------------------------
-                    // Msg of Day start...
-                    [
-                        'label' => 'Communications',
-                        'icon' => 'comments',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Message of the Day', 'icon' => 'caret-right', 'url' => "./msg-of-day"],
-                            ['label' => 'Events Management', 'icon' => 'caret-right', 'url' => "./events"],
-                            ['label' => 'Notice Management', 'icon' => 'caret-right', 'url' => "./notice"],
-                            ['label' => 'Complaint Box', 'icon' => 'caret-right','url' =>"./premium-version"]
-                        ],
-                    ],
-                    // ------------------------------------------------
-                    // Msg of Day close...
-                    // ------------------------------------------------
-                    // SMS start...
-                    [
-                        'label' => 'SMS',
-                        'icon' => 'comments-o',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'SMS Templates', 'icon' => 'caret-right', 'url' => "./premium-version",],
-                            ['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./premium-version",],
-                            //['label' => 'SMS Templates', 'icon' => 'caret-right', 'url' => "./sms",],
-                            //['label' => 'Absent Students SMS', 'icon' => 'caret-right', 'url' => "./absent-sms",],
-                            //['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./custom-sms",],
-                            // ['label' => 'Fee Transaction Details', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-transaction-detail',]
-                        ],
-                    ],
-                    // ------------------------------------------------
-                    // SMS close...
-                    // ------------------------------------------------
-                    // Email start...
-                    ['label' => 'Email', 'icon' => 'envelope-o', 'url' => ["/emails"],],
-                    // ------------------------------------------------
-                    // Email close...
-                    // ------------------------------------------------
-                    // E-Learning start...
-                    ['label' => 'E-Learning', 'icon' => 'etsy', 'url' => ["./premium-version"],],
-                    // ------------------------------------------------
-                    // E-Learning  close...
-                    // ------------------------------------------------
-                    // Time Table Generator start...
-                    ['label' => 'Time Table Generator', 'icon' => 'calendar', 'url' => ["./time-table-head"],],
-                    // ------------------------------------------------
-                    // Time Table Generator  close...
-                    // ------------------------------------------------
-                    // Data Visualization start...
-                    [
-                        'label' => 'Data Visualization',
-                        'icon' => 'bar-chart',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Income & Expense', 'icon' => 'caret-right', 'url' => './income-expense',],
-                            [
-                                'label' => 'Main Branch',
-                                'icon' => 'caret-right',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Income/Expence', 'icon' => 'chevron-right', 'url' => './income-expense-main',],
-                                    ['label' => 'Fee Statistics', 'icon' => 'chevron-right', 'url' => './fee-statistics-main',],
-                                ],
-                            ],
-                            [
-                                'label' => 'Sub Branch',
-                                'icon' => 'caret-right',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Income/Expence', 'icon' => 'chevron-right', 'url' => './income-expense-sub',],
-                                    ['label' => 'Fee Statistics', 'icon' => 'chevron-right', 'url' => './fee-statistics-sub',],
-                                ],
-                            ],
-                        ],
-                    ],
-                    // ------------------------------------------------
-                    // Data Visualization  close...
-                    // ------------------------------------------------
-                    // Visitor Management start...
-                    ['label' => 'Visitor Record', 'icon' => 'book', 'url' => ["./visitors"],],
-                    // ------------------------------------------------
-                    // Visitor Management  close...
-                    // ------------------------------------------------
-                    // Library Management start...
-                    ['label' => 'Library Management', 'icon' => 'book', 'url' => ["./premium-version"],],
-                    // ------------------------------------------------
-                    // Library Management  close...
-                    // ------------------------------------------------
-                    // Hostel Management start...
-                    ['label' => 'Hostel Management', 'icon' => 'home', 'url' => ["./premium-version"],],
-                    // ------------------------------------------------
-                    // Hostel Management close...
-                    // ------------------------------------------------
-                    // Canteen Management start...
-                    ['label' => 'Canteen Management', 'icon' => 'cutlery', 'url' => ["./premium-version"],],
-                    // ------------------------------------------------
-                    // Canteen Management close...
-                    // ------------------------------------------------
-                    // Stock/Inventory start...
-                    ['label' => 'Stock/Inventory', 'icon' => 'line-chart', 'url' => ["./premium-version"],],
-                    // ------------------------------------------------
-                    // Stock/Inventory close...
-                    // ------------------------------------------------
-                    // Transportation Management start...
-                    ['label' => 'Transportation Management', 'icon' => 'bus', 'url' => ["./premium-version"],],
-                    // ------------------------------------------------
-                    // Transportation Management close...
-                    // ------------------------------------------------
-                    // System Audits start...
-                    ['label' => 'System Audits', 'icon' => 'search-plus', 'url' => ["./premium-version"],],
-                    // ------------------------------------------------
-                    // System Audits close...
-                    // ------------------------------------------------
-                    // Alumni start...
-                    ['label' => 'Alumni', 'icon' => 'recycle', 'url' => ["./premium-version"],],
+                    //     ],
+                    // ],
+                    // // ------------------------------------------------
+                    // // Account Module close...
+                    // // ------------------------------------------------
+                    // // Msg of Day start...
+                    // [
+                    //     'label' => 'Communications',
+                    //     'icon' => 'comments',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'Message of the Day', 'icon' => 'caret-right', 'url' => "./msg-of-day"],
+                    //         ['label' => 'Events Management', 'icon' => 'caret-right', 'url' => "./events"],
+                    //         ['label' => 'Notice Management', 'icon' => 'caret-right', 'url' => "./notice"],
+                    //         ['label' => 'Complaint Box', 'icon' => 'caret-right','url' =>"./premium-version"]
+                    //     ],
+                    // ],
+                    // // ------------------------------------------------
+                    // // Msg of Day close...
+                    // // ------------------------------------------------
+                    // // SMS start...
+                    // [
+                    //     'label' => 'SMS',
+                    //     'icon' => 'comments-o',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'SMS Templates', 'icon' => 'caret-right', 'url' => "./premium-version",],
+                    //         ['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./premium-version",],
+                    //         //['label' => 'SMS Templates', 'icon' => 'caret-right', 'url' => "./sms",],
+                    //         //['label' => 'Absent Students SMS', 'icon' => 'caret-right', 'url' => "./absent-sms",],
+                    //         //['label' => 'Custom SMS', 'icon' => 'caret-right', 'url' => "./custom-sms",],
+                    //         // ['label' => 'Fee Transaction Details', 'icon' => 'caret-right', 'url' => 'index.php?r=fee-transaction-detail',]
+                    //     ],
+                    // ],
+                    // // ------------------------------------------------
+                    // // SMS close...
+                    // // ------------------------------------------------
+                    // // Email start...
+                    // ['label' => 'Email', 'icon' => 'envelope-o', 'url' => ["/emails"],],
+                    // // ------------------------------------------------
+                    // // Email close...
+                    // // ------------------------------------------------
+                    // // E-Learning start...
+                    // ['label' => 'E-Learning', 'icon' => 'etsy', 'url' => ["./premium-version"],],
+                    // // ------------------------------------------------
+                    // // E-Learning  close...
+                    // // ------------------------------------------------
+                    // // Time Table Generator start...
+                    // ['label' => 'Time Table Generator', 'icon' => 'calendar', 'url' => ["./time-table-head"],],
+                    // // ------------------------------------------------
+                    // // Time Table Generator  close...
+                    // // ------------------------------------------------
+                    // // Data Visualization start...
+                    // [
+                    //     'label' => 'Data Visualization',
+                    //     'icon' => 'bar-chart',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'Income & Expense', 'icon' => 'caret-right', 'url' => './income-expense',],
+                    //         [
+                    //             'label' => 'Main Branch',
+                    //             'icon' => 'caret-right',
+                    //             'url' => '#',
+                    //             'items' => [
+                    //                 ['label' => 'Income/Expence', 'icon' => 'chevron-right', 'url' => './income-expense-main',],
+                    //                 ['label' => 'Fee Statistics', 'icon' => 'chevron-right', 'url' => './fee-statistics-main',],
+                    //             ],
+                    //         ],
+                    //         [
+                    //             'label' => 'Sub Branch',
+                    //             'icon' => 'caret-right',
+                    //             'url' => '#',
+                    //             'items' => [
+                    //                 ['label' => 'Income/Expence', 'icon' => 'chevron-right', 'url' => './income-expense-sub',],
+                    //                 ['label' => 'Fee Statistics', 'icon' => 'chevron-right', 'url' => './fee-statistics-sub',],
+                    //             ],
+                    //         ],
+                    //     ],
+                    // ],
+                    // // ------------------------------------------------
+                    // // Data Visualization  close...
+                    // // ------------------------------------------------
+                    // // Visitor Management start...
+                    // ['label' => 'Visitor Record', 'icon' => 'book', 'url' => ["./visitors"],],
+                    // // ------------------------------------------------
+                    // // Visitor Management  close...
+                    // // ------------------------------------------------
+                    // // Library Management start...
+                    // ['label' => 'Library Management', 'icon' => 'book', 'url' => ["./premium-version"],],
+                    // // ------------------------------------------------
+                    // // Library Management  close...
+                    // // ------------------------------------------------
+                    // // Hostel Management start...
+                    // ['label' => 'Hostel Management', 'icon' => 'home', 'url' => ["./premium-version"],],
+                    // // ------------------------------------------------
+                    // // Hostel Management close...
+                    // // ------------------------------------------------
+                    // // Canteen Management start...
+                    // ['label' => 'Canteen Management', 'icon' => 'cutlery', 'url' => ["./premium-version"],],
+                    // // ------------------------------------------------
+                    // // Canteen Management close...
+                    // // ------------------------------------------------
+                    // // Stock/Inventory start...
+                    // ['label' => 'Stock/Inventory', 'icon' => 'line-chart', 'url' => ["./premium-version"],],
+                    // // ------------------------------------------------
+                    // // Stock/Inventory close...
+                    // // ------------------------------------------------
+                    // // Transportation Management start...
+                    // ['label' => 'Transportation Management', 'icon' => 'bus', 'url' => ["./premium-version"],],
+                    // // ------------------------------------------------
+                    // // Transportation Management close...
+                    // // ------------------------------------------------
+                    // // System Audits start...
+                    // ['label' => 'System Audits', 'icon' => 'search-plus', 'url' => ["./premium-version"],],
+                    // // ------------------------------------------------
+                    // // System Audits close...
+                    // // ------------------------------------------------
+                    // // Alumni start...
+                    // ['label' => 'Alumni', 'icon' => 'recycle', 'url' => ["./premium-version"],],
                     // ------------------------------------------------
                     // Alumni close...                    
                      

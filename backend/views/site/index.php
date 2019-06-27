@@ -17,7 +17,13 @@ use yii\helpers\Url;
           <div class="small-box bg-aqua">
             <div class="inner">
               <?php 
-              $query = (new \yii\db\Query())->from('std_personal_info')->where(['status' => 'Active']);
+              $branch_id = Yii::$app->user->identity->branch_id;
+
+              if(Yii::$app->user->identity->user_type == 'Superadmin'){
+                $query = (new \yii\db\Query())->from('std_personal_info')->where(['status' => 'Active']);
+              } else {
+                  $query = (new \yii\db\Query())->from('std_personal_info')->where(['status' => 'Active', 'branch_id'=>$branch_id]);
+              }
               $id = $query->count('std_id'); ?>
               <h3><?php echo $id; ?> </h3>
 
@@ -35,7 +41,11 @@ use yii\helpers\Url;
           <div class="small-box bg-green">
             <div class="inner">
               <?php 
-              $query = (new \yii\db\Query())->from('emp_info');
+              if(Yii::$app->user->identity->user_type == 'Superadmin'){
+                $query = (new \yii\db\Query())->from('emp_info');
+              } else {
+                $query = (new \yii\db\Query())->from('emp_info')->where(['emp_branch_id'=>$branch_id]);
+              }
               $id = $query->count('emp_id'); ?>
               <h3><?php echo $id; ?> </h3>
               <p>Active Employees</p>
@@ -52,8 +62,11 @@ use yii\helpers\Url;
           <div class="small-box bg-yellow">
             <div class="inner">
              <?php 
-              $branch_id = Yii::$app->user->identity->branch_id;
-              $query = (new \yii\db\Query())->from('std_sessions')->where(['session_branch_id'=>$branch_id , 'status'=> 'Active']);
+              if(Yii::$app->user->identity->user_type == 'Superadmin'){
+                  $query = (new \yii\db\Query())->from('std_sessions')->where(['status'=> 'Active']);
+              } else{
+                $query = (new \yii\db\Query())->from('std_sessions')->where(['session_branch_id'=>$branch_id , 'status'=> 'Active']);
+              }
               $id = $query->count('session_id'); ?>
               <h3><?php echo $id; ?> </h3>
               <p>Active Sessions</p>
@@ -70,7 +83,11 @@ use yii\helpers\Url;
           <div class="small-box bg-red">
             <div class="inner">
               <?php 
-              $query = (new \yii\db\Query())->from('branches')->where(['status'=>'Active']);
+              if(Yii::$app->user->identity->user_type == 'Superadmin'){ 
+                  $query = (new \yii\db\Query())->from('branches')->where(['status'=>'Active']);
+              } else {
+                  $query = (new \yii\db\Query())->from('branches')->where(['branch_id'=>$branch_id, 'status'=>'Active']);
+              }
               $id = $query->count('branch_id'); ?>
               <h3><?php echo $id; ?></h3>
               <p>Active Branches</p>
