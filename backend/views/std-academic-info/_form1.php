@@ -25,13 +25,13 @@ use common\models\StdSubjects;
             <div class="col-md-4">
                 <?= $form->field($model, 'class_name_id')->dropDownList(
                     ArrayHelper::map(StdClassName::find()->where(['delete_status'=>1])->all(),'class_name_id','class_name'),
-                    ['prompt'=>'']
+                    ['prompt'=>'', 'id'=>'classId']
                 )?>
             </div>
             <div class="col-md-8">
                 <?= $form->field($model, 'subject_combination')->dropDownList(
                         ArrayHelper::map(StdSubjects::find()->all(),'std_subject_id','std_subject_name'),
-                        ['prompt'=>'Select Subject combination']
+                        ['prompt'=>'Select Subject combination', 'id'=>'subjectId']
                     )?>
             </div>
         </div>
@@ -88,4 +88,36 @@ $('#obtainedMarks').on('change',function(){
    var percentage = ((parseInt(obtainedMarks) / parseInt(totalMarks))*100);
    $('#percentage').val(percentage);
 });
+</script>
+
+<?php
+$url = \yii\helpers\Url::to("./std-registration/fetch-fee");
+
+$script = <<< JS
+
+$('#classId').on('change',function(){
+    var classId = $('#classId').val();
+   
+   $.ajax({
+        type:'post',
+        data:{class_Id:classId},
+        url: "$url",
+        success: function(result){ 
+            console.log(result);
+            var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
+            var options = '';
+            $('#subjectId').empty();
+            $('#subjectId').append("<option>"+"Select Subject combination"+"</option>");
+            for(var i=0; i<jsonResult.length; i++) { 
+                options += '<option value="'+jsonResult[i].std_subject_id+'">'+jsonResult[i].std_subject_name+'</option>';
+            }
+            // Append to the html
+            $('#subjectId').append(options);
+        }         
+    }); 
+});
+
+JS;
+$this->registerJs($script);
+?>
 </script>

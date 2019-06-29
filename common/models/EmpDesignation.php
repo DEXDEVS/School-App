@@ -65,7 +65,7 @@ class EmpDesignation extends \yii\db\ActiveRecord
     {
         return [
             'emp_designation_id' => 'Designation ID',
-            'emp_id' => 'ID',
+            'emp_id' => 'Employee Name',
             'designation_id' => 'Designation',
             'emp_type_id' => 'Employee Type',
             'group_by' => 'Group By',

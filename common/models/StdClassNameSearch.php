@@ -67,7 +67,7 @@ class StdClassNameSearch extends StdClassName
 
             $query->andFilterWhere(['like', 'class_name', $this->class_name])
                 ->andFilterWhere(['like', 'class_name_description', $this->class_name_description])
-                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'std_class_name.status', $this->status])
                 ->andFilterWhere(['like', 'class_type', $this->class_type])
                 ->andFilterWhere(['like', 'branches.branch_name', $this->branch_id]);
 
@@ -99,7 +99,7 @@ class StdClassNameSearch extends StdClassName
 
             $query->andFilterWhere(['like', 'class_name', $this->class_name])
                 ->andFilterWhere(['like', 'class_name_description', $this->class_name_description])
-                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'std_class_name.status', $this->status])
                 ->andFilterWhere(['like', 'class_type', $this->class_type])
                 ->andFilterWhere(['like', 'branches.branch_name', $this->branch_id]);
 

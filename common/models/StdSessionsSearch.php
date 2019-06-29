@@ -57,24 +57,24 @@ class StdSessionsSearch extends StdSessions
             }
 
             $query->joinWith('sessionBranch');
-            // $query->andFilterWhere([
+            $query->andFilterWhere([
             //     'session_id' => $this->session_id,
-            //     'session_start_date' => $this->session_start_date,
-            //     'session_end_date' => $this->session_end_date,
+                'session_start_date' => $this->session_start_date,
+                'session_end_date' => $this->session_end_date,
             //     'created_at' => $this->created_at,
             //     'updated_at' => $this->updated_at,
             //     'created_by' => $this->created_by,
             //     'updated_by' => $this->updated_by,
-            // ]);
+            ]);
 
             $query->andFilterWhere(['like', 'session_name', $this->session_name])
-                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'std_sessions.status', $this->status])
                 ->andFilterWhere(['like', 'branches.branch_name', $this->session_branch_id]);
 
             return $dataProvider;
         } else {
             $branch_id = Yii::$app->user->identity->branch_id;
-            $query = StdSessions::find()->innerJoinWith('sessionBranch')->where(['session_branch_id' => $branch_id]);
+            $query = StdSessions::find()->innerJoinWith('sessionBranch')->where(['std_sessions.session_branch_id' => $branch_id]);
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
@@ -88,18 +88,18 @@ class StdSessionsSearch extends StdSessions
             }
 
             // $query->joinWith('sessionBranch');
-            // $query->andFilterWhere([
+             $query->andFilterWhere([
             //     'session_id' => $this->session_id,
-            //     'session_start_date' => $this->session_start_date,
-            //     'session_end_date' => $this->session_end_date,
+                 'session_start_date' => $this->session_start_date,
+                 'session_end_date' => $this->session_end_date,
             //     'created_at' => $this->created_at,
             //     'updated_at' => $this->updated_at,
             //     'created_by' => $this->created_by,
             //     'updated_by' => $this->updated_by,
-            // ]);
+            ]);
 
             $query->andFilterWhere(['like', 'session_name', $this->session_name])
-                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'std_sessions.status', $this->status])
                 ->andFilterWhere(['like', 'branches.branch_name', $this->session_branch_id]);
 
             return $dataProvider;

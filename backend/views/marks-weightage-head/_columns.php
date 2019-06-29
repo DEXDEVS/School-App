@@ -26,7 +26,7 @@ return [
     ],
      [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'exam_category_id',
+        'attribute'=>'subjects_id',
         'value'=>'subjects.subject_name',
     ],
     // 
