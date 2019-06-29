@@ -1,7 +1,7 @@
 <?php 
-	if(isset($_POST['class_Id'])){
+	if(isset($_POST['classId'])){
 
-	$classId = $_POST['class_Id'];
+	$classId = $_POST['classId'];
 	
 	$studentName = Yii::$app->db->createCommand("SELECT spi.std_id ,spi.std_name FROM std_personal_info as spi
 		INNER JOIN std_academic_info as sai

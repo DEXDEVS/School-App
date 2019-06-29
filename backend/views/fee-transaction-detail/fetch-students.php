@@ -19,7 +19,8 @@
 	}
 	else if(isset($_POST['session_Id'])){
 	$sessionId = $_POST['session_Id'];
-	$sections = Yii::$app->db->createCommand("SELECT section_id,section_name FROM std_sections WHERE session_id = '$sessionId'")->queryAll();
+	$classId = $_POST['classId'];
+	$sections = Yii::$app->db->createCommand("SELECT section_id,section_name FROM std_sections WHERE session_id = '$sessionId' AND class_id = '$classId'")->queryAll();
 	echo json_encode($sections);
 	} else {
 		$classId = $_POST['classid'];

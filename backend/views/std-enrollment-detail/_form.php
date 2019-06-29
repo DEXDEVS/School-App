@@ -68,10 +68,10 @@ $in = 1;
     
 </div>
 <?php
-//$url = \yii\helpers\Url::to("std-enrollment-detail/fetch-students");
+$url = \yii\helpers\Url::to("std-enrollment-detail/fetch-students");
 
 $script = <<< JS
-var intake;
+
 //here you write all your javascript stuff
 $('#classId').change(function(){
     var classId = $(this).val();
@@ -89,10 +89,13 @@ $('#classId').change(function(){
         $('#sectionId').append(options);
     });
 });
+
 $('#classId').change(function(){
     var classId = $(this).val();
     $.get('./std-personal-info/get-student',{classId : classId},function(data){
+        console.log(data);
         var data =  $.parseJSON(data);
+        console.log(data);
         $('#stdent').empty();
         var options = '';
             for(var i=0; i<data.length; i++) { 
@@ -102,6 +105,33 @@ $('#classId').change(function(){
         $('#stdent').append(options);
     });
 });
+
+// $('#classId').on('change',function(){
+//    var classId = $('#classId').val();
+  
+//    $.ajax({
+//         type:'post',
+//         data:{classId:classId},
+//         url: "$url",
+
+//         success: function(result){
+//             console.log(result);
+//             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
+
+//             var len =jsonResult[0].length;
+//             var options = "";
+//             $('#stdent').empty();
+//             $('#stdent').append("<option>"+"Select Student.."+"</option>");
+//             for(var i=0; i<len; i++)
+//             {
+//                 var stdId = jsonResult[0][i];
+//                 var stdName = jsonResult[1][i];
+//                 options += "<option value="+ stdId +">"+stdName+"</option>";
+//             }
+//             $("#stdent").append(options);
+//         }         
+//     });       
+// });
 
 JS;
 $this->registerJs($script);
