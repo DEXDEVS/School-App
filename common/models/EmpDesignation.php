@@ -47,11 +47,11 @@ class EmpDesignation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['emp_id', 'designation_id', 'emp_type_id', 'group_by', 'emp_salary'], 'required'],
+            [['group_by', 'emp_id', 'designation_id', 'emp_type_id'], 'required'],
             [['emp_id', 'designation_id', 'emp_type_id', 'created_by', 'updated_by'], 'integer'],
-            [['group_by', 'designation_status', 'status'], 'string'],
+            [['designation_status', 'status'], 'string'],
             [['emp_salary'], 'number'],
-            [['created_at', 'updated_at', 'created_by', 'updated_by', 'designation_status', 'status','updateStatus','updateDesignation_status','updateEmp_salary','updateGroup_by','updateEmp_type_id','updateDesignation_id'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by', 'designation_status', 'status','updateStatus','updateDesignation_status','updateEmp_salary','updateGroup_by','updateEmp_type_id','updateDesignation_id', 'group_by', 'emp_salary'], 'safe'],
             [['emp_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpInfo::className(), 'targetAttribute' => ['emp_id' => 'emp_id']],
             [['designation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Designation::className(), 'targetAttribute' => ['designation_id' => 'designation_id']],
             [['emp_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmpType::className(), 'targetAttribute' => ['emp_type_id' => 'emp_type_id']],
