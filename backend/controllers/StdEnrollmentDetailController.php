@@ -137,6 +137,7 @@ class StdEnrollmentDetailController extends Controller
                             $model = new StdEnrollmentDetail();
                             $model->std_enroll_detail_head_id = $std_enrollment_head_id;
                             $stdName = Yii::$app->db->createCommand("SELECT std_reg_no , std_name FROM std_personal_info WHERE std_id = '$value'")->queryAll();
+
                             //assign registration no
                             $model->std_reg_no =$stdName[0]['std_reg_no'];
                             //$model->std_roll_no = $value;
@@ -152,6 +153,7 @@ class StdEnrollmentDetailController extends Controller
                             $model->updated_at = '0'; 
                             $model->save();
                             $updateStdAcademicInfo = Yii::$app->db->createCommand("UPDATE  std_academic_info SET std_enroll_status = '$std_enroll_status' WHERE std_id = '$value'")->execute();
+                            $updateStdAcademicInfo;
                         } 
                     $transaction->commit();
                     Yii::$app->session->setFlash('warning', "Students enrolled in class successfully...!");
