@@ -115,29 +115,11 @@ class AccountRegisterController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
-                $natureID = $model->account_nature_id;
-
-                $accountNum = Yii::$app->db->createCommand("SELECT account_no FROM account_nature WHERE account_nature_id = '$natureID'")->queryAll();
-                // if ($accountNum) {
-                //     # code...
-                // }
-                $accountNo = $accountNum[0]['account_no'];
-
-                echo $accountNo;
-                //$std_inquiry_id = AccountNature::find()->max('std_inquiry_id');
-                
-                $natureNo  = $accountNo+1;
-                
-                echo $natureNo;
-
-                $model->account_no = $natureNo;
-
-                $model->created_by = Yii::$app->user->identity->id; 
-                $model->created_at = new \yii\db\Expression('NOW()');
-                $model->updated_by = '0';
-                $model->updated_at = '0'; 
-                $model->save();
-
+                        $model->created_by = Yii::$app->user->identity->id; 
+                        $model->created_at = new \yii\db\Expression('NOW()');
+                        $model->updated_by = '0';
+                        $model->updated_at = '0'; 
+                        $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new AccountRegister",

@@ -16,25 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 ?>
-<style type="text/css">
-    .panel-heading{
-        background-color: #001F3F;
-        color: white;
-    }
-</style>
-<?php 
-    $month = date('Y-m');
-    // initialize $totalIncome and $totalExpense...
-    $totalIncome = $totalExpense = 0;
-    // getting user branch_id....
-    $branch_id = Yii::$app->user->identity->branch_id;
-    // getting total income of the current month...
-    $income = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Income' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-    $totalIncome = $income[0]['date'];
-    // getting total expense of the current month...
-    $expense = Yii::$app->db->createCommand("SELECT SUM(total_amount) date FROM account_transactions WHERE branch_id = '$branch_id' AND account_nature = 'Expense' AND CAST(date AS DATE) >= '$month-01' AND CAST(date AS DATE) <= '$month-31'")->queryAll();
-    $totalExpense = $expense[0]['date'];
-?>
+
 <div class="account-transactions-index">
     <!-- Income and Expense Widgets start -->
     <div class="row">
@@ -44,17 +26,14 @@ CrudAsset::register($this);
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                          <h3>Rs.</h3>
-                          <h4><?php echo number_format($totalIncome, 0); ?></h4>
+                          <h3>Rs</h3>
+                          <h4>50,000</h4>
                         </div>
                         <div class="icon">
                           <i class="fa fa-calculator"></i>
                         </div>
                         <a href="#" class="small-box-footer">
-                            <?php
-                                $mon   = date('M'); 
-                                $month = date("F",strtotime($mon));; ?>
-                            <i class="fa fa-money"></i><b> Current Income of <?php echo $month; ?></b>
+                            <i class="fa fa-money"></i><b> Current Income This Month</b>
                         </a>
                     </div>
                 </div>
@@ -62,18 +41,14 @@ CrudAsset::register($this);
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                          <h3>Rs.</h3>
-                            <h4>
-                                <?php  
-                                    echo number_format($totalExpense, 0); 
-                                ?>
-                            </h4>
+                          <h3>Rs</h3>
+                          <h4>5000</h4>
                         </div>
                         <div class="icon">
                           <i class="fa fa-calculator"></i>
                         </div>
                         <a href="#" class="small-box-footer">
-                            <i class="fa fa-money"></i><b> Current Expense of <?php echo $month; ?></b>
+                            <i class="fa fa-money"></i><b> Current Expense This Month</b>
                         </a>
                     </div>
                 </div>
@@ -83,8 +58,8 @@ CrudAsset::register($this);
                   <!-- small box -->
                   <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>Rs.</h3>
-                        <h4>0</h4>
+                        <h3>Rs</h3>
+                        <h4>45,000</h4>
                     </div>
                     <div class="icon">
                       <i class="fa fa-money"></i>
@@ -100,8 +75,8 @@ CrudAsset::register($this);
                   <div class="small-box bg-red">
                     <div class="inner">
                       <div class="inner">
-                      <h3>Rs.</h3>
-                      <h4>0</h4>
+                      <h3>Rs</h3>
+                      <h4>5000</h4>
                     </div>
                     </div>
                     <div class="icon">
@@ -128,9 +103,9 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Account Transactions','class'=>'btn btn-success']).
+                    ['role'=>'modal-remote','title'=> 'Create new Account Transactions','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-warning', 'title'=>'Reset Grid']).
+                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.
                     '{export}'
                 ],
@@ -139,22 +114,22 @@ CrudAsset::register($this);
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
-                'type' => '', 
+                'type' => 'primary', 
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Account Transactions listing',
-                // 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
-                // 'after'=>BulkButtonWidget::widget([
-                //             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
-                //                 ["bulk-delete"] ,
-                //                 [
-                //                     "class"=>"btn btn-danger btn-xs",
-                //                     'role'=>'modal-remote-bulk',
-                //                     'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                //                     'data-request-method'=>'post',
-                //                     'data-confirm-title'=>'Are you sure?',
-                //                     'data-confirm-message'=>'Are you sure want to delete this item'
-                //                 ]),
-                //         ]).                        
-                //         '<div class="clearfix"></div>',
+                'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
+                'after'=>BulkButtonWidget::widget([
+                            'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
+                                ["bulk-delete"] ,
+                                [
+                                    "class"=>"btn btn-danger btn-xs",
+                                    'role'=>'modal-remote-bulk',
+                                    'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                                    'data-request-method'=>'post',
+                                    'data-confirm-title'=>'Are you sure?',
+                                    'data-confirm-message'=>'Are you sure want to delete this item'
+                                ]),
+                        ]).                        
+                        '<div class="clearfix"></div>',
             ]
         ])?>
     </div>

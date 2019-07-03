@@ -248,6 +248,7 @@ if(isset($_POST['save'])){
     catch (Exception $e) {
         $transaction->rollBack();
         Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+        echo $e;
     }
     // ending catch...
 }

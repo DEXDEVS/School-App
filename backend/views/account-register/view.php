@@ -12,7 +12,6 @@ use yii\widgets\DetailView;
         'attributes' => [
             'account_register_id',
             'account_nature_id',
-            'account_no',
             'account_name',
             'account_description:ntext',
             'created_at',

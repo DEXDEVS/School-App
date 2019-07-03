@@ -19,6 +19,22 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
+                    <label>Select Session</label>
+                    <select class="form-control" name="sessionid" id="sessionId" required="">
+                            <option value="">Select Session</option>
+                            <?php 
+                                $sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND session_branch_id = '$branch_id'")->queryAll();
+                                
+                                    foreach ($sessionName as  $value) { ?>  
+                                    <option value="<?php echo $value["session_id"]; ?>">
+                                        <?php echo $value["session_name"]; ?>   
+                                    </option>
+                            <?php } ?>
+                    </select>      
+                </div>    
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
                     <label>Select Class</label>
                     <select class="form-control" name="classid" id="classId" required="">
                         <option>Select Class</option>
@@ -32,22 +48,7 @@
 					</select>      
                 </div>    
             </div>  
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Select Session</label>
-                    <select class="form-control" name="sessionid" id="sessionId" required="">
-                            <option value="">Select Session</option>
-							<?php 
-								$sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND session_branch_id = '$branch_id'")->queryAll();
-								
-								  	foreach ($sessionName as  $value) { ?>	
-									<option value="<?php echo $value["session_id"]; ?>">
-										<?php echo $value["session_name"]; ?>	
-									</option>
-							<?php } ?>
-					</select>      
-                </div>    
-            </div>  
+              
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select Section</label>
@@ -98,23 +99,26 @@
 $url = \yii\helpers\Url::to("fee-transaction-detail/fetch-students");
 
 $script = <<< JS
-$('#sessionId').on('change',function(){
-   var session_Id = $('#sessionId').val();
+$('#classId').on('change',function(){
+    var classId = $('#classId').val();
+    var session_Id = $('#sessionId').val();
   
    $.ajax({
         type:'post',
-        data:{session_Id:session_Id},
+        data:{session_Id:session_Id,classId:classId},
         url: "$url",
 
         success: function(result){
-     
+            console.log(result);
             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
             var options = '';
+            $('#section').empty();
+            $('#section').append("<option>"+"Select Section"+"</option>");
             for(var i=0; i<jsonResult.length; i++) { 
-		        options += '<option value="'+jsonResult[i].section_id+'">'+jsonResult[i].section_name+'</option>';
-		    }
-		    // Append to the html
-		    $('#section').append(options);
+                options += '<option value="'+jsonResult[i].section_id+'">'+jsonResult[i].section_name+'</option>';
+            }
+            // Append to the html
+            $('#section').append(options);
         }         
     });       
 });

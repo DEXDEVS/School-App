@@ -203,27 +203,27 @@
                     // ------------------------------------------------
                     // Employee Module close...
                     // Account Module start...
-                    // [
-                    //     'label' => 'Accounting System',
-                    //     'icon' => 'credit-card',
-                    //     'url' => '#',
-                    //     'items' => [
-                    //         ['label' => 'Account Nature', 'icon' => 'caret-right', 'url' => "./account-nature"],
-                    //         ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
-                    //         ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
-                    //         ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./balance-sheet"],],
-                    //         ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
-                    //         ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                    [
+                        'label' => 'Accounting System',
+                        'icon' => 'credit-card',
+                        'url' => '#',
+                        'items' => [
+                            //['label' => 'Account Nature', 'icon' => 'caret-right', 'url' => "./account-nature"],
+                            ['label' => 'Account Head', 'icon' => 'caret-right', 'url' => "./account-register"],
+                            ['label' => 'Account Transaction', 'icon' => 'caret-right', 'url' => "./account-transactions"],
+                            ['label' => 'Balance Sheet', 'icon' => 'caret-right', 'url' => ["./balance-sheet"],],
+                            // ['label' => 'Capital', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Assets', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Liabilities', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Revenue', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Trial Balance', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Income Statement', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
+                            // ['label' => 'Yearly Charts', 'icon' => 'caret-right', 'url' => ["./premium-version"],],
 
-                    //         ['label' => 'Transaction Logs', 'icon' => 'caret-right', 'url' => ["./premium-version"],]
+                            // ['label' => 'Transaction Logs', 'icon' => 'caret-right', 'url' => ["./premium-version"],]
 
-                    //     ],
-                    // ],
+                        ],
+                    ],
                     // // ------------------------------------------------
                     // // Account Module close...
                     // // ------------------------------------------------
