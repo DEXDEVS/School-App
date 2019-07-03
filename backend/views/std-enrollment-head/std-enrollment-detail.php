@@ -59,11 +59,11 @@ use yii\helpers\Html;
                 </td>
                 <td>
                   <?php  
-                    if (empty($value['std_roll_no'])) {
+                    if (empty($value['std_enroll_detail_std_id'])) {
                       echo " ";
                     }
                     else{
-                      echo $value['std_roll_no'];
+                      echo $value['std_enroll_detail_std_id'];
                     }
                   ?>   
                 </td>

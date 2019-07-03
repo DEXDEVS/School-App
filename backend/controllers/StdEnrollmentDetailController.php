@@ -120,16 +120,15 @@ class StdEnrollmentDetailController extends Controller
             }else if($stdEnrollmentHead->load($request->post()) && $model->load($request->post())){
                 
                     $branch_id = Yii::$app->user->identity->branch_id;
-                    $std_enrollment_head = Yii::$app->db->createCommand("SELECT * FROM std_enrollment_head where class_name_id = $stdEnrollmentHead->class_name_id AND session_id = $stdEnrollmentHead->session_id AND section_id = $stdEnrollmentHead->section_id")->queryAll();
 
+                    $std_enrollment_head = Yii::$app->db->createCommand("SELECT * FROM std_enrollment_head where class_name_id = $stdEnrollmentHead->class_name_id AND session_id = $stdEnrollmentHead->session_id AND section_id = $stdEnrollmentHead->section_id")->queryAll();
                     $className = Yii::$app->db->createCommand("SELECT class_name FROM std_class_name where class_name_id = $stdEnrollmentHead->class_name_id")->queryAll();
                     $session = Yii::$app->db->createCommand("SELECT session_name FROM std_sessions where session_id = $stdEnrollmentHead->session_id")->queryAll();
                     $section = Yii::$app->db->createCommand("SELECT section_name FROM std_sections where section_id = $stdEnrollmentHead->section_id")->queryAll();
-                    $class = substr($className[0]['class_name'], 0, 3);
-                    $sessionString = substr($session[0]['session_name'], 2,2);
-                    $sectionString = substr($section[0]['section_name'], 0,2);
 
-                    if(!empty($std_enrollment_head)){
+                if(!empty($std_enrollment_head)){
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
                         $std_enrollment_head_id = $std_enrollment_head[0]['std_enroll_head_id'];
 
                         // select2 add multiple students start...!
@@ -138,18 +137,10 @@ class StdEnrollmentDetailController extends Controller
                             $model = new StdEnrollmentDetail();
                             $model->std_enroll_detail_head_id = $std_enrollment_head_id;
                             $stdName = Yii::$app->db->createCommand("SELECT std_reg_no , std_name FROM std_personal_info WHERE std_id = '$value'")->queryAll();
+
                             //assign registration no
                             $model->std_reg_no =$stdName[0]['std_reg_no'];
-
-                            //assign roll no
-                            $StdEnrollmentDetail = Yii::$app->db->createCommand("SELECT std_roll_no FROM std_enrollment_detail WHERE std_enroll_detail_head_id = $std_enrollment_head_id ORDER BY std_roll_no DESC LIMIT 1")->queryAll();
-                            if(empty($StdEnrollmentDetail)){
-                                $rollNo = 001;
-                            } else {
-                                $rolNo = $StdEnrollmentDetail[0]['std_roll_no'];
-                                $rollNo = substr($rolNo,9,2)+1;    
-                            } 
-                            $model->std_roll_no = $class."-".$sectionString.$sessionString."-".$rollNo;
+                            //$model->std_roll_no = $value;
                             $model->std_enroll_detail_std_id = $value;
                             $model->std_enroll_detail_std_name = $stdName[0]['std_name'];
 
@@ -162,9 +153,15 @@ class StdEnrollmentDetailController extends Controller
                             $model->updated_at = '0'; 
                             $model->save();
                             $updateStdAcademicInfo = Yii::$app->db->createCommand("UPDATE  std_academic_info SET std_enroll_status = '$std_enroll_status' WHERE std_id = '$value'")->execute();
-                    }   
-                }
-                else {
+                            $updateStdAcademicInfo;
+                        } 
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('warning', "Students enrolled in class successfully...!");
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                    }  
+                }else {
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
                         $stdEnrollmentHead->branch_id = $branch_id;
@@ -184,14 +181,7 @@ class StdEnrollmentDetailController extends Controller
                             // assihn registration no
                             $model->std_reg_no =$stdName[0]['std_reg_no'];
                             // assign roll no 
-                            $StdEnrollmentDetail = Yii::$app->db->createCommand("SELECT std_roll_no FROM std_enrollment_detail WHERE std_enroll_detail_head_id = $stdEnrollmentHead->std_enroll_head_id ORDER BY std_roll_no DESC LIMIT 1")->queryAll();
-                            if(empty($StdEnrollmentDetail)){
-                                $rollNo = 001;
-                            } else {
-                                $rolNo = $StdEnrollmentDetail[0]['std_roll_no'];
-                                $rollNo = substr($rolNo,9,2)+1;    
-                            } 
-                            $model->std_roll_no = $class."-".$sectionString.$sessionString."-".$rollNo;
+                            //$model->std_roll_no = $value;
                             $model->std_enroll_detail_std_id = $value;
                             $model->std_enroll_detail_std_name = $stdName[0]['std_name'];
 
@@ -205,13 +195,12 @@ class StdEnrollmentDetailController extends Controller
                             $model->save();
                             $updateStdAcademicInfo = Yii::$app->db->createCommand("UPDATE  std_academic_info SET std_enroll_status = '$std_enroll_status' WHERE std_id = '$value'")->execute();
                         }
-
                     $transaction->commit();
                     Yii::$app->session->setFlash('warning', "Students enrolled in class successfully...!");
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                    Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
-                }
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+                    }
                 }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
