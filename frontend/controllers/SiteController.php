@@ -34,7 +34,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details','reset-password','user-profile','update-profile','std-remarks'],
+                        'actions' => ['logout','signup', 'index','employe-dashboard','employee-portfolio','students-view','students-list','view-classes','view-datesheet','activity-view','list-of-classes','std-profile','std-fee','std-fee-details','std-exams','std-exam-schedule','std-exam-result','children', 'executive-portal', 'income-expense', 'balance-sheet', 'std-attendance-report', 'emp-attendance-report', 'premium-version','fee-details','reset-password','user-profile','update-profile','std-remarks','view-atten-incharge','datewise-class-atten-view','daterangewise-class-atten-view','datewise-std-atten-view','daterangewise-std-atten-view', 'monthly-class-atten-view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -64,6 +64,36 @@ class SiteController extends Controller
     public function beforeAction($action) {
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
+    }
+
+    public function actionMonthlyClassAttenView()
+    { 
+        return $this->render('monthly-class-atten-view');
+    }
+    
+    public function actionDatewiseClassAttenView()
+    { 
+        return $this->render('datewise-class-atten-view');
+    }
+
+    public function actionDaterangewiseClassAttenView()
+    { 
+        return $this->render('daterangewise-class-atten-view');
+    }
+
+    public function actionDatewiseStdAttenView()
+    { 
+        return $this->render('datewise-std-atten-view');
+    }
+
+    public function actionDaterangewiseStdAttenView()
+    { 
+        return $this->render('daterangewise-std-atten-view');
+    }
+    
+    public function actionViewAttenIncharge()
+    { 
+        return $this->render('view-atten-incharge');
     }
 
     public function actionExecutivePortal()
