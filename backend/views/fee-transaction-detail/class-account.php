@@ -30,6 +30,21 @@ use common\models\FeeTransactionHead;
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
+                    <label>Select Session</label>
+                    <select class="form-control" name="sessionid" id="sessionId" required="">
+                            <option value="">Select Session</option>
+                            <?php 
+                                $sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND session_branch_id = $branch_id")->queryAll();
+                                    foreach ($sessionName as  $value) { ?>  
+                                    <option value="<?php echo $value["session_id"]; ?>">
+                                        <?php echo $value["session_name"]; ?>   
+                                    </option>
+                            <?php } ?>
+                    </select>      
+                </div>    
+            </div>  
+            <div class="col-md-4">
+                <div class="form-group">
                     <label>Select Class</label>
                     <select class="form-control" name="classid" id="classId" required="required">
                         <option>Select Class</option>
@@ -44,21 +59,7 @@ use common\models\FeeTransactionHead;
                     </select>      
                 </div>    
             </div>  
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Select Session</label>
-                    <select class="form-control" name="sessionid" id="sessionId" required="">
-                            <option value="">Select Session</option>
-                            <?php 
-                                $sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND session_branch_id = $branch_id")->queryAll();
-                                    foreach ($sessionName as  $value) { ?>  
-                                    <option value="<?php echo $value["session_id"]; ?>">
-                                        <?php echo $value["session_name"]; ?>   
-                                    </option>
-                            <?php } ?>
-                    </select>      
-                </div>    
-            </div>  
+            
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Select Section</label>
@@ -255,7 +256,7 @@ use common\models\FeeTransactionHead;
                 }
                 //end of i for loop
                 // success alert message...
-                Yii::$app->session->setFlash('success', "You have successfully maintain this class account...!"); 
+                Yii::$app->session->setFlash('success', "You have successfully maintained the account of this class. You may print the vouchers. <a href = './fee-transaction-detail-fee-voucher'>Genarate Voucher</a>");
             // end of if
             } else {
                 $voucherNo = $headTransId[0]['voucher_no'];
@@ -532,7 +533,8 @@ use common\models\FeeTransactionHead;
 $url = \yii\helpers\Url::to("fee-transaction-detail/fetch-students");
 
 $script = <<< JS
-$('#sessionId').on('change',function(){
+
+$('#classId').on('change',function(){
     var classId = $('#classId').val();
     var session_Id = $('#sessionId').val();
   

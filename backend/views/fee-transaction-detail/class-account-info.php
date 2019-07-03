@@ -27,6 +27,7 @@
         $sessionName = Yii::$app->db->createCommand("SELECT session_name FROM std_sessions WHERE session_id = '$sessionid'")->queryAll();
         // Select Section...
         $sectionName = Yii::$app->db->createCommand("SELECT section_name FROM std_sections WHERE section_id = '$sectionid'")->queryAll();
+        $section = $sectionName[0]['section_name'];
 
         // Select Students...
         $student = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_id ,sed.std_enroll_detail_std_id FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
@@ -39,12 +40,21 @@
     <form method="POST" action="class-account">
         <div class="row">
             <div class="col-md-12 text-center" style="margin-top: -20px;">
-                <?php echo "<h3> Class: ".$className." - Month: ";
-                if($countMonth >1){
-                    echo date('F', strtotime($months[0])).'/'.date('F-Y', strtotime($months[1]))."</h3>";
-                } else {
-                    echo date('F-Y', strtotime($months[0]))."</h3>"; 
-                } 
+            <?php   if(!empty($classAccount)){
+                        echo "<h2> Update: </h2>" ."<h3> Class: ".$className." Section: ".$section." - Month: ";
+                        if($countMonth >1){
+                        echo date('F', strtotime($months[0])).'/'.date('F-Y', strtotime($months[1]))."</h3>";
+                        } else {
+                        echo date('F-Y', strtotime($months[0]))."</h3>"; 
+                        }
+                    } else {
+                        echo "<h3> Class: ".$className." Section: ".$section." - Month: ";
+                        if($countMonth >1){
+                        echo date('F', strtotime($months[0])).'/'.date('F-Y', strtotime($months[1]))."</h3>";
+                        } else {
+                        echo date('F-Y', strtotime($months[0]))."</h3>"; 
+                        }
+                    } 
                 ?>
                 <ol class="breadcrumb" style="float: right; margin-top: -40px;">
                     <li><a href="./home" style="color: #3C8DBC;"><i class="fa fa-dashboard"></i> Home</a></li>
