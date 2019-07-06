@@ -115,6 +115,7 @@ class AccountTransactionsController extends Controller
         
                 ];         
             }else if($model->load($request->post())){
+                        $model->branch_id = Yii::$app->user->identity->branch_id;
                         $model->created_by = Yii::$app->user->identity->id; 
                         $model->created_at = new \yii\db\Expression('NOW()');
                         $model->updated_by = '0';

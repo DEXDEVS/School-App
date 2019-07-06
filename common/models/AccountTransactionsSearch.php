@@ -40,36 +40,70 @@ class AccountTransactionsSearch extends AccountTransactions
      *
      * @return ActiveDataProvider
      */
+     
     public function search($params)
     {
-        $query = AccountTransactions::find();
+        if(Yii::$app->user->identity->user_type == 'Superadmin'){
+            $query = AccountTransactions::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
 
-        $this->load($params);
+            $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+
+            $query->andFilterWhere([
+                'trans_id' => $this->trans_id,
+                'account_register_id' => $this->account_register_id,
+                'date' => $this->date,
+                'total_amount' => $this->total_amount,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'created_by' => $this->created_by,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'account_nature', $this->account_nature])
+                ->andFilterWhere(['like', 'description', $this->description]);
+
             return $dataProvider;
-        }
+        } else {
+            $branch_id = Yii::$app->user->identity->branch_id;
+            $query = AccountTransactions::find()->where(['branch_id'=> $branch_id ]);
 
-        $query->andFilterWhere([
-            'trans_id' => $this->trans_id,
-            'account_register_id' => $this->account_register_id,
-            'date' => $this->date,
-            'total_amount' => $this->total_amount,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
 
-        $query->andFilterWhere(['like', 'account_nature', $this->account_nature])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            $this->load($params);
 
-        return $dataProvider;
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+
+            $query->andFilterWhere([
+                'trans_id' => $this->trans_id,
+                'account_register_id' => $this->account_register_id,
+                'date' => $this->date,
+                'total_amount' => $this->total_amount,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'created_by' => $this->created_by,
+                'updated_by' => $this->updated_by,
+            ]);
+
+            $query->andFilterWhere(['like', 'account_nature', $this->account_nature])
+                ->andFilterWhere(['like', 'description', $this->description]);
+
+            return $dataProvider; 
+        }    
     }
 }

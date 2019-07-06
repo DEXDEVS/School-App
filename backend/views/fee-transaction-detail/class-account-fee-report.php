@@ -34,10 +34,25 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
+                    <select class="form-control" name="sessionid" id="sessionId" required="">
+                            <option value="">Select Session</option>
+                            <?php 
+                            $branch_id = Yii::$app->user->identity->branch_id;
+                                $sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND status ='Active' AND session_branch_id = '$branch_id'")->queryAll();
+                                    foreach ($sessionName as  $value) { ?>  
+                                    <option value="<?php echo $value["session_id"]; ?>">
+                                        <?php echo $value["session_name"]; ?>   
+                                    </option>
+                            <?php } ?>
+                    </select>      
+                </div>    
+            </div> 
+            <div class="col-md-4">
+                <div class="form-group">
                     <select class="form-control" name="classid" id="classId" required="">
                     	<option>Select Class</option>
                             <?php 
-                                $branch_id = Yii::$app->user->identity->branch_id;
+                                
                                 $className = Yii::$app->db->createCommand("SELECT * FROM std_class_name where branch_id = '$branch_id' AND delete_status=1")->queryAll();
                                 
                                     foreach ($className as  $value) { ?>    
@@ -48,20 +63,7 @@
                     </select>      
                 </div>    
             </div>  
-            <div class="col-md-4">
-                <div class="form-group">
-                    <select class="form-control" name="sessionid" id="sessionId" required="">
-                            <option value="">Select Session</option>
-                            <?php 
-                                $sessionName = Yii::$app->db->createCommand("SELECT * FROM std_sessions where delete_status=1 AND status ='Active' AND session_branch_id = '$branch_id'")->queryAll();
-                                    foreach ($sessionName as  $value) { ?>  
-                                    <option value="<?php echo $value["session_id"]; ?>">
-                                        <?php echo $value["session_name"]; ?>   
-                                    </option>
-                            <?php } ?>
-                    </select>      
-                </div>    
-            </div>  
+             
             <div class="col-md-4">
                 <div class="form-group">
                     <select class="form-control" name="sectionid" id="section" required="">
@@ -115,17 +117,21 @@ $('#month').on('change',function(){
     });       
 });
 
-$('#sessionId').on('change',function(){
-   var session_Id = $('#sessionId').val();
+$('#classId').on('change',function(){
+    var classId = $('#classId').val();
+    var session_Id = $('#sessionId').val();
   
    $.ajax({
         type:'post',
-        data:{session_Id:session_Id},
+        data:{session_Id:session_Id,classId:classId},
         url: "$url",
 
         success: function(result){
+            console.log(result);
             var jsonResult = JSON.parse(result.substring(result.indexOf('['), result.indexOf(']')+1));
             var options = '';
+            $('#section').empty();
+            $('#section').append("<option>"+"Select Section"+"</option>");
             for(var i=0; i<jsonResult.length; i++) { 
                 options += '<option value="'+jsonResult[i].section_id+'">'+jsonResult[i].section_name+'</option>';
             }

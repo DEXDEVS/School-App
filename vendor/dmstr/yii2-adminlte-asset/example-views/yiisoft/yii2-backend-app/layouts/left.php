@@ -107,15 +107,15 @@
                                     ['label' => 'Generate Vouchers', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-fee-voucher',],
                                 ],
                             ],
-                            [
-                                'label' => 'Student Account',
-                                'icon' => 'caret-right',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Manage Account', 'icon' => 'chevron-right', 'url' => './student-account',],
-                                    ['label' => 'Generate Voucher', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-student-voucher',],
-                                ],
-                            ],
+                            // [
+                            //     'label' => 'Student Account',
+                            //     'icon' => 'caret-right',
+                            //     'url' => '#',
+                            //     'items' => [
+                            //         ['label' => 'Manage Account', 'icon' => 'chevron-right', 'url' => './student-account',],
+                            //         ['label' => 'Generate Voucher', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-student-voucher',],
+                            //     ],
+                            // ],
                             [
                                 'label' => 'Vouchers Collection',
                                 'icon' => 'caret-right',
@@ -457,6 +457,79 @@
         ) ?>
         <?php } ?>
         <!-- Inquiry Nav end -->
+
+        <!-- Fee Module Nav Start -->
+        <?php if(Yii::$app->user->can('fee-nav')){ ?>
+
+        <?= dmstr\widgets\Menu::widget(
+            [
+                'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
+                'items' => [
+                    ['label' => 'Menus', 'options' => ['class' => 'header center']],
+                    ['label' => 'Home', 'icon' => 'dashboard', 'url' => "./home"],
+                    //['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
+                    ['label' => 'Login', 'url' => ["../login"], 'visible' => Yii::$app->user->isGuest],
+
+                    // ------------------------------------------------
+                    // Student Module start...
+                    [
+                        'label' => 'Students',
+                        'icon' => 'graduation-cap',
+                        'url' => '#',
+                        'items' => [
+                            // ['label' => 'Inquiry', 'icon' => 'caret-right', 'url' => ["/std-inquiry"],],
+                            ['label' => 'Registration', 'icon' => 'caret-right', 'url' => ["/std-personal-info"],],
+                        ],
+                    ],
+                    
+                    // ------------------------------------------------
+
+                    // ------------------------------------------------
+                    // Fee Module start...
+                    [
+                        'label' => 'Fee',
+                        'icon' => 'credit-card',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Class Account',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Manage Accounts', 'icon' => 'chevron-right', 'url' => './class-account',],
+                                    ['label' => 'Generate Vouchers', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-fee-voucher',],
+                                ],
+                            ],
+                            // [
+                            //     'label' => 'Student Account',
+                            //     'icon' => 'caret-right',
+                            //     'url' => '#',
+                            //     'items' => [
+                            //         ['label' => 'Manage Account', 'icon' => 'chevron-right', 'url' => './student-account',],
+                            //         ['label' => 'Generate Voucher', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-student-voucher',],
+                            //     ],
+                            // ],
+                            [
+                                'label' => 'Vouchers Collection',
+                                'icon' => 'caret-right',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Collect Voucher', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-collect-voucher',],
+                                    //['label' => 'Monthly Collection', 'icon' => 'caret-right', 'url' => "./monthly-voucher"],
+                                    ['label' => 'Student Account Detail', 'icon' => 'chevron-right', 'url' => "./yearly-voucher"],
+                                ],
+                            ],
+                            ['label' => 'Class Fee Report', 'icon' => 'chevron-right', 'url' => './fee-transaction-detail-class-account-fee-report',],
+                        ],
+                    ],
+                    // ------------------------------------------------
+                    // Fee Module close...
+                    
+                ],
+            ]
+        ) ?>
+        <?php } ?>
+        <!-- Fee Module Nav end -->
 
     </section>
 

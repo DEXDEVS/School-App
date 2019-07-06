@@ -19,7 +19,7 @@ use yii\helpers\Html;
             //echo "DEXDEVS";
         } 
         else {
-            $userID = Yii::$app->user->id; 
+            $userID = Yii::$app->user->identity->id; 
             $user   = Yii::$app->db->createCommand("SELECT user_photo FROM user WHERE id = $userID")->queryAll();
     
         if (empty($user)){

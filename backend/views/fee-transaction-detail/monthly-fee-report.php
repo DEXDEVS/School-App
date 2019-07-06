@@ -36,7 +36,7 @@
        // Select Section...
         $sectionName = Yii::$app->db->createCommand("SELECT section_name FROM std_sections WHERE section_id = '$sectionid'")->queryAll();
         // Select Students...
-        $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id,sed.std_roll_no FROM std_enrollment_detail as sed 
+        $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id, sed.std_roll_no FROM std_enrollment_detail as sed 
             INNER JOIN std_enrollment_head as seh
             ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id
             WHERE seh.class_name_id  = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid'")->queryAll();
@@ -44,8 +44,8 @@
     ?>
     <div class="row">
         <div class="col-md-12">
-            <img src="images/abc_logo.jpg" width="90px" class="img-circle" style="float:left;margin-top: 10px;">
-            <h2 align="center">ABC Learning High School<small> (Rahim Yar Khan)</small></h2>
+            <img src="images/abc_logo.jpg" width="90px" class="img-circle" style="margin-top: 10px; margin-left: 20%; float: left">
+            <h2 style="float: left; margin-left: 10%">ABC Learning High School<small> (Rahim Yar Khan)</small></h2>
         </div>
         <div class="col-md-12">
             <table width="100%" style="margin-top: -45px;">
@@ -93,13 +93,21 @@
                     ?>
                     <tr>
                         <td><?php echo $id+1; ?></td>
-                        <td><?php echo  $students[$id]['std_roll_no']; ?></td>
+                        <td><?php echo  $stdID; ?></td>
                         <td><?php echo $stdName[0]['std_name']; ?></td>
                         <td align="center"><?php echo $tuitionFee;  ?></td>
                         <td class="tdcolor" align="center" style="background-color: #ccc;">
                             <?php echo $paidAmount; ?>
                         </td>
-                        <td align="center"><?php echo $remaining; ?></td>
+                        <td align="center">
+                            <?php 
+                                if($paidAmount == 0){
+                                    echo $tuitionFee; 
+                                } else {
+                                    echo $remaining; 
+                                }
+                            ?>
+                        </td>
                         <th style="background-color: #ccc;" class="tdcolor text-center">
                             <?php echo $status;?>
                         </th>
@@ -117,7 +125,12 @@
                     <?php 
                         $totalFee += $stdFeeDetails[0]['total_amount'];
                         $totalPaid += $stdFeeDetails[0]['paid_amount'];
-                        $totalRemaining += $stdFeeDetails[0]['remaining'];
+                        if($stdFeeDetails[0]['paid_amount'] == 0){
+                            $totalRemaining += $stdFeeDetails[0]['total_amount'];
+                        } else {
+                           $totalRemaining += $stdFeeDetails[0]['remaining']; 
+                        }
+                        
                     //end of for each
                     }
                     ?>
@@ -159,13 +172,21 @@
                     ?>   
                     <tr>
                         <td><?php echo $id+1; ?></td>
-                        <td><?php echo  $students[$id]['std_roll_no']; ?></td>
+                        <td><?php echo  $stdID; ?></td>
                         <td><?php echo $stdName[0]['std_name']; ?></td>
                         <td align="center"><?php echo $tuitionFee;  ?></td>
                         <td class="tdcolor" align="center" style="background-color: #ccc;">
                             <?php echo $paidAmount; ?>
                         </td>
-                        <td align="center"><?php echo $remaining; ?></td>
+                        <td align="center">
+                            <?php 
+                                if($paidAmount == 0){
+                                    echo $tuitionFee; 
+                                } else {
+                                    echo $remaining; 
+                                }
+                            ?>
+                        </td>
                         <th style="background-color: #ccc;" class="tdcolor text-center">
                             <?php echo $status;?>
                         </th>
@@ -185,6 +206,11 @@
                         $badTotalFee += $stdFeeDetails[0]['total_amount'];
                         $badTotalPaid += $stdFeeDetails[0]['paid_amount'];
                         $badTotalRemaining += $stdFeeDetails[0]['remaining']; 
+                        if($stdFeeDetails[0]['paid_amount'] == 0){
+                            $badTotalRemaining += $stdFeeDetails[0]['total_amount'];
+                        } else {
+                           $badTotalRemaining += $stdFeeDetails[0]['remaining']; 
+                        }
                     ?>
                     <tr align="center" style="background-color: #ccc;">
                         <td colspan="3" style="text-align: center"><b>Total Left</b></td>
