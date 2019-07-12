@@ -137,8 +137,6 @@ class EmpInfoController extends Controller
             }else if($model->load($request->post()) && $empDesignation->load($request->post()) && $empRefModel->load($request->post()) ){
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
-                        var_dump($model->emp_name);
-                        die();
                         $model->emp_photo = UploadedFile::getInstance($model,'emp_photo');
                         if(!empty($model->emp_photo)){
                             $imageName = $model->emp_name.'_emp_photo'; 

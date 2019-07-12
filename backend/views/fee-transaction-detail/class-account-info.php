@@ -255,18 +255,18 @@
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" value="0" name="exam_fee[]"  onChange="totalAmount(<?php echo $id; ?>)" style="width: 130px; border: none;">
+                                        <input class="form-control text-center" type="number" id="examFee_<?php echo $id; ?>" value="0" name="exam_fee[]" onChange="totalAmount(<?php echo $id; ?>)" style="width: 130px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
                             if($feeType[$m] == 8){
                                 if(!empty($classAccountDetail)){ ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="arrears[]" readonly="" style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" value="<?php echo $feeAmount[$m]; ?>" name="arrears[]" onChange="totalAmount(<?php echo $id; ?>)" style="width: 70px; border: none;">
                                     </td> 
                             <?php } else { ?>
                                    <td>
-                                        <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" name="arrears[]" value="<?php echo $remainingArrears; ?>" readonly="" style="width: 70px; border: none;">
+                                        <input class="form-control text-center" type="number" id="arrears_<?php echo $id; ?>" name="arrears[]" value="<?php echo $remainingArrears; ?>" onChange="totalAmount(<?php echo $id; ?>)" style="width: 70px; border: none;">
                                     </td>
                             <?php } // ending of else... 
                                 } // ending of if...
