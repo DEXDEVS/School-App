@@ -199,7 +199,7 @@ use common\models\FeeTransactionHead;
                             'fee_amount'=> $admission_fee[$i]
                             ])->execute();
                         }
-                        if($feeType[$j] == 2 && $tuition_fee[$i] > 0){
+                        if($feeType[$j] == 2 && $tuition_fee[$i] >= 0){
                             $feeDetails = Yii::$app->db->createCommand()->insert('fee_transaction_detail',[
                             'fee_trans_detail_head_id' => $headId,
                             'fee_type_id'=> $feeType[$j],
