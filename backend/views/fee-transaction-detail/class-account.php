@@ -522,8 +522,8 @@ use common\models\FeeTransactionHead;
             //return $this->redirect(['./class-account']);
         } catch (Exception $e) {
             //$transaction->rollBack();
-            Yii::$app->session->setFlash('error', "Transaction Failed, Tray Again...!");
-            echo $e."<br>"; 
+            Yii::$app->session->setFlash('error', "Transaction Failed, Try Again...!");
+            //echo $e."<br>"; 
         }
     //end of isset
     }
