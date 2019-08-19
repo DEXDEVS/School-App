@@ -8,9 +8,9 @@ if(isset($_POST['submit'])){
     $classnameid    = $_POST["classnameid"];
     $sessionid      = $_POST["sessionid"];
     $sectionid      = $_POST["sectionid"];
-    $branch_id         = $_GET['branch_id'];  
-    $class_head_id       = $_GET['class_head_id'];
-    $teacher_id         = $_GET['teacher_id'];
+    $branch_id      = $_GET['branch_id'];  
+    $class_head_id  = $_GET['class_head_id'];
+    $teacher_id     = $_GET['teacher_id'];
 ?>
 <!DOCTYPE html>
 <html>
