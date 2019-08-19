@@ -33,9 +33,9 @@ class AccountNature extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['account_nature_name', 'account_nature_status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
+            [['account_nature_name', 'account_nature_status'], 'required'],
             [['account_nature_status'], 'string'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['account_nature_name'], 'string', 'max' => 64],
         ];
@@ -47,7 +47,7 @@ class AccountNature extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'account_nature_id' => 'Account Nature ID',
+            'account_nature_id' => 'Account Nature',
             'account_nature_name' => 'Account Nature Name',
             'account_nature_status' => 'Account Nature Status',
             'created_at' => 'Created At',

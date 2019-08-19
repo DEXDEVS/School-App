@@ -41,7 +41,7 @@
               ?>
                 <thead>
                   <tr>
-                  <th colspan="3" class="label-primary text-center">
+                  <th colspan="6" class="label-primary text-center">
                     <?php echo $teacherClassName[0]['std_enroll_head_name']; ?>
                     
                       <?php 
@@ -58,6 +58,7 @@
                   <th style="width: 60px; text-align: center;">Sr #</th>
                   <th style="width: 200px">Subject</th>
                   <th>Lectures</th>
+                  <th colspan="2" style="text-align: center;">Attendance</th>
                 </tr>
                 </thead>
                 <?php
@@ -69,6 +70,21 @@
                   <td align="center"><b><?php  echo $key+1; ?></b></td>
                   <td><?php echo $teacherSubjectName[0]['subject_name']; ?></td>
                   <td><?php echo $value['no_of_lecture'];?></td>
+                  <td>
+                    <a href="take-attendance?sub_id=<?php echo $teacherSubjectId;?>&class_id=<?php echo $teacherClassId;?>&teacherHeadId=<?php echo $id;?>" class="btn btn-success btn-xs">
+                      Take
+                    </a>
+                  </td>
+                  <td>
+                    <a href="view-attendance?sub_id=<?php echo $teacherSubjectId;?>&class_id=<?php echo $teacherClassId;?>&teacherHeadId=<?php echo $id;?>" class="btn btn-warning btn-xs">
+                      View
+                    </a>
+                  </td>
+                  <td>
+                    <a href="update-attendance?sub_id=<?php echo $teacherSubjectId;?>&class_id=<?php echo $teacherClassId;?>&teacherHeadId=<?php echo $id;?>" class="btn btn-info btn-xs">
+                      Update
+                    </a>
+                  </td>
                 </tr>
               <?php } } ?>
             </tbody>

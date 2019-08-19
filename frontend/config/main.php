@@ -55,7 +55,6 @@ return [
                 'home' => 'site/index',
                 'user-profile' => 'site/user-profile',
                 'list-of-classes' => 'site/list-of-classes',
-                'std-remarks' => 'site/std-remarks',
                 'activity-view' => 'site/activity-view',
                 'employe-dashboard'=>'site/employe-dashboard',
                 'employee-portfolio'=>'site/employee-portfolio',
@@ -73,12 +72,6 @@ return [
                 'premium-version'=>'site/premium-version',
                 'fee-details'=>'site/fee-details',
                 'dates'=>'site/dates',
-                'view-atten-incharge'=>'site/view-atten-incharge',
-                'datewise-class-atten-view' => 'site/datewise-class-atten-view',
-                'datewise-std-atten-view' => 'site/datewise-std-atten-view',
-                'daterangewise-class-atten-view' => 'site/daterangewise-class-atten-view',
-                'daterangewise-std-atten-view' => 'site/daterangewise-std-atten-view',
-                'monthly-class-atten-view' => 'site/monthly-class-atten-view',
                 //-------------------------------------------
                 // executive-portal route
                 'executive-portal' => 'site/executive-portal',
@@ -100,9 +93,6 @@ return [
                 'daterangewise-student-attendance' => 'std-attendance/daterangewise-student-attendance',
                 'monthly-attendance-view' => 'std-attendance/monthly-attendance-view',
                 'take-attendance-by-incharge' => 'std-attendance/take-attendance-by-incharge',
-                //std-attendance-by-incharge
-                'attendance-by-incharge'=>'std-atten-incharge/attendance-by-incharge',
-                'mark-attendance' => 'std-atten-incharge/mark-attendance',
                 //-------------------------------------------
                 //marks-details
                 'marks-sheet'=>'marks-details/marks-sheet',

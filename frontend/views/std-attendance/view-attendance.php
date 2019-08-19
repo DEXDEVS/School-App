@@ -130,13 +130,13 @@ body{
     if(isset($_GET['sub_id'])){
         $sub_id = $_GET['sub_id'];  
         $class_id = $_GET['class_id'];
-        $emp_id = $_GET['emp_id'];     
+        $teacherHeadId = $_GET['teacherHeadId'];     
         
 ?>
  <div class="row" style="margin-bottom:13px; ">
         
         <div class="col-md-8 col-md-offset-2">
-            <a href="./activity-view?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&emp_id=<?php echo $emp_id;?>"  style="float: right; margin-right: 16px;background-color:#5CB85C;color: white;padding:3px;border-radius:5px; text-decoration: none;"><i class="glyphicon glyphicon-backward"></i> Back</a>
+            <a href="./activity-view?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&teacherHeadId=<?php echo $teacherHeadId;?>"  style="float: right; margin-right: 16px;background-color:#5CB85C;color: white;padding:3px;border-radius:5px; text-decoration: none;"><i class="glyphicon glyphicon-backward"></i> Back</a>
         </div>
 </div>
 <div class="row">
@@ -244,7 +244,7 @@ body{
                             <h3 class="text-center" style="color:#5CB85C;">Date Wise Class Attendance</h3>
                         </div>
                         <div class="box-body">
-                            <form method="POST" action="./datewise-class-attendance?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&emp_id=<?php echo $emp_id ?>">
+                            <form method="POST" action="./datewise-class-attendance?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&teacherHeadId=<?php echo $teacherHeadId ?>">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -295,7 +295,7 @@ body{
             <h3 class="text-center" style="color:#5CB85C;">Date Range Wise Class Attendance</h3>
         </div>
         <div class="box-body">
-           <form method="POST" action="./daterangewise-class-attendance?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&emp_id=<?php echo $emp_id ?>">
+           <form method="POST" action="./daterangewise-class-attendance?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&teacherHeadId=<?php echo $teacherHeadId ?>">
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
@@ -363,7 +363,7 @@ body{
             <h3 class="text-center" style="color:#5CB85C;">Date Wise Student Attendance</h3>
         </div>
         <div class="box-body">
-            <form method="POST" action="./datewise-student-attendance?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&emp_id=<?php echo $emp_id ?>">
+            <form method="POST" action="./datewise-student-attendance?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&teacherHeadId=<?php echo $teacherHeadId ?>">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -385,7 +385,16 @@ body{
                         $sectionid = $classDetail[0]['section_id'];
 
 
-                        $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id, sed.std_enroll_detail_std_name FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON sed.std_enroll_detail_head_id = seh.std_enroll_head_id WHERE seh.class_name_id = '$classnameid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid' ")->queryAll();
+                        $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id, sed.std_enroll_detail_std_name 
+                            FROM ((std_enrollment_detail as sed 
+                            INNER JOIN std_enrollment_head as seh 
+                            ON sed.std_enroll_detail_head_id = seh.std_enroll_head_id )
+                            INNER JOIN std_personal_info as spi 
+                            ON spi.std_id = sed.std_enroll_detail_std_id )
+                            WHERE seh.class_name_id = '$classnameid' 
+                            AND seh.session_id = '$sessionid' 
+                            AND seh.section_id = '$sectionid' 
+                            AND spi.status = 'Active'")->queryAll();
                         $stdCount = count($students);
 
                     ?>
@@ -452,7 +461,7 @@ body{
             <h3 class="text-center" style="color:#5CB85C;">Date Range Wise Class Attendance</h3>
         </div>
         <div class="box-body">
-           <form method="POST" action="./daterangewise-student-attendance?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&emp_id=<?php echo $emp_id ?>">
+           <form method="POST" action="./daterangewise-student-attendance?sub_id=<?php echo $sub_id ?>&class_id=<?php echo $class_id ?>&teacherHeadId=<?php echo $teacherHeadId ?>">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -480,12 +489,25 @@ body{
                         </div>
                     </div> 
                     <?php 
-                        $classDetail = Yii::$app->db->createCommand("SELECT DISTINCT seh.class_name_id, seh.session_id, seh.section_id FROM std_enrollment_head as seh INNER JOIN teacher_subject_assign_detail as d ON d.class_id = seh.std_enroll_head_id WHERE d.class_id = '$class_id'")->queryAll();
+                        $classDetail = Yii::$app->db->createCommand("SELECT DISTINCT seh.class_name_id, seh.session_id, seh.section_id 
+                            FROM std_enrollment_head as seh 
+                            INNER JOIN teacher_subject_assign_detail as d 
+                            ON d.class_id = seh.std_enroll_head_id 
+                            WHERE d.class_id = '$class_id'")->queryAll();
                             $classnameid = $classDetail[0]['class_name_id'];
                             $sessionid = $classDetail[0]['session_id'];
                             $sectionid = $classDetail[0]['section_id'];
 
-                        $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id, sed.std_enroll_detail_std_name FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON sed.std_enroll_detail_head_id = seh.std_enroll_head_id WHERE seh.class_name_id = '$classnameid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid' ")->queryAll();
+                        $students = Yii::$app->db->createCommand("SELECT sed.std_enroll_detail_std_id, sed.std_enroll_detail_std_name 
+                            FROM ((std_enrollment_detail as sed 
+                            INNER JOIN std_enrollment_head as seh 
+                            ON sed.std_enroll_detail_head_id = seh.std_enroll_head_id)
+                            INNER JOIN std_personal_info as spi 
+                            ON spi.std_id = sed.std_enroll_detail_std_id ) 
+                            WHERE seh.class_name_id = '$classnameid' 
+                            AND seh.session_id = '$sessionid' 
+                            AND seh.section_id = '$sectionid' 
+                            AND spi.status = 'Active'")->queryAll();
                         $stdCount = count($students);
 
                     ?>

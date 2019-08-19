@@ -14,14 +14,18 @@
        if(isset($_GET["sub_id"])){ 
         $sub_id = $_GET["sub_id"];
         $class_id = $_GET["class_id"];
-        $emp_id = $_GET["emp_id"];
+        $teacherHeadId = $_GET["teacherHeadId"];
 
         $branch_id = Yii::$app->user->identity->branch_id;
         $students = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,sed.std_enroll_detail_std_id,sed.std_enroll_detail_std_name, sed.std_roll_no
-        FROM std_enrollment_detail as sed
+        FROM ((std_enrollment_detail as sed
         INNER JOIN std_enrollment_head as seh
-        ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id
-        WHERE sed.std_enroll_detail_head_id = '$class_id' AND seh.branch_id = '$branch_id'")->queryAll();
+        ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id)
+        INNER JOIN std_personal_info as spi 
+        ON spi.std_id = sed.std_enroll_detail_std_id )
+        WHERE sed.std_enroll_detail_head_id = '$class_id' 
+        AND seh.branch_id = '$branch_id'
+        AND spi.status = 'Active'")->queryAll();
     
     $countstd = count($students);
     $subName = Yii::$app->db->createCommand("SELECT subject_name FROM subjects WHERE subject_id = '$sub_id'")->queryAll();
@@ -34,7 +38,7 @@
 ?>      
      <div class="row">
             <div class="col-md-3 col-md-offset-9">
-                    <a href="./view-attendance?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&emp_id=<?php echo $emp_id;?>" style="float: right; margin-right:2px;background-color:#5CB85C;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
+                    <a href="./view-attendance?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&teacherHeadId=<?php echo $teacherHeadId;?>" style="float: right; margin-right:2px;background-color:#5CB85C;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
             </div>
     </div><br>
     <div class="row">
@@ -93,7 +97,7 @@
                                 <td><?php echo $students[$i]['std_enroll_detail_std_name'];?></td>
                                 <?php 
                                     $stdId = $students[$i]['std_enroll_detail_std_id'];
-                                    $atten = Yii::$app->db->createCommand("SELECT att.status FROM std_attendance as att WHERE att.branch_id = '$branch_id' AND att.teacher_id = '$emp_id' AND att.class_name_id = '$classnameid' AND att.session_id = '$sessionid' AND att.section_id = '$sectionid' AND att.subject_id = '$sub_id' AND CAST(date AS DATE) = '$date' AND att.student_id = '$stdId'")->queryAll();
+                                    $atten = Yii::$app->db->createCommand("SELECT att.status FROM std_attendance as att WHERE att.branch_id = '$branch_id' AND att.teacher_id = '$teacherHeadId' AND att.class_name_id = '$classnameid' AND att.session_id = '$sessionid' AND att.section_id = '$sectionid' AND att.subject_id = '$sub_id' AND CAST(date AS DATE) = '$date' AND att.student_id = '$stdId'")->queryAll();
                                     ?>
                                 <td align="center">
                                     <?php 

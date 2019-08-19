@@ -4,7 +4,7 @@ use backend\controllers\SmsController;
                 $classid = $_POST["classnameid"];
                 $sessionid = $_POST["sessionid"];
                 $sectionid = $_POST["sectionid"];
-                $emp_id = $_POST["emp_id"];
+                $teacherHeadId = $_POST["teacherHeadId"];
                 $branch_id = $_POST["branch_id"];
                 $sub_id = $_POST["sub_id"];
                 $date = $_POST["date"];
@@ -23,7 +23,7 @@ use backend\controllers\SmsController;
                     for($i=0; $i<$countstd; $i++){
                     $attendance = Yii::$app->db->createCommand()->insert('std_attendance',[
                         'branch_id' => $branch_id,
-                        'teacher_id' => $emp_id,
+                        'teacher_id' => $teacherHeadId,
                         'class_name_id' => $classid,
                         'session_id'=> $sessionid,
                         'section_id'=> $sectionid,
@@ -31,12 +31,14 @@ use backend\controllers\SmsController;
                         'date' => $date,
                         'student_id' => $stdAttendId[$i],
                         'status' => $status[$i],
+                        'created_at'   => new \yii\db\Expression('NOW()'),
+                        'created_by'   => Yii::$app->user->identity->id, 
                     ])->execute();
                     }
                  if($attendance == 1){
                         $query = Yii::$app->db->createCommand("SELECT att.student_id, att.status 
                      FROM std_attendance as att
-                     WHERE att.teacher_id = '$emp_id' 
+                     WHERE att.teacher_id = '$teacherHeadId' 
                      AND att.class_name_id = '$classid'
                      AND att.session_id = '$sessionid'
                      AND att.section_id = '$sectionid'
@@ -94,7 +96,17 @@ use backend\controllers\SmsController;
         $empId = Yii::$app->db->createCommand("SELECT emp.emp_id FROM emp_info as emp WHERE emp.emp_cnic = '$empCnic' AND emp.emp_branch_id = '$branch_id'")->queryAll();
         $teacher_id = $empId[0]['emp_id'];
         //Select studnet roll no and name
-        $student = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_id, sed.std_enroll_detail_std_id, sed.std_roll_no FROM std_enrollment_detail as sed INNER JOIN std_enrollment_head as seh ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id WHERE seh.class_name_id = '$classid' AND seh.session_id = '$sessionid' AND seh.section_id = '$sectionid' AND seh.branch_id = '$branch_id '")->queryAll();
+        $student = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_id, sed.std_enroll_detail_std_id, sed.std_roll_no 
+            FROM ((std_enrollment_detail as sed 
+            INNER JOIN std_enrollment_head as seh 
+            ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id)
+            INNER JOIN std_personal_info as spi 
+            ON spi.std_id = sed.std_enroll_detail_std_id ) 
+            WHERE seh.class_name_id = '$classid' 
+            AND seh.session_id = '$sessionid'
+            AND seh.section_id = '$sectionid' 
+            AND seh.branch_id = '$branch_id'
+            AND spi.status = 'Active'")->queryAll();
         $studentLength = count($student);
 
         // Selected Class Name

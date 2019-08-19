@@ -189,6 +189,7 @@ return [
                 'emp-leave' => 'emp-leave/index',
                 //-------------------------------------------
                 // account-transactions
+                'account-nature' => 'account-nature/index',
                 'account-transactions' => 'account-transactions/index',
                 'balance-sheet' => 'account-transactions/balance-sheet',
                 //-------------------------------------------
@@ -200,6 +201,21 @@ return [
                 //Visitors
                 'fetch-visitors'=>'visitors/fetch-visitors',
                 'visitors' => 'visitors/index',
+                 //-------------------------------------------
+                //std-attendance
+                'class-attendance' => 'std-attendance/view-class-attendance',
+                'view-attendance' => 'std-attendance/view-attendance',
+                'take-attendance' => 'std-attendance/take-attendance',
+                'update-attendance' => 'std-attendance/update-attendance',
+                'datewise-class-attendance' => 'std-attendance/datewise-class-attendance',
+                'datewise-student-attendance' => 'std-attendance/datewise-student-attendance',
+                'daterangewise-class-attendance' => 'std-attendance/daterangewise-class-attendance',
+                'daterangewise-student-attendance' => 'std-attendance/daterangewise-student-attendance',
+                //'monthly-attendance-view' => 'std-attendance/monthly-attendance-view',
+                //std-attendance-by-incharge
+                //'attendance-by-incharge'=>'std-atten-incharge/attendance-by-incharge',
+                //'mark-attendance' => 'std-atten-incharge/mark-attendance',
+                //-------------------------------------------
 
             ],
         ],

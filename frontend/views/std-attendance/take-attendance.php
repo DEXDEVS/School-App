@@ -5,10 +5,10 @@ $conn = \Yii::$app->db;
 	if(isset($_GET['sub_id'])){
 		$sub_id = $_GET['sub_id'];	
 		$class_id = $_GET['class_id'];
-		$emp_id = $_GET['emp_id'];
+		$teacherHeadId = $_GET['teacherHeadId'];
 	
 
-		$classDetail = Yii::$app->db->createCommand("SELECT DISTINCT seh.class_name_id, seh.session_id, seh.section_id FROM std_enrollment_head as seh INNER JOIN teacher_subject_assign_detail as d ON d.class_id = seh.std_enroll_head_id WHERE d.class_id = '$class_id'")->queryAll();
+		$classDetail = Yii::$app->db->createCommand("SELECT DISTINCT seh.class_name_id, seh.session_id, seh.section_id FROM std_enrollment_head as seh INNER JOIN teacher_subject_assign_detail as d ON d.class_id = seh.std_enroll_head_id WHERE d.class_id = '$class_id' AND seh.status = 'Active'")->queryAll();
 				$classnameid = $classDetail[0]['class_name_id'];
 				$sessionid = $classDetail[0]['session_id'];
 				$sectionid = $classDetail[0]['section_id'];
@@ -53,7 +53,7 @@ $conn = \Yii::$app->db;
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-3 col-md-offset-9">
-			<a href="./activity-view?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&emp_id=<?php echo $emp_id;?>" style="float: right;background-color:#DD4B39;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
+			<a href="./activity-view?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&teacherHeadId=<?php echo $teacherHeadId;?>" style="float: right;background-color:#DD4B39;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
 		</div>
 	</div><br>
 	<div class="row">
@@ -64,40 +64,40 @@ $conn = \Yii::$app->db;
 				</div>
 				<div class="box-body">
 					<form  action = "take-attendance" method="POST">
-    	<div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
-                </div>    
-            </div>    
-        </div>
-        <div class="row">
-        	<div class="col-md-3">
-                <div class="form-group">
-                	<label>Current Date</label>
-                    <input type="date" class="form-control" name="date" required="required">
-                </div>    
-            </div>  <br>         
-            <div class="col-md-2">
-                <div class="form-group">
-                	<label></label>
-                    <button type="submit" name="submit" class="btn btn-success form-control" style="margin-top: -25px;">
-                    <i class="fa fa-sign-in" aria-hidden="true"></i>	
-                	<b>Take Attendance</b></button>
-                </div>    
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                	<input type="hidden" name="classnameid" value="<?php echo $classnameid; ?>">
-                	<input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
-                	<input type="hidden" name="sessionid" value="<?php echo $sessionid; ?>">
-                	<input type="hidden" name="sectionid" value="<?php echo $sectionid; ?>">
-                	<input type="hidden" name="emp_id" value="<?php echo $emp_id; ?>">
-                	<input type="hidden" name="sub_id" value="<?php echo $sub_id; ?>">
-                </div>    
-        	</div>    
-        </div>
-    </form>
+				    	<div class="row">
+				            <div class="col-md-4">
+				                <div class="form-group">
+				                    <input type="hidden" name="_csrf" class="form-control" value="<?=Yii::$app->request->getCsrfToken()?>">          
+				                </div>    
+				            </div>    
+				        </div>
+				        <div class="row">
+				        	<div class="col-md-3">
+				                <div class="form-group">
+				                	<label>Current Date</label>
+				                    <input type="date" class="form-control" name="date" required="required">
+				                </div>    
+				            </div>  <br>         
+				            <div class="col-md-2">
+				                <div class="form-group">
+				                	<label></label>
+				                    <button type="submit" name="submit" class="btn btn-success form-control" style="margin-top: -25px;">
+				                    <i class="fa fa-sign-in" aria-hidden="true"></i>	
+				                	<b>Take Attendance</b></button>
+				                </div>    
+				            </div>
+				            <div class="col-md-2">
+				                <div class="form-group">
+				                	<input type="hidden" name="classnameid" value="<?php echo $classnameid; ?>">
+				                	<input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
+				                	<input type="hidden" name="sessionid" value="<?php echo $sessionid; ?>">
+				                	<input type="hidden" name="sectionid" value="<?php echo $sectionid; ?>">
+				                	<input type="hidden" name="teacherHeadId" value="<?php echo $teacherHeadId; ?>">
+				                	<input type="hidden" name="sub_id" value="<?php echo $sub_id; ?>">
+				                </div>    
+				        	</div>    
+				        </div>
+				    </form>
 				</div>
 			</div>
 		</div>
@@ -111,19 +111,21 @@ $conn = \Yii::$app->db;
 		$classnameid= $_POST["classnameid"];
 		$sessionid = $_POST["sessionid"];
 		$sectionid = $_POST["sectionid"];
-		$emp_id = $_POST["emp_id"];
+		$teacherHeadId = $_POST["teacherHeadId"];
 		$sub_id = $_POST["sub_id"];
 		$date = $_POST["date"];
 
 		$branch_id = Yii::$app->user->identity->branch_id;
-		$checkAttendance = Yii::$app->db->createCommand("SELECT * FROM std_attendance as att WHERE att.teacher_id = '$emp_id' AND att.class_name_id = '$classnameid' AND att.session_id = '$sessionid' AND att.section_id = '$sectionid' AND att.subject_id = '$sub_id' AND CAST(date AS DATE) = '$date' AND att.branch_id = '$branch_id'")->queryAll();
+		$checkAttendance = Yii::$app->db->createCommand("SELECT * FROM std_attendance as att WHERE att.teacher_id = '$teacherHeadId' AND att.class_name_id = '$classnameid' AND att.session_id = '$sessionid' AND att.section_id = '$sectionid' AND att.subject_id = '$sub_id' AND CAST(date AS DATE) = '$date' AND att.branch_id = '$branch_id'")->queryAll();
 	if(empty($checkAttendance)){
 		
 		$students = Yii::$app->db->createCommand("SELECT seh.std_enroll_head_name,sed.std_enroll_detail_std_id,sed.std_enroll_detail_std_name, sed.std_roll_no
-			FROM std_enrollment_detail as sed
+			FROM ((std_enrollment_detail as sed
 			INNER JOIN std_enrollment_head as seh
-			ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id
-			WHERE sed.std_enroll_detail_head_id = '$class_id' AND seh.branch_id = '$branch_id'")->queryAll();
+			ON seh.std_enroll_head_id = sed.std_enroll_detail_head_id )
+			INNER JOIN std_personal_info as spi 
+			ON spi.std_id = sed.std_enroll_detail_std_id )
+			WHERE sed.std_enroll_detail_head_id = '$class_id' AND seh.branch_id = '$branch_id' AND spi.status = 'Active'")->queryAll();
 		
 		$countstd = count($students);
 
@@ -133,7 +135,7 @@ $conn = \Yii::$app->db;
 	<div class="row container-fluid">
 		<div class="row">
 			<div class="col-md-3 col-md-offset-9">
-				<a href="./activity-view?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&emp_id=<?php echo $emp_id;?>" style="float: right;background-color:#DD4B39;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
+				<a href="./activity-view?sub_id=<?php echo $sub_id;?>&class_id=<?php echo $class_id;?>&teacherHeadId=<?php echo $teacherHeadId;?>" style="float: right;background-color:#DD4B39;color: white;padding:3px;border-radius:5px;"><i class="glyphicon glyphicon-backward"></i> Back</a>
 			</div>
 		</div>
 		<br>
@@ -219,14 +221,14 @@ $conn = \Yii::$app->db;
 								
 					                	<input type="hidden" name="sectionid" value="<?php echo $sectionid; ?>" style="width: 30px">
 								
-					                	<input type="hidden" name="emp_id" value="<?php echo $emp_id; ?>" style="width: 30px">
+					                	<input type="hidden" name="teacherHeadId" value="<?php echo $teacherHeadId; ?>" style="width: 30px">
 									
 					                	<input type="hidden" name="sub_id" value="<?php echo $sub_id; ?>" style="width: 30px">
 									
 					                	<input type="hidden" name="date" value="<?php echo $date; ?>" style="width: 30px">
 					                	<input type="hidden" name="branch_id" value="<?php echo $branch_id; ?>" style="width: 30px">
 								<br>
-								<button style="float: right;s" type="submit" name="save" class="btn btn-success btn-flat btn-xs">
+								<button style="float: right;" type="submit" name="save" class="btn btn-success btn-flat btn-xs">
 									<i class="fa fa-sign-in"></i> <b>Take Attendance</b>
 								</button>		
 							</form>
